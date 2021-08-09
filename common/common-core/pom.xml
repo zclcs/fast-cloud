@@ -115,6 +115,12 @@
             <artifactId>hutool-all</artifactId>
             <version>${hutool-all.version}</version>
         </dependency>
+        <!-- 接口文档依赖 -->
+        <dependency>
+            <groupId>com.zclcs</groupId>
+            <artifactId>common-doc</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
 </project>
