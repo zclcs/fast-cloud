@@ -16,7 +16,7 @@ public class ControllerLogAspect {
 
     @Around("(@within(org.springframework.stereotype.Controller)" +
             "|| @within(org.springframework.web.bind.annotation.RestController))" +
-            "&& execution(public * cc.mrbird..*.controller..*.*(..))")
+            "&& execution(public * com.zclcs..*.controller..*.*(..))")
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
 
         String className = pjp.getTarget().getClass().getName();

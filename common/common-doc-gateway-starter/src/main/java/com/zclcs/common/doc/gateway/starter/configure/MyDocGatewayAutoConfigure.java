@@ -41,17 +41,17 @@ public class MyDocGatewayAutoConfigure {
     }
 
     @Bean
-    public MyDocGatewayResourceConfigure febsDocGatewayResourceConfigure(RouteLocator routeLocator, GatewayProperties gatewayProperties) {
+    public MyDocGatewayResourceConfigure myDocGatewayResourceConfigure(RouteLocator routeLocator, GatewayProperties gatewayProperties) {
         return new MyDocGatewayResourceConfigure(routeLocator, gatewayProperties);
     }
 
     @Bean
-    public MyDocGatewayHeaderFilter febsDocGatewayHeaderFilter() {
+    public MyDocGatewayHeaderFilter myDocGatewayHeaderFilter() {
         return new MyDocGatewayHeaderFilter();
     }
 
     @Bean
-    public MyDocGatewayHandler febsDocGatewayHandler(SwaggerResourcesProvider swaggerResources) {
+    public MyDocGatewayHandler myDocGatewayHandler(SwaggerResourcesProvider swaggerResources) {
         MyDocGatewayHandler myDocGatewayHandler = new MyDocGatewayHandler();
         myDocGatewayHandler.setSecurityConfiguration(securityConfiguration);
         myDocGatewayHandler.setUiConfiguration(uiConfiguration);

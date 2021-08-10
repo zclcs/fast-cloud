@@ -167,7 +167,7 @@ public class MyDocProperties {
 
     @Override
     public String toString() {
-        return "FebsDocProperties{" +
+        return "MyDocProperties{" +
                 "enable=" + enable +
                 ", basePackage='" + basePackage + '\'' +
                 ", title='" + title + '\'' +

@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**
  * @author MrBird
  */
-public class MyCloudSecurityInteceptorConfigure implements WebMvcConfigurer {
+public class MyCloudSecurityInterceptorConfigure implements WebMvcConfigurer {
 
     private MyCloudSecurityProperties properties;
 

@@ -61,7 +61,7 @@ public class MyCloudSecurityProperties {
 
     @Override
     public String toString() {
-        return "FebsCloudSecurityProperties{" +
+        return "MyCloudSecurityProperties{" +
                 "enable=" + enable +
                 ", authUri='" + authUri + '\'' +
                 ", anonUris='" + anonUris + '\'' +

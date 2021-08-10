@@ -50,14 +50,14 @@ public class MyCloudSecurityAutoConfigure extends GlobalMethodSecurityConfigurat
     }
 
     @Bean
-    public MyCloudSecurityInteceptorConfigure febsCloudSecurityInteceptorConfigure() {
-        return new MyCloudSecurityInteceptorConfigure();
+    public MyCloudSecurityInterceptorConfigure myCloudSecurityInterceptorConfigure() {
+        return new MyCloudSecurityInterceptorConfigure();
     }
 
     @Bean
     @Primary
     @ConditionalOnMissingBean(DefaultTokenServices.class)
-    public MyUserInfoTokenServices febsUserInfoTokenServices(ResourceServerProperties properties) {
+    public MyUserInfoTokenServices myUserInfoTokenServices(ResourceServerProperties properties) {
         return new MyUserInfoTokenServices(properties.getUserInfoUri(), properties.getClientId());
     }
 

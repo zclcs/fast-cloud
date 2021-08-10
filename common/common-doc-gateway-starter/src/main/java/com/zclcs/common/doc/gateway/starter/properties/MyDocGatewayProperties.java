@@ -36,7 +36,7 @@ public class MyDocGatewayProperties {
 
     @Override
     public String toString() {
-        return "FebsDocGatewayProperties{" +
+        return "MyDocGatewayProperties{" +
                 "enable=" + enable +
                 ", resources='" + resources + '\'' +
                 '}';
