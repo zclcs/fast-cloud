@@ -1,19 +1,18 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 本地
+ Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 50734
+ Source Server Version : 50735
  Source Host           : localhost:3306
- Source Schema         : cloud_base
+ Source Schema         : cloud_system
 
  Target Server Type    : MySQL
- Target Server Version : 50734
+ Target Server Version : 50735
  File Encoding         : 65001
 
- Date: 10/08/2021 22:32:57
+ Date: 11/08/2021 19:18:59
 */
-
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
@@ -46,11 +45,50 @@ CREATE TABLE `oauth_client_details`
 -- Records of oauth_client_details
 -- ----------------------------
 INSERT INTO `oauth_client_details`
-VALUES ('app', '', '$2a$10$8qk/efslepo1af1kyw/rp.ddjgsdnet8ucp1vgdzpqea.1qbklvua', 'all', 'refresh_token,password', '',
+VALUES ('app', '', '$2a$10$8Qk/efslEpO1Af1kyw/rp.DdJGsdnET8UCp1vGDzpQEa.1qBklvua', 'all', 'refresh_token,password', '',
         NULL, 86400, 864000, NULL, NULL, '123456');
 INSERT INTO `oauth_client_details`
-VALUES ('febs', ' ', '$2a$10$asztvmotuayuq.75z2n3cejd6dcik9vy3j/skzue4hbld6sz7.6ge', 'all', 'password,refresh_token',
+VALUES ('febs', ' ', '$2a$10$aSZTvMOtUAYUQ.75z2n3ceJd6dCIk9Vy3J/SKZUE4hBLd6sz7.6ge', 'all', 'password,refresh_token',
         NULL, NULL, 86400, 8640000, NULL, 0, '123456');
+
+-- ----------------------------
+-- Table structure for system_data_permission_test
+-- ----------------------------
+DROP TABLE IF EXISTS `system_data_permission_test`;
+CREATE TABLE `system_data_permission_test`
+(
+    `field1`      varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+    `field2`      varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+    `field3`      varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+    `field4`      varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+    `dept_id`     int(11)                                                NOT NULL,
+    `create_time` datetime                                               NOT NULL,
+    `id`          int(11)                                                NOT NULL,
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = '用户权限测试'
+  ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of system_data_permission_test
+-- ----------------------------
+INSERT INTO `system_data_permission_test`
+VALUES ('小米', '小米10Pro', '4999', '珍珠白', 1, '2020-04-14 15:00:38', 1);
+INSERT INTO `system_data_permission_test`
+VALUES ('腾讯', '黑鲨游戏手机3', '3799', '铠甲灰', 2, '2020-04-14 15:01:36', 2);
+INSERT INTO `system_data_permission_test`
+VALUES ('华为', '华为P30', '3299', '天空之境', 1, '2020-04-14 15:03:11', 3);
+INSERT INTO `system_data_permission_test`
+VALUES ('华为', '华为P40Pro', '6488', '亮黑色', 3, '2020-04-14 15:04:31', 4);
+INSERT INTO `system_data_permission_test`
+VALUES ('vivo', 'Vivo iQOO 3', '3998', '拉力橙', 4, '2020-04-14 15:05:55', 5);
+INSERT INTO `system_data_permission_test`
+VALUES ('一加', '一加7T', '3199', '冰际蓝', 5, '2020-04-14 15:06:53', 6);
+INSERT INTO `system_data_permission_test`
+VALUES ('三星', '三星Galaxy S10', '4098', '浩玉白', 6, '2020-04-14 15:08:25', 7);
+INSERT INTO `system_data_permission_test`
+VALUES ('苹果', 'iPhone 11 pro max', '9198', '暗夜绿', 4, '2020-04-14 15:09:20', 8);
 
 -- ----------------------------
 -- Table structure for system_dept
@@ -65,12 +103,12 @@ CREATE TABLE `system_dept`
     `create_time` datetime                                                NULL DEFAULT NULL COMMENT '创建时间',
     `modify_time` datetime                                                NULL DEFAULT NULL COMMENT '修改时间',
     PRIMARY KEY (`dept_id`) USING BTREE,
-    INDEX `t_dept_parent_id` (`parent_id`) USING BTREE,
-    INDEX `t_dept_dept_name` (`dept_name`) USING BTREE
+    INDEX `system_dept_parent_id` (`parent_id`) USING BTREE,
+    INDEX `system_dept_dept_name` (`dept_name`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 7
-  CHARACTER SET = utf8
-  COLLATE = utf8_general_ci COMMENT = '部门表'
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = '部门表'
   ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -88,6 +126,41 @@ INSERT INTO `system_dept`
 VALUES (5, 0, '人事部', 3, '2018-01-04 15:42:32', '2019-01-23 06:27:59');
 INSERT INTO `system_dept`
 VALUES (6, 0, '测试部', 4, '2018-01-04 15:42:38', '2019-01-17 08:15:47');
+
+-- ----------------------------
+-- Table structure for system_eximport
+-- ----------------------------
+DROP TABLE IF EXISTS `system_eximport`;
+CREATE TABLE `system_eximport`
+(
+    `field1`      varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL,
+    `field2`      int(11)                                                 NOT NULL,
+    `field3`      varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+    `create_time` datetime                                                NOT NULL
+) ENGINE = MyISAM
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = 'excel导入导出测试'
+  ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of system_eximport
+-- ----------------------------
+INSERT INTO `system_eximport`
+VALUES ('字段1', 1, 'mrbird0@gmail.com', '2019-07-25 19:08:01');
+INSERT INTO `system_eximport`
+VALUES ('字段1', 2, 'mrbird1@gmail.com', '2019-07-25 19:08:01');
+INSERT INTO `system_eximport`
+VALUES ('字段1', 3, 'mrbird2@gmail.com', '2019-07-25 19:08:01');
+INSERT INTO `system_eximport`
+VALUES ('字段1', 4, 'mrbird3@gmail.com', '2019-07-25 19:08:01');
+INSERT INTO `system_eximport`
+VALUES ('字段1', 5, 'mrbird4@gmail.com', '2019-07-25 19:08:01');
+INSERT INTO `system_eximport`
+VALUES ('字段1', 6, 'mrbird5@gmail.com', '2019-07-25 19:08:01');
+INSERT INTO `system_eximport`
+VALUES ('字段1', 7, 'mrbird6@gmail.com', '2019-07-25 19:08:01');
+INSERT INTO `system_eximport`
+VALUES ('字段1', 8, 'mrbird7@gmail.com', '2019-07-25 19:08:01');
 
 -- ----------------------------
 -- Table structure for system_generator_config
@@ -108,15 +181,15 @@ CREATE TABLE `system_generator_config`
     `trim_value`           varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '前缀内容',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
-  CHARACTER SET = utf8
-  COLLATE = utf8_general_ci COMMENT = '代码生成配置表'
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = '代码生成配置表'
   ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_generator_config
 -- ----------------------------
 INSERT INTO `system_generator_config`
-VALUES (1, 'mrbird', 'cc.mrbird.febs.server.generator.gen', 'entity', 'mapper', 'mapper', 'service', 'service.impl',
+VALUES (1, 'MrBird', 'cc.mrbird.febs.server.generator.gen', 'entity', 'mapper', 'mapper', 'service', 'service.impl',
         'controller', '1', 't_');
 
 -- ----------------------------
@@ -134,25 +207,25 @@ CREATE TABLE `system_job`
     `remark`          varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
     `create_time`     datetime                                               NULL DEFAULT NULL COMMENT '创建时间',
     PRIMARY KEY (`job_id`) USING BTREE,
-    INDEX `t_job_create_time` (`create_time`) USING BTREE
+    INDEX `system_job_create_time` (`create_time`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 5
-  CHARACTER SET = utf8
-  COLLATE = utf8_general_ci COMMENT = '定时任务表'
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = '定时任务表'
   ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_job
 -- ----------------------------
 INSERT INTO `system_job`
-VALUES (1, 'tasklist', 'test', 'hello', '0/1 * * * * ?', '1', '有参任务调度测试', '2018-02-24 16:26:14');
+VALUES (1, 'taskList', 'test', 'hello', '0/1 * * * * ?', '1', '有参任务调度测试', '2018-02-24 16:26:14');
 INSERT INTO `system_job`
-VALUES (2, 'tasklist', 'test1', NULL, '0/10 * * * * ?', '1', '无参任务调度测试', '2018-02-24 17:06:23');
+VALUES (2, 'taskList', 'test1', NULL, '0/10 * * * * ?', '1', '无参任务调度测试', '2018-02-24 17:06:23');
 INSERT INTO `system_job`
-VALUES (3, 'tasklist', 'test2', '{\"name\":\"mrbird\",\"age\":18}', '0/1 * * * * ?', '1', 'json类型参数任务测试',
+VALUES (3, 'taskList', 'test2', '{\"name\":\"mrbird\",\"age\":18}', '0/1 * * * * ?', '1', 'JSON类型参数任务测试',
         '2018-02-26 09:28:26');
 INSERT INTO `system_job`
-VALUES (4, 'tasklist', 'test3', '', '0/5 * * * * ?', '1', '测试异常，没有编写test3任务', '2018-02-26 11:15:30');
+VALUES (4, 'taskList', 'test3', '', '0/5 * * * * ?', '1', '测试异常，没有编写test3任务', '2018-02-26 11:15:30');
 
 -- ----------------------------
 -- Table structure for system_job_log
@@ -170,11 +243,11 @@ CREATE TABLE `system_job_log`
     `times`       decimal(11, 0)                                          NULL DEFAULT NULL COMMENT '耗时(单位：毫秒)',
     `create_time` datetime                                                NULL DEFAULT NULL COMMENT '创建时间',
     PRIMARY KEY (`log_id`) USING BTREE,
-    INDEX `t_job_log_create_time` (`create_time`) USING BTREE
+    INDEX `system_job_log_create_time` (`create_time`) USING BTREE
 ) ENGINE = MyISAM
   AUTO_INCREMENT = 1
-  CHARACTER SET = utf8
-  COLLATE = utf8_general_ci COMMENT = '调度日志表'
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = '调度日志表'
   ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -197,11 +270,11 @@ CREATE TABLE `system_log`
     `create_time` datetime                                               NULL DEFAULT NULL COMMENT '创建时间',
     `location`    varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作地点',
     PRIMARY KEY (`id`) USING BTREE,
-    INDEX `t_log_create_time` (`create_time`) USING BTREE
+    INDEX `system_log_create_time` (`create_time`) USING BTREE
 ) ENGINE = MyISAM
   AUTO_INCREMENT = 1
-  CHARACTER SET = utf8
-  COLLATE = utf8_general_ci COMMENT = '用户操作日志表'
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = '用户操作日志表'
   ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -224,8 +297,8 @@ CREATE TABLE `system_logger`
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
-  CHARACTER SET = utf8
-  COLLATE = utf8_general_ci COMMENT = '分布式事务日志'
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = '分布式事务日志'
   ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -246,11 +319,11 @@ CREATE TABLE `system_login_log`
     `system`     varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作系统',
     `browser`    varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '浏览器',
     PRIMARY KEY (`id`) USING BTREE,
-    INDEX `t_login_log_login_time` (`login_time`) USING BTREE
+    INDEX `system_login_log_login_time` (`login_time`) USING BTREE
 ) ENGINE = MyISAM
   AUTO_INCREMENT = 1
-  CHARACTER SET = utf8
-  COLLATE = utf8_general_ci COMMENT = '登录日志表'
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = '登录日志表'
   ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -275,37 +348,37 @@ CREATE TABLE `system_menu`
     `create_time` datetime                                                NOT NULL COMMENT '创建时间',
     `modify_time` datetime                                                NULL DEFAULT NULL COMMENT '修改时间',
     PRIMARY KEY (`menu_id`) USING BTREE,
-    INDEX `t_menu_parent_id` (`parent_id`) USING BTREE,
-    INDEX `t_menu_menu_id` (`menu_id`) USING BTREE
+    INDEX `system_menu_parent_id` (`parent_id`) USING BTREE,
+    INDEX `system_menu_menu_id` (`menu_id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 195
-  CHARACTER SET = utf8
-  COLLATE = utf8_general_ci COMMENT = '菜单表'
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = '菜单表'
   ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_menu
 -- ----------------------------
 INSERT INTO `system_menu`
-VALUES (1, 0, '系统管理', '/system', 'layout', NULL, 'el-icon-set-up', '0', 1, '2017-12-27 16:39:07',
+VALUES (1, 0, '系统管理', '/system', 'Layout', NULL, 'el-icon-set-up', '0', 1, '2017-12-27 16:39:07',
         '2019-07-20 16:19:04');
 INSERT INTO `system_menu`
-VALUES (2, 0, '系统监控', '/monitor', 'layout', NULL, 'el-icon-data-line', '0', 2, '2017-12-27 16:45:51',
+VALUES (2, 0, '系统监控', '/monitor', 'Layout', NULL, 'el-icon-data-line', '0', 2, '2017-12-27 16:45:51',
         '2019-01-23 06:27:12');
 INSERT INTO `system_menu`
-VALUES (3, 1, '用户管理', '/system/user', 'febs/system/user/index', 'user:view', '', '0', 1, '2017-12-27 16:47:13',
+VALUES (3, 1, '用户管理', '/system/user', 'febs/system/user/Index', 'user:view', '', '0', 1, '2017-12-27 16:47:13',
         '2019-01-22 06:45:55');
 INSERT INTO `system_menu`
-VALUES (4, 1, '角色管理', '/system/role', 'febs/system/role/index', 'role:view', '', '0', 2, '2017-12-27 16:48:09',
+VALUES (4, 1, '角色管理', '/system/role', 'febs/system/role/Index', 'role:view', '', '0', 2, '2017-12-27 16:48:09',
         '2018-04-25 09:01:12');
 INSERT INTO `system_menu`
-VALUES (5, 1, '菜单管理', '/system/menu', 'febs/system/menu/index', 'menu:view', '', '0', 3, '2017-12-27 16:48:57',
+VALUES (5, 1, '菜单管理', '/system/menu', 'febs/system/menu/Index', 'menu:view', '', '0', 3, '2017-12-27 16:48:57',
         '2018-04-25 09:01:30');
 INSERT INTO `system_menu`
-VALUES (6, 1, '部门管理', '/system/dept', 'febs/system/dept/index', 'dept:view', '', '0', 4, '2017-12-27 16:57:33',
+VALUES (6, 1, '部门管理', '/system/dept', 'febs/system/dept/Index', 'dept:view', '', '0', 4, '2017-12-27 16:57:33',
         '2018-04-25 09:01:40');
 INSERT INTO `system_menu`
-VALUES (10, 2, '系统日志', '/monitor/systemlog', 'febs/monitor/systemlog/index', 'log:view', '', '0', 2,
+VALUES (10, 2, '系统日志', '/monitor/systemlog', 'febs/monitor/systemlog/Index', 'log:view', '', '0', 2,
         '2017-12-27 17:00:50', '2020-04-13 11:38:04');
 INSERT INTO `system_menu`
 VALUES (11, 3, '新增用户', '', '', 'user:add', NULL, '1', NULL, '2017-12-27 17:02:58', NULL);
@@ -334,37 +407,37 @@ VALUES (22, 6, '删除部门', '', '', 'dept:delete', NULL, '1', NULL, '2017-12-
 INSERT INTO `system_menu`
 VALUES (24, 10, '删除日志', '', '', 'log:delete', NULL, '1', NULL, '2017-12-27 17:11:45', NULL);
 INSERT INTO `system_menu`
-VALUES (130, 3, '导出excel', NULL, NULL, 'user:export', NULL, '1', NULL, '2019-01-23 06:35:16', NULL);
+VALUES (130, 3, '导出Excel', NULL, NULL, 'user:export', NULL, '1', NULL, '2019-01-23 06:35:16', NULL);
 INSERT INTO `system_menu`
-VALUES (131, 4, '导出excel', NULL, NULL, 'role:export', NULL, '1', NULL, '2019-01-23 06:35:36', NULL);
+VALUES (131, 4, '导出Excel', NULL, NULL, 'role:export', NULL, '1', NULL, '2019-01-23 06:35:36', NULL);
 INSERT INTO `system_menu`
-VALUES (132, 5, '导出excel', NULL, NULL, 'menu:export', NULL, '1', NULL, '2019-01-23 06:36:05', NULL);
+VALUES (132, 5, '导出Excel', NULL, NULL, 'menu:export', NULL, '1', NULL, '2019-01-23 06:36:05', NULL);
 INSERT INTO `system_menu`
-VALUES (133, 6, '导出excel', NULL, NULL, 'dept:export', NULL, '1', NULL, '2019-01-23 06:36:25', NULL);
+VALUES (133, 6, '导出Excel', NULL, NULL, 'dept:export', NULL, '1', NULL, '2019-01-23 06:36:25', NULL);
 INSERT INTO `system_menu`
 VALUES (135, 3, '密码重置', NULL, NULL, 'user:reset', NULL, '1', NULL, '2019-01-23 06:37:00', NULL);
 INSERT INTO `system_menu`
-VALUES (136, 10, '导出excel', NULL, NULL, 'log:export', NULL, '1', NULL, '2019-01-23 06:37:27', NULL);
+VALUES (136, 10, '导出Excel', NULL, NULL, 'log:export', NULL, '1', NULL, '2019-01-23 06:37:27', NULL);
 INSERT INTO `system_menu`
-VALUES (150, 2, '登录日志', '/monitor/loginlog', 'febs/monitor/loginlog/index', 'monitor:loginlog', '', '0', 3,
+VALUES (150, 2, '登录日志', '/monitor/loginlog', 'febs/monitor/loginlog/Index', 'monitor:loginlog', '', '0', 3,
         '2019-07-22 13:41:17', '2020-04-13 11:38:08');
 INSERT INTO `system_menu`
 VALUES (151, 150, '删除日志', NULL, NULL, 'loginlog:delete', NULL, '1', NULL, '2019-07-22 13:43:04', NULL);
 INSERT INTO `system_menu`
-VALUES (152, 150, '导出excel', NULL, NULL, 'loginlog:export', NULL, '1', NULL, '2019-07-22 13:43:30', NULL);
+VALUES (152, 150, '导出Excel', NULL, NULL, 'loginlog:export', NULL, '1', NULL, '2019-07-22 13:43:30', NULL);
 INSERT INTO `system_menu`
-VALUES (154, 0, '其他模块', '/others', 'layout', '', 'el-icon-shopping-bag-1', '0', 6, '2019-07-25 10:16:16',
+VALUES (154, 0, '其他模块', '/others', 'Layout', '', 'el-icon-shopping-bag-1', '0', 6, '2019-07-25 10:16:16',
         '2020-04-14 18:38:20');
 INSERT INTO `system_menu`
-VALUES (155, 154, '导入导出', '/others/eximport', 'febs/others/eximport/index', 'others:eximport', '', '0', 1,
+VALUES (155, 154, '导入导出', '/others/eximport', 'febs/others/eximport/Index', 'others:eximport', '', '0', 1,
         '2019-07-25 10:19:31', NULL);
 INSERT INTO `system_menu`
-VALUES (156, 0, '代码生成', '/gen', 'layout', '', 'el-icon-printer', '0', 4, '2019-07-25 10:24:03', '2020-01-16 13:59:49');
+VALUES (156, 0, '代码生成', '/gen', 'Layout', '', 'el-icon-printer', '0', 4, '2019-07-25 10:24:03', '2020-01-16 13:59:49');
 INSERT INTO `system_menu`
-VALUES (157, 156, '基础配置', '/gen/config', 'febs/gen/config/index', 'gen:config', '', '0', 1, '2019-07-25 10:24:55',
+VALUES (157, 156, '基础配置', '/gen/config', 'febs/gen/config/Index', 'gen:config', '', '0', 1, '2019-07-25 10:24:55',
         '2020-04-09 14:21:54');
 INSERT INTO `system_menu`
-VALUES (158, 156, '生成代码', '/gen/generate', 'febs/gen/generate/index', 'gen:generate', '', '0', 2, '2019-07-25 10:25:26',
+VALUES (158, 156, '生成代码', '/gen/generate', 'febs/gen/generate/Index', 'gen:generate', '', '0', 2, '2019-07-25 10:25:26',
         '2019-07-25 11:13:20');
 INSERT INTO `system_menu`
 VALUES (159, 157, '修改配置', NULL, NULL, 'gen:config:update', NULL, '1', NULL, '2019-07-26 16:22:56', NULL);
@@ -372,7 +445,7 @@ INSERT INTO `system_menu`
 VALUES (160, 158, '打包生成', NULL, NULL, 'gen:generate:gen', NULL, '1', NULL, '2019-07-26 16:23:38',
         '2019-07-26 16:23:53');
 INSERT INTO `system_menu`
-VALUES (163, 1, '客户端管理', '/client', 'febs/system/client/index', 'client:view', '', '0', 5, '2019-09-26 22:58:09', NULL);
+VALUES (163, 1, '客户端管理', '/client', 'febs/system/client/Index', 'client:view', '', '0', 5, '2019-09-26 22:58:09', NULL);
 INSERT INTO `system_menu`
 VALUES (164, 163, '新增', NULL, NULL, 'client:add', NULL, '1', NULL, '2019-09-26 22:58:21', NULL);
 INSERT INTO `system_menu`
@@ -382,50 +455,50 @@ VALUES (166, 163, '删除', NULL, NULL, 'client:delete', NULL, '1', NULL, '2019-
 INSERT INTO `system_menu`
 VALUES (167, 163, '解密', NULL, NULL, 'client:decrypt', NULL, '1', NULL, '2019-09-26 22:59:08', NULL);
 INSERT INTO `system_menu`
-VALUES (168, 0, '静态组件', '/components', 'layout', '', 'el-icon-present', '0', 7, '2019-12-02 16:41:28',
+VALUES (168, 0, '静态组件', '/components', 'Layout', '', 'el-icon-present', '0', 7, '2019-12-02 16:41:28',
         '2020-04-14 18:38:23');
 INSERT INTO `system_menu`
-VALUES (169, 168, '二级菜单', '/two', 'demos/two/index', '', '', '0', 1, '2019-12-02 16:41:51', NULL);
+VALUES (169, 168, '二级菜单', '/two', 'demos/two/Index', '', '', '0', 1, '2019-12-02 16:41:51', NULL);
 INSERT INTO `system_menu`
-VALUES (170, 169, '三级菜单', '/three', 'demos/two/three/index', '', '', '0', 1, '2019-12-02 16:42:09', NULL);
+VALUES (170, 169, '三级菜单', '/three', 'demos/two/three/Index', '', '', '0', 1, '2019-12-02 16:42:09', NULL);
 INSERT INTO `system_menu`
-VALUES (171, 168, 'markdown', '/components/markdown', 'demos/markdown', '', '', '0', 2, '2019-12-02 16:42:34', NULL);
+VALUES (171, 168, 'MarkDown', '/components/markdown', 'demos/markdown', '', '', '0', 2, '2019-12-02 16:42:34', NULL);
 INSERT INTO `system_menu`
 VALUES (172, 168, '富文本编辑器', '/components/tinymce', 'demos/tinymce', '', '', '0', 3, '2019-12-02 16:42:50', NULL);
 INSERT INTO `system_menu`
-VALUES (173, 0, '网关管理', '/route', 'layout', '', 'el-icon-odometer', '0', 3, '2020-01-16 14:00:15', NULL);
+VALUES (173, 0, '网关管理', '/route', 'Layout', '', 'el-icon-odometer', '0', 3, '2020-01-16 14:00:15', NULL);
 INSERT INTO `system_menu`
-VALUES (174, 173, '网关用户', '/route/user', 'febs/route/routeuser/index', '', '', '0', 1, '2020-01-16 14:00:32', NULL);
+VALUES (174, 173, '网关用户', '/route/user', 'febs/route/routeuser/Index', '', '', '0', 1, '2020-01-16 14:00:32', NULL);
 INSERT INTO `system_menu`
-VALUES (175, 173, '网关日志', '/route/log', 'febs/route/routelog/index', '', '', '0', 2, '2020-01-16 14:00:47', NULL);
+VALUES (175, 173, '网关日志', '/route/log', 'febs/route/routelog/Index', '', '', '0', 2, '2020-01-16 14:00:47', NULL);
 INSERT INTO `system_menu`
-VALUES (176, 173, '限流规则', '/route/ratelimitrule', 'febs/route/ratelimitrule/index', '', '', '0', 3,
+VALUES (176, 173, '限流规则', '/route/ratelimitrule', 'febs/route/ratelimitrule/Index', '', '', '0', 3,
         '2020-01-16 14:01:01', NULL);
 INSERT INTO `system_menu`
-VALUES (177, 173, '限流日志', '/route/ratelimitlog', 'febs/route/ratelimitlog/index', '', '', '0', 4, '2020-01-16 14:01:17',
+VALUES (177, 173, '限流日志', '/route/ratelimitlog', 'febs/route/ratelimitlog/Index', '', '', '0', 4, '2020-01-16 14:01:17',
         NULL);
 INSERT INTO `system_menu`
-VALUES (178, 173, '黑名单管理', '/route/blacklist', 'febs/route/blacklist/index', '', '', '0', 5, '2020-01-16 14:01:32',
+VALUES (178, 173, '黑名单管理', '/route/blacklist', 'febs/route/blacklist/Index', '', '', '0', 5, '2020-01-16 14:01:32',
         NULL);
 INSERT INTO `system_menu`
-VALUES (179, 173, '黑名单日志', '/route/blocklog', 'febs/route/blocklog/index', '', '', '0', 6, '2020-01-16 14:01:49', NULL);
+VALUES (179, 173, '黑名单日志', '/route/blocklog', 'febs/route/blocklog/Index', '', '', '0', 6, '2020-01-16 14:01:49', NULL);
 INSERT INTO `system_menu`
-VALUES (180, 2, '监控面板', '/monitor/dashboard', 'febs/monitor/dashboard/index', 'monitor:dashboard', '', '0', 1,
+VALUES (180, 2, '监控面板', '/monitor/dashboard', 'febs/monitor/dashboard/Index', 'monitor:dashboard', '', '0', 1,
         '2020-04-13 09:44:09', '2020-04-13 11:38:00');
 INSERT INTO `system_menu`
-VALUES (181, 154, '个人博客', '/others/blog', 'febs/others/blog/index', '', '', '0', 2, '2020-04-13 16:11:48',
+VALUES (181, 154, '个人博客', '/others/blog', 'febs/others/blog/Index', '', '', '0', 2, '2020-04-13 16:11:48',
         '2020-04-13 16:12:26');
 INSERT INTO `system_menu`
-VALUES (182, 154, '数据权限', '/others/datapermission', 'febs/others/datapermission/index', 'others:datapermission', '',
+VALUES (182, 154, '数据权限', '/others/datapermission', 'febs/others/datapermission/Index', 'others:datapermission', '',
         '0', 3, '2020-04-14 14:51:35', '2020-04-14 15:37:19');
 INSERT INTO `system_menu`
-VALUES (183, 0, '任务调度', '/job', 'layout', '', 'el-icon-alarm-clock', '0', 5, '2020-04-14 18:39:35',
+VALUES (183, 0, '任务调度', '/job', 'Layout', '', 'el-icon-alarm-clock', '0', 5, '2020-04-14 18:39:35',
         '2020-04-14 18:39:53');
 INSERT INTO `system_menu`
-VALUES (184, 183, '任务列表', '/job/list', 'febs/job/job/index', 'job:view', '', '0', 1, '2020-04-14 18:40:37',
+VALUES (184, 183, '任务列表', '/job/list', 'febs/job/job/Index', 'job:view', '', '0', 1, '2020-04-14 18:40:37',
         '2020-04-14 18:41:36');
 INSERT INTO `system_menu`
-VALUES (185, 183, '调度日志', '/job/log', 'febs/job/log/index', 'job:log:view', '', '0', 2, '2020-04-14 18:42:25', NULL);
+VALUES (185, 183, '调度日志', '/job/log', 'febs/job/log/Index', 'job:log:view', '', '0', 2, '2020-04-14 18:42:25', NULL);
 INSERT INTO `system_menu`
 VALUES (186, 184, '新增任务', NULL, NULL, 'job:add', NULL, '1', NULL, '2020-04-14 18:59:55', '2020-04-15 08:56:03');
 INSERT INTO `system_menu`
@@ -439,7 +512,7 @@ VALUES (190, 184, '恢复任务', NULL, NULL, 'job:resume', NULL, '1', NULL, '20
 INSERT INTO `system_menu`
 VALUES (191, 184, '立即执行一次', NULL, NULL, 'job:run', NULL, '1', NULL, '2020-04-14 19:01:42', NULL);
 INSERT INTO `system_menu`
-VALUES (192, 184, '导出excel', NULL, NULL, 'job:export', NULL, '1', NULL, '2020-04-14 19:01:59', NULL);
+VALUES (192, 184, '导出Excel', NULL, NULL, 'job:export', NULL, '1', NULL, '2020-04-14 19:01:59', NULL);
 INSERT INTO `system_menu`
 VALUES (193, 185, '删除', NULL, NULL, 'job:log:delete', NULL, '1', NULL, '2020-04-15 14:01:33', NULL);
 INSERT INTO `system_menu`
@@ -459,8 +532,8 @@ CREATE TABLE `system_role`
     PRIMARY KEY (`role_id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 5
-  CHARACTER SET = utf8
-  COLLATE = utf8_general_ci COMMENT = '角色表'
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = '角色表'
   ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -484,11 +557,11 @@ CREATE TABLE `system_role_menu`
     `role_id` bigint(20) NOT NULL,
     `menu_id` bigint(20) NOT NULL,
     PRIMARY KEY (`role_id`, `menu_id`) USING BTREE,
-    INDEX `t_role_menu_menu_id` (`menu_id`) USING BTREE,
-    INDEX `t_role_menu_role_id` (`role_id`) USING BTREE
+    INDEX `system_role_menu_menu_id` (`menu_id`) USING BTREE,
+    INDEX `system_role_menu_role_id` (`role_id`) USING BTREE
 ) ENGINE = InnoDB
-  CHARACTER SET = utf8
-  COLLATE = utf8_general_ci COMMENT = '角色菜单关联表'
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = '角色菜单关联表'
   ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -771,8 +844,8 @@ CREATE TABLE `system_trade_log`
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
-  CHARACTER SET = utf8
-  COLLATE = utf8_general_ci COMMENT = '分布式事务测试'
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = '分布式事务测试'
   ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -811,43 +884,43 @@ CREATE TABLE `system_tx_exception`
 DROP TABLE IF EXISTS `system_user`;
 CREATE TABLE `system_user`
 (
-    `user_id`         bigint(20)                                              NOT NULL AUTO_INCREMENT COMMENT '用户id',
-    `username`        varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL COMMENT '用户名',
-    `password`        varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码',
-    `dept_id`         bigint(20)                                              NULL DEFAULT NULL COMMENT '部门id',
-    `email`           varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '邮箱',
-    `mobile`          varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL DEFAULT NULL COMMENT '联系电话',
-    `status`          char(1) CHARACTER SET utf8 COLLATE utf8_general_ci      NOT NULL COMMENT '状态 0锁定 1有效',
-    `create_time`     datetime                                                NOT NULL COMMENT '创建时间',
-    `modify_time`     datetime                                                NULL DEFAULT NULL COMMENT '修改时间',
-    `last_login_time` datetime                                                NULL DEFAULT NULL COMMENT '最近访问时间',
-    `ssex`            char(1) CHARACTER SET utf8 COLLATE utf8_general_ci      NULL DEFAULT NULL COMMENT '性别 0男 1女 2保密',
-    `is_tab`          char(1) CHARACTER SET utf8 COLLATE utf8_general_ci      NULL DEFAULT NULL COMMENT '是否开启tab，0关闭 1开启',
-    `theme`           varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL DEFAULT NULL COMMENT '主题',
-    `avatar`          varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '头像',
-    `description`     varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
+    `user_id`              bigint(20)                                              NOT NULL AUTO_INCREMENT COMMENT '用户id',
+    `username`             varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL COMMENT '用户名',
+    `password`             varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码',
+    `dept_id`              bigint(20)                                              NULL DEFAULT NULL COMMENT '部门id',
+    `email`                varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '邮箱',
+    `mobile`               varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL DEFAULT NULL COMMENT '联系电话',
+    `status`               char(1) CHARACTER SET utf8 COLLATE utf8_general_ci      NOT NULL COMMENT '状态 0锁定 1有效',
+    `create_time`          datetime                                                NOT NULL COMMENT '创建时间',
+    `modify_time`          datetime                                                NULL DEFAULT NULL COMMENT '修改时间',
+    `lassystem_login_time` datetime                                                NULL DEFAULT NULL COMMENT '最近访问时间',
+    `ssex`                 char(1) CHARACTER SET utf8 COLLATE utf8_general_ci      NULL DEFAULT NULL COMMENT '性别 0男 1女 2保密',
+    `is_tab`               char(1) CHARACTER SET utf8 COLLATE utf8_general_ci      NULL DEFAULT NULL COMMENT '是否开启tab，0关闭 1开启',
+    `theme`                varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL DEFAULT NULL COMMENT '主题',
+    `avatar`               varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '头像',
+    `description`          varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
     PRIMARY KEY (`user_id`) USING BTREE,
-    INDEX `t_user_username` (`username`) USING BTREE,
-    INDEX `t_user_mobile` (`mobile`) USING BTREE
+    INDEX `system_user_username` (`username`) USING BTREE,
+    INDEX `system_user_mobile` (`mobile`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 18
-  CHARACTER SET = utf8
-  COLLATE = utf8_general_ci COMMENT = '用户表'
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = '用户表'
   ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_user
 -- ----------------------------
 INSERT INTO `system_user`
-VALUES (1, 'mrbird', '$2a$10$gzhiub1ldc1rf3lka4k/woofkkgpephszjxzcpsn5/65szkmdc.sk', 2, 'mrbird@qq.com', '17788888888',
+VALUES (1, 'MrBird', '$2a$10$gzhiUb1ldc1Rf3lka4k/WOoFKKGPepHSzJxzcPSN5/65SzkMdc.SK', 2, 'mrbird@qq.com', '17788888888',
         '1', '2019-06-14 20:39:22', '2020-04-15 16:00:32', '2020-04-15 16:03:13', '0', '1', 'white',
-        'gaongjwsryravauxxcmb.png', '我是帅比作者。');
+        'gaOngJwsRYRaVAuXXcmB.png', '我是帅比作者。');
 INSERT INTO `system_user`
-VALUES (15, 'scott', '$2a$10$7tati2stcilhnego/rfixoyf2mqbu/sdvmrds54rlsyvj2vmwwchc', 5, 'scott@hotmail.com',
+VALUES (15, 'scott', '$2a$10$7tATi2STciLHnEgO/RfIxOYf2MQBu/SDVMRDs54rlSYVj2VmwwCHC', 5, 'scott@hotmail.com',
         '17720888888', '1', '2019-07-20 19:00:32', '2020-04-15 16:00:42', '2020-04-14 16:49:27', '2', NULL, NULL,
-        'biazfanxmamnroxxvxka.png', NULL);
+        'BiazfanxmamNRoxxVxka.png', NULL);
 INSERT INTO `system_user`
-VALUES (16, 'jane', '$2a$10$eckfipopy7horvdlsziox.8hnig0shazqpg8pq7d5ivp.uvogmmhy', 4, 'jane@hotmail.com',
+VALUES (16, 'Jane', '$2a$10$ECkfipOPY7hORVdlSzIOX.8hnig0shAZQPG8pQ7D5iVP.uVogmmHy', 4, 'Jane@hotmail.com',
         '13489898989', '1', '2019-09-01 10:31:21', '2020-04-15 16:00:48', '2019-09-01 10:32:27', '1', NULL, NULL,
         '2dd7a2d09fa94bf8b5c52e5318868b4d9.jpg', NULL);
 
@@ -868,8 +941,8 @@ CREATE TABLE `system_user_connection`
     PRIMARY KEY (`user_name`, `provider_name`, `provider_user_id`) USING BTREE,
     UNIQUE INDEX `userconnectionrank` (`user_name`, `provider_name`, `provider_user_id`) USING BTREE
 ) ENGINE = InnoDB
-  CHARACTER SET = utf8
-  COLLATE = utf8_general_ci COMMENT = '系统用户社交账户关联表'
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = '系统用户社交账户关联表'
   ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -886,8 +959,8 @@ CREATE TABLE `system_user_data_permission`
     `dept_id` bigint(20) NOT NULL,
     PRIMARY KEY (`user_id`, `dept_id`) USING BTREE
 ) ENGINE = InnoDB
-  CHARACTER SET = utf8
-  COLLATE = utf8_general_ci COMMENT = '用户数据权限关联表'
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = '用户数据权限关联表'
   ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -924,8 +997,8 @@ CREATE TABLE `system_user_role`
     `role_id` bigint(20) NOT NULL COMMENT '角色id',
     PRIMARY KEY (`user_id`, `role_id`) USING BTREE
 ) ENGINE = InnoDB
-  CHARACTER SET = utf8
-  COLLATE = utf8_general_ci COMMENT = '用户角色关联表'
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = '用户角色关联表'
   ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
