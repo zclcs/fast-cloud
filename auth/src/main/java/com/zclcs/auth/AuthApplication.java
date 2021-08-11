@@ -2,8 +2,9 @@ package com.zclcs.auth;
 
 import com.zclcs.common.security.starter.annotation.EnableMyCloudResourceServer;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 /**
@@ -16,7 +17,9 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 public class AuthApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AuthApplication.class, args);
+        new SpringApplicationBuilder(AuthApplication.class)
+                .web(WebApplicationType.SERVLET)
+                .run(args);
     }
 
 }

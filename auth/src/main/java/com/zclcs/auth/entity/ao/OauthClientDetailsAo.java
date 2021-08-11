@@ -1,14 +1,14 @@
-package com.zclcs.auth.entity;
+package com.zclcs.auth.entity.ao;
 
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import java.io.Serializable;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * <p>
@@ -21,37 +21,49 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value = "OauthClientDetails对象", description = "客户端配置表")
-public class OauthClientDetails extends Model<OauthClientDetails> {
+@ApiModel(value = "OauthClientDetailsAo", description = "客户端配置表")
+public class OauthClientDetailsAo {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "client_id")
     @ApiModelProperty(value = "客户端ID")
+    @NotBlank(message = "{required}")
+    @Size(max = 255, message = "{noMoreThan}")
     private String clientId;
 
     @ApiModelProperty(value = "资源编号")
+    @Size(max = 255, message = "{noMoreThan}")
     private String resourceIds;
 
     @ApiModelProperty(value = "客户端密钥")
+    @NotBlank(message = "{required}")
+    @Size(max = 255, message = "{noMoreThan}")
     private String clientSecret;
 
     @ApiModelProperty(value = "客户端权限")
+    @NotBlank(message = "{required}")
+    @Size(max = 255, message = "{noMoreThan}")
     private String scope;
 
     @ApiModelProperty(value = "鉴权类型")
+    @NotBlank(message = "{required}")
+    @Size(max = 255, message = "{noMoreThan}")
     private String authorizedGrantTypes;
 
     @ApiModelProperty(value = "跳转地址")
+    @Size(max = 255, message = "{noMoreThan}")
     private String webServerRedirectUri;
 
     @ApiModelProperty(value = "拥有的系统权限")
+    @Size(max = 255, message = "{noMoreThan}")
     private String authorities;
 
     @ApiModelProperty(value = "token过期时间")
+    @NotNull(message = "{required}")
     private Integer accessTokenValidity;
 
     @ApiModelProperty(value = "token刷新时间")
+    @NotNull(message = "{required}")
     private Integer refreshTokenValidity;
 
     @ApiModelProperty(value = "额外信息")
@@ -62,11 +74,5 @@ public class OauthClientDetails extends Model<OauthClientDetails> {
 
     @ApiModelProperty(value = "组织密码")
     private String originSecret;
-
-
-    @Override
-    protected Serializable pkVal() {
-        return this.clientId;
-    }
 
 }

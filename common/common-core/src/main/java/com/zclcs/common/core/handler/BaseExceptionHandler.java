@@ -35,14 +35,14 @@ public class BaseExceptionHandler {
     public BaseRsp<Object> handleException(Exception e) {
         String message = BaseUtil.containChinese(e.getMessage()) ? e.getMessage() : "系统内部异常";
         log.error(message, e);
-        return BaseRspUtil.failure(message);
+        return BaseRspUtil.message(message);
     }
 
     @ExceptionHandler(value = MyException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public BaseRsp<Object> handleMyException(MyException e) {
         log.error("系统业务异常", e);
-        return BaseRspUtil.failure(e.getMessage());
+        return BaseRspUtil.message(e.getMessage());
     }
 
     /**
@@ -61,7 +61,7 @@ public class BaseExceptionHandler {
         }
         message = new StringBuilder(message.substring(0, message.length() - 1));
         log.error(message.toString());
-        return BaseRspUtil.failure(message.toString());
+        return BaseRspUtil.message(message.toString());
     }
 
     /**
@@ -82,7 +82,7 @@ public class BaseExceptionHandler {
         }
         message = new StringBuilder(message.substring(0, message.length() - 1));
         log.error(message.toString());
-        return BaseRspUtil.failure(message.toString());
+        return BaseRspUtil.message(message.toString());
     }
 
     /**
@@ -100,7 +100,7 @@ public class BaseExceptionHandler {
         }
         message = new StringBuilder(message.substring(0, message.length() - 1));
         log.error(message.toString());
-        return BaseRspUtil.failure(message.toString());
+        return BaseRspUtil.message(message.toString());
     }
 
     @ExceptionHandler(value = FileDownloadException.class)
@@ -112,7 +112,7 @@ public class BaseExceptionHandler {
     @ExceptionHandler(value = AccessDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public BaseRsp<Object> handleAccessDeniedException() {
-        return BaseRspUtil.failure("没有权限访问该资源");
+        return BaseRspUtil.message("没有权限访问该资源");
     }
 
     @ExceptionHandler(value = HttpMediaTypeNotSupportedException.class)
@@ -120,7 +120,7 @@ public class BaseExceptionHandler {
     public BaseRsp<Object> handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
         String message = "该方法不支持" + StringUtils.substringBetween(e.getMessage(), "'", "'") + "媒体类型";
         log.error(message);
-        return BaseRspUtil.failure(message);
+        return BaseRspUtil.message(message);
     }
 
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
@@ -128,7 +128,7 @@ public class BaseExceptionHandler {
     public BaseRsp<Object> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
         String message = "该方法不支持" + StringUtils.substringBetween(e.getMessage(), "'", "'") + "请求方法";
         log.error(message);
-        return BaseRspUtil.failure(message);
+        return BaseRspUtil.message(message);
     }
 
 }

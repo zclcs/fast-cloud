@@ -1,14 +1,10 @@
-package com.zclcs.auth.entity;
+package com.zclcs.auth.entity.vo;
 
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import java.io.Serializable;
 
 /**
  * <p>
@@ -21,12 +17,11 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value = "OauthClientDetails对象", description = "客户端配置表")
-public class OauthClientDetails extends Model<OauthClientDetails> {
+@ApiModel(value = "OauthClientDetailsVo", description = "客户端配置表")
+public class OauthClientDetailsVo {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "client_id")
     @ApiModelProperty(value = "客户端ID")
     private String clientId;
 
@@ -62,11 +57,5 @@ public class OauthClientDetails extends Model<OauthClientDetails> {
 
     @ApiModelProperty(value = "组织密码")
     private String originSecret;
-
-
-    @Override
-    protected Serializable pkVal() {
-        return this.clientId;
-    }
 
 }

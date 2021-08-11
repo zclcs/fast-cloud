@@ -66,7 +66,7 @@ public class MybatisPlusAndGenerator {
         //生成策略的配置
         StrategyConfig strategyConfig = new StrategyConfig();
         //生成指定表
-        strategyConfig.setInclude("system_menu", "system_user", "system_user_role", "oauth_client_details", "system_user_connection");
+        strategyConfig.setInclude("oauth_client_details");
         // 模糊查询表
         //strategyConfig.setLikeTable(new LikeTable("auth"));
         //驼峰命名

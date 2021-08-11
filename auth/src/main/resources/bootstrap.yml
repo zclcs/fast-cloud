@@ -1,12 +1,12 @@
 spring:
   application:
-    name: FEBS-Auth
+    name: auth
   cloud:
     nacos:
       config:
         server-addr: ${nacos.url}:8001
         group: DEFAULT_GROUP
-        prefix: febs-auth
+        prefix: auth
         file-extension: yaml
       discovery:
         server-addr: ${nacos.url}:8001

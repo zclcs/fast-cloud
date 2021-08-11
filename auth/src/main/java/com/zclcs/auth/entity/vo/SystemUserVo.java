@@ -1,16 +1,13 @@
-package com.zclcs.auth.entity;
+package com.zclcs.auth.entity.vo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -23,13 +20,47 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value = "SystemUser对象", description = "用户表")
-public class SystemUser extends Model<SystemUser> {
+@ApiModel(value = "SystemUserVo", description = "用户表")
+public class SystemUserVo {
+
+    /**
+     * 用户状态：有效
+     */
+    public static final String STATUS_VALID = "1";
+
+    /**
+     * 用户状态：锁定
+     */
+    public static final String STATUS_LOCK = "0";
+
+    /**
+     * 默认头像
+     */
+    public static final String DEFAULT_AVATAR = "default.jpg";
+
+    /**
+     * 默认密码
+     */
+    public static final String DEFAULT_PASSWORD = "1234qwer";
+
+    /**
+     * 性别男
+     */
+    public static final String SEX_MALE = "0";
+
+    /**
+     * 性别女
+     */
+    public static final String SEX_FEMALE = "1";
+
+    /**
+     * 性别保密
+     */
+    public static final String SEX_UNKNOWN = "2";
 
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "用户id")
-    @TableId(value = "user_id", type = IdType.AUTO)
     private Long userId;
 
     @ApiModelProperty(value = "用户名")
@@ -37,9 +68,6 @@ public class SystemUser extends Model<SystemUser> {
 
     @ApiModelProperty(value = "密码")
     private String password;
-
-    @ApiModelProperty(value = "部门id")
-    private Long deptId;
 
     @ApiModelProperty(value = "邮箱")
     private String email;
@@ -74,10 +102,19 @@ public class SystemUser extends Model<SystemUser> {
     @ApiModelProperty(value = "描述")
     private String description;
 
+    @ApiModelProperty(value = "部门id")
+    private Long deptId;
 
-    @Override
-    protected Serializable pkVal() {
-        return this.userId;
-    }
+    @ApiModelProperty(value = "部门名称")
+    private String deptName;
+
+    @ApiModelProperty(value = "数据权限集合")
+    private List<Long> deptIds;
+
+    @ApiModelProperty(value = "角色 ID")
+    private Long roleId;
+
+    @ApiModelProperty(value = "部门名称")
+    private String roleName;
 
 }

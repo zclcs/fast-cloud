@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost
+ Source Server         : 本地
  Source Server Type    : MySQL
- Source Server Version : 50735
+ Source Server Version : 50734
  Source Host           : localhost:3306
  Source Schema         : cloud_system
 
  Target Server Type    : MySQL
- Target Server Version : 50735
+ Target Server Version : 50734
  File Encoding         : 65001
 
- Date: 11/08/2021 19:18:59
+ Date: 12/08/2021 00:21:16
 */
 
 SET NAMES utf8mb4;
@@ -23,18 +23,18 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `oauth_client_details`;
 CREATE TABLE `oauth_client_details`
 (
-    `client_id`               varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL,
-    `resource_ids`            varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL,
-    `client_secret`           varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL,
-    `scope`                   varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL,
-    `authorized_grant_types`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL,
-    `web_server_redirect_uri` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL,
-    `authorities`             varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL,
-    `access_token_validity`   int(11)                                                        NOT NULL,
-    `refresh_token_validity`  int(11)                                                        NULL DEFAULT NULL,
-    `additional_information`  varchar(4096) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-    `autoapprove`             tinyint(4)                                                     NULL DEFAULT NULL,
-    `origin_secret`           varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL,
+    `client_id`               varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '客户端ID',
+    `resource_ids`            varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '资源编号',
+    `client_secret`           varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '客户端密钥',
+    `scope`                   varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '客户端权限',
+    `authorized_grant_types`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '鉴权类型',
+    `web_server_redirect_uri` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '跳转地址',
+    `authorities`             varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '拥有的系统权限',
+    `access_token_validity`   int(11)                                                        NOT NULL COMMENT 'token过期时间',
+    `refresh_token_validity`  int(11)                                                        NULL DEFAULT NULL COMMENT 'token刷新时间',
+    `additional_information`  varchar(4096) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '额外信息',
+    `auto_approve`            tinyint(4)                                                     NULL DEFAULT NULL COMMENT '是否自动批准',
+    `origin_secret`           varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '组织密码',
     PRIMARY KEY (`client_id`) USING BTREE
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
@@ -57,38 +57,38 @@ VALUES ('febs', ' ', '$2a$10$aSZTvMOtUAYUQ.75z2n3ceJd6dCIk9Vy3J/SKZUE4hBLd6sz7.6
 DROP TABLE IF EXISTS `system_data_permission_test`;
 CREATE TABLE `system_data_permission_test`
 (
+    `id`          int(11)                                                NOT NULL,
     `field1`      varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
     `field2`      varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
     `field3`      varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
     `field4`      varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
     `dept_id`     int(11)                                                NOT NULL,
     `create_time` datetime                                               NOT NULL,
-    `id`          int(11)                                                NOT NULL,
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '用户权限测试'
-  ROW_FORMAT = Dynamic;
+  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_data_permission_test
 -- ----------------------------
 INSERT INTO `system_data_permission_test`
-VALUES ('小米', '小米10Pro', '4999', '珍珠白', 1, '2020-04-14 15:00:38', 1);
+VALUES (1, '小米', '小米10Pro', '4999', '珍珠白', 1, '2020-04-14 15:00:38');
 INSERT INTO `system_data_permission_test`
-VALUES ('腾讯', '黑鲨游戏手机3', '3799', '铠甲灰', 2, '2020-04-14 15:01:36', 2);
+VALUES (2, '腾讯', '黑鲨游戏手机3', '3799', '铠甲灰', 2, '2020-04-14 15:01:36');
 INSERT INTO `system_data_permission_test`
-VALUES ('华为', '华为P30', '3299', '天空之境', 1, '2020-04-14 15:03:11', 3);
+VALUES (3, '华为', '华为P30', '3299', '天空之境', 1, '2020-04-14 15:03:11');
 INSERT INTO `system_data_permission_test`
-VALUES ('华为', '华为P40Pro', '6488', '亮黑色', 3, '2020-04-14 15:04:31', 4);
+VALUES (4, '华为', '华为P40Pro', '6488', '亮黑色', 3, '2020-04-14 15:04:31');
 INSERT INTO `system_data_permission_test`
-VALUES ('vivo', 'Vivo iQOO 3', '3998', '拉力橙', 4, '2020-04-14 15:05:55', 5);
+VALUES (5, 'vivo', 'Vivo iQOO 3', '3998', '拉力橙', 4, '2020-04-14 15:05:55');
 INSERT INTO `system_data_permission_test`
-VALUES ('一加', '一加7T', '3199', '冰际蓝', 5, '2020-04-14 15:06:53', 6);
+VALUES (6, '一加', '一加7T', '3199', '冰际蓝', 5, '2020-04-14 15:06:53');
 INSERT INTO `system_data_permission_test`
-VALUES ('三星', '三星Galaxy S10', '4098', '浩玉白', 6, '2020-04-14 15:08:25', 7);
+VALUES (7, '三星', '三星Galaxy S10', '4098', '浩玉白', 6, '2020-04-14 15:08:25');
 INSERT INTO `system_data_permission_test`
-VALUES ('苹果', 'iPhone 11 pro max', '9198', '暗夜绿', 4, '2020-04-14 15:09:20', 8);
+VALUES (8, '苹果', 'iPhone 11 pro max', '9198', '暗夜绿', 4, '2020-04-14 15:09:20');
 
 -- ----------------------------
 -- Table structure for system_dept
@@ -287,19 +287,19 @@ CREATE TABLE `system_log`
 DROP TABLE IF EXISTS `system_logger`;
 CREATE TABLE `system_logger`
 (
-    `id`          bigint(20)                                               NOT NULL AUTO_INCREMENT,
-    `group_id`    varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci   NOT NULL,
-    `unit_id`     varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci   NOT NULL,
-    `tag`         varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci   NOT NULL,
-    `content`     varchar(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `create_time` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci   NOT NULL,
-    `app_name`    varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL,
+    `id`          bigint(20)                                               NOT NULL AUTO_INCREMENT COMMENT '分布式事务日志id',
+    `group_id`    varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci   NOT NULL COMMENT '分组id',
+    `unit_id`     varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci   NOT NULL COMMENT '事务',
+    `tag`         varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci   NOT NULL COMMENT '标签',
+    `content`     varchar(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '内容',
+    `create_time` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci   NOT NULL COMMENT '创建时间',
+    `app_name`    varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL COMMENT '服务名',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '分布式事务日志'
-  ROW_FORMAT = Dynamic;
+  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_logger
@@ -554,8 +554,8 @@ VALUES (4, '测试角色', '测试角色', '2020-03-08 19:16:01', '2020-04-13 11
 DROP TABLE IF EXISTS `system_role_menu`;
 CREATE TABLE `system_role_menu`
 (
-    `role_id` bigint(20) NOT NULL,
-    `menu_id` bigint(20) NOT NULL,
+    `role_id` bigint(20) NOT NULL COMMENT '角色编号',
+    `menu_id` bigint(20) NOT NULL COMMENT '菜单编号',
     PRIMARY KEY (`role_id`, `menu_id`) USING BTREE,
     INDEX `system_role_menu_menu_id` (`menu_id`) USING BTREE,
     INDEX `system_role_menu_role_id` (`role_id`) USING BTREE
@@ -858,20 +858,20 @@ CREATE TABLE `system_trade_log`
 DROP TABLE IF EXISTS `system_tx_exception`;
 CREATE TABLE `system_tx_exception`
 (
-    `id`                bigint(20)                                                      NOT NULL AUTO_INCREMENT,
-    `group_id`          varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci    NULL DEFAULT NULL,
-    `unit_id`           varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci    NULL DEFAULT NULL,
-    `mod_id`            varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NULL DEFAULT NULL,
-    `transaction_state` tinyint(4)                                                      NULL DEFAULT NULL,
-    `registrar`         tinyint(4)                                                      NULL DEFAULT NULL,
+    `id`                bigint(20)                                                      NOT NULL AUTO_INCREMENT COMMENT '系统事务日志id',
+    `group_id`          varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci    NULL DEFAULT NULL COMMENT '分租id',
+    `unit_id`           varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci    NULL DEFAULT NULL COMMENT '事务id',
+    `mod_id`            varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NULL DEFAULT NULL COMMENT '方法id',
+    `transaction_state` tinyint(4)                                                      NULL DEFAULT NULL COMMENT '事务状态',
+    `registrar`         tinyint(4)                                                      NULL DEFAULT NULL COMMENT '是否创建',
     `ex_state`          tinyint(4)                                                      NULL DEFAULT NULL COMMENT '0 待处理 1已处理',
     `remark`            varchar(10240) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
-    `create_time`       datetime                                                        NULL DEFAULT NULL,
+    `create_time`       datetime                                                        NULL DEFAULT NULL COMMENT '创建时间',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
   CHARACTER SET = utf8mb4
-  COLLATE = utf8mb4_general_ci
+  COLLATE = utf8mb4_general_ci COMMENT = '系统事务日志'
   ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -884,21 +884,21 @@ CREATE TABLE `system_tx_exception`
 DROP TABLE IF EXISTS `system_user`;
 CREATE TABLE `system_user`
 (
-    `user_id`              bigint(20)                                              NOT NULL AUTO_INCREMENT COMMENT '用户id',
-    `username`             varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL COMMENT '用户名',
-    `password`             varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码',
-    `dept_id`              bigint(20)                                              NULL DEFAULT NULL COMMENT '部门id',
-    `email`                varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '邮箱',
-    `mobile`               varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL DEFAULT NULL COMMENT '联系电话',
-    `status`               char(1) CHARACTER SET utf8 COLLATE utf8_general_ci      NOT NULL COMMENT '状态 0锁定 1有效',
-    `create_time`          datetime                                                NOT NULL COMMENT '创建时间',
-    `modify_time`          datetime                                                NULL DEFAULT NULL COMMENT '修改时间',
-    `lassystem_login_time` datetime                                                NULL DEFAULT NULL COMMENT '最近访问时间',
-    `ssex`                 char(1) CHARACTER SET utf8 COLLATE utf8_general_ci      NULL DEFAULT NULL COMMENT '性别 0男 1女 2保密',
-    `is_tab`               char(1) CHARACTER SET utf8 COLLATE utf8_general_ci      NULL DEFAULT NULL COMMENT '是否开启tab，0关闭 1开启',
-    `theme`                varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL DEFAULT NULL COMMENT '主题',
-    `avatar`               varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '头像',
-    `description`          varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
+    `user_id`         bigint(20)                                              NOT NULL AUTO_INCREMENT COMMENT '用户id',
+    `username`        varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL COMMENT '用户名',
+    `password`        varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码',
+    `dept_id`         bigint(20)                                              NULL DEFAULT NULL COMMENT '部门id',
+    `email`           varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '邮箱',
+    `mobile`          varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL DEFAULT NULL COMMENT '联系电话',
+    `status`          char(1) CHARACTER SET utf8 COLLATE utf8_general_ci      NOT NULL COMMENT '状态 0锁定 1有效',
+    `create_time`     datetime                                                NOT NULL COMMENT '创建时间',
+    `modify_time`     datetime                                                NULL DEFAULT NULL COMMENT '修改时间',
+    `last_login_time` datetime                                                NULL DEFAULT NULL COMMENT '最近访问时间',
+    `ssex`            char(1) CHARACTER SET utf8 COLLATE utf8_general_ci      NULL DEFAULT NULL COMMENT '性别 0男 1女 2保密',
+    `is_tab`          char(1) CHARACTER SET utf8 COLLATE utf8_general_ci      NULL DEFAULT NULL COMMENT '是否开启tab，0关闭 1开启',
+    `theme`           varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL DEFAULT NULL COMMENT '主题',
+    `avatar`          varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '头像',
+    `description`     varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
     PRIMARY KEY (`user_id`) USING BTREE,
     INDEX `system_user_username` (`username`) USING BTREE,
     INDEX `system_user_mobile` (`mobile`) USING BTREE
@@ -955,13 +955,13 @@ CREATE TABLE `system_user_connection`
 DROP TABLE IF EXISTS `system_user_data_permission`;
 CREATE TABLE `system_user_data_permission`
 (
-    `user_id` bigint(20) NOT NULL,
-    `dept_id` bigint(20) NOT NULL,
+    `user_id` bigint(20) NOT NULL COMMENT '用户编号',
+    `dept_id` bigint(20) NOT NULL COMMENT '部门编号',
     PRIMARY KEY (`user_id`, `dept_id`) USING BTREE
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '用户数据权限关联表'
-  ROW_FORMAT = Dynamic;
+  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_user_data_permission
