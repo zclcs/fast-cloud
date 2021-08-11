@@ -25,6 +25,7 @@
         <module>common-logging-starter</module>
         <module>common-redis-starter</module>
         <module>common-security-starter</module>
+        <module>common-code-generator</module>
     </modules>
 
 </project>
