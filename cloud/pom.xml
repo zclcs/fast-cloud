@@ -25,6 +25,8 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <!-- spring boot 依赖 -->
+        <spring-boot.version>2.2.1.RELEASE</spring-boot.version>
         <!-- spring cloud 微服务依赖 -->
         <spring-cloud.version>Hoxton.RELEASE</spring-cloud.version>
         <!-- alibaba cloud 微服务依赖 -->
@@ -41,6 +43,8 @@
         <excelkit.version>2.0.71</excelkit.version>
         <!-- mybatis-plus 半自动orm框架 -->
         <mybatis-plus.version>3.2.0</mybatis-plus.version>
+        <!-- mybatis-plus-generator 代码生成 -->
+        <mybatis-plus-generator.version>3.2.0</mybatis-plus-generator.version>
         <!-- dynamic-datasource 多数据源依赖 -->
         <dynamic-datasource.version>2.5.7</dynamic-datasource.version>
         <!-- p6spy 打印数据库日志 -->
@@ -99,4 +103,21 @@
         </dependencies>
     </dependencyManagement>
 
+    <build>
+        <!-- 打成jar包或者war是标注资源文件位置 -->
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
 </project>

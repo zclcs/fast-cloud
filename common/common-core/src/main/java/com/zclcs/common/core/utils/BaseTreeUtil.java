@@ -1,8 +1,7 @@
 package com.zclcs.common.core.utils;
 
-
-import cc.mrbird.febs.common.core.entity.Tree;
-import cc.mrbird.febs.common.core.entity.router.VueRouter;
+import com.zclcs.common.core.entity.Tree;
+import com.zclcs.common.core.entity.router.VueRouter;
 
 import java.util.ArrayList;
 import java.util.List;
