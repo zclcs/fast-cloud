@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost
+ Source Server         : 本地
  Source Server Type    : MySQL
- Source Server Version : 50735
+ Source Server Version : 50734
  Source Host           : localhost:3306
  Source Schema         : cloud_system
 
  Target Server Type    : MySQL
- Target Server Version : 50735
+ Target Server Version : 50734
  File Encoding         : 65001
 
- Date: 12/08/2021 15:58:43
+ Date: 12/08/2021 23:24:30
 */
 
 SET NAMES utf8mb4;
@@ -33,7 +33,7 @@ CREATE TABLE `oauth_client_details`
     `access_token_validity`   int(11)                                                        NOT NULL COMMENT 'token过期时间',
     `refresh_token_validity`  int(11)                                                        NULL DEFAULT NULL COMMENT 'token刷新时间',
     `additional_information`  varchar(4096) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '额外信息',
-    `auto_approve`            tinyint(4)                                                     NULL DEFAULT NULL COMMENT '是否自动批准',
+    `autoapprove`             tinyint(4)                                                     NULL DEFAULT NULL COMMENT '是否自动批准',
     `origin_secret`           varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '组织密码',
     PRIMARY KEY (`client_id`) USING BTREE
 ) ENGINE = InnoDB
@@ -168,17 +168,17 @@ VALUES ('字段1', 8, 'mrbird7@gmail.com', '2019-07-25 19:08:01');
 DROP TABLE IF EXISTS `system_generator_config`;
 CREATE TABLE `system_generator_config`
 (
-    `id`                   int(11)                                                NOT NULL COMMENT '主键',
-    `author`               varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '作者',
-    `base_package`         varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '基础包名',
-    `entity_package`       varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'entity文件存放路径',
-    `mapper_package`       varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'mapper文件存放路径',
-    `mapper_xml_package`   varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'mapper xml文件存放路径',
-    `service_package`      varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'servcie文件存放路径',
-    `service_impl_package` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'serviceimpl文件存放路径',
-    `controller_package`   varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'controller文件存放路径',
-    `is_trim`              char(1) CHARACTER SET utf8 COLLATE utf8_general_ci     NOT NULL COMMENT '是否去除前缀 1是 0否',
-    `trim_value`           varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '前缀内容',
+    `id`                   int(11)                                                 NOT NULL COMMENT '主键',
+    `author`               varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL COMMENT '作者',
+    `base_package`         varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '基础包名',
+    `entity_package`       varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'entity文件存放路径',
+    `mapper_package`       varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL COMMENT 'mapper文件存放路径',
+    `mapper_xml_package`   varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL COMMENT 'mapper xml文件存放路径',
+    `service_package`      varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL COMMENT 'servcie文件存放路径',
+    `service_impl_package` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL COMMENT 'serviceimpl文件存放路径',
+    `controller_package`   varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL COMMENT 'controller文件存放路径',
+    `is_trim`              char(1) CHARACTER SET utf8 COLLATE utf8_general_ci      NOT NULL COMMENT '是否去除前缀 1是 0否',
+    `trim_value`           varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL DEFAULT NULL COMMENT '前缀内容',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
@@ -190,8 +190,7 @@ CREATE TABLE `system_generator_config`
 -- ----------------------------
 INSERT INTO `system_generator_config`
 VALUES (1, 'MrBird', 'cc.mrbird.febs.server.generator.gen', 'com.zclcs.common.core.entity', 'mapper', 'mapper',
-        'service', 'service.impl',
-        'controller', '1', 't_');
+        'service', 'service.impl', 'controller', '1', 't_');
 
 -- ----------------------------
 -- Table structure for system_job
@@ -904,7 +903,7 @@ CREATE TABLE `system_user`
     INDEX `system_user_username` (`username`) USING BTREE,
     INDEX `system_user_mobile` (`mobile`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 18
+  AUTO_INCREMENT = 17
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '用户表'
   ROW_FORMAT = DYNAMIC;
@@ -931,7 +930,7 @@ VALUES (16, 'Jane', '$2a$10$ECkfipOPY7hORVdlSzIOX.8hnig0shAZQPG8pQ7D5iVP.uVogmmH
 DROP TABLE IF EXISTS `system_user_connection`;
 CREATE TABLE `system_user_connection`
 (
-    `user_name`          varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL COMMENT 'febs系统用户名',
+    `user_name`          varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL COMMENT '系统用户名',
     `provider_name`      varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL COMMENT '第三方平台名称',
     `provider_user_id`   varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL COMMENT '第三方平台账户id',
     `provider_user_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL DEFAULT NULL COMMENT '第三方平台用户名',
