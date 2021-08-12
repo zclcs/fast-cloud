@@ -14,7 +14,7 @@
     <packaging>jar</packaging>
 
     <name>common-doc-gateway-starter</name>
-    <description>文档网关聚合模块启动注解</description>
+    <description>文档网关聚合模块 starter</description>
 
     <dependencies>
         <dependency>
@@ -35,7 +35,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
-        <!--hu tool 工具类-->
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>

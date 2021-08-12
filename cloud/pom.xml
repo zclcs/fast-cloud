@@ -10,6 +10,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
+    <modules>
+        <module>../common</module>
+    </modules>
+
     <groupId>com.zclcs</groupId>
     <artifactId>cloud</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -17,11 +21,6 @@
 
     <name>cloud</name>
     <description>微服务权限管理系统</description>
-
-    <modules>
-        <module>../common</module>
-        <module>../auth</module>
-    </modules>
 
     <properties>
         <java.version>1.8</java.version>
@@ -103,21 +102,4 @@
         </dependencies>
     </dependencyManagement>
 
-    <build>
-        <!-- 打成jar包或者war是标注资源文件位置 -->
-        <resources>
-            <resource>
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>**/*.xml</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>**/*</include>
-                </includes>
-            </resource>
-        </resources>
-    </build>
 </project>

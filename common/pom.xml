@@ -10,22 +10,21 @@
         <relativePath>../cloud/pom.xml</relativePath>
     </parent>
 
+    <modules>
+        <module>common-core</module>
+        <module>common-doc</module>
+        <module>common-code-generator</module>
+        <module>common-doc-gateway-starter</module>
+        <module>common-doc-starter</module>
+        <module>common-logging-starter</module>
+        <module>common-redis-starter</module>
+        <module>common-security-starter</module>
+    </modules>
+
     <artifactId>common</artifactId>
     <packaging>pom</packaging>
 
     <name>common</name>
     <description>通用模块</description>
-
-    <modules>
-        <module>common-core</module>
-        <module>common-doc</module>
-        <module>common-doc-starter</module>
-        <module>common-doc-gateway-starter</module>
-        <module>common-data-source-starter</module>
-        <module>common-logging-starter</module>
-        <module>common-redis-starter</module>
-        <module>common-security-starter</module>
-        <module>common-code-generator</module>
-    </modules>
 
 </project>

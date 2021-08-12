@@ -1,6 +1,7 @@
 package com.zclcs.common.security.starter.interceptor;
 
 import com.zclcs.common.core.constant.MyConstant;
+import com.zclcs.common.core.utils.BaseRspUtil;
 import com.zclcs.common.core.utils.BaseUtil;
 import com.zclcs.common.security.starter.properties.MyCloudSecurityProperties;
 import org.apache.commons.lang3.StringUtils;
@@ -29,7 +30,8 @@ public class MyServerProtectInterceptor implements HandlerInterceptor {
         if (StringUtils.equals(gatewayToken, token)) {
             return true;
         } else {
-            BaseUtil.makeJsonResponse(response, HttpServletResponse.SC_FORBIDDEN, "请通过网关获取资源");
+
+            BaseUtil.makeJsonResponse(response, HttpServletResponse.SC_FORBIDDEN, BaseRspUtil.message("请通过网关获取资源"));
             return false;
         }
     }

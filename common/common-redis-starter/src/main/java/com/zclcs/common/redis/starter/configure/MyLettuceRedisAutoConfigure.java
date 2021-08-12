@@ -1,10 +1,10 @@
-package com.zclcs.common.redis.configure;
+package com.zclcs.common.redis.starter.configure;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zclcs.common.redis.properties.MyLettuceRedisProperties;
-import com.zclcs.common.redis.service.RedisService;
+import com.zclcs.common.redis.starter.properties.MyLettuceRedisProperties;
+import com.zclcs.common.redis.starter.service.RedisService;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

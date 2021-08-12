@@ -15,6 +15,7 @@ public class MyDocGatewayProperties {
 
     /**
      * 需要暴露doc的服务列表，多个值时用逗号分隔
+     * 如 auth,server-system
      */
     private String resources;
 

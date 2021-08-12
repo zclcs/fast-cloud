@@ -1,3 +1,0 @@
-# Auto Configure
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.zclcs.common.data.source.starter.configure.MyDataSourceAutoConfigure

@@ -1,4 +1,4 @@
-package com.zclcs.common.redis.service;
+package com.zclcs.common.redis.starter.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

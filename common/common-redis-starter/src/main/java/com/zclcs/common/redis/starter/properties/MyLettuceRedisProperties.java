@@ -1,4 +1,4 @@
-package com.zclcs.common.redis.properties;
+package com.zclcs.common.redis.starter.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

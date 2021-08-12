@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 本地
+ Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 50734
+ Source Server Version : 50735
  Source Host           : localhost:3306
  Source Schema         : cloud_system
 
  Target Server Type    : MySQL
- Target Server Version : 50734
+ Target Server Version : 50735
  File Encoding         : 65001
 
- Date: 12/08/2021 00:21:16
+ Date: 12/08/2021 15:58:43
 */
 
 SET NAMES utf8mb4;
@@ -189,7 +189,8 @@ CREATE TABLE `system_generator_config`
 -- Records of system_generator_config
 -- ----------------------------
 INSERT INTO `system_generator_config`
-VALUES (1, 'MrBird', 'cc.mrbird.febs.server.generator.gen', 'entity', 'mapper', 'mapper', 'service', 'service.impl',
+VALUES (1, 'MrBird', 'cc.mrbird.febs.server.generator.gen', 'com.zclcs.common.core.entity', 'mapper', 'mapper',
+        'service', 'service.impl',
         'controller', '1', 't_');
 
 -- ----------------------------
@@ -894,7 +895,7 @@ CREATE TABLE `system_user`
     `create_time`     datetime                                                NOT NULL COMMENT '创建时间',
     `modify_time`     datetime                                                NULL DEFAULT NULL COMMENT '修改时间',
     `last_login_time` datetime                                                NULL DEFAULT NULL COMMENT '最近访问时间',
-    `ssex`            char(1) CHARACTER SET utf8 COLLATE utf8_general_ci      NULL DEFAULT NULL COMMENT '性别 0男 1女 2保密',
+    `gender`          char(1) CHARACTER SET utf8 COLLATE utf8_general_ci      NULL DEFAULT NULL COMMENT '性别 0男 1女 2保密',
     `is_tab`          char(1) CHARACTER SET utf8 COLLATE utf8_general_ci      NULL DEFAULT NULL COMMENT '是否开启tab，0关闭 1开启',
     `theme`           varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL DEFAULT NULL COMMENT '主题',
     `avatar`          varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '头像',

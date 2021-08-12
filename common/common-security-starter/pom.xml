@@ -14,7 +14,7 @@
     <packaging>jar</packaging>
 
     <name>common-security-starter</name>
-    <description>安全模块</description>
+    <description>安全模块starter</description>
 
     <dependencies>
         <dependency>
