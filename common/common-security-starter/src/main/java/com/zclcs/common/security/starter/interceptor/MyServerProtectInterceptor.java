@@ -30,7 +30,6 @@ public class MyServerProtectInterceptor implements HandlerInterceptor {
         if (StringUtils.equals(gatewayToken, token)) {
             return true;
         } else {
-
             BaseUtil.makeJsonResponse(response, HttpServletResponse.SC_FORBIDDEN, BaseRspUtil.message("请通过网关获取资源"));
             return false;
         }

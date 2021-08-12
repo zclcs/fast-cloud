@@ -102,4 +102,22 @@
         </dependencies>
     </dependencyManagement>
 
+    <build>
+        <!-- 打成jar包或者war是标注资源文件位置 -->
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
+
 </project>

@@ -1,6 +1,7 @@
 package com.zclcs.common.core.utils;
 
 import com.zclcs.common.core.base.BaseRsp;
+import com.zclcs.common.core.constant.MyConstant;
 import com.zclcs.common.core.exception.MyException;
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,11 +14,10 @@ public abstract class BaseRspUtil {
     /**
      * 成功不带参
      *
-     * @param <T> 数据类型
      * @return 返回json
      */
-    public static <T> BaseRsp<T> message() {
-        return new BaseRsp<>();
+    public static BaseRsp<Object> message() {
+        return new BaseRsp<>().setMsg(MyConstant.SUCCESS_MSG);
     }
 
     /**
@@ -26,8 +26,21 @@ public abstract class BaseRspUtil {
      * @param data 数据体
      * @return 返回json
      */
-    public static <T> BaseRsp<T> message(T data) {
-        BaseRsp<T> vo = new BaseRsp<>();
+    public static BaseRsp<Object> message(Object data) {
+        BaseRsp<Object> vo = new BaseRsp<>();
+        vo.setData(data);
+        return vo;
+    }
+
+    /**
+     * 调用成功 - 消息体
+     *
+     * @param data 数据体
+     * @return 返回json
+     */
+    public static BaseRsp<Object> message(String msg, Object data) {
+        BaseRsp<Object> vo = new BaseRsp<>();
+        vo.setMsg(msg);
         vo.setData(data);
         return vo;
     }

@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: auth
+  cloud:
+    nacos:
+      config:
+        server-addr: ${nacos.url}:8001
+        group: DEFAULT_GROUP
+        prefix: auth
+        file-extension: yaml
+      discovery:
+        server-addr: ${nacos.url}:8001
+  thymeleaf:
+    cache: false
+
+logging:
+  level:
+    org:
+      springframework:
+        boot:
+          actuate:
+            endpoint:
+              EndpointId: error
+    spring:
+      web: debug
+    com:
+      alibaba:
+        cloud:
+          nacos:
+            client:
+              NacosPropertySourceBuilder: error

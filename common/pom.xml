@@ -19,6 +19,7 @@
         <module>common-logging-starter</module>
         <module>common-redis-starter</module>
         <module>common-security-starter</module>
+        <module>common-datasource-starter</module>
     </modules>
 
     <artifactId>common</artifactId>

@@ -15,7 +15,7 @@ public class MyLogProperties {
     /**
      * 是否开启controller层api调用的日志
      */
-    private Boolean enableLogForController = false;
+    private Boolean enableLogForController = true;
 
     /**
      * 是否开启ELK日志收集

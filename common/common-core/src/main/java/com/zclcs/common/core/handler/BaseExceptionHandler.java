@@ -4,6 +4,7 @@ import com.zclcs.common.core.base.BaseRsp;
 import com.zclcs.common.core.constant.StringConstant;
 import com.zclcs.common.core.exception.FileDownloadException;
 import com.zclcs.common.core.exception.MyException;
+import com.zclcs.common.core.exception.ValidateCodeException;
 import com.zclcs.common.core.utils.BaseRspUtil;
 import com.zclcs.common.core.utils.BaseUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +43,13 @@ public class BaseExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public BaseRsp<Object> handleMyException(MyException e) {
         log.error("系统业务异常", e);
+        return BaseRspUtil.message(e.getMessage());
+    }
+
+    @ExceptionHandler(value = ValidateCodeException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public BaseRsp<Object> handleMyException(ValidateCodeException e) {
+        log.error("验证码异常", e);
         return BaseRspUtil.message(e.getMessage());
     }
 
