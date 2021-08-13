@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>common-doc</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <name>common-doc</name>
     <description>接口文档</description>

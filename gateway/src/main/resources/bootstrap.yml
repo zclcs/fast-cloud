@@ -1,17 +1,22 @@
 spring:
+  main:
+    allow-bean-definition-overriding: true
   application:
-    name: auth
+    name: gateway
   cloud:
     nacos:
       config:
         server-addr: ${nacos.url}:8001
         group: DEFAULT_GROUP
-        prefix: auth
+        prefix: gateway
         file-extension: yaml
       discovery:
         server-addr: ${nacos.url}:8001
-  thymeleaf:
-    cache: false
+  boot:
+    admin:
+      client:
+        instance:
+          prefer-ip: true
 
 logging:
   level:
@@ -21,6 +26,9 @@ logging:
           actuate:
             endpoint:
               EndpointId: error
+        data:
+          convert:
+            CustomConversions: error
     com:
       alibaba:
         cloud:

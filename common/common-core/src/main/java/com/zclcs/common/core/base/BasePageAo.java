@@ -20,14 +20,14 @@ public class BasePageAo {
      */
     @NotNull(message = "请输入页码")
     @ApiModelProperty(value = "页码", required = true)
-    private Long pageNum;
+    private Integer pageNum;
 
     /**
      * 页数
      */
     @NotNull(message = "请输入页数")
     @ApiModelProperty(value = "页数", required = true)
-    private Long pageSize;
+    private Integer pageSize;
 
     /**
      * 排序字段

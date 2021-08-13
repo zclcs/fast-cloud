@@ -12,6 +12,7 @@
 
     <modules>
         <module>../common</module>
+        <module>../auth</module>
     </modules>
 
     <groupId>com.zclcs</groupId>

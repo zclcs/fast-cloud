@@ -1,8 +1,8 @@
 package com.zclcs.auth.configure;
 
 import com.zclcs.auth.filter.ValidateCodeFilter;
-import com.zclcs.auth.handler.FebsWebLoginFailureHandler;
-import com.zclcs.auth.handler.FebsWebLoginSuccessHandler;
+import com.zclcs.auth.handler.MyWebLoginFailureHandler;
+import com.zclcs.auth.handler.MyWebLoginSuccessHandler;
 import com.zclcs.common.core.constant.EndpointConstant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -29,8 +29,8 @@ public class MySecurityConfigure extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailService;
     private final ValidateCodeFilter validateCodeFilter;
     private final PasswordEncoder passwordEncoder;
-    private final FebsWebLoginSuccessHandler successHandler;
-    private final FebsWebLoginFailureHandler failureHandler;
+    private final MyWebLoginSuccessHandler successHandler;
+    private final MyWebLoginFailureHandler failureHandler;
 
 
     @Bean

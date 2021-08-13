@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>common-code-generator</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <name>common-code-generator</name>
     <description>代码生成</description>

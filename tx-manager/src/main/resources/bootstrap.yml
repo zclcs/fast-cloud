@@ -1,26 +1,15 @@
 spring:
   application:
-    name: auth
+    name: tx-manager
   cloud:
     nacos:
       config:
         server-addr: ${nacos.url}:8001
         group: DEFAULT_GROUP
-        prefix: auth
+        prefix: tx-manager
         file-extension: yaml
-      discovery:
-        server-addr: ${nacos.url}:8001
-  thymeleaf:
-    cache: false
-
 logging:
   level:
-    org:
-      springframework:
-        boot:
-          actuate:
-            endpoint:
-              EndpointId: error
     com:
       alibaba:
         cloud:
