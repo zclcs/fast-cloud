@@ -13,6 +13,9 @@
     <modules>
         <module>../common</module>
         <module>../auth</module>
+        <module>../apm</module>
+        <module>../gateway</module>
+        <module>../tx-manager</module>
     </modules>
 
     <groupId>com.zclcs</groupId>

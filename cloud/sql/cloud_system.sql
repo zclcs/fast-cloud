@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 本地
+ Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 50734
+ Source Server Version : 50735
  Source Host           : localhost:3306
  Source Schema         : cloud_system
 
  Target Server Type    : MySQL
- Target Server Version : 50734
+ Target Server Version : 50735
  File Encoding         : 65001
 
- Date: 12/08/2021 23:24:30
+ Date: 13/08/2021 21:03:14
 */
 
 SET NAMES utf8mb4;
@@ -279,30 +279,6 @@ CREATE TABLE `system_log`
 
 -- ----------------------------
 -- Records of system_log
--- ----------------------------
-
--- ----------------------------
--- Table structure for system_logger
--- ----------------------------
-DROP TABLE IF EXISTS `system_logger`;
-CREATE TABLE `system_logger`
-(
-    `id`          bigint(20)                                               NOT NULL AUTO_INCREMENT COMMENT '分布式事务日志id',
-    `group_id`    varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci   NOT NULL COMMENT '分组id',
-    `unit_id`     varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci   NOT NULL COMMENT '事务',
-    `tag`         varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci   NOT NULL COMMENT '标签',
-    `content`     varchar(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '内容',
-    `create_time` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci   NOT NULL COMMENT '创建时间',
-    `app_name`    varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL COMMENT '服务名',
-    PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB
-  AUTO_INCREMENT = 1
-  CHARACTER SET = utf8mb4
-  COLLATE = utf8mb4_general_ci COMMENT = '分布式事务日志'
-  ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of system_logger
 -- ----------------------------
 
 -- ----------------------------
@@ -850,32 +826,6 @@ CREATE TABLE `system_trade_log`
 
 -- ----------------------------
 -- Records of system_trade_log
--- ----------------------------
-
--- ----------------------------
--- Table structure for system_tx_exception
--- ----------------------------
-DROP TABLE IF EXISTS `system_tx_exception`;
-CREATE TABLE `system_tx_exception`
-(
-    `id`                bigint(20)                                                      NOT NULL AUTO_INCREMENT COMMENT '系统事务日志id',
-    `group_id`          varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci    NULL DEFAULT NULL COMMENT '分租id',
-    `unit_id`           varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci    NULL DEFAULT NULL COMMENT '事务id',
-    `mod_id`            varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NULL DEFAULT NULL COMMENT '方法id',
-    `transaction_state` tinyint(4)                                                      NULL DEFAULT NULL COMMENT '事务状态',
-    `registrar`         tinyint(4)                                                      NULL DEFAULT NULL COMMENT '是否创建',
-    `ex_state`          tinyint(4)                                                      NULL DEFAULT NULL COMMENT '0 待处理 1已处理',
-    `remark`            varchar(10240) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
-    `create_time`       datetime                                                        NULL DEFAULT NULL COMMENT '创建时间',
-    PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB
-  AUTO_INCREMENT = 1
-  CHARACTER SET = utf8mb4
-  COLLATE = utf8mb4_general_ci COMMENT = '系统事务日志'
-  ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of system_tx_exception
 -- ----------------------------
 
 -- ----------------------------

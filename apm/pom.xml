@@ -9,6 +9,10 @@
         <relativePath>../cloud/pom.xml</relativePath>
     </parent>
 
+    <modules>
+        <module>admin</module>
+    </modules>
+
     <artifactId>apm</artifactId>
     <packaging>pom</packaging>
 
