@@ -3,7 +3,7 @@
 <mapper namespace="com.zclcs.auth.mapper.SystemUserMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.zclcs.auth.entity.SystemUser">
+    <resultMap id="BaseResultMap" type="com.zclcs.common.core.entity.system.SystemUser">
         <id column="user_id" property="userId"/>
         <result column="username" property="username"/>
         <result column="password" property="password"/>
@@ -25,7 +25,7 @@
     <sql id="Base_Column_List">
         user_id, username, password, dept_id, email, mobile, status, create_time, modify_time, lassystem_login_time, ssex, is_tab, theme, avatar, description
     </sql>
-    <select id="findByName" resultType="com.zclcs.auth.entity.vo.SystemUserVo">
+    <select id="findByName" resultType="com.zclcs.common.core.entity.system.vo.SystemUserVo">
         SELECT u.user_id,
                u.username,
                u.email,
@@ -44,7 +44,7 @@
                  LEFT JOIN system_dept d ON (u.dept_id = d.dept_id)
         WHERE u.username = #{username}
     </select>
-    <select id="findUserDataPermissions" resultType="com.zclcs.auth.entity.vo.SystemUserDataPermissionVo">
+    <select id="findUserDataPermissions" resultType="com.zclcs.common.core.entity.system.vo.SystemUserDataPermissionVo">
         select user_id, dept_id
         from system_user_data_permission
         where user_id = #{userId}

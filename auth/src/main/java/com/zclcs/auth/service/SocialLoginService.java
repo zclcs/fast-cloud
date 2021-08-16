@@ -1,7 +1,7 @@
 package com.zclcs.auth.service;
 
-import com.zclcs.auth.entity.ao.BindUserAo;
 import com.zclcs.common.core.base.BaseRsp;
+import com.zclcs.common.core.entity.system.ao.BindUserAo;
 import me.zhyd.oauth.model.AuthCallback;
 import me.zhyd.oauth.model.AuthUser;
 import me.zhyd.oauth.request.AuthRequest;

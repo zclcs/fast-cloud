@@ -1,9 +1,9 @@
 package com.zclcs.auth.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.zclcs.auth.entity.SystemUser;
-import com.zclcs.auth.entity.vo.SystemUserDataPermissionVo;
-import com.zclcs.auth.entity.vo.SystemUserVo;
+import com.zclcs.common.core.entity.system.SystemUser;
+import com.zclcs.common.core.entity.system.vo.SystemUserDataPermissionVo;
+import com.zclcs.common.core.entity.system.vo.SystemUserVo;
 
 import java.util.List;
 

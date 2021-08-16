@@ -3,7 +3,7 @@
 <mapper namespace="com.zclcs.auth.mapper.SystemUserDataPermissionMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.zclcs.auth.entity.SystemUserDataPermission">
+    <resultMap id="BaseResultMap" type="com.zclcs.common.core.entity.system.SystemUserDataPermission">
         <id column="user_id" property="userId" />
         <result column="dept_id" property="deptId" />
     </resultMap>

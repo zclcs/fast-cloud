@@ -3,7 +3,7 @@
 <mapper namespace="com.zclcs.auth.mapper.SystemUserConnectionMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.zclcs.auth.entity.SystemUserConnection">
+    <resultMap id="BaseResultMap" type="com.zclcs.common.core.entity.system.SystemUserConnection">
         <id column="user_name" property="userName"/>
         <result column="provider_name" property="providerName"/>
         <result column="provider_user_id" property="providerUserId"/>
@@ -30,13 +30,13 @@
         from system_user_connection suc
             ${ew.customSqlSegment}
     </sql>
-    <select id="findPageVo" resultType="com.zclcs.auth.entity.vo.SystemUserConnectionVo">
+    <select id="findPageVo" resultType="com.zclcs.common.core.entity.system.vo.SystemUserConnectionVo">
         <include refid="baseSql"/>
     </select>
-    <select id="findListVo" resultType="com.zclcs.auth.entity.vo.SystemUserConnectionVo">
+    <select id="findListVo" resultType="com.zclcs.common.core.entity.system.vo.SystemUserConnectionVo">
         <include refid="baseSql"/>
     </select>
-    <select id="findOneVo" resultType="com.zclcs.auth.entity.vo.SystemUserConnectionVo">
+    <select id="findOneVo" resultType="com.zclcs.common.core.entity.system.vo.SystemUserConnectionVo">
         <include refid="baseSql"/>
     </select>
 </mapper>

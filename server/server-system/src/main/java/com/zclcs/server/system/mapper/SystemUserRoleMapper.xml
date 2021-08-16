@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zclcs.server.system.mapper.SystemUserRoleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zclcs.common.core.entity.system.SystemUserRole">
+        <id column="user_id" property="userId"/>
+        <result column="role_id" property="roleId"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        user_id, role_id
+    </sql>
+    <sql id="baseSql">
+        select sur.user_id,
+               sur.role_id,
+               su.username,
+               sr.role_name
+        from system_user_role sur
+                 inner join system_user su on sur.user_id = su.user_id
+                 inner join system_role sr on sur.role_id = sr.role_id
+            ${ew.customSqlSegment}
+    </sql>
+    <select id="findPageVo" resultType="com.zclcs.common.core.entity.system.vo.SystemUserRoleVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="findListVo" resultType="com.zclcs.common.core.entity.system.vo.SystemUserRoleVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="findOneVo" resultType="com.zclcs.common.core.entity.system.vo.SystemUserRoleVo">
+        <include refid="baseSql"/>
+    </select>
+
+</mapper>

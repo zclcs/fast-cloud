@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zclcs.server.system.mapper.SystemUserDataPermissionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zclcs.common.core.entity.system.SystemUserDataPermission">
+        <id column="user_id" property="userId"/>
+        <result column="dept_id" property="deptId"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        user_id, dept_id
+    </sql>
+    <sql id="baseSql">
+        select sudp.user_id,
+               sudp.dept_id,
+               su.username,
+               su.password,
+               su.email,
+               su.mobile,
+               su.status,
+               su.create_time,
+               su.modify_time,
+               su.last_login_time,
+               su.gender,
+               su.is_tab,
+               su.theme,
+               su.avatar,
+               su.description,
+               sd.parent_id,
+               sd.dept_name,
+               sd.order_num,
+               sd.create_time,
+               sd.modify_time
+        from system_user_data_permission sudp
+                 inner join system_user su on sudp.user_id = su.user_id
+                 inner join system_dept sd on sudp.dept_id = sd.dept_id
+            ${ew.customSqlSegment}
+    </sql>
+    <select id="findPageVo" resultType="com.zclcs.common.core.entity.system.vo.SystemUserDataPermissionVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="findListVo" resultType="com.zclcs.common.core.entity.system.vo.SystemUserDataPermissionVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="findOneVo" resultType="com.zclcs.common.core.entity.system.vo.SystemUserDataPermissionVo">
+        <include refid="baseSql"/>
+    </select>
+
+</mapper>

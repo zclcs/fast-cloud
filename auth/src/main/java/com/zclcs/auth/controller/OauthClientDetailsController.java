@@ -1,12 +1,12 @@
 package com.zclcs.auth.controller;
 
-import com.zclcs.auth.entity.ao.FindOauthClientDetailsPageAo;
-import com.zclcs.auth.entity.ao.OauthClientDetailsAo;
-import com.zclcs.auth.entity.vo.OauthClientDetailsVo;
 import com.zclcs.auth.service.OauthClientDetailsService;
 import com.zclcs.common.core.base.BaseController;
 import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BaseRsp;
+import com.zclcs.common.core.entity.system.ao.FindOauthClientDetailsPageAo;
+import com.zclcs.common.core.entity.system.ao.OauthClientDetailsAo;
+import com.zclcs.common.core.entity.system.vo.OauthClientDetailsVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

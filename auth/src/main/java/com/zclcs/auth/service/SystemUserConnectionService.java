@@ -1,9 +1,9 @@
 package com.zclcs.auth.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zclcs.auth.entity.SystemUserConnection;
-import com.zclcs.auth.entity.ao.SystemUserConnectionAo;
-import com.zclcs.auth.entity.vo.SystemUserConnectionVo;
+import com.zclcs.common.core.entity.system.SystemUserConnection;
+import com.zclcs.common.core.entity.system.ao.SystemUserConnectionAo;
+import com.zclcs.common.core.entity.system.vo.SystemUserConnectionVo;
 
 import java.util.List;
 

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zclcs.server.system.mapper.SystemExportMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zclcs.common.core.entity.system.SystemExport">
+        <result column="field1" property="field1"/>
+        <result column="field2" property="field2"/>
+        <result column="field3" property="field3"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        field1, field2, field3, create_time
+    </sql>
+    <sql id="baseSql">
+        select se.field1, se.field2, se.field3, se.create_time
+        from system_export se
+            ${ew.customSqlSegment}
+    </sql>
+    <select id="findPageVo" resultType="com.zclcs.common.core.entity.system.vo.SystemExportVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="findListVo" resultType="com.zclcs.common.core.entity.system.vo.SystemExportVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="findOneVo" resultType="com.zclcs.common.core.entity.system.vo.SystemExportVo">
+        <include refid="baseSql"/>
+    </select>
+
+</mapper>

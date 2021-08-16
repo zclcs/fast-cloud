@@ -1,12 +1,12 @@
 package com.zclcs.auth.controller;
 
-import com.zclcs.auth.entity.ao.BindUserAo;
-import com.zclcs.auth.entity.vo.SystemUserConnectionVo;
 import com.zclcs.auth.service.SocialLoginService;
 import com.zclcs.auth.service.SystemUserConnectionService;
 import com.zclcs.common.core.base.BaseController;
 import com.zclcs.common.core.base.BaseRsp;
 import com.zclcs.common.core.constant.StringConstant;
+import com.zclcs.common.core.entity.system.ao.BindUserAo;
+import com.zclcs.common.core.entity.system.vo.SystemUserConnectionVo;
 import com.zclcs.common.core.utils.BaseUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

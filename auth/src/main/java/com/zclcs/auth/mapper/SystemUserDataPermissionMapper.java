@@ -1,7 +1,7 @@
 package com.zclcs.auth.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.zclcs.auth.entity.SystemUserDataPermission;
+import com.zclcs.common.core.entity.system.SystemUserDataPermission;
 
 /**
  * <p>

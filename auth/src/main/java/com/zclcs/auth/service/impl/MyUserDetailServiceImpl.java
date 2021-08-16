@@ -1,12 +1,12 @@
 package com.zclcs.auth.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.zclcs.auth.entity.vo.SystemUserVo;
 import com.zclcs.auth.manager.UserManager;
 import com.zclcs.common.core.constant.ParamsConstant;
 import com.zclcs.common.core.constant.SocialConstant;
 import com.zclcs.common.core.constant.StringConstant;
 import com.zclcs.common.core.entity.FebsAuthUser;
+import com.zclcs.common.core.entity.system.vo.SystemUserVo;
 import com.zclcs.common.core.utils.BaseUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;

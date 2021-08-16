@@ -3,7 +3,7 @@
 <mapper namespace="com.zclcs.auth.mapper.OauthClientDetailsMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.zclcs.auth.entity.OauthClientDetails">
+    <resultMap id="BaseResultMap" type="com.zclcs.common.core.entity.system.OauthClientDetails">
         <id column="client_id" property="clientId"/>
         <result column="resource_ids" property="resourceIds"/>
         <result column="client_secret" property="clientSecret"/>
@@ -38,13 +38,13 @@
         from oauth_client_details ocd
             ${ew.customSqlSegment}
     </sql>
-    <select id="findPageVo" resultType="com.zclcs.auth.entity.vo.OauthClientDetailsVo">
+    <select id="findPageVo" resultType="com.zclcs.common.core.entity.system.vo.OauthClientDetailsVo">
         <include refid="baseSql"/>
     </select>
-    <select id="findListVo" resultType="com.zclcs.auth.entity.vo.OauthClientDetailsVo">
+    <select id="findListVo" resultType="com.zclcs.common.core.entity.system.vo.OauthClientDetailsVo">
         <include refid="baseSql"/>
     </select>
-    <select id="findOneVo" resultType="com.zclcs.auth.entity.vo.OauthClientDetailsVo">
+    <select id="findOneVo" resultType="com.zclcs.common.core.entity.system.vo.OauthClientDetailsVo">
         <include refid="baseSql"/>
     </select>
 

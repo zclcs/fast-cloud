@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zclcs.server.system.mapper.SystemLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zclcs.common.core.entity.system.SystemLog">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="operation" property="operation"/>
+        <result column="time" property="time"/>
+        <result column="method" property="method"/>
+        <result column="params" property="params"/>
+        <result column="ip" property="ip"/>
+        <result column="create_time" property="createTime"/>
+        <result column="location" property="location"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, username, operation, time, method, params, ip, create_time, location
+    </sql>
+    <sql id="baseSql">
+        select sl.id,
+               sl.username,
+               sl.operation,
+               sl.time,
+               sl.method,
+               sl.params,
+               sl.ip,
+               sl.create_time,
+               sl.location
+        from system_log sl
+            ${ew.customSqlSegment}
+    </sql>
+    <select id="findPageVo" resultType="com.zclcs.common.core.entity.system.vo.SystemLogVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="findListVo" resultType="com.zclcs.common.core.entity.system.vo.SystemLogVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="findOneVo" resultType="com.zclcs.common.core.entity.system.vo.SystemLogVo">
+        <include refid="baseSql"/>
+    </select>
+
+</mapper>

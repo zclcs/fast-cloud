@@ -1,11 +1,11 @@
 package com.zclcs.auth.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zclcs.auth.entity.OauthClientDetails;
-import com.zclcs.auth.entity.ao.FindOauthClientDetailsPageAo;
-import com.zclcs.auth.entity.ao.OauthClientDetailsAo;
-import com.zclcs.auth.entity.vo.OauthClientDetailsVo;
 import com.zclcs.common.core.base.BasePage;
+import com.zclcs.common.core.entity.system.OauthClientDetails;
+import com.zclcs.common.core.entity.system.ao.FindOauthClientDetailsPageAo;
+import com.zclcs.common.core.entity.system.ao.OauthClientDetailsAo;
+import com.zclcs.common.core.entity.system.vo.OauthClientDetailsVo;
 
 import java.util.List;
 

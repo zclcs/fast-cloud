@@ -3,9 +3,9 @@ package com.zclcs.auth.mapper;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
-import com.zclcs.auth.entity.SystemUserConnection;
-import com.zclcs.auth.entity.vo.SystemUserConnectionVo;
 import com.zclcs.common.core.base.BasePage;
+import com.zclcs.common.core.entity.system.SystemUserConnection;
+import com.zclcs.common.core.entity.system.vo.SystemUserConnectionVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

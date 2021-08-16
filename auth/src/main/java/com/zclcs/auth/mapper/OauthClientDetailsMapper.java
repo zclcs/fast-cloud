@@ -3,9 +3,9 @@ package com.zclcs.auth.mapper;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
-import com.zclcs.auth.entity.OauthClientDetails;
-import com.zclcs.auth.entity.vo.OauthClientDetailsVo;
 import com.zclcs.common.core.base.BasePage;
+import com.zclcs.common.core.entity.system.OauthClientDetails;
+import com.zclcs.common.core.entity.system.vo.OauthClientDetailsVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

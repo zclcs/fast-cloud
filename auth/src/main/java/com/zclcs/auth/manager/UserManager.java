@@ -1,14 +1,14 @@
 package com.zclcs.auth.manager;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.zclcs.auth.entity.SystemUser;
-import com.zclcs.auth.entity.SystemUserRole;
-import com.zclcs.auth.entity.vo.SystemMenuVo;
-import com.zclcs.auth.entity.vo.SystemUserDataPermissionVo;
-import com.zclcs.auth.entity.vo.SystemUserVo;
 import com.zclcs.auth.mapper.SystemMenuMapper;
 import com.zclcs.auth.mapper.SystemUserMapper;
 import com.zclcs.common.core.constant.MyConstant;
+import com.zclcs.common.core.entity.system.SystemUser;
+import com.zclcs.common.core.entity.system.SystemUserRole;
+import com.zclcs.common.core.entity.system.vo.SystemMenuVo;
+import com.zclcs.common.core.entity.system.vo.SystemUserDataPermissionVo;
+import com.zclcs.common.core.entity.system.vo.SystemUserVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
