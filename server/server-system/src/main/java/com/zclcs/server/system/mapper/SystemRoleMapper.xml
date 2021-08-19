@@ -20,6 +20,13 @@
         from system_role sr
             ${ew.customSqlSegment}
     </sql>
+    <sql id="baseSqlFromUserRole">
+        select sr.role_id, sr.role_name, sr.remark, sr.create_time, sr.modify_time
+        from system_role sr
+                 left join system_user_role sur on sr.role_id = sur.role_id
+                 left join system_user su on sur.user_id = su.user_id
+            ${ew.customSqlSegment}
+    </sql>
     <select id="findPageVo" resultType="com.zclcs.common.core.entity.system.vo.SystemRoleVo">
         <include refid="baseSql"/>
     </select>
@@ -28,6 +35,15 @@
     </select>
     <select id="findOneVo" resultType="com.zclcs.common.core.entity.system.vo.SystemRoleVo">
         <include refid="baseSql"/>
+    </select>
+    <select id="findUserRolePageVo" resultType="com.zclcs.common.core.entity.system.vo.SystemRoleVo">
+        <include refid="baseSqlFromUserRole"/>
+    </select>
+    <select id="findUserRoleListVo" resultType="com.zclcs.common.core.entity.system.vo.SystemRoleVo">
+        <include refid="baseSqlFromUserRole"/>
+    </select>
+    <select id="findUserRoleOneVo" resultType="com.zclcs.common.core.entity.system.vo.SystemRoleVo">
+        <include refid="baseSqlFromUserRole"/>
     </select>
 
 </mapper>

@@ -9,6 +9,7 @@ import lombok.experimental.Accessors;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -64,6 +65,12 @@ public class SystemUserAo {
 
     @ApiModelProperty(value = "描述")
     private String description;
+
+    @ApiModelProperty(value = "角色集合")
+    private List<Long> roles;
+
+    @ApiModelProperty(value = "数据权限集合")
+    private List<Long> deptIds;
 
 
 }

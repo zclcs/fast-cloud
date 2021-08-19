@@ -36,5 +36,11 @@ public class SystemDeptAo {
     @ApiModelProperty(value = "排序")
     private Double orderNum;
 
+    @ApiModelProperty(value = "创建时间-开始")
+    private String createTimeFrom;
+
+    @ApiModelProperty(value = "创建时间-结束")
+    private String createTimeTo;
+
 
 }

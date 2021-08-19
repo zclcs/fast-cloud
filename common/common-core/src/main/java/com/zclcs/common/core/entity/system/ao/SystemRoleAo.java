@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 /**
  * <p>
@@ -33,6 +34,9 @@ public class SystemRoleAo {
     @ApiModelProperty(value = "角色描述")
     @Size(max = 50, message = "{noMoreThan}")
     private String remark;
+
+    @ApiModelProperty(value = "菜单编号")
+    private List<Long> menuIds;
 
 
 }

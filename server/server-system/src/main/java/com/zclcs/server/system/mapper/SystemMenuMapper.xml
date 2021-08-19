@@ -36,6 +36,29 @@
         from system_menu sm
             ${ew.customSqlSegment}
     </sql>
+    <sql id="baseSqlFromUserMenu">
+        select sm.menu_id,
+               sm.parent_id,
+               sm.menu_name,
+               sm.path,
+               sm.component,
+               sm.perms,
+               sm.icon,
+               sm.type,
+               sm.order_num,
+               sm.create_time,
+               sm.modify_time
+        from system_menu sm
+        where sm.type &lt;&gt; 1
+          and sm.menu_id in
+              (select distinct srm.menu_id
+               from system_role_menu srm
+                        left join system_role sr on (srm.role_id = sr.role_id)
+                        left join system_user_role sur on (sur.role_id = sr.role_id)
+                        left join system_user su on (su.user_id = sur.user_id)
+               where su.username = #{username})
+            ${ew.customSqlSegment}
+    </sql>
     <select id="findUserPermissions" resultType="com.zclcs.common.core.entity.system.vo.SystemMenuVo">
         select distinct m.perms
         from system_role r
@@ -55,6 +78,15 @@
     </select>
     <select id="findOneVo" resultType="com.zclcs.common.core.entity.system.vo.SystemMenuVo">
         <include refid="baseSql"/>
+    </select>
+    <select id="findUserMenuPageVo" resultType="com.zclcs.common.core.entity.system.vo.SystemMenuVo">
+        <include refid="baseSqlFromUserMenu"/>
+    </select>
+    <select id="findUserMenuListVo" resultType="com.zclcs.common.core.entity.system.vo.SystemMenuVo">
+        <include refid="baseSqlFromUserMenu"/>
+    </select>
+    <select id="findUserMenuOneVo" resultType="com.zclcs.common.core.entity.system.vo.SystemMenuVo">
+        <include refid="baseSqlFromUserMenu"/>
     </select>
 
 </mapper>

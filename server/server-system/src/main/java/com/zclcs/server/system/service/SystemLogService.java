@@ -1,12 +1,17 @@
 package com.zclcs.server.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zclcs.common.core.base.BasePage;
+import com.zclcs.common.core.base.BasePageAo;
 import com.zclcs.common.core.constant.MyConstant;
 import com.zclcs.common.core.entity.system.SystemLog;
+import com.zclcs.common.core.entity.system.ao.SystemLogAo;
+import com.zclcs.common.core.entity.system.vo.SystemLogVo;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.scheduling.annotation.Async;
 
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * <p>
@@ -17,6 +22,22 @@ import java.lang.reflect.Method;
  * @since 2021-08-16
  */
 public interface SystemLogService extends IService<SystemLog> {
+
+    /**
+     * 查询操作日志分页
+     *
+     * @param basePageAo QueryRequest
+     * @param log        日志
+     * @return BasePage<SystemLogVo>
+     */
+    BasePage<SystemLogVo> findLogs(BasePageAo basePageAo, SystemLogAo log);
+
+    /**
+     * 删除操作日志
+     *
+     * @param logIds 日志 ID集合
+     */
+    void deleteLogs(List<Long> logIds);
 
     /**
      * 异步保存操作日志

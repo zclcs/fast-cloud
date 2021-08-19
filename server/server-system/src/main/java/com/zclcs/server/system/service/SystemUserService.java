@@ -2,7 +2,10 @@ package com.zclcs.server.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zclcs.common.core.entity.system.SystemUser;
+import com.zclcs.common.core.entity.system.ao.SystemUserAo;
 import com.zclcs.common.core.entity.system.vo.SystemUserVo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -42,21 +45,21 @@ public interface SystemUserService extends IService<SystemUser> {
      *
      * @param user user
      */
-    void createUser(SystemUser user);
+    void createUser(SystemUserAo user);
 
     /**
      * 修改用户
      *
      * @param user user
      */
-    void updateUser(SystemUser user);
+    void updateUser(SystemUserAo user);
 
     /**
      * 删除用户
      *
      * @param userIds 用户 id数组
      */
-    void deleteUsers(String[] userIds);
+    void deleteUsers(List<Long> userIds);
 
     /**
      * 更新用户密码
@@ -70,6 +73,6 @@ public interface SystemUserService extends IService<SystemUser> {
      *
      * @param usernames 用户集合
      */
-    void resetPassword(String[] usernames);
+    void resetPassword(List<Long> usernames);
 
 }

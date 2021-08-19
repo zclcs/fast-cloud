@@ -1,8 +1,16 @@
 package com.zclcs.server.system.service.impl;
 
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zclcs.common.core.base.BasePage;
+import com.zclcs.common.core.base.BasePageAo;
+import com.zclcs.common.core.constant.MyConstant;
 import com.zclcs.common.core.entity.system.SystemLog;
+import com.zclcs.common.core.entity.system.ao.SystemLogAo;
+import com.zclcs.common.core.entity.system.vo.SystemLogVo;
+import com.zclcs.common.core.utils.BaseSortUtil;
 import com.zclcs.server.system.mapper.SystemLogMapper;
 import com.zclcs.server.system.service.SystemLogService;
 import com.zclcs.server.system.utils.BaseAddressUtil;
@@ -30,6 +38,24 @@ import java.util.*;
 public class SystemLogServiceImpl extends ServiceImpl<SystemLogMapper, SystemLog> implements SystemLogService {
 
     private final ObjectMapper objectMapper;
+
+    @Override
+    public BasePage<SystemLogVo> findLogs(BasePageAo basePageAo, SystemLogAo log) {
+        BasePage<SystemLogVo> basePage = new BasePage<>();
+        BaseSortUtil.handlePageSort(basePageAo, basePage, "createTime", MyConstant.ORDER_DESC, true);
+        QueryWrapper<SystemLogVo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(StrUtil.isNotBlank(log.getUsername()), "sl.username", log.getUsername());
+        queryWrapper.eq(StrUtil.isNotBlank(log.getOperation()), "sl.operation", log.getOperation());
+        queryWrapper.eq(StrUtil.isNotBlank(log.getLocation()), "sl.location", log.getLocation());
+        queryWrapper.between(StrUtil.isNotBlank(log.getCreateTimeFrom()) && StrUtil.isNotBlank(log.getCreateTimeTo()),
+                "sl.create_time", log.getCreateTimeFrom(), log.getCreateTimeTo());
+        return this.baseMapper.findPageVo(basePage, queryWrapper);
+    }
+
+    @Override
+    public void deleteLogs(List<Long> logIds) {
+        this.removeByIds(logIds);
+    }
 
     @Override
     public void saveLog(ProceedingJoinPoint point, Method method, String ip, String operation, String username, long start) {

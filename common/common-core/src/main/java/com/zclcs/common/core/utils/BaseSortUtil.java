@@ -2,7 +2,7 @@ package com.zclcs.common.core.utils;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
 import com.zclcs.common.core.constant.MyConstant;
 import org.apache.commons.lang3.StringUtils;
@@ -22,7 +22,7 @@ public abstract class BaseSortUtil {
      * @param defaultOrder      默认排序规则
      * @param camelToUnderscore 是否开启驼峰转下划线
      */
-    public static void handlePageSort(BasePageAo basePageAo, Page<?> page, String defaultSort, String defaultOrder, boolean camelToUnderscore) {
+    public static void handlePageSort(BasePageAo basePageAo, BasePage<?> page, String defaultSort, String defaultOrder, boolean camelToUnderscore) {
         page.setCurrent(basePageAo.getPageNum());
         page.setSize(basePageAo.getPageSize());
         String sortField = basePageAo.getField();
@@ -56,7 +56,7 @@ public abstract class BaseSortUtil {
      * @param basePageAo BasePageAo
      * @param page       Page
      */
-    public static void handlePageSort(BasePageAo basePageAo, Page<?> page) {
+    public static void handlePageSort(BasePageAo basePageAo, BasePage<?> page) {
         handlePageSort(basePageAo, page, null, null, false);
     }
 
@@ -67,7 +67,7 @@ public abstract class BaseSortUtil {
      * @param page              Page
      * @param camelToUnderscore 是否开启驼峰转下划线
      */
-    public static void handlePageSort(BasePageAo basePageAo, Page<?> page, boolean camelToUnderscore) {
+    public static void handlePageSort(BasePageAo basePageAo, BasePage<?> page, boolean camelToUnderscore) {
         handlePageSort(basePageAo, page, null, null, camelToUnderscore);
     }
 
