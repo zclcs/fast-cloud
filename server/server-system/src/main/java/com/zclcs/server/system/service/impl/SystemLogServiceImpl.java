@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
@@ -40,7 +41,7 @@ public class SystemLogServiceImpl extends ServiceImpl<SystemLogMapper, SystemLog
     private final ObjectMapper objectMapper;
 
     @Override
-    public BasePage<SystemLogVo> findLogs(BasePageAo basePageAo, SystemLogAo log) {
+    public BasePage<SystemLogVo> findLogPage(BasePageAo basePageAo, SystemLogAo log) {
         BasePage<SystemLogVo> basePage = new BasePage<>();
         BaseSortUtil.handlePageSort(basePageAo, basePage, "createTime", MyConstant.ORDER_DESC, true);
         QueryWrapper<SystemLogVo> queryWrapper = new QueryWrapper<>();
@@ -53,11 +54,13 @@ public class SystemLogServiceImpl extends ServiceImpl<SystemLogMapper, SystemLog
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteLogs(List<Long> logIds) {
         this.removeByIds(logIds);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void saveLog(ProceedingJoinPoint point, Method method, String ip, String operation, String username, long start) {
         SystemLog log = new SystemLog();
         log.setIp(ip);

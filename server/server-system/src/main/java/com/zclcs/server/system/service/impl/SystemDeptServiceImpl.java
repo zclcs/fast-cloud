@@ -72,6 +72,7 @@ public class SystemDeptServiceImpl extends ServiceImpl<SystemDeptMapper, SystemD
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void createDept(SystemDeptAo dept) {
         SystemDept systemDept = new SystemDept();
         BeanUtil.copyProperties(dept, systemDept);
@@ -83,6 +84,7 @@ public class SystemDeptServiceImpl extends ServiceImpl<SystemDeptMapper, SystemD
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateDept(SystemDeptAo dept) {
         SystemDept systemDept = new SystemDept();
         BeanUtil.copyProperties(dept, systemDept);
@@ -94,6 +96,7 @@ public class SystemDeptServiceImpl extends ServiceImpl<SystemDeptMapper, SystemD
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteDept(List<Long> deptIds) {
         this.delete(deptIds);
     }

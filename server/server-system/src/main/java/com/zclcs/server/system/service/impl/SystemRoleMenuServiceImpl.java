@@ -25,11 +25,13 @@ import java.util.List;
 public class SystemRoleMenuServiceImpl extends ServiceImpl<SystemRoleMenuMapper, SystemRoleMenu> implements SystemRoleMenuService {
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteRoleMenusByRoleId(List<Long> roleIds) {
         this.lambdaUpdate().in(SystemRoleMenu::getRoleId, roleIds).remove();
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteRoleMenusByMenuId(List<Long> menuIds) {
         this.lambdaUpdate().in(SystemRoleMenu::getMenuId, menuIds).remove();
     }

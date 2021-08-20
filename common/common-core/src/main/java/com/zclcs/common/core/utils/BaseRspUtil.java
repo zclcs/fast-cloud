@@ -68,4 +68,16 @@ public abstract class BaseRspUtil {
         vo.setMsg(myException.getMessage());
         return vo;
     }
+
+    /**
+     * 调用成功 - 返回数据
+     *
+     * @param data 数据
+     * @return 返回json
+     */
+    public static <T> BaseRsp<T> data(T data) {
+        BaseRsp<T> vo = new BaseRsp<>();
+        vo.setData(data);
+        return vo;
+    }
 }

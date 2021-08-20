@@ -30,7 +30,7 @@ public interface SystemLogService extends IService<SystemLog> {
      * @param log        日志
      * @return BasePage<SystemLogVo>
      */
-    BasePage<SystemLogVo> findLogs(BasePageAo basePageAo, SystemLogAo log);
+    BasePage<SystemLogVo> findLogPage(BasePageAo basePageAo, SystemLogAo log);
 
     /**
      * 删除操作日志

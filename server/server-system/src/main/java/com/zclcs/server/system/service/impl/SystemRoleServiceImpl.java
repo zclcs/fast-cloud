@@ -4,7 +4,6 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
@@ -46,7 +45,7 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     private final SystemUserRoleService userRoleService;
 
     @Override
-    public IPage<SystemRoleVo> findSystemRolePage(BasePageAo basePageAo, SystemRoleAo role) {
+    public BasePage<SystemRoleVo> findSystemRolePage(BasePageAo basePageAo, SystemRoleAo role) {
         BasePage<SystemRoleVo> basePage = new BasePage<>(basePageAo.getPageNum(), basePageAo.getPageSize());
         BaseSortUtil.handlePageSort(basePageAo, basePage, "createTime", MyConstant.ORDER_DESC, false);
         QueryWrapper<SystemRoleVo> queryWrapper = new QueryWrapper<>();
@@ -75,6 +74,7 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void createSystemRole(SystemRoleAo role) {
         SystemRole systemRole = new SystemRole();
         BeanUtil.copyProperties(role, systemRole);
@@ -85,6 +85,7 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteSystemRoles(List<Long> roleIds) {
         this.removeByIds(roleIds);
         this.roleMenuService.deleteRoleMenusByRoleId(roleIds);
@@ -92,6 +93,7 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateSystemRole(SystemRoleAo role) {
         SystemRole systemRole = new SystemRole();
         BeanUtil.copyProperties(role, systemRole);

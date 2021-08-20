@@ -11,7 +11,7 @@
  Target Server Version : 50735
  File Encoding         : 65001
 
- Date: 13/08/2021 21:03:14
+ Date: 20/08/2021 16:07:46
 */
 
 SET NAMES utf8mb4;
@@ -48,7 +48,7 @@ INSERT INTO `oauth_client_details`
 VALUES ('app', '', '$2a$10$8Qk/efslEpO1Af1kyw/rp.DdJGsdnET8UCp1vGDzpQEa.1qBklvua', 'all', 'refresh_token,password', '',
         NULL, 86400, 864000, NULL, NULL, '123456');
 INSERT INTO `oauth_client_details`
-VALUES ('febs', ' ', '$2a$10$aSZTvMOtUAYUQ.75z2n3ceJd6dCIk9Vy3J/SKZUE4hBLd6sz7.6ge', 'all', 'password,refresh_token',
+VALUES ('zclcs', ' ', '$2a$10$aSZTvMOtUAYUQ.75z2n3ceJd6dCIk9Vy3J/SKZUE4hBLd6sz7.6ge', 'all', 'password,refresh_token',
         NULL, NULL, 86400, 8640000, NULL, 0, '123456');
 
 -- ----------------------------
@@ -128,10 +128,10 @@ INSERT INTO `system_dept`
 VALUES (6, 0, '测试部', 4, '2018-01-04 15:42:38', '2019-01-17 08:15:47');
 
 -- ----------------------------
--- Table structure for system_eximport
+-- Table structure for system_export
 -- ----------------------------
-DROP TABLE IF EXISTS `system_eximport`;
-CREATE TABLE `system_eximport`
+DROP TABLE IF EXISTS `system_export`;
+CREATE TABLE `system_export`
 (
     `field1`      varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL,
     `field2`      int(11)                                                 NOT NULL,
@@ -143,23 +143,23 @@ CREATE TABLE `system_eximport`
   ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of system_eximport
+-- Records of system_export
 -- ----------------------------
-INSERT INTO `system_eximport`
+INSERT INTO `system_export`
 VALUES ('字段1', 1, 'mrbird0@gmail.com', '2019-07-25 19:08:01');
-INSERT INTO `system_eximport`
+INSERT INTO `system_export`
 VALUES ('字段1', 2, 'mrbird1@gmail.com', '2019-07-25 19:08:01');
-INSERT INTO `system_eximport`
+INSERT INTO `system_export`
 VALUES ('字段1', 3, 'mrbird2@gmail.com', '2019-07-25 19:08:01');
-INSERT INTO `system_eximport`
+INSERT INTO `system_export`
 VALUES ('字段1', 4, 'mrbird3@gmail.com', '2019-07-25 19:08:01');
-INSERT INTO `system_eximport`
+INSERT INTO `system_export`
 VALUES ('字段1', 5, 'mrbird4@gmail.com', '2019-07-25 19:08:01');
-INSERT INTO `system_eximport`
+INSERT INTO `system_export`
 VALUES ('字段1', 6, 'mrbird5@gmail.com', '2019-07-25 19:08:01');
-INSERT INTO `system_eximport`
+INSERT INTO `system_export`
 VALUES ('字段1', 7, 'mrbird6@gmail.com', '2019-07-25 19:08:01');
-INSERT INTO `system_eximport`
+INSERT INTO `system_export`
 VALUES ('字段1', 8, 'mrbird7@gmail.com', '2019-07-25 19:08:01');
 
 -- ----------------------------
@@ -862,8 +862,8 @@ CREATE TABLE `system_user`
 -- Records of system_user
 -- ----------------------------
 INSERT INTO `system_user`
-VALUES (1, 'MrBird', '$2a$10$gzhiUb1ldc1Rf3lka4k/WOoFKKGPepHSzJxzcPSN5/65SzkMdc.SK', 2, 'mrbird@qq.com', '17788888888',
-        '1', '2019-06-14 20:39:22', '2020-04-15 16:00:32', '2020-04-15 16:03:13', '0', '1', 'white',
+VALUES (1, 'zclcs', '$2a$10$gzhiUb1ldc1Rf3lka4k/WOoFKKGPepHSzJxzcPSN5/65SzkMdc.SK', 2, '2371219112@qq.com',
+        '17788888888', '1', '2019-06-14 20:39:22', '2020-04-15 16:00:32', '2020-04-15 16:03:13', '0', '1', 'white',
         'gaOngJwsRYRaVAuXXcmB.png', '我是帅比作者。');
 INSERT INTO `system_user`
 VALUES (15, 'scott', '$2a$10$7tATi2STciLHnEgO/RfIxOYf2MQBu/SDVMRDs54rlSYVj2VmwwCHC', 5, 'scott@hotmail.com',

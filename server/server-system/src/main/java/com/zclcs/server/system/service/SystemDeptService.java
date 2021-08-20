@@ -3,7 +3,7 @@ package com.zclcs.server.system.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
-import com.zclcs.common.core.entity.Tree;
+import com.zclcs.common.core.entity.DeptTree;
 import com.zclcs.common.core.entity.system.SystemDept;
 import com.zclcs.common.core.entity.system.ao.SystemDeptAo;
 import com.zclcs.common.core.entity.system.vo.SystemDeptVo;
@@ -27,7 +27,7 @@ public interface SystemDeptService extends IService<SystemDept> {
      * @param dept    dept
      * @return 部门信息
      */
-    BasePage<? extends Tree<?>> findDeptPage(BasePageAo request, SystemDeptAo dept);
+    BasePage<DeptTree> findDeptPage(BasePageAo request, SystemDeptAo dept);
 
     /**
      * 获取部门列表

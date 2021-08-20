@@ -1,7 +1,7 @@
 package com.zclcs.server.system.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
 import com.zclcs.common.core.entity.system.SystemRole;
 import com.zclcs.common.core.entity.system.ao.SystemRoleAo;
@@ -26,7 +26,7 @@ public interface SystemRoleService extends IService<SystemRole> {
      * @param role       role
      * @return 角色分页数据
      */
-    IPage<SystemRoleVo> findSystemRolePage(BasePageAo basePageAo, SystemRoleAo role);
+    BasePage<SystemRoleVo> findSystemRolePage(BasePageAo basePageAo, SystemRoleAo role);
 
     /**
      * 获取用户角色

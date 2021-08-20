@@ -5,6 +5,8 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zclcs.common.core.base.BasePage;
+import com.zclcs.common.core.base.BasePageAo;
 import com.zclcs.common.core.entity.system.SystemUser;
 import com.zclcs.common.core.entity.system.SystemUserDataPermission;
 import com.zclcs.common.core.entity.system.SystemUserRole;
@@ -58,6 +60,14 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     @Override
+    public BasePage<SystemUserVo> findUserDetailPage(BasePageAo request, SystemUserAo user) {
+        BasePage<SystemUserVo> page = new BasePage<>(request.getPageNum(), request.getPageSize());
+        QueryWrapper<SystemUserVo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByAsc("su.user_id");
+        return this.baseMapper.findPageVo(page, queryWrapper);
+    }
+
+    @Override
     public SystemUserVo findUserDetail(String username) {
         SystemUserVo byName = this.findByName(username);
         QueryWrapper<SystemUserRoleVo> objectQueryWrapper = new QueryWrapper<>();
@@ -80,6 +90,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void createUser(SystemUserAo user) {
         SystemUser systemUser = new SystemUser();
         BeanUtil.copyProperties(user, systemUser);
@@ -92,6 +103,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateUser(SystemUserAo user) {
         SystemUser systemUser = new SystemUser();
         BeanUtil.copyProperties(user, systemUser);
@@ -111,6 +123,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteUsers(List<Long> userIds) {
         this.removeByIds(userIds);
         // 删除用户角色
@@ -119,6 +132,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updatePassword(String password) {
         SystemUser user = new SystemUser();
         user.setPassword(passwordEncoder.encode(password));
@@ -127,7 +141,8 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     @Override
-    public void resetPassword(List<Long> usernames) {
+    @Transactional(rollbackFor = Exception.class)
+    public void resetPassword(List<String> usernames) {
         SystemUser user = new SystemUser();
         user.setPassword(passwordEncoder.encode(SystemUserVo.DEFAULT_PASSWORD));
         this.lambdaUpdate().in(SystemUser::getUsername, usernames).update(user);

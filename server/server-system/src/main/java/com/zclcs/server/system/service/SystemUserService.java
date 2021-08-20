@@ -1,6 +1,8 @@
 package com.zclcs.server.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zclcs.common.core.base.BasePage;
+import com.zclcs.common.core.base.BasePageAo;
 import com.zclcs.common.core.entity.system.SystemUser;
 import com.zclcs.common.core.entity.system.ao.SystemUserAo;
 import com.zclcs.common.core.entity.system.vo.SystemUserVo;
@@ -24,6 +26,15 @@ public interface SystemUserService extends IService<SystemUser> {
      * @return 用户
      */
     SystemUserVo findByName(String username);
+
+    /**
+     * 查找用户详细信息
+     *
+     * @param request request
+     * @param user    用户对象，用于传递查询条件
+     * @return IPage
+     */
+    BasePage<SystemUserVo> findUserDetailPage(BasePageAo request, SystemUserAo user);
 
     /**
      * 通过用户名查找用户详细信息
@@ -73,6 +84,6 @@ public interface SystemUserService extends IService<SystemUser> {
      *
      * @param usernames 用户集合
      */
-    void resetPassword(List<Long> usernames);
+    void resetPassword(List<String> usernames);
 
 }
