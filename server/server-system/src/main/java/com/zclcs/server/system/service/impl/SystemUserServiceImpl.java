@@ -3,13 +3,16 @@ package com.zclcs.server.system.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
+import com.zclcs.common.core.constant.StringConstant;
 import com.zclcs.common.core.entity.system.SystemUser;
 import com.zclcs.common.core.entity.system.SystemUserDataPermission;
 import com.zclcs.common.core.entity.system.SystemUserRole;
+import com.zclcs.common.core.entity.system.ao.SelectSystemUserAo;
 import com.zclcs.common.core.entity.system.ao.SystemUserAo;
 import com.zclcs.common.core.entity.system.vo.SystemUserDataPermissionVo;
 import com.zclcs.common.core.entity.system.vo.SystemUserRoleVo;
@@ -18,6 +21,7 @@ import com.zclcs.common.core.utils.BaseUtil;
 import com.zclcs.server.system.mapper.SystemUserDataPermissionMapper;
 import com.zclcs.server.system.mapper.SystemUserMapper;
 import com.zclcs.server.system.mapper.SystemUserRoleMapper;
+import com.zclcs.server.system.service.SystemDeptService;
 import com.zclcs.server.system.service.SystemUserDataPermissionService;
 import com.zclcs.server.system.service.SystemUserRoleService;
 import com.zclcs.server.system.service.SystemUserService;
@@ -27,10 +31,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 /**
@@ -50,6 +52,8 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     private final SystemUserRoleMapper systemUserRoleMapper;
     private final SystemUserDataPermissionService userDataPermissionService;
     private final SystemUserDataPermissionMapper systemUserDataPermissionMapper;
+    private final SystemDeptService deptService;
+    private final SystemUserRoleMapper userRoleMapper;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -60,24 +64,49 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     @Override
-    public BasePage<SystemUserVo> findUserDetailPage(BasePageAo request, SystemUserAo user) {
+    public BasePage<SystemUserVo> findUserDetailPage(BasePageAo request, SelectSystemUserAo user) {
         BasePage<SystemUserVo> page = new BasePage<>(request.getPageNum(), request.getPageSize());
+        BasePage<SystemUserVo> pageVo = this.baseMapper.findPageVo(page, getUserQueryWrapper(user));
+        for (SystemUserVo systemUserVo : pageVo.getList()) {
+            setUserRoleAndDataPermission(systemUserVo);
+        }
+        return pageVo;
+    }
+
+    @Override
+    public List<SystemUserVo> findUserList(SelectSystemUserAo user) {
+        List<SystemUserVo> userVos = this.baseMapper.findListVo(getUserQueryWrapper(user));
+        for (SystemUserVo userVo : userVos) {
+            setUserRoleAndDataPermission(userVo);
+        }
+        return userVos;
+    }
+
+    private void setUserRoleAndDataPermission(SystemUserVo systemUserVo) {
+        List<SystemUserRoleVo> userRoleListVo = userRoleMapper.findListVo(new QueryWrapper<SystemUserRoleVo>().eq("sur.user_id", systemUserVo.getUserId()));
+        systemUserVo.setRoleIds(userRoleListVo.stream().map(SystemUserRoleVo::getRoleId).collect(Collectors.toList()));
+        systemUserVo.setRoleNames(userRoleListVo.stream().map(SystemUserRoleVo::getRoleName).collect(Collectors.joining(StringConstant.COMMA)));
+        List<SystemUserDataPermissionVo> userDataPermissionListVo = systemUserDataPermissionMapper.findListVo(new QueryWrapper<SystemUserDataPermissionVo>().eq("sudp.user_id", systemUserVo.getUserId()));
+        systemUserVo.setDeptIds(userDataPermissionListVo.stream().map(SystemUserDataPermissionVo::getDeptId).collect(Collectors.toList()));
+        systemUserVo.setDeptNames(userDataPermissionListVo.stream().map(SystemUserDataPermissionVo::getDeptName).collect(Collectors.joining(StringConstant.COMMA)));
+    }
+
+    private QueryWrapper<SystemUserVo> getUserQueryWrapper(SelectSystemUserAo user) {
         QueryWrapper<SystemUserVo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.orderByAsc("su.user_id");
-        return this.baseMapper.findPageVo(page, queryWrapper);
+        AtomicReference<List<Long>> deptList = new AtomicReference<>();
+        Optional.ofNullable(user.getDeptId()).ifPresent(aLong -> deptList.set(deptService.getChildDeptId(aLong)));
+        queryWrapper
+                .in(user.getDeptId() != null && CollUtil.isNotEmpty(deptList.get()), "su.dept_id", deptList.get())
+                .eq(user.getDeptId() != null && CollUtil.isEmpty(deptList.get()), "su.dept_id", 0)
+                .like(StrUtil.isNotBlank(user.getUsername()), "su.username", user.getUsername())
+                .orderByAsc("su.user_id");
+        return queryWrapper;
     }
 
     @Override
     public SystemUserVo findUserDetail(String username) {
         SystemUserVo byName = this.findByName(username);
-        QueryWrapper<SystemUserRoleVo> objectQueryWrapper = new QueryWrapper<>();
-        objectQueryWrapper.eq("su.user_id", byName.getUserId());
-        List<SystemUserRoleVo> listVo = systemUserRoleMapper.findListVo(objectQueryWrapper);
-        byName.setSystemUserRoleVos(listVo);
-        QueryWrapper<SystemUserDataPermissionVo> systemUserDataPermissionVoQueryWrapper = new QueryWrapper<>();
-        objectQueryWrapper.eq("su.user_id", byName.getUserId());
-        List<Long> deptIds = systemUserDataPermissionMapper.findListVo(systemUserDataPermissionVoQueryWrapper).stream().map(SystemUserDataPermissionVo::getDeptId).collect(Collectors.toList());
-        byName.setDeptIds(deptIds);
+        setUserRoleAndDataPermission(byName);
         return byName;
     }
 
@@ -98,7 +127,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         systemUser.setAvatar(SystemUserVo.DEFAULT_AVATAR);
         systemUser.setPassword(passwordEncoder.encode(SystemUserVo.DEFAULT_PASSWORD));
         this.save(systemUser);
-        setUserRoles(systemUser, user.getRoles());
+        setUserRoles(systemUser, user.getRoleIds());
         setUserDataPermissions(systemUser, user.getDeptIds());
     }
 
@@ -116,7 +145,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
 
         ArrayList<Long> userIds = CollUtil.newArrayList(systemUser.getUserId());
         userRoleService.deleteUserRolesByUserId(userIds);
-        setUserRoles(systemUser, user.getRoles());
+        setUserRoles(systemUser, user.getRoleIds());
 
         userDataPermissionService.deleteByUserIds(userIds);
         setUserDataPermissions(systemUser, user.getDeptIds());
@@ -133,11 +162,19 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updatePassword(String password) {
+    public void updatePassword(String username, String password) {
         SystemUser user = new SystemUser();
         user.setPassword(passwordEncoder.encode(password));
         String currentUsername = BaseUtil.getCurrentUsername();
-        this.lambdaUpdate().eq(SystemUser::getUsername, currentUsername).update(user);
+        this.lambdaUpdate().eq(SystemUser::getUsername, Optional.ofNullable(username).filter(StrUtil::isNotBlank).orElse(currentUsername)).update(user);
+    }
+
+    @Override
+    public void updateStatus(String username, String status) {
+        SystemUser user = new SystemUser();
+        user.setStatus(Optional.ofNullable(status).filter(StrUtil::isNotBlank).orElse(SystemUserVo.STATUS_LOCK));
+        String currentUsername = BaseUtil.getCurrentUsername();
+        this.lambdaUpdate().eq(SystemUser::getUsername, Optional.ofNullable(username).filter(StrUtil::isNotBlank).orElse(currentUsername)).update(user);
     }
 
     @Override

@@ -30,6 +30,8 @@
                sm.perms,
                sm.icon,
                sm.type,
+               sm.hide_menu,
+               sm.ignore_keep_alive,
                sm.order_num,
                sm.create_time,
                sm.modify_time
@@ -45,6 +47,8 @@
                sm.perms,
                sm.icon,
                sm.type,
+               sm.hide_menu,
+               sm.ignore_keep_alive,
                sm.order_num,
                sm.create_time,
                sm.modify_time

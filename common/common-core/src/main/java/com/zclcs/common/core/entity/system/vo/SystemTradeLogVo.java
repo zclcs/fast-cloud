@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -22,7 +23,7 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "SystemTradeLogVo", description = "分布式事务测试")
-public class SystemTradeLogVo {
+public class SystemTradeLogVo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

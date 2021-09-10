@@ -11,7 +11,7 @@
  Target Server Version : 50735
  File Encoding         : 65001
 
- Date: 20/08/2021 16:07:46
+ Date: 10/09/2021 17:04:17
 */
 
 SET NAMES utf8mb4;
@@ -106,7 +106,7 @@ CREATE TABLE `system_dept`
     INDEX `system_dept_parent_id` (`parent_id`) USING BTREE,
     INDEX `system_dept_dept_name` (`dept_name`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 7
+  AUTO_INCREMENT = 9
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '部门表'
   ROW_FORMAT = DYNAMIC;
@@ -121,7 +121,7 @@ VALUES (2, 1, '开发一部', 1, '2018-01-04 15:42:34', '2019-01-18 00:59:37');
 INSERT INTO `system_dept`
 VALUES (3, 1, '开发二部', 2, '2018-01-04 15:42:29', '2019-01-05 14:09:39');
 INSERT INTO `system_dept`
-VALUES (4, 0, '市场部', 2, '2018-01-04 15:42:36', '2019-01-23 06:27:56');
+VALUES (4, 0, '市场部', 2, '2018-01-04 15:42:36', '2021-09-10 15:14:54');
 INSERT INTO `system_dept`
 VALUES (5, 0, '人事部', 3, '2018-01-04 15:42:32', '2019-01-23 06:27:59');
 INSERT INTO `system_dept`
@@ -270,9 +270,10 @@ CREATE TABLE `system_log`
     `create_time` datetime                                               NULL DEFAULT NULL COMMENT '创建时间',
     `location`    varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作地点',
     PRIMARY KEY (`id`) USING BTREE,
-    INDEX `system_log_create_time` (`create_time`) USING BTREE
+    INDEX `system_log_create_time` (`create_time`) USING BTREE,
+    INDEX `system_log_username` (`username`) USING BTREE
 ) ENGINE = MyISAM
-  AUTO_INCREMENT = 1
+  AUTO_INCREMENT = 81
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '用户操作日志表'
   ROW_FORMAT = DYNAMIC;
@@ -280,6 +281,316 @@ CREATE TABLE `system_log`
 -- ----------------------------
 -- Records of system_log
 -- ----------------------------
+INSERT INTO `system_log`
+VALUES (1, 'zclcs', '新增用户', 49, 'com.zclcs.server.system.controller.SystemUserController.addUser()',
+        ' user: \"SystemUserAo(username=test, password=null, email=null, mobile=null, status=1, lastLoginTime=null, gender=null, isTab=null, theme=null, avatar=null, description=null, deptIds=null)\"',
+        '127.0.0.1', '2021-09-03 10:12:52', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (2, 'zclcs', '新增用户', 27, 'com.zclcs.server.system.controller.SystemUserController.addUser()',
+        ' user: \"SystemUserAo(username=test, password=null, email=null, mobile=null, status=1, lastLoginTime=null, gender=null, isTab=null, theme=null, avatar=null, description=null, deptIds=null)\"',
+        '127.0.0.1', '2021-09-03 11:02:27', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (3, 'zclcs', '新增用户', 18, 'com.zclcs.server.system.controller.SystemUserController.addUser()',
+        ' user: \"SystemUserAo(username=test, password=null, deptId=4, email=null, mobile=null, status=1, lastLoginTime=null, gender=null, isTab=null, theme=null, avatar=null, description=null, roleIds=[1], deptIds=null)\"',
+        '127.0.0.1', '2021-09-06 16:30:53', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (4, 'zclcs', '新增用户', 285, 'com.zclcs.server.system.controller.SystemUserController.addUser()',
+        ' user: \"SystemUserAo(username=test, password=null, deptId=4, email=null, mobile=null, status=1, lastLoginTime=null, gender=null, isTab=null, theme=null, avatar=null, description=null, roleIds=[1], deptIds=[3])\"',
+        '127.0.0.1', '2021-09-06 17:00:34', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (5, 'zclcs', '新增用户', 247, 'com.zclcs.server.system.controller.SystemUserController.addUser()',
+        ' user: \"SystemUserAo(userId=null, username=test1, password=null, deptId=4, email=null, mobile=null, status=1, lastLoginTime=null, gender=null, isTab=null, theme=null, avatar=null, description=null, roleIds=[1], deptIds=[2])\"',
+        '127.0.0.1', '2021-09-07 09:44:32', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (6, 'zclcs', '修改用户', 96, 'com.zclcs.server.system.controller.SystemUserController.updateUser()',
+        ' user: \"SystemUserAo(userId=3, username=test, password=null, deptId=4, email=null, mobile=null, status=1, lastLoginTime=null, gender=null, isTab=null, theme=null, avatar=null, description=null, roleIds=[1], deptIds=[3])\"',
+        '127.0.0.1', '2021-09-07 09:45:37', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (7, 'zclcs', '修改用户', 75, 'com.zclcs.server.system.controller.SystemUserController.updateUser()',
+        ' user: \"SystemUserAo(userId=3, username=test, password=null, deptId=4, email=null, mobile=null, status=1, lastLoginTime=null, gender=null, isTab=null, theme=null, avatar=null, description=11, roleIds=[1], deptIds=[3])\"',
+        '127.0.0.1', '2021-09-07 09:47:28', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (8, 'zclcs', '删除用户', 76, 'com.zclcs.server.system.controller.SystemUserController.deleteUsers()',
+        ' userIds: \"4\"', '127.0.0.1', '2021-09-07 09:58:41', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (9, 'zclcs', '修改用户', 86, 'com.zclcs.server.system.controller.SystemUserController.updateUser()',
+        ' user: \"SystemUserAo(userId=3, username=test, password=null, deptId=4, email=null, mobile=null, status=1, lastLoginTime=null, gender=null, isTab=null, theme=null, avatar=null, description=11222, roleIds=[1], deptIds=[3])\"',
+        '127.0.0.1', '2021-09-07 10:00:55', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (10, 'zclcs', '新增用户', 160, 'com.zclcs.server.system.controller.SystemUserController.addUser()',
+        ' user: \"SystemUserAo(userId=null, username=test2, password=null, deptId=5, email=null, mobile=null, status=1, lastLoginTime=null, gender=null, isTab=null, theme=null, avatar=null, description=null, roleIds=[1], deptIds=[4])\"',
+        '127.0.0.1', '2021-09-07 10:01:49', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (11, 'zclcs', '新增用户', 174, 'com.zclcs.server.system.controller.SystemUserController.addUser()',
+        ' user: \"SystemUserAo(userId=null, username=test3, password=null, deptId=5, email=null, mobile=null, status=1, lastLoginTime=null, gender=null, isTab=null, theme=null, avatar=null, description=null, roleIds=[1], deptIds=[2])\"',
+        '127.0.0.1', '2021-09-07 10:06:27', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (12, 'zclcs', '新增用户', 152, 'com.zclcs.server.system.controller.SystemUserController.addUser()',
+        ' user: \"SystemUserAo(userId=null, username=test3, password=null, deptId=4, email=null, mobile=null, status=1, lastLoginTime=null, gender=null, isTab=null, theme=null, avatar=null, description=null, roleIds=[1], deptIds=[5])\"',
+        '127.0.0.1', '2021-09-07 10:06:54', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (13, 'zclcs', '删除用户', 74, 'com.zclcs.server.system.controller.SystemUserController.deleteUsers()',
+        ' userIds: \"6\"', '127.0.0.1', '2021-09-07 10:07:54', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (14, 'zclcs', '删除用户', 10, 'com.zclcs.server.system.controller.SystemUserController.deleteUsers()',
+        ' userIds: \"6\"', '127.0.0.1', '2021-09-07 10:08:03', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (15, 'zclcs', '删除用户', 42, 'com.zclcs.server.system.controller.SystemUserController.deleteUsers()',
+        ' userIds: \"7\"', '127.0.0.1', '2021-09-07 10:08:31', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (16, 'zclcs', '删除用户', 45, 'com.zclcs.server.system.controller.SystemUserController.deleteUsers()',
+        ' userIds: \"5\"', '127.0.0.1', '2021-09-07 10:11:53', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (17, 'zclcs', '删除用户', 45, 'com.zclcs.server.system.controller.SystemUserController.deleteUsers()',
+        ' userIds: \"3\"', '127.0.0.1', '2021-09-07 10:13:01', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (18, 'zclcs', '新增用户', 246, 'com.zclcs.server.system.controller.SystemUserController.addUser()',
+        ' user: \"SystemUserAo(userId=null, username=test, password=null, deptId=4, email=null, mobile=null, status=1, lastLoginTime=null, gender=null, isTab=null, theme=null, avatar=null, description=null, roleIds=[1], deptIds=[2])\"',
+        '127.0.0.1', '2021-09-07 16:56:28', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (19, 'zclcs', '删除用户', 65, 'com.zclcs.server.system.controller.SystemUserController.deleteUsers()',
+        ' userIds: \"8\"', '127.0.0.1', '2021-09-08 09:16:06', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (20, 'zclcs', '新增用户', 215, 'com.zclcs.server.system.controller.SystemUserController.addUser()',
+        ' user: \"SystemUserAo(userId=null, username=test, password=null, deptId=4, email=null, mobile=null, status=1, lastLoginTime=null, gender=null, isTab=null, theme=null, avatar=null, description=null, roleIds=[1], deptIds=[2])\"',
+        '127.0.0.1', '2021-09-08 09:19:38', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (21, 'zclcs', '修改用户', 147, 'com.zclcs.server.system.controller.SystemUserController.updateUser()',
+        ' user: \"SystemUserAo(userId=9, username=test, password=null, deptId=4, email=null, mobile=null, status=0, lastLoginTime=null, gender=null, isTab=null, theme=null, avatar=null, description=null, roleIds=[1], deptIds=[2])\"',
+        '127.0.0.1', '2021-09-08 10:29:11', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (22, 'zclcs', '新增菜单/按钮', 156, 'com.zclcs.server.system.controller.SystemMenuController.addMenu()',
+        ' menu: \"SystemMenuAo(menuId=null, parentId=1, menuName=角色管理, path=/cloud/system/role/index, component=null, perms=role:view, icon=ant-design:bell-twotone, type=0, orderNum=3.0)\"',
+        '127.0.0.1', '2021-09-08 15:11:16', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (23, 'zclcs', '新增菜单/按钮', 50, 'com.zclcs.server.system.controller.SystemMenuController.addMenu()',
+        ' menu: \"SystemMenuAo(menuId=null, parentId=10, menuName=修改菜单, path=null, component=null, perms=menu:update, icon=null, type=1, orderNum=2.0)\"',
+        '127.0.0.1', '2021-09-08 15:34:15', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (24, 'zclcs', '修改菜单/按钮', 57, 'com.zclcs.server.system.controller.SystemMenuController.updateMenu()',
+        ' menu: \"SystemMenuAo(menuId=1, parentId=null, menuName=系统管理, path=/system, component=null, perms=null, icon=ant-design:setting-outlined, type=2, orderNum=1.0)\"',
+        '127.0.0.1', '2021-09-08 16:50:54', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (25, 'zclcs', '新增菜单/按钮', 38, 'com.zclcs.server.system.controller.SystemMenuController.addMenu()',
+        ' menu: \"SystemMenuAo(menuId=null, parentId=10, menuName=删除菜单, path=null, component=null, perms=menu:delete, icon=null, type=1, orderNum=3.0)\"',
+        '127.0.0.1', '2021-09-09 09:09:49', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (26, 'zclcs', '修改菜单/按钮', 50, 'com.zclcs.server.system.controller.SystemMenuController.updateMenu()',
+        ' menu: \"SystemMenuAo(menuId=2, parentId=1, menuName=用户管理, path=user, component=/cloud/system/user/index, perms=user:view, icon=ant-design:user-switch-outlined, type=0, orderNum=1.0)\"',
+        '127.0.0.1', '2021-09-09 09:10:20', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (27, 'zclcs', '修改菜单/按钮', 42, 'com.zclcs.server.system.controller.SystemMenuController.updateMenu()',
+        ' menu: \"SystemMenuAo(menuId=4, parentId=1, menuName=部门管理, path=dept, component=/cloud/system/dept/index, perms=dept:view, icon=ant-design:apartment-outlined, type=0, orderNum=2.0)\"',
+        '127.0.0.1', '2021-09-09 09:11:30', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (28, 'zclcs', '修改菜单/按钮', 44, 'com.zclcs.server.system.controller.SystemMenuController.updateMenu()',
+        ' menu: \"SystemMenuAo(menuId=10, parentId=1, menuName=菜单管理, path=menu, component=/cloud/system/menu/index, perms=menu:view, icon=ant-design:menu-fold-outlined, type=0, orderNum=3.0)\"',
+        '127.0.0.1', '2021-09-09 09:11:47', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (29, 'zclcs', '修改菜单/按钮', 42, 'com.zclcs.server.system.controller.SystemMenuController.updateMenu()',
+        ' menu: \"SystemMenuAo(menuId=3, parentId=1, menuName=用户详情页面, path=accountDetail/:username, component=/cloud/system/user/AccountDetail, perms=user:view, icon=ant-design:audit-outlined, type=0, orderNum=2.0)\"',
+        '127.0.0.1', '2021-09-09 09:15:12', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (30, 'zclcs', '修改菜单/按钮', 43, 'com.zclcs.server.system.controller.SystemMenuController.updateMenu()',
+        ' menu: \"SystemMenuAo(menuId=12, parentId=1, menuName=角色管理, path=role, component=/cloud/system/role/index, perms=role:view, icon=ant-design:bell-twotone, type=0, orderNum=3.0)\"',
+        '127.0.0.1', '2021-09-09 09:15:38', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (31, 'zclcs', '修改菜单/按钮', 39, 'com.zclcs.server.system.controller.SystemMenuController.updateMenu()',
+        ' menu: \"SystemMenuAo(menuId=12, parentId=1, menuName=角色管理, path=role, component=/cloud/system/role/index, perms=role:view, icon=ant-design:bell-twotone, type=0, orderNum=3.0)\"',
+        '127.0.0.1', '2021-09-09 09:15:46', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (32, 'zclcs', '修改菜单/按钮', 45, 'com.zclcs.server.system.controller.SystemMenuController.updateMenu()',
+        ' menu: \"SystemMenuAo(menuId=14, parentId=10, menuName=删除菜单, path=null, component=null, perms=menu:delete, icon=null, type=1, orderNum=null)\"',
+        '127.0.0.1', '2021-09-09 10:29:08', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (33, 'zclcs', '修改菜单/按钮', 39, 'com.zclcs.server.system.controller.SystemMenuController.updateMenu()',
+        ' menu: \"SystemMenuAo(menuId=3, parentId=1, menuName=用户详情页面, path=accountDetail/:username, component=/cloud/system/user/AccountDetail, perms=user:view, icon=ant-design:audit-outlined, type=0, orderNum=2.0)\"',
+        '127.0.0.1', '2021-09-09 10:29:41', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (34, 'zclcs', '修改菜单/按钮', 113, 'com.zclcs.server.system.controller.SystemMenuController.updateMenu()',
+        ' menu: \"SystemMenuAo(menuId=12, parentId=1, menuName=角色管理, path=role, component=/cloud/system/role/index, perms=role:view, icon=ant-design:bell-twotone, type=0, hideMenu=1, ignoreKeepAlive=1, orderNum=3.0)\"',
+        '127.0.0.1', '2021-09-09 10:40:31', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (35, 'zclcs', '修改菜单/按钮', 56, 'com.zclcs.server.system.controller.SystemMenuController.updateMenu()',
+        ' menu: \"SystemMenuAo(menuId=12, parentId=1, menuName=角色管理, path=role, component=/cloud/system/role/index, perms=role:view, icon=ant-design:bell-twotone, type=0, hideMenu=0, ignoreKeepAlive=0, orderNum=3.0)\"',
+        '127.0.0.1', '2021-09-09 10:41:06', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (36, 'zclcs', '新增菜单/按钮', 119, 'com.zclcs.server.system.controller.SystemMenuController.addMenu()',
+        ' menu: \"SystemMenuAo(menuId=null, parentId=12, menuName=添加角色, path=null, component=null, perms=role:add, icon=null, type=1, hideMenu=null, ignoreKeepAlive=null, orderNum=null)\"',
+        '127.0.0.1', '2021-09-09 11:26:57', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (37, 'zclcs', '新增用户', 154, 'com.zclcs.server.system.controller.SystemUserController.addUser()',
+        ' user: \"SystemUserAo(userId=null, username=test1, password=null, deptId=5, email=null, mobile=null, status=1, lastLoginTime=null, gender=null, isTab=null, theme=null, avatar=null, description=null, roleIds=[1], deptIds=[2])\"',
+        '127.0.0.1', '2021-09-09 11:27:52', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (38, 'zclcs', '删除用户', 81, 'com.zclcs.server.system.controller.SystemUserController.deleteUsers()',
+        ' userIds: \"10\"', '127.0.0.1', '2021-09-09 11:27:57', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (39, 'zclcs', '新增菜单/按钮', 82, 'com.zclcs.server.system.controller.SystemMenuController.addMenu()',
+        ' menu: \"SystemMenuAo(menuId=null, parentId=12, menuName=修改角色, path=null, component=null, perms=role:update, icon=null, type=1, hideMenu=null, ignoreKeepAlive=null, orderNum=null)\"',
+        '127.0.0.1', '2021-09-09 11:33:34', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (40, 'zclcs', '修改菜单/按钮', 51, 'com.zclcs.server.system.controller.SystemMenuController.updateMenu()',
+        ' menu: \"SystemMenuAo(menuId=12, parentId=1, menuName=角色管理, path=role, component=/cloud/system/role/index, perms=role:view, icon=ant-design:solution-outlined, type=0, hideMenu=0, ignoreKeepAlive=0, orderNum=3.0)\"',
+        '127.0.0.1', '2021-09-09 11:34:40', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (41, 'zclcs', '新增角色', 117, 'com.zclcs.server.system.controller.SystemRoleController.addRole()',
+        ' role: \"SystemRoleAo(roleId=null, roleName=部门管理, remark=null, menuIds=[4])\"', '127.0.0.1',
+        '2021-09-09 14:54:42', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (42, 'zclcs', '修改用户', 95, 'com.zclcs.server.system.controller.SystemUserController.updateUser()',
+        ' user: \"SystemUserAo(userId=9, username=test, password=null, deptId=4, email=null, mobile=null, status=1, lastLoginTime=null, gender=null, isTab=null, theme=null, avatar=null, description=null, roleIds=[1], deptIds=[2])\"',
+        '127.0.0.1', '2021-09-09 14:58:16', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (43, 'zclcs', '修改用户', 85, 'com.zclcs.server.system.controller.SystemUserController.updateUser()',
+        ' user: \"SystemUserAo(userId=9, username=test, password=null, deptId=4, email=null, mobile=null, status=1, lastLoginTime=null, gender=null, isTab=null, theme=null, avatar=null, description=null, roleIds=[2], deptIds=[2])\"',
+        '127.0.0.1', '2021-09-09 14:58:31', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (44, 'zclcs', '修改用户', 80, 'com.zclcs.server.system.controller.SystemUserController.updateUser()',
+        ' user: \"SystemUserAo(userId=9, username=test, password=null, deptId=4, email=null, mobile=null, status=1, lastLoginTime=null, gender=null, isTab=null, theme=null, avatar=null, description=null, roleIds=[1], deptIds=[2])\"',
+        '127.0.0.1', '2021-09-09 15:01:06', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (45, 'zclcs', '修改用户', 83, 'com.zclcs.server.system.controller.SystemUserController.updateUser()',
+        ' user: \"SystemUserAo(userId=9, username=test, password=null, deptId=4, email=null, mobile=null, status=1, lastLoginTime=null, gender=null, isTab=null, theme=null, avatar=null, description=null, roleIds=[2], deptIds=[2])\"',
+        '127.0.0.1', '2021-09-09 15:01:13', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (46, 'zclcs', '修改角色', 84, 'com.zclcs.server.system.controller.SystemRoleController.updateRole()',
+        ' role: \"SystemRoleAo(roleId=2, roleName=部门管理, remark=null, menuIds=[4])\"', '127.0.0.1',
+        '2021-09-09 15:04:21', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (47, 'zclcs', '修改角色', 46, 'com.zclcs.server.system.controller.SystemRoleController.updateRole()',
+        ' role: \"SystemRoleAo(roleId=2, roleName=部门管理, remark=null, menuIds=[4])\"', '127.0.0.1',
+        '2021-09-09 15:17:21', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (48, 'zclcs', '修改角色', 45, 'com.zclcs.server.system.controller.SystemRoleController.updateRole()',
+        ' role: \"SystemRoleAo(roleId=2, roleName=部门管理, remark=null, menuIds=[4])\"', '127.0.0.1',
+        '2021-09-09 15:19:54', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (49, 'zclcs', '修改角色', 74, 'com.zclcs.server.system.controller.SystemRoleController.updateRole()',
+        ' role: \"SystemRoleAo(roleId=2, roleName=部门管理, remark=null, menuIds=[4])\"', '127.0.0.1',
+        '2021-09-09 15:20:09', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (50, 'zclcs', '修改角色', 54, 'com.zclcs.server.system.controller.SystemRoleController.updateRole()',
+        ' role: \"SystemRoleAo(roleId=2, roleName=部门管理, remark=null, menuIds=[4])\"', '127.0.0.1',
+        '2021-09-09 16:38:31', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (51, 'zclcs', '修改角色', 47, 'com.zclcs.server.system.controller.SystemRoleController.updateRole()',
+        ' role: \"SystemRoleAo(roleId=2, roleName=部门管理, remark=null, menuIds=[4])\"', '127.0.0.1',
+        '2021-09-09 16:38:53', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (52, 'zclcs', '修改角色', 106, 'com.zclcs.server.system.controller.SystemRoleController.updateRole()',
+        ' role: \"SystemRoleAo(roleId=2, roleName=部门管理, remark=null, menuIds=[4, 1])\"', '127.0.0.1',
+        '2021-09-09 16:40:42', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (53, 'zclcs', '修改角色', 169, 'com.zclcs.server.system.controller.SystemRoleController.updateRole()',
+        ' role: \"SystemRoleAo(roleId=2, roleName=部门管理, remark=null, menuIds=[1, 4])\"', '127.0.0.1',
+        '2021-09-10 09:48:39', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (54, 'zclcs', '修改角色', 103, 'com.zclcs.server.system.controller.SystemRoleController.updateRole()',
+        ' role: \"SystemRoleAo(roleId=2, roleName=部门管理, remark=null, menuIds=[1, 4])\"', '127.0.0.1',
+        '2021-09-10 09:50:06', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (55, 'zclcs', '修改角色', 81, 'com.zclcs.server.system.controller.SystemRoleController.updateRole()',
+        ' role: \"SystemRoleAo(roleId=2, roleName=部门管理, remark=null, menuIds=[4])\"', '127.0.0.1',
+        '2021-09-10 09:53:24', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (56, 'zclcs', '修改角色', 257, 'com.zclcs.server.system.controller.SystemRoleController.updateRole()',
+        ' role: \"SystemRoleAo(roleId=2, roleName=部门管理, remark=null, menuIds=[])\"', '127.0.0.1', '2021-09-10 10:30:12',
+        '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (57, 'zclcs', '修改角色', 83, 'com.zclcs.server.system.controller.SystemRoleController.updateRole()',
+        ' role: \"SystemRoleAo(roleId=2, roleName=部门管理, remark=null, menuIds=[5])\"', '127.0.0.1',
+        '2021-09-10 10:30:21', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (58, 'zclcs', '修改菜单/按钮', 49, 'com.zclcs.server.system.controller.SystemMenuController.updateMenu()',
+        ' menu: \"SystemMenuAo(menuId=12, parentId=1, menuName=角色管理, path=role, component=/cloud/system/role/index, perms=role:view, icon=ant-design:solution-outlined, type=0, hideMenu=0, ignoreKeepAlive=0, orderNum=2.0)\"',
+        '127.0.0.1', '2021-09-10 10:31:41', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (59, 'zclcs', '修改菜单/按钮', 56, 'com.zclcs.server.system.controller.SystemMenuController.updateMenu()',
+        ' menu: \"SystemMenuAo(menuId=4, parentId=1, menuName=部门管理, path=dept, component=/cloud/system/dept/index, perms=dept:view, icon=ant-design:apartment-outlined, type=0, hideMenu=0, ignoreKeepAlive=0, orderNum=4.0)\"',
+        '127.0.0.1', '2021-09-10 10:32:25', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (60, 'zclcs', '修改菜单/按钮', 52, 'com.zclcs.server.system.controller.SystemMenuController.updateMenu()',
+        ' menu: \"SystemMenuAo(menuId=5, parentId=2, menuName=添加用户, path=null, component=null, perms=user:add, icon=null, type=1, hideMenu=null, ignoreKeepAlive=null, orderNum=null)\"',
+        '127.0.0.1', '2021-09-10 10:33:20', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (61, 'zclcs', '新增菜单/按钮', 168, 'com.zclcs.server.system.controller.SystemMenuController.addMenu()',
+        ' menu: \"SystemMenuAo(menuId=null, parentId=4, menuName=添加部门, path=null, component=null, perms=dept:add, icon=null, type=1, hideMenu=null, ignoreKeepAlive=null, orderNum=null)\"',
+        '127.0.0.1', '2021-09-10 14:28:37', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (62, 'zclcs', '新增菜单/按钮', 47, 'com.zclcs.server.system.controller.SystemMenuController.addMenu()',
+        ' menu: \"SystemMenuAo(menuId=null, parentId=4, menuName=修改部门, path=null, component=null, perms=dept:delete, icon=null, type=1, hideMenu=null, ignoreKeepAlive=null, orderNum=null)\"',
+        '127.0.0.1', '2021-09-10 14:29:25', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (63, 'zclcs', '修改菜单/按钮', 50, 'com.zclcs.server.system.controller.SystemMenuController.updateMenu()',
+        ' menu: \"SystemMenuAo(menuId=18, parentId=4, menuName=修改部门, path=null, component=null, perms=dept:update, icon=null, type=1, hideMenu=null, ignoreKeepAlive=null, orderNum=null)\"',
+        '127.0.0.1', '2021-09-10 14:29:58', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (64, 'zclcs', '新增菜单/按钮', 50, 'com.zclcs.server.system.controller.SystemMenuController.addMenu()',
+        ' menu: \"SystemMenuAo(menuId=null, parentId=4, menuName=删除部门, path=null, component=null, perms=dept:delete, icon=null, type=1, hideMenu=null, ignoreKeepAlive=null, orderNum=null)\"',
+        '127.0.0.1', '2021-09-10 14:30:26', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (65, 'zclcs', '修改角色', 118, 'com.zclcs.server.system.controller.SystemRoleController.updateRole()',
+        ' role: \"SystemRoleAo(roleId=1, roleName=管理员, remark=管理员, menuIds=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19])\"',
+        '127.0.0.1', '2021-09-10 14:30:49', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (66, 'zclcs', '新增部门', 50, 'com.zclcs.server.system.controller.SystemDeptController.addDept()',
+        ' dept: \"SystemDeptAo(deptId=null, parentId=null, deptName=5, orderNum=5.0, createTimeFrom=null, createTimeTo=null)\"',
+        '127.0.0.1', '2021-09-10 15:04:49', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (67, 'zclcs', '修改部门', 56, 'com.zclcs.server.system.controller.SystemDeptController.updateDept()',
+        ' dept: \"SystemDeptAo(deptId=7, parentId=null, deptName=6, orderNum=5.0, createTimeFrom=null, createTimeTo=null)\"',
+        '127.0.0.1', '2021-09-10 15:05:00', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (68, 'zclcs', '删除部门', 372, 'com.zclcs.server.system.controller.SystemDeptController.deleteDepts()',
+        ' deptIds: \"8\"', '127.0.0.1', '2021-09-10 15:10:06', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (69, 'zclcs', '删除部门', 46, 'com.zclcs.server.system.controller.SystemDeptController.deleteDepts()',
+        ' deptIds: \"7\"', '127.0.0.1', '2021-09-10 15:10:09', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (70, 'zclcs', '修改部门', 98, 'com.zclcs.server.system.controller.SystemDeptController.updateDept()',
+        ' dept: \"SystemDeptAo(deptId=4, parentId=1, deptName=市场部, orderNum=2.0, createTimeFrom=null, createTimeTo=null)\"',
+        '127.0.0.1', '2021-09-10 15:14:47', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (71, 'zclcs', '修改部门', 43, 'com.zclcs.server.system.controller.SystemDeptController.updateDept()',
+        ' dept: \"SystemDeptAo(deptId=4, parentId=null, deptName=市场部, orderNum=2.0, createTimeFrom=null, createTimeTo=null)\"',
+        '127.0.0.1', '2021-09-10 15:14:54', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (72, 'zclcs', '修改菜单/按钮', 116, 'com.zclcs.server.system.controller.SystemMenuController.updateMenu()',
+        ' menu: \"SystemMenuAo(menuId=3, parentId=1, menuName=用户详情页面, path=accountDetail/:username, component=/cloud/system/user/AccountDetail, perms=user:detail:view, icon=ant-design:audit-outlined, type=0, hideMenu=1, ignoreKeepAlive=1, orderNum=2.0)\"',
+        '127.0.0.1', '2021-09-10 15:23:25', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (73, 'zclcs', '修改角色', 103, 'com.zclcs.server.system.controller.SystemRoleController.updateRole()',
+        ' role: \"SystemRoleAo(roleId=1, roleName=管理员, remark=管理员, menuIds=[1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19])\"',
+        '127.0.0.1', '2021-09-10 15:34:00', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (74, 'zclcs', '修改角色', 103, 'com.zclcs.server.system.controller.SystemRoleController.updateRole()',
+        ' role: \"SystemRoleAo(roleId=1, roleName=管理员, remark=管理员, menuIds=[1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 3])\"',
+        '127.0.0.1', '2021-09-10 15:56:12', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (75, 'zclcs', '修改角色', 69, 'com.zclcs.server.system.controller.SystemRoleController.updateRole()',
+        ' role: \"SystemRoleAo(roleId=2, roleName=查看, remark=null, menuIds=[2, 12, 3, 4, 10])\"', '127.0.0.1',
+        '2021-09-10 15:56:31', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (76, 'zclcs', '修改角色', 210, 'com.zclcs.server.system.controller.SystemRoleController.updateRole()',
+        ' role: \"SystemRoleAo(roleId=2, roleName=查看, remark=null, menuIds=[1, 2, 3, 4, 10, 12, 8])\"', '127.0.0.1',
+        '2021-09-10 15:59:33', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (77, 'zclcs', '修改角色', 154, 'com.zclcs.server.system.controller.SystemRoleController.updateRole()',
+        ' role: \"SystemRoleAo(roleId=2, roleName=部门管理, remark=null, menuIds=[8, 2])\"', '127.0.0.1',
+        '2021-09-10 16:17:48', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (78, 'zclcs', '修改角色', 75, 'com.zclcs.server.system.controller.SystemRoleController.updateRole()',
+        ' role: \"SystemRoleAo(roleId=2, roleName=部门管理, remark=null, menuIds=[1, 2])\"', '127.0.0.1',
+        '2021-09-10 16:18:02', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (79, 'zclcs', '修改角色', 78, 'com.zclcs.server.system.controller.SystemRoleController.updateRole()',
+        ' role: \"SystemRoleAo(roleId=2, roleName=部门管理, remark=null, menuIds=[2])\"', '127.0.0.1',
+        '2021-09-10 16:18:13', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (80, 'zclcs', '修改角色', 140, 'com.zclcs.server.system.controller.SystemRoleController.updateRole()',
+        ' role: \"SystemRoleAo(roleId=2, roleName=查看, remark=null, menuIds=[1, 2, 3, 12, 10, 4, 8])\"', '127.0.0.1',
+        '2021-09-10 16:59:22', '内网IP|0|0|内网IP|内网IP');
 
 -- ----------------------------
 -- Table structure for system_login_log
@@ -312,22 +623,24 @@ CREATE TABLE `system_login_log`
 DROP TABLE IF EXISTS `system_menu`;
 CREATE TABLE `system_menu`
 (
-    `menu_id`     bigint(20)                                              NOT NULL AUTO_INCREMENT COMMENT '菜单/按钮id',
-    `parent_id`   bigint(20)                                              NOT NULL COMMENT '上级菜单id',
-    `menu_name`   varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL COMMENT '菜单/按钮名称',
-    `path`        varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '对应路由path',
-    `component`   varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '对应路由组件component',
-    `perms`       varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL DEFAULT NULL COMMENT '权限标识',
-    `icon`        varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL DEFAULT NULL COMMENT '图标',
-    `type`        char(2) CHARACTER SET utf8 COLLATE utf8_general_ci      NOT NULL COMMENT '类型 0菜单 1按钮',
-    `order_num`   double(20, 0)                                           NULL DEFAULT NULL COMMENT '排序',
-    `create_time` datetime                                                NOT NULL COMMENT '创建时间',
-    `modify_time` datetime                                                NULL DEFAULT NULL COMMENT '修改时间',
+    `menu_id`           bigint(20)                                               NOT NULL AUTO_INCREMENT COMMENT '菜单/按钮id',
+    `parent_id`         bigint(20)                                               NOT NULL COMMENT '上级菜单id',
+    `menu_name`         varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci   NOT NULL COMMENT '菜单/按钮名称',
+    `path`              varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL     DEFAULT NULL COMMENT '对应路由path',
+    `component`         varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL     DEFAULT NULL COMMENT '对应路由组件component',
+    `perms`             varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci   NULL     DEFAULT NULL COMMENT '权限标识',
+    `icon`              varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci   NULL     DEFAULT NULL COMMENT '图标',
+    `type`              char(2) CHARACTER SET utf8 COLLATE utf8_general_ci       NOT NULL COMMENT '类型 0菜单 1按钮 2菜单',
+    `hide_menu`         char(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '是否隐藏菜单 1是 0否',
+    `ignore_keep_alive` char(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '是否忽略KeepAlive缓存 1是 0否',
+    `order_num`         double(20, 0)                                            NULL     DEFAULT NULL COMMENT '排序',
+    `create_time`       datetime                                                 NOT NULL COMMENT '创建时间',
+    `modify_time`       datetime                                                 NULL     DEFAULT NULL COMMENT '修改时间',
     PRIMARY KEY (`menu_id`) USING BTREE,
     INDEX `system_menu_parent_id` (`parent_id`) USING BTREE,
     INDEX `system_menu_menu_id` (`menu_id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 195
+  AUTO_INCREMENT = 20
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '菜单表'
   ROW_FORMAT = DYNAMIC;
@@ -336,163 +649,51 @@ CREATE TABLE `system_menu`
 -- Records of system_menu
 -- ----------------------------
 INSERT INTO `system_menu`
-VALUES (1, 0, '系统管理', '/system', 'Layout', NULL, 'el-icon-set-up', '0', 1, '2017-12-27 16:39:07',
-        '2019-07-20 16:19:04');
+VALUES (1, 0, '系统管理', '/system', 'Layout', NULL, 'ant-design:setting-outlined', '2', '0', '0', 1, '2017-12-27 16:39:07',
+        '2021-09-08 16:50:54');
 INSERT INTO `system_menu`
-VALUES (2, 0, '系统监控', '/monitor', 'Layout', NULL, 'el-icon-data-line', '0', 2, '2017-12-27 16:45:51',
-        '2019-01-23 06:27:12');
+VALUES (2, 1, '用户管理', 'user', '/cloud/system/user/index', 'user:view', 'ant-design:user-switch-outlined', '0', '0', '0',
+        1, '2017-12-27 16:47:13', '2021-09-09 09:10:20');
 INSERT INTO `system_menu`
-VALUES (3, 1, '用户管理', '/system/user', 'febs/system/user/Index', 'user:view', '', '0', 1, '2017-12-27 16:47:13',
-        '2019-01-22 06:45:55');
+VALUES (3, 1, '用户详情页面', 'accountDetail/:username', '/cloud/system/user/AccountDetail', 'user:detail:view',
+        'ant-design:audit-outlined', '0', '1', '1', 2, '2021-09-02 09:40:08', '2021-09-10 15:23:24');
 INSERT INTO `system_menu`
-VALUES (4, 1, '角色管理', '/system/role', 'febs/system/role/Index', 'role:view', '', '0', 2, '2017-12-27 16:48:09',
-        '2018-04-25 09:01:12');
+VALUES (4, 1, '部门管理', 'dept', '/cloud/system/dept/index', 'dept:view', 'ant-design:apartment-outlined', '0', '0', '0',
+        4, '2021-09-02 11:56:30', '2021-09-10 10:32:25');
 INSERT INTO `system_menu`
-VALUES (5, 1, '菜单管理', '/system/menu', 'febs/system/menu/Index', 'menu:view', '', '0', 3, '2017-12-27 16:48:57',
-        '2018-04-25 09:01:30');
+VALUES (5, 2, '添加用户', NULL, NULL, 'user:add', NULL, '1', '0', '0', 1, '2021-09-03 10:07:35', '2021-09-10 10:33:20');
 INSERT INTO `system_menu`
-VALUES (6, 1, '部门管理', '/system/dept', 'febs/system/dept/Index', 'dept:view', '', '0', 4, '2017-12-27 16:57:33',
-        '2018-04-25 09:01:40');
+VALUES (6, 2, '修改用户', NULL, NULL, 'user:update', NULL, '1', '0', '0', 2, '2021-09-07 09:02:52', NULL);
 INSERT INTO `system_menu`
-VALUES (10, 2, '系统日志', '/monitor/systemlog', 'febs/monitor/systemlog/Index', 'log:view', '', '0', 2,
-        '2017-12-27 17:00:50', '2020-04-13 11:38:04');
+VALUES (7, 2, '删除用户', NULL, NULL, 'user:delete', NULL, '1', '0', '0', 3, '2021-09-07 09:57:45', NULL);
 INSERT INTO `system_menu`
-VALUES (11, 3, '新增用户', '', '', 'user:add', NULL, '1', NULL, '2017-12-27 17:02:58', NULL);
+VALUES (8, 2, '查看用户操作日志', NULL, NULL, 'log:view', NULL, '1', '0', '0', 4, '2021-09-07 11:26:50', NULL);
 INSERT INTO `system_menu`
-VALUES (12, 3, '修改用户', '', '', 'user:update', NULL, '1', NULL, '2017-12-27 17:04:07', NULL);
+VALUES (9, 2, '重置用户密码', NULL, NULL, 'user:reset', NULL, '1', '0', '0', 5, '2021-09-07 15:16:32', NULL);
 INSERT INTO `system_menu`
-VALUES (13, 3, '删除用户', '', '', 'user:delete', NULL, '1', NULL, '2017-12-27 17:04:58', NULL);
+VALUES (10, 1, '菜单管理', 'menu', '/cloud/system/menu/index', 'menu:view', 'ant-design:menu-fold-outlined', '0', '0', '0',
+        3, '2021-09-08 10:55:14', '2021-09-09 09:11:47');
 INSERT INTO `system_menu`
-VALUES (14, 4, '新增角色', '', '', 'role:add', NULL, '1', NULL, '2017-12-27 17:06:38', NULL);
+VALUES (11, 10, '添加菜单', NULL, NULL, 'menu:add', NULL, '1', '0', '0', NULL, '2021-09-08 15:08:38', NULL);
 INSERT INTO `system_menu`
-VALUES (15, 4, '修改角色', '', '', 'role:update', NULL, '1', NULL, '2017-12-27 17:06:38', NULL);
+VALUES (12, 1, '角色管理', 'role', '/cloud/system/role/index', 'role:view', 'ant-design:solution-outlined', '0', '0', '0',
+        2, '2021-09-08 15:11:16', '2021-09-10 10:31:41');
 INSERT INTO `system_menu`
-VALUES (16, 4, '删除角色', '', '', 'role:delete', NULL, '1', NULL, '2017-12-27 17:06:38', NULL);
+VALUES (13, 10, '修改菜单', NULL, NULL, 'menu:update', NULL, '1', '0', '0', NULL, '2021-09-08 15:34:15', NULL);
 INSERT INTO `system_menu`
-VALUES (17, 5, '新增菜单', '', '', 'menu:add', NULL, '1', NULL, '2017-12-27 17:08:02', NULL);
+VALUES (14, 10, '删除菜单', NULL, NULL, 'menu:delete', NULL, '1', '0', '0', NULL, '2021-09-09 09:09:49',
+        '2021-09-09 10:29:08');
 INSERT INTO `system_menu`
-VALUES (18, 5, '修改菜单', '', '', 'menu:update', NULL, '1', NULL, '2017-12-27 17:08:02', NULL);
+VALUES (15, 12, '添加角色', NULL, NULL, 'role:add', NULL, '1', '0', '0', NULL, '2021-09-09 11:26:56', NULL);
 INSERT INTO `system_menu`
-VALUES (19, 5, '删除菜单', '', '', 'menu:delete', NULL, '1', NULL, '2017-12-27 17:08:02', NULL);
+VALUES (16, 12, '修改角色', NULL, NULL, 'role:update', NULL, '1', '0', '0', NULL, '2021-09-09 11:33:34', NULL);
 INSERT INTO `system_menu`
-VALUES (20, 6, '新增部门', '', '', 'dept:add', NULL, '1', NULL, '2017-12-27 17:09:24', NULL);
+VALUES (17, 4, '添加部门', NULL, NULL, 'dept:add', NULL, '1', '0', '0', NULL, '2021-09-10 14:28:37', NULL);
 INSERT INTO `system_menu`
-VALUES (21, 6, '修改部门', '', '', 'dept:update', NULL, '1', NULL, '2017-12-27 17:09:24', NULL);
+VALUES (18, 4, '修改部门', NULL, NULL, 'dept:update', NULL, '1', '0', '0', NULL, '2021-09-10 14:29:25',
+        '2021-09-10 14:29:58');
 INSERT INTO `system_menu`
-VALUES (22, 6, '删除部门', '', '', 'dept:delete', NULL, '1', NULL, '2017-12-27 17:09:24', NULL);
-INSERT INTO `system_menu`
-VALUES (24, 10, '删除日志', '', '', 'log:delete', NULL, '1', NULL, '2017-12-27 17:11:45', NULL);
-INSERT INTO `system_menu`
-VALUES (130, 3, '导出Excel', NULL, NULL, 'user:export', NULL, '1', NULL, '2019-01-23 06:35:16', NULL);
-INSERT INTO `system_menu`
-VALUES (131, 4, '导出Excel', NULL, NULL, 'role:export', NULL, '1', NULL, '2019-01-23 06:35:36', NULL);
-INSERT INTO `system_menu`
-VALUES (132, 5, '导出Excel', NULL, NULL, 'menu:export', NULL, '1', NULL, '2019-01-23 06:36:05', NULL);
-INSERT INTO `system_menu`
-VALUES (133, 6, '导出Excel', NULL, NULL, 'dept:export', NULL, '1', NULL, '2019-01-23 06:36:25', NULL);
-INSERT INTO `system_menu`
-VALUES (135, 3, '密码重置', NULL, NULL, 'user:reset', NULL, '1', NULL, '2019-01-23 06:37:00', NULL);
-INSERT INTO `system_menu`
-VALUES (136, 10, '导出Excel', NULL, NULL, 'log:export', NULL, '1', NULL, '2019-01-23 06:37:27', NULL);
-INSERT INTO `system_menu`
-VALUES (150, 2, '登录日志', '/monitor/loginlog', 'febs/monitor/loginlog/Index', 'monitor:loginlog', '', '0', 3,
-        '2019-07-22 13:41:17', '2020-04-13 11:38:08');
-INSERT INTO `system_menu`
-VALUES (151, 150, '删除日志', NULL, NULL, 'loginlog:delete', NULL, '1', NULL, '2019-07-22 13:43:04', NULL);
-INSERT INTO `system_menu`
-VALUES (152, 150, '导出Excel', NULL, NULL, 'loginlog:export', NULL, '1', NULL, '2019-07-22 13:43:30', NULL);
-INSERT INTO `system_menu`
-VALUES (154, 0, '其他模块', '/others', 'Layout', '', 'el-icon-shopping-bag-1', '0', 6, '2019-07-25 10:16:16',
-        '2020-04-14 18:38:20');
-INSERT INTO `system_menu`
-VALUES (155, 154, '导入导出', '/others/eximport', 'febs/others/eximport/Index', 'others:eximport', '', '0', 1,
-        '2019-07-25 10:19:31', NULL);
-INSERT INTO `system_menu`
-VALUES (156, 0, '代码生成', '/gen', 'Layout', '', 'el-icon-printer', '0', 4, '2019-07-25 10:24:03', '2020-01-16 13:59:49');
-INSERT INTO `system_menu`
-VALUES (157, 156, '基础配置', '/gen/config', 'febs/gen/config/Index', 'gen:config', '', '0', 1, '2019-07-25 10:24:55',
-        '2020-04-09 14:21:54');
-INSERT INTO `system_menu`
-VALUES (158, 156, '生成代码', '/gen/generate', 'febs/gen/generate/Index', 'gen:generate', '', '0', 2, '2019-07-25 10:25:26',
-        '2019-07-25 11:13:20');
-INSERT INTO `system_menu`
-VALUES (159, 157, '修改配置', NULL, NULL, 'gen:config:update', NULL, '1', NULL, '2019-07-26 16:22:56', NULL);
-INSERT INTO `system_menu`
-VALUES (160, 158, '打包生成', NULL, NULL, 'gen:generate:gen', NULL, '1', NULL, '2019-07-26 16:23:38',
-        '2019-07-26 16:23:53');
-INSERT INTO `system_menu`
-VALUES (163, 1, '客户端管理', '/client', 'febs/system/client/Index', 'client:view', '', '0', 5, '2019-09-26 22:58:09', NULL);
-INSERT INTO `system_menu`
-VALUES (164, 163, '新增', NULL, NULL, 'client:add', NULL, '1', NULL, '2019-09-26 22:58:21', NULL);
-INSERT INTO `system_menu`
-VALUES (165, 163, '修改', NULL, NULL, 'client:update', NULL, '1', NULL, '2019-09-26 22:58:43', NULL);
-INSERT INTO `system_menu`
-VALUES (166, 163, '删除', NULL, NULL, 'client:delete', NULL, '1', NULL, '2019-09-26 22:58:55', NULL);
-INSERT INTO `system_menu`
-VALUES (167, 163, '解密', NULL, NULL, 'client:decrypt', NULL, '1', NULL, '2019-09-26 22:59:08', NULL);
-INSERT INTO `system_menu`
-VALUES (168, 0, '静态组件', '/components', 'Layout', '', 'el-icon-present', '0', 7, '2019-12-02 16:41:28',
-        '2020-04-14 18:38:23');
-INSERT INTO `system_menu`
-VALUES (169, 168, '二级菜单', '/two', 'demos/two/Index', '', '', '0', 1, '2019-12-02 16:41:51', NULL);
-INSERT INTO `system_menu`
-VALUES (170, 169, '三级菜单', '/three', 'demos/two/three/Index', '', '', '0', 1, '2019-12-02 16:42:09', NULL);
-INSERT INTO `system_menu`
-VALUES (171, 168, 'MarkDown', '/components/markdown', 'demos/markdown', '', '', '0', 2, '2019-12-02 16:42:34', NULL);
-INSERT INTO `system_menu`
-VALUES (172, 168, '富文本编辑器', '/components/tinymce', 'demos/tinymce', '', '', '0', 3, '2019-12-02 16:42:50', NULL);
-INSERT INTO `system_menu`
-VALUES (173, 0, '网关管理', '/route', 'Layout', '', 'el-icon-odometer', '0', 3, '2020-01-16 14:00:15', NULL);
-INSERT INTO `system_menu`
-VALUES (174, 173, '网关用户', '/route/user', 'febs/route/routeuser/Index', '', '', '0', 1, '2020-01-16 14:00:32', NULL);
-INSERT INTO `system_menu`
-VALUES (175, 173, '网关日志', '/route/log', 'febs/route/routelog/Index', '', '', '0', 2, '2020-01-16 14:00:47', NULL);
-INSERT INTO `system_menu`
-VALUES (176, 173, '限流规则', '/route/ratelimitrule', 'febs/route/ratelimitrule/Index', '', '', '0', 3,
-        '2020-01-16 14:01:01', NULL);
-INSERT INTO `system_menu`
-VALUES (177, 173, '限流日志', '/route/ratelimitlog', 'febs/route/ratelimitlog/Index', '', '', '0', 4, '2020-01-16 14:01:17',
-        NULL);
-INSERT INTO `system_menu`
-VALUES (178, 173, '黑名单管理', '/route/blacklist', 'febs/route/blacklist/Index', '', '', '0', 5, '2020-01-16 14:01:32',
-        NULL);
-INSERT INTO `system_menu`
-VALUES (179, 173, '黑名单日志', '/route/blocklog', 'febs/route/blocklog/Index', '', '', '0', 6, '2020-01-16 14:01:49', NULL);
-INSERT INTO `system_menu`
-VALUES (180, 2, '监控面板', '/monitor/dashboard', 'febs/monitor/dashboard/Index', 'monitor:dashboard', '', '0', 1,
-        '2020-04-13 09:44:09', '2020-04-13 11:38:00');
-INSERT INTO `system_menu`
-VALUES (181, 154, '个人博客', '/others/blog', 'febs/others/blog/Index', '', '', '0', 2, '2020-04-13 16:11:48',
-        '2020-04-13 16:12:26');
-INSERT INTO `system_menu`
-VALUES (182, 154, '数据权限', '/others/datapermission', 'febs/others/datapermission/Index', 'others:datapermission', '',
-        '0', 3, '2020-04-14 14:51:35', '2020-04-14 15:37:19');
-INSERT INTO `system_menu`
-VALUES (183, 0, '任务调度', '/job', 'Layout', '', 'el-icon-alarm-clock', '0', 5, '2020-04-14 18:39:35',
-        '2020-04-14 18:39:53');
-INSERT INTO `system_menu`
-VALUES (184, 183, '任务列表', '/job/list', 'febs/job/job/Index', 'job:view', '', '0', 1, '2020-04-14 18:40:37',
-        '2020-04-14 18:41:36');
-INSERT INTO `system_menu`
-VALUES (185, 183, '调度日志', '/job/log', 'febs/job/log/Index', 'job:log:view', '', '0', 2, '2020-04-14 18:42:25', NULL);
-INSERT INTO `system_menu`
-VALUES (186, 184, '新增任务', NULL, NULL, 'job:add', NULL, '1', NULL, '2020-04-14 18:59:55', '2020-04-15 08:56:03');
-INSERT INTO `system_menu`
-VALUES (187, 184, '修改任务', NULL, NULL, 'job:update', NULL, '1', NULL, '2020-04-14 19:00:13', NULL);
-INSERT INTO `system_menu`
-VALUES (188, 184, '删除任务', NULL, NULL, 'job:delete', NULL, '1', NULL, '2020-04-14 19:00:26', NULL);
-INSERT INTO `system_menu`
-VALUES (189, 184, '暂停任务', NULL, NULL, 'job:pause', NULL, '1', NULL, '2020-04-14 19:00:42', NULL);
-INSERT INTO `system_menu`
-VALUES (190, 184, '恢复任务', NULL, NULL, 'job:resume', NULL, '1', NULL, '2020-04-14 19:00:56', NULL);
-INSERT INTO `system_menu`
-VALUES (191, 184, '立即执行一次', NULL, NULL, 'job:run', NULL, '1', NULL, '2020-04-14 19:01:42', NULL);
-INSERT INTO `system_menu`
-VALUES (192, 184, '导出Excel', NULL, NULL, 'job:export', NULL, '1', NULL, '2020-04-14 19:01:59', NULL);
-INSERT INTO `system_menu`
-VALUES (193, 185, '删除', NULL, NULL, 'job:log:delete', NULL, '1', NULL, '2020-04-15 14:01:33', NULL);
-INSERT INTO `system_menu`
-VALUES (194, 185, '导出', NULL, NULL, 'job:log:export', NULL, '1', NULL, '2020-04-15 14:01:45', NULL);
+VALUES (19, 4, '删除部门', NULL, NULL, 'dept:delete', NULL, '1', '0', '0', NULL, '2021-09-10 14:30:26', NULL);
 
 -- ----------------------------
 -- Table structure for system_role
@@ -507,7 +708,7 @@ CREATE TABLE `system_role`
     `modify_time` datetime                                                NULL DEFAULT NULL COMMENT '修改时间',
     PRIMARY KEY (`role_id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 5
+  AUTO_INCREMENT = 3
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '角色表'
   ROW_FORMAT = DYNAMIC;
@@ -516,13 +717,9 @@ CREATE TABLE `system_role`
 -- Records of system_role
 -- ----------------------------
 INSERT INTO `system_role`
-VALUES (1, '管理员', '管理员', '2017-12-27 16:23:11', '2020-04-15 14:02:27');
+VALUES (1, '管理员', '管理员', '2017-12-27 16:23:11', '2021-09-10 15:56:12');
 INSERT INTO `system_role`
-VALUES (2, '注册用户', '可查看，新增，导出', '2019-01-04 14:11:28', '2020-04-15 16:00:16');
-INSERT INTO `system_role`
-VALUES (3, '系统监控员', '负责系统监控模块', '2019-09-01 10:30:25', '2019-09-01 10:30:37');
-INSERT INTO `system_role`
-VALUES (4, '测试角色', '测试角色', '2020-03-08 19:16:01', '2020-04-13 11:26:13');
+VALUES (2, '查看', NULL, '2021-09-09 14:54:42', '2021-09-10 16:59:22');
 
 -- ----------------------------
 -- Table structure for system_role_menu
@@ -548,19 +745,13 @@ VALUES (1, 1);
 INSERT INTO `system_role_menu`
 VALUES (2, 1);
 INSERT INTO `system_role_menu`
-VALUES (4, 1);
-INSERT INTO `system_role_menu`
 VALUES (1, 2);
 INSERT INTO `system_role_menu`
 VALUES (2, 2);
 INSERT INTO `system_role_menu`
-VALUES (3, 2);
-INSERT INTO `system_role_menu`
 VALUES (1, 3);
 INSERT INTO `system_role_menu`
 VALUES (2, 3);
-INSERT INTO `system_role_menu`
-VALUES (4, 3);
 INSERT INTO `system_role_menu`
 VALUES (1, 4);
 INSERT INTO `system_role_menu`
@@ -568,33 +759,29 @@ VALUES (2, 4);
 INSERT INTO `system_role_menu`
 VALUES (1, 5);
 INSERT INTO `system_role_menu`
-VALUES (2, 5);
-INSERT INTO `system_role_menu`
 VALUES (1, 6);
 INSERT INTO `system_role_menu`
-VALUES (2, 6);
+VALUES (1, 7);
+INSERT INTO `system_role_menu`
+VALUES (1, 8);
+INSERT INTO `system_role_menu`
+VALUES (2, 8);
+INSERT INTO `system_role_menu`
+VALUES (1, 9);
 INSERT INTO `system_role_menu`
 VALUES (1, 10);
 INSERT INTO `system_role_menu`
 VALUES (2, 10);
 INSERT INTO `system_role_menu`
-VALUES (3, 10);
-INSERT INTO `system_role_menu`
 VALUES (1, 11);
-INSERT INTO `system_role_menu`
-VALUES (4, 11);
 INSERT INTO `system_role_menu`
 VALUES (1, 12);
 INSERT INTO `system_role_menu`
-VALUES (4, 12);
+VALUES (2, 12);
 INSERT INTO `system_role_menu`
 VALUES (1, 13);
 INSERT INTO `system_role_menu`
-VALUES (4, 13);
-INSERT INTO `system_role_menu`
 VALUES (1, 14);
-INSERT INTO `system_role_menu`
-VALUES (2, 14);
 INSERT INTO `system_role_menu`
 VALUES (1, 15);
 INSERT INTO `system_role_menu`
@@ -602,209 +789,9 @@ VALUES (1, 16);
 INSERT INTO `system_role_menu`
 VALUES (1, 17);
 INSERT INTO `system_role_menu`
-VALUES (2, 17);
-INSERT INTO `system_role_menu`
 VALUES (1, 18);
 INSERT INTO `system_role_menu`
 VALUES (1, 19);
-INSERT INTO `system_role_menu`
-VALUES (1, 20);
-INSERT INTO `system_role_menu`
-VALUES (2, 20);
-INSERT INTO `system_role_menu`
-VALUES (1, 21);
-INSERT INTO `system_role_menu`
-VALUES (1, 22);
-INSERT INTO `system_role_menu`
-VALUES (1, 24);
-INSERT INTO `system_role_menu`
-VALUES (3, 24);
-INSERT INTO `system_role_menu`
-VALUES (1, 130);
-INSERT INTO `system_role_menu`
-VALUES (2, 130);
-INSERT INTO `system_role_menu`
-VALUES (4, 130);
-INSERT INTO `system_role_menu`
-VALUES (1, 131);
-INSERT INTO `system_role_menu`
-VALUES (2, 131);
-INSERT INTO `system_role_menu`
-VALUES (1, 132);
-INSERT INTO `system_role_menu`
-VALUES (2, 132);
-INSERT INTO `system_role_menu`
-VALUES (1, 133);
-INSERT INTO `system_role_menu`
-VALUES (2, 133);
-INSERT INTO `system_role_menu`
-VALUES (1, 135);
-INSERT INTO `system_role_menu`
-VALUES (4, 135);
-INSERT INTO `system_role_menu`
-VALUES (1, 136);
-INSERT INTO `system_role_menu`
-VALUES (2, 136);
-INSERT INTO `system_role_menu`
-VALUES (3, 136);
-INSERT INTO `system_role_menu`
-VALUES (3, 148);
-INSERT INTO `system_role_menu`
-VALUES (3, 149);
-INSERT INTO `system_role_menu`
-VALUES (1, 150);
-INSERT INTO `system_role_menu`
-VALUES (2, 150);
-INSERT INTO `system_role_menu`
-VALUES (3, 150);
-INSERT INTO `system_role_menu`
-VALUES (1, 151);
-INSERT INTO `system_role_menu`
-VALUES (3, 151);
-INSERT INTO `system_role_menu`
-VALUES (1, 152);
-INSERT INTO `system_role_menu`
-VALUES (2, 152);
-INSERT INTO `system_role_menu`
-VALUES (3, 152);
-INSERT INTO `system_role_menu`
-VALUES (3, 153);
-INSERT INTO `system_role_menu`
-VALUES (1, 154);
-INSERT INTO `system_role_menu`
-VALUES (2, 154);
-INSERT INTO `system_role_menu`
-VALUES (1, 155);
-INSERT INTO `system_role_menu`
-VALUES (2, 155);
-INSERT INTO `system_role_menu`
-VALUES (1, 156);
-INSERT INTO `system_role_menu`
-VALUES (2, 156);
-INSERT INTO `system_role_menu`
-VALUES (1, 157);
-INSERT INTO `system_role_menu`
-VALUES (2, 157);
-INSERT INTO `system_role_menu`
-VALUES (1, 158);
-INSERT INTO `system_role_menu`
-VALUES (2, 158);
-INSERT INTO `system_role_menu`
-VALUES (1, 159);
-INSERT INTO `system_role_menu`
-VALUES (1, 160);
-INSERT INTO `system_role_menu`
-VALUES (2, 160);
-INSERT INTO `system_role_menu`
-VALUES (1, 163);
-INSERT INTO `system_role_menu`
-VALUES (2, 163);
-INSERT INTO `system_role_menu`
-VALUES (1, 164);
-INSERT INTO `system_role_menu`
-VALUES (2, 164);
-INSERT INTO `system_role_menu`
-VALUES (1, 165);
-INSERT INTO `system_role_menu`
-VALUES (1, 166);
-INSERT INTO `system_role_menu`
-VALUES (1, 167);
-INSERT INTO `system_role_menu`
-VALUES (2, 167);
-INSERT INTO `system_role_menu`
-VALUES (1, 168);
-INSERT INTO `system_role_menu`
-VALUES (2, 168);
-INSERT INTO `system_role_menu`
-VALUES (1, 169);
-INSERT INTO `system_role_menu`
-VALUES (2, 169);
-INSERT INTO `system_role_menu`
-VALUES (1, 170);
-INSERT INTO `system_role_menu`
-VALUES (2, 170);
-INSERT INTO `system_role_menu`
-VALUES (1, 171);
-INSERT INTO `system_role_menu`
-VALUES (2, 171);
-INSERT INTO `system_role_menu`
-VALUES (1, 172);
-INSERT INTO `system_role_menu`
-VALUES (2, 172);
-INSERT INTO `system_role_menu`
-VALUES (1, 173);
-INSERT INTO `system_role_menu`
-VALUES (2, 173);
-INSERT INTO `system_role_menu`
-VALUES (1, 174);
-INSERT INTO `system_role_menu`
-VALUES (2, 174);
-INSERT INTO `system_role_menu`
-VALUES (1, 175);
-INSERT INTO `system_role_menu`
-VALUES (2, 175);
-INSERT INTO `system_role_menu`
-VALUES (1, 176);
-INSERT INTO `system_role_menu`
-VALUES (2, 176);
-INSERT INTO `system_role_menu`
-VALUES (1, 177);
-INSERT INTO `system_role_menu`
-VALUES (2, 177);
-INSERT INTO `system_role_menu`
-VALUES (1, 178);
-INSERT INTO `system_role_menu`
-VALUES (2, 178);
-INSERT INTO `system_role_menu`
-VALUES (1, 179);
-INSERT INTO `system_role_menu`
-VALUES (2, 179);
-INSERT INTO `system_role_menu`
-VALUES (1, 180);
-INSERT INTO `system_role_menu`
-VALUES (2, 180);
-INSERT INTO `system_role_menu`
-VALUES (1, 181);
-INSERT INTO `system_role_menu`
-VALUES (2, 181);
-INSERT INTO `system_role_menu`
-VALUES (1, 182);
-INSERT INTO `system_role_menu`
-VALUES (2, 182);
-INSERT INTO `system_role_menu`
-VALUES (1, 183);
-INSERT INTO `system_role_menu`
-VALUES (2, 183);
-INSERT INTO `system_role_menu`
-VALUES (1, 184);
-INSERT INTO `system_role_menu`
-VALUES (2, 184);
-INSERT INTO `system_role_menu`
-VALUES (1, 185);
-INSERT INTO `system_role_menu`
-VALUES (2, 185);
-INSERT INTO `system_role_menu`
-VALUES (1, 186);
-INSERT INTO `system_role_menu`
-VALUES (1, 187);
-INSERT INTO `system_role_menu`
-VALUES (1, 188);
-INSERT INTO `system_role_menu`
-VALUES (1, 189);
-INSERT INTO `system_role_menu`
-VALUES (1, 190);
-INSERT INTO `system_role_menu`
-VALUES (1, 191);
-INSERT INTO `system_role_menu`
-VALUES (1, 192);
-INSERT INTO `system_role_menu`
-VALUES (2, 192);
-INSERT INTO `system_role_menu`
-VALUES (1, 193);
-INSERT INTO `system_role_menu`
-VALUES (1, 194);
-INSERT INTO `system_role_menu`
-VALUES (2, 194);
 
 -- ----------------------------
 -- Table structure for system_trade_log
@@ -853,7 +840,7 @@ CREATE TABLE `system_user`
     INDEX `system_user_username` (`username`) USING BTREE,
     INDEX `system_user_mobile` (`mobile`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 17
+  AUTO_INCREMENT = 10
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '用户表'
   ROW_FORMAT = DYNAMIC;
@@ -866,13 +853,8 @@ VALUES (1, 'zclcs', '$2a$10$gzhiUb1ldc1Rf3lka4k/WOoFKKGPepHSzJxzcPSN5/65SzkMdc.S
         '17788888888', '1', '2019-06-14 20:39:22', '2020-04-15 16:00:32', '2020-04-15 16:03:13', '0', '1', 'white',
         'gaOngJwsRYRaVAuXXcmB.png', '我是帅比作者。');
 INSERT INTO `system_user`
-VALUES (15, 'scott', '$2a$10$7tATi2STciLHnEgO/RfIxOYf2MQBu/SDVMRDs54rlSYVj2VmwwCHC', 5, 'scott@hotmail.com',
-        '17720888888', '1', '2019-07-20 19:00:32', '2020-04-15 16:00:42', '2020-04-14 16:49:27', '2', NULL, NULL,
-        'BiazfanxmamNRoxxVxka.png', NULL);
-INSERT INTO `system_user`
-VALUES (16, 'Jane', '$2a$10$ECkfipOPY7hORVdlSzIOX.8hnig0shAZQPG8pQ7D5iVP.uVogmmHy', 4, 'Jane@hotmail.com',
-        '13489898989', '1', '2019-09-01 10:31:21', '2020-04-15 16:00:48', '2019-09-01 10:32:27', '1', NULL, NULL,
-        '2dd7a2d09fa94bf8b5c52e5318868b4d9.jpg', NULL);
+VALUES (9, 'test', '$2a$10$URqQzGO9Hw9v5lyb2vsJFOBccfrxmuGdziyflizqEAH.LaonKk2mi', 4, NULL, NULL, '1',
+        '2021-09-08 09:19:38', '2021-09-09 15:01:13', NULL, NULL, NULL, NULL, 'default.jpg', NULL);
 
 -- ----------------------------
 -- Table structure for system_user_connection
@@ -929,13 +911,7 @@ VALUES (1, 5);
 INSERT INTO `system_user_data_permission`
 VALUES (1, 6);
 INSERT INTO `system_user_data_permission`
-VALUES (15, 1);
-INSERT INTO `system_user_data_permission`
-VALUES (15, 2);
-INSERT INTO `system_user_data_permission`
-VALUES (16, 4);
-INSERT INTO `system_user_data_permission`
-VALUES (16, 5);
+VALUES (9, 2);
 
 -- ----------------------------
 -- Table structure for system_user_role
@@ -957,8 +933,6 @@ CREATE TABLE `system_user_role`
 INSERT INTO `system_user_role`
 VALUES (1, 1);
 INSERT INTO `system_user_role`
-VALUES (15, 2);
-INSERT INTO `system_user_role`
-VALUES (16, 3);
+VALUES (9, 2);
 
 SET FOREIGN_KEY_CHECKS = 1;

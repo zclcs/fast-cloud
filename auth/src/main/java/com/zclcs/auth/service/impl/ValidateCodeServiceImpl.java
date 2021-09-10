@@ -6,6 +6,7 @@ import com.wf.captcha.base.Captcha;
 import com.zclcs.auth.properties.MyAuthProperties;
 import com.zclcs.auth.properties.MyValidateCodeProperties;
 import com.zclcs.auth.service.ValidateCodeService;
+import com.zclcs.common.core.constant.HttpStatusConstant;
 import com.zclcs.common.core.constant.ImageTypeConstant;
 import com.zclcs.common.core.constant.MyConstant;
 import com.zclcs.common.core.constant.ParamsConstant;
@@ -54,7 +55,7 @@ public class ValidateCodeServiceImpl implements ValidateCodeService {
             throw new ValidateCodeException("请输入验证码");
         }
         if (codeInRedis == null) {
-            throw new ValidateCodeException("验证码已过期");
+            throw new ValidateCodeException(HttpStatusConstant.YZMGQ, "验证码已过期");
         }
         if (!StringUtils.equalsIgnoreCase(value, String.valueOf(codeInRedis))) {
             throw new ValidateCodeException("验证码不正确");

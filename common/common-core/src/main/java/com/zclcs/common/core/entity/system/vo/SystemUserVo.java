@@ -111,7 +111,16 @@ public class SystemUserVo {
     @ApiModelProperty(value = "数据权限集合")
     private List<Long> deptIds;
 
-    @ApiModelProperty(value = "用户角色集合")
-    private List<SystemUserRoleVo> systemUserRoleVos;
+    @ApiModelProperty(value = "数据权限集合字符串")
+    private String deptNames;
+
+    @ApiModelProperty(value = "用户角色")
+    private List<SystemUserRoleVo> roles;
+
+    @ApiModelProperty(value = "用户角色编号集合")
+    private List<Long> roleIds;
+
+    @ApiModelProperty(value = "用户角色名称集合字符串")
+    private String roleNames;
 
 }

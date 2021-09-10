@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -20,7 +21,7 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "SystemMenuVo", description = "菜单表")
-public class SystemMenuVo {
+public class SystemMenuVo implements Serializable {
 
     /**
      * 菜单
@@ -31,9 +32,22 @@ public class SystemMenuVo {
      */
     public static final String TYPE_BUTTON = "1";
     /**
+     * 目录
+     */
+    public static final String TYPE_DIR = "2";
+    /**
      * 父菜单编号
      */
     public static final Long TOP_MENU_ID = 0L;
+
+    /**
+     * 是
+     */
+    public static final String YES = "1";
+    /**
+     * 否
+     */
+    public static final String NO = "0";
 
     private static final long serialVersionUID = 1L;
 
@@ -60,6 +74,12 @@ public class SystemMenuVo {
 
     @ApiModelProperty(value = "类型 0菜单 1按钮")
     private String type;
+
+    @ApiModelProperty(value = "是否隐藏菜单 1是 0否")
+    private String hideMenu;
+
+    @ApiModelProperty(value = "是否忽略KeepAlive缓存 1是 0否")
+    private String ignoreKeepAlive;
 
     @ApiModelProperty(value = "排序")
     private Double orderNum;

@@ -6,7 +6,6 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.entity.MenuTree;
 import com.zclcs.common.core.entity.Tree;
 import com.zclcs.common.core.entity.router.RouterMeta;
@@ -54,28 +53,21 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
     public List<SystemMenuVo> findUserSystemMenus(String username) {
         checkUser(username);
         QueryWrapper<SystemMenuVo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByAsc("sm.order_num");
         return this.baseMapper.findUserMenuListVo(queryWrapper, username);
     }
 
     @Override
-    public BasePage<MenuTree> findSystemMenus(SystemMenuAo menu) {
-        BasePage<MenuTree> basePage = new BasePage<>();
-        QueryWrapper<SystemMenuVo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.orderByAsc("sm.order_num");
-        List<SystemMenuVo> menus = this.baseMapper.findListVo(queryWrapper);
+    public List<? extends Tree<?>> findSystemMenus(SystemMenuAo menu) {
+        List<SystemMenuVo> menus = findSystemMenuList(menu);
         List<MenuTree> trees = new ArrayList<>();
         buildTrees(trees, menus);
 
-
         if (StringUtils.equals(menu.getType(), SystemMenuVo.TYPE_BUTTON)) {
-            basePage.setList(trees);
+            return trees;
         } else {
-            List<? extends Tree<?>> build = BaseTreeUtil.build(trees);
-            basePage.setList((List<MenuTree>) build);
+            return BaseTreeUtil.build(trees);
         }
-
-        basePage.setTotal(menus.size());
-        return null;
     }
 
     @Override
@@ -85,12 +77,17 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
         List<SystemMenuVo> menus = this.findUserSystemMenus(username);
         menus.forEach(menu -> {
             VueRouter<SystemMenuVo> route = new VueRouter<>();
-            route.setId(menu.getMenuId().toString());
-            route.setParentId(menu.getParentId().toString());
+            route.setId(menu.getMenuId());
+            route.setParentId(menu.getParentId());
             route.setPath(menu.getPath());
             route.setComponent(menu.getComponent());
             route.setName(menu.getMenuName());
-            route.setMeta(new RouterMeta(menu.getMenuName(), menu.getIcon(), true));
+            route.setMeta(new RouterMeta(
+                    menu.getMenuName(),
+                    menu.getIcon(),
+                    true,
+                    menu.getHideMenu().equals(SystemMenuVo.YES),
+                    menu.getIgnoreKeepAlive().equals(SystemMenuVo.YES)));
             routes.add(route);
         });
         return BaseTreeUtil.buildVueRouter(routes);
@@ -133,15 +130,18 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
     private void buildTrees(List<MenuTree> trees, List<SystemMenuVo> menus) {
         menus.forEach(menu -> {
             MenuTree tree = new MenuTree();
-            tree.setId(menu.getMenuId().toString());
-            tree.setParentId(menu.getParentId().toString());
+            tree.setId(menu.getMenuId());
+            tree.setParentId(menu.getParentId());
             tree.setLabel(menu.getMenuName());
             tree.setComponent(menu.getComponent());
             tree.setIcon(menu.getIcon());
             tree.setOrderNum(menu.getOrderNum());
             tree.setPath(menu.getPath());
             tree.setType(menu.getType());
+            tree.setHideMenu(menu.getHideMenu());
+            tree.setIgnoreKeepAlive(menu.getIgnoreKeepAlive());
             tree.setPerms(menu.getPerms());
+            tree.setCreateTime(menu.getCreateTime());
             trees.add(tree);
         });
     }
@@ -149,6 +149,7 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
     private void setMenu(SystemMenu menu) {
         if (menu.getParentId() == null) {
             menu.setParentId(SystemMenuVo.TOP_MENU_ID);
+            menu.setType(SystemMenuVo.TYPE_DIR);
         }
         if (SystemMenuVo.TYPE_BUTTON.equals(menu.getType())) {
             menu.setPath(null);

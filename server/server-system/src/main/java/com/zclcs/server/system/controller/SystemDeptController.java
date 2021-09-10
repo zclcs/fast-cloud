@@ -5,8 +5,11 @@ import com.zclcs.common.core.base.BasePageAo;
 import com.zclcs.common.core.base.BaseRsp;
 import com.zclcs.common.core.constant.StringConstant;
 import com.zclcs.common.core.entity.DeptTree;
+import com.zclcs.common.core.entity.system.ao.SelectSystemDeptAo;
 import com.zclcs.common.core.entity.system.ao.SystemDeptAo;
+import com.zclcs.common.core.entity.system.vo.SystemDeptVo;
 import com.zclcs.common.core.utils.BaseRspUtil;
+import com.zclcs.common.core.validate.strategy.UpdateStrategy;
 import com.zclcs.server.system.annotation.ControllerEndpoint;
 import com.zclcs.server.system.service.SystemDeptService;
 import io.swagger.annotations.Api;
@@ -43,16 +46,33 @@ public class SystemDeptController {
 
     @GetMapping
     @ApiOperation(value = "分页")
-    public BaseRsp<BasePage<DeptTree>> deptList(BasePageAo basePageAo, SystemDeptAo dept) {
+    @PreAuthorize("hasAuthority('dept:view')")
+    public BaseRsp<BasePage<DeptTree>> deptPage(@Valid BasePageAo basePageAo, SelectSystemDeptAo dept) {
         BasePage<DeptTree> page = this.deptService.findDeptPage(basePageAo, dept);
         return BaseRspUtil.data(page);
+    }
+
+    @GetMapping("options")
+    @ApiOperation(value = "集合")
+    @PreAuthorize("hasAuthority('dept:view')")
+    public BaseRsp<List<DeptTree>> deptTree(@Valid SelectSystemDeptAo dept) {
+        List<DeptTree> list = this.deptService.findDeptTree(dept);
+        return BaseRspUtil.data(list);
+    }
+
+    @GetMapping("list")
+    @ApiOperation(value = "集合")
+    @PreAuthorize("hasAuthority('dept:view')")
+    public BaseRsp<List<SystemDeptVo>> deptList(@Valid SelectSystemDeptAo dept) {
+        List<SystemDeptVo> deptList = this.deptService.findDeptList(dept);
+        return BaseRspUtil.data(deptList);
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('dept:add')")
     @ControllerEndpoint(operation = "新增部门", exceptionMessage = "新增部门失败")
     @ApiOperation(value = "新增部门")
-    public void addDept(@Valid SystemDeptAo dept) {
+    public void addDept(@RequestBody @Validated SystemDeptAo dept) {
         this.deptService.createDept(dept);
     }
 
@@ -69,7 +89,7 @@ public class SystemDeptController {
     @PreAuthorize("hasAuthority('dept:update')")
     @ControllerEndpoint(operation = "修改部门", exceptionMessage = "修改部门失败")
     @ApiOperation(value = "修改部门")
-    public void updateDept(@Valid SystemDeptAo dept) {
+    public void updateDept(@RequestBody @Validated(UpdateStrategy.class) SystemDeptAo dept) {
         this.deptService.updateDept(dept);
     }
 

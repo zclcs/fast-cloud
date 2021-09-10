@@ -1,13 +1,16 @@
 package com.zclcs.auth.manager;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zclcs.auth.mapper.SystemMenuMapper;
 import com.zclcs.auth.mapper.SystemUserMapper;
+import com.zclcs.auth.mapper.SystemUserRoleMapper;
 import com.zclcs.common.core.constant.MyConstant;
 import com.zclcs.common.core.entity.system.SystemUser;
 import com.zclcs.common.core.entity.system.SystemUserRole;
 import com.zclcs.common.core.entity.system.vo.SystemMenuVo;
 import com.zclcs.common.core.entity.system.vo.SystemUserDataPermissionVo;
+import com.zclcs.common.core.entity.system.vo.SystemUserRoleVo;
 import com.zclcs.common.core.entity.system.vo.SystemUserVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,6 +32,7 @@ import java.util.stream.Collectors;
 public class UserManager {
 
     private final SystemUserMapper userMapper;
+    private final SystemUserRoleMapper userRoleMapper;
     private final SystemMenuMapper menuMapper;
 
     /**
@@ -40,6 +44,8 @@ public class UserManager {
     public SystemUserVo findByName(String username) {
         SystemUserVo user = userMapper.findByName(username);
         if (user != null) {
+            List<SystemUserRoleVo> listVo = userRoleMapper.findListVo(new QueryWrapper<SystemUserRoleVo>().eq("sur.user_id", user.getUserId()));
+            user.setRoles(listVo);
             List<SystemUserDataPermissionVo> permissions = userMapper.findUserDataPermissions(user.getUserId());
             List<Long> deptIds = permissions.stream().map(SystemUserDataPermissionVo::getDeptId).collect(Collectors.toList());
             user.setDeptIds(deptIds);

@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -23,7 +24,7 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "SystemLogVo", description = "用户操作日志表")
-public class SystemLogVo {
+public class SystemLogVo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

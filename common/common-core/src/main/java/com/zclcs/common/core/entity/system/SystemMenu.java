@@ -50,8 +50,14 @@ public class SystemMenu extends Model<SystemMenu> {
     @ApiModelProperty(value = "图标")
     private String icon;
 
-    @ApiModelProperty(value = "类型 0菜单 1按钮")
+    @ApiModelProperty(value = "类型 0菜单 1按钮 2目录")
     private String type;
+
+    @ApiModelProperty(value = "是否隐藏菜单 1是 0否")
+    private String hideMenu;
+
+    @ApiModelProperty(value = "是否忽略KeepAlive缓存 1是 0否")
+    private String ignoreKeepAlive;
 
     @ApiModelProperty(value = "排序")
     private Double orderNum;

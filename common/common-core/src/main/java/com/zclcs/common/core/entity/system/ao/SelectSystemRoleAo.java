@@ -1,4 +1,4 @@
-package com.zclcs.common.core.entity.system.vo;
+package com.zclcs.common.core.entity.system.ao;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -7,34 +7,32 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
- * 用户角色关联表
+ * 角色表
  * </p>
  *
  * @author zclcs
- * @since 2021-08-11
+ * @since 2021-08-16
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value = "SystemUserRoleVo", description = "用户角色关联表")
-public class SystemUserRoleVo implements Serializable {
+@ApiModel(value = "SelectSystemRoleAo", description = "角色表")
+public class SelectSystemRoleAo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "用户id")
-    private Long userId;
-
-    @ApiModelProperty(value = "用户名称")
-    private String userName;
-
-    @ApiModelProperty(value = "角色id")
-    private Long roleId;
-
     @ApiModelProperty(value = "角色名称")
     private String roleName;
+
+    @ApiModelProperty(value = "角色描述")
+    private String remark;
+
+    @ApiModelProperty(value = "菜单编号")
+    private List<Long> menuIds;
 
 
 }

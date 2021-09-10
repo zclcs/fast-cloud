@@ -41,6 +41,7 @@ public class SystemLogController {
 
     @GetMapping
     @ApiOperation(value = "分页")
+    @PreAuthorize("hasAuthority('log:view')")
     public BaseRsp<BasePage<SystemLogVo>> logList(BasePageAo basePageAo, SystemLogAo log) {
         BasePage<SystemLogVo> page = this.logService.findLogPage(basePageAo, log);
         return BaseRspUtil.data(page);

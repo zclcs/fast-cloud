@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
 import com.zclcs.common.core.entity.system.SystemRole;
+import com.zclcs.common.core.entity.system.ao.SelectSystemRoleAo;
 import com.zclcs.common.core.entity.system.ao.SystemRoleAo;
 import com.zclcs.common.core.entity.system.vo.SystemRoleVo;
 
@@ -39,9 +40,10 @@ public interface SystemRoleService extends IService<SystemRole> {
     /**
      * 获取所有角色
      *
+     * @param selectSystemRoleAo 查询参数
      * @return 角色列表
      */
-    List<SystemRoleVo> findSystemRoleList();
+    List<SystemRoleVo> findSystemRoleList(SelectSystemRoleAo selectSystemRoleAo);
 
     /**
      * 通过名称获取角色

@@ -5,6 +5,7 @@ import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
 import com.zclcs.common.core.entity.DeptTree;
 import com.zclcs.common.core.entity.system.SystemDept;
+import com.zclcs.common.core.entity.system.ao.SelectSystemDeptAo;
 import com.zclcs.common.core.entity.system.ao.SystemDeptAo;
 import com.zclcs.common.core.entity.system.vo.SystemDeptVo;
 
@@ -27,7 +28,7 @@ public interface SystemDeptService extends IService<SystemDept> {
      * @param dept    dept
      * @return 部门信息
      */
-    BasePage<DeptTree> findDeptPage(BasePageAo request, SystemDeptAo dept);
+    BasePage<DeptTree> findDeptPage(BasePageAo request, SelectSystemDeptAo dept);
 
     /**
      * 获取部门列表
@@ -35,7 +36,23 @@ public interface SystemDeptService extends IService<SystemDept> {
      * @param dept dept
      * @return 部门列表
      */
-    List<SystemDeptVo> findDeptList(SystemDeptAo dept);
+    List<SystemDeptVo> findDeptList(SelectSystemDeptAo dept);
+
+    /**
+     * 获取部门列表
+     *
+     * @param dept dept
+     * @return 部门列表
+     */
+    List<DeptTree> findDeptTree(SelectSystemDeptAo dept);
+
+    /**
+     * 返回本级以及下级部门编号
+     *
+     * @param deptId 部门编号
+     * @return 本级以及下级部门编号
+     */
+    List<Long> getChildDeptId(Long deptId);
 
     /**
      * 创建部门

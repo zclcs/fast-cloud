@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -19,7 +20,7 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "SystemExport对象", description = "excel导入导出测试")
-public class SystemExportVo {
+public class SystemExportVo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

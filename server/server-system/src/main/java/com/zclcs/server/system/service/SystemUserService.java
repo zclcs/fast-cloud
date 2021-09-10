@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
 import com.zclcs.common.core.entity.system.SystemUser;
+import com.zclcs.common.core.entity.system.ao.SelectSystemUserAo;
 import com.zclcs.common.core.entity.system.ao.SystemUserAo;
 import com.zclcs.common.core.entity.system.vo.SystemUserVo;
 
@@ -34,7 +35,15 @@ public interface SystemUserService extends IService<SystemUser> {
      * @param user    用户对象，用于传递查询条件
      * @return IPage
      */
-    BasePage<SystemUserVo> findUserDetailPage(BasePageAo request, SystemUserAo user);
+    BasePage<SystemUserVo> findUserDetailPage(BasePageAo request, SelectSystemUserAo user);
+
+    /**
+     * 查找用户详细信息
+     *
+     * @param user 用户对象，用于传递查询条件
+     * @return IPage
+     */
+    List<SystemUserVo> findUserList(SelectSystemUserAo user);
 
     /**
      * 通过用户名查找用户详细信息
@@ -75,9 +84,18 @@ public interface SystemUserService extends IService<SystemUser> {
     /**
      * 更新用户密码
      *
+     * @param username 用户名 为空则修改当前用户
      * @param password 新密码
      */
-    void updatePassword(String password);
+    void updatePassword(String username, String password);
+
+    /**
+     * 更新用户状态
+     *
+     * @param username 用户名 为空则修改当前用户
+     * @param status   状态 为空则修改为禁用状态
+     */
+    void updateStatus(String username, String status);
 
     /**
      * 重置密码

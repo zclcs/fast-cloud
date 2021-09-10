@@ -1,8 +1,7 @@
 package com.zclcs.server.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zclcs.common.core.base.BasePage;
-import com.zclcs.common.core.entity.MenuTree;
+import com.zclcs.common.core.entity.Tree;
 import com.zclcs.common.core.entity.router.VueRouter;
 import com.zclcs.common.core.entity.system.SystemMenu;
 import com.zclcs.common.core.entity.system.ao.SystemMenuAo;
@@ -42,7 +41,7 @@ public interface SystemMenuService extends IService<SystemMenu> {
      * @param menu menu
      * @return 用户菜单
      */
-    BasePage<MenuTree> findSystemMenus(SystemMenuAo menu);
+    List<? extends Tree<?>> findSystemMenus(SystemMenuAo menu);
 
     /**
      * 获取用户路由

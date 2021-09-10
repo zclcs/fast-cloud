@@ -20,9 +20,9 @@ public class VueRouter<T> implements Serializable {
     private static final long serialVersionUID = -3327478146308500708L;
 
     @JsonIgnore
-    private String id;
+    private Long id;
     @JsonIgnore
-    private String parentId;
+    private Long parentId;
 
     private String path;
     private String name;

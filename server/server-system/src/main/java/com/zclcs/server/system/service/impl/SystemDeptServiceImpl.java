@@ -1,6 +1,7 @@
 package com.zclcs.server.system.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -11,6 +12,7 @@ import com.zclcs.common.core.base.BasePageAo;
 import com.zclcs.common.core.entity.DeptTree;
 import com.zclcs.common.core.entity.Tree;
 import com.zclcs.common.core.entity.system.SystemDept;
+import com.zclcs.common.core.entity.system.ao.SelectSystemDeptAo;
 import com.zclcs.common.core.entity.system.ao.SystemDeptAo;
 import com.zclcs.common.core.entity.system.vo.SystemDeptVo;
 import com.zclcs.common.core.utils.BaseTreeUtil;
@@ -44,7 +46,7 @@ public class SystemDeptServiceImpl extends ServiceImpl<SystemDeptMapper, SystemD
     private final SystemUserDataPermissionService userDataPermissionService;
 
     @Override
-    public BasePage<DeptTree> findDeptPage(BasePageAo request, SystemDeptAo dept) {
+    public BasePage<DeptTree> findDeptPage(BasePageAo request, SelectSystemDeptAo dept) {
         BasePage<DeptTree> basePage = new BasePage<>();
         try {
             List<SystemDeptVo> depts = findDeptList(dept);
@@ -63,12 +65,39 @@ public class SystemDeptServiceImpl extends ServiceImpl<SystemDeptMapper, SystemD
     }
 
     @Override
-    public List<SystemDeptVo> findDeptList(SystemDeptAo dept) {
+    public List<SystemDeptVo> findDeptList(SelectSystemDeptAo dept) {
         QueryWrapper<SystemDeptVo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByAsc("sd.order_num");
         queryWrapper.like(StrUtil.isNotBlank(dept.getDeptName()), "sd.dept_name", dept.getDeptName());
         queryWrapper.between(StrUtil.isNotBlank(dept.getCreateTimeFrom()) && StrUtil.isNotBlank(dept.getCreateTimeTo()),
                 "sd.create_time", dept.getCreateTimeFrom(), dept.getCreateTimeTo());
         return this.baseMapper.findListVo(queryWrapper);
+    }
+
+    @Override
+    public List<DeptTree> findDeptTree(SelectSystemDeptAo dept) {
+        List<SystemDeptVo> depts = findDeptList(dept);
+        List<DeptTree> trees = new ArrayList<>();
+        buildTrees(trees, depts);
+        return (List<DeptTree>) BaseTreeUtil.build(trees);
+    }
+
+    @Override
+    public List<Long> getChildDeptId(Long deptId) {
+        List<Long> deptIds = new ArrayList<>();
+        deptIds.add(deptId);
+        getChild(deptIds, this.lambdaQuery().eq(SystemDept::getDeptId, deptId).one());
+        return deptIds;
+    }
+
+    private void getChild(List<Long> allDeptId, SystemDept systemDept) {
+        List<SystemDept> one = this.lambdaQuery().eq(SystemDept::getParentId, systemDept.getDeptId()).list();
+        if (CollUtil.isNotEmpty(one)) {
+            for (SystemDept dept : one) {
+                allDeptId.add(dept.getDeptId());
+                getChild(allDeptId, dept);
+            }
+        }
     }
 
     @Override
@@ -92,7 +121,7 @@ public class SystemDeptServiceImpl extends ServiceImpl<SystemDeptMapper, SystemD
             systemDept.setParentId(SystemDeptVo.TOP_DEPT_ID);
         }
         systemDept.setModifyTime(DateUtil.date());
-        this.save(systemDept);
+        this.updateById(systemDept);
     }
 
     @Override
@@ -104,10 +133,11 @@ public class SystemDeptServiceImpl extends ServiceImpl<SystemDeptMapper, SystemD
     private void buildTrees(List<DeptTree> trees, List<SystemDeptVo> deptVos) {
         deptVos.forEach(dept -> {
             DeptTree tree = new DeptTree();
-            tree.setId(dept.getDeptId().toString());
-            tree.setParentId(dept.getParentId().toString());
+            tree.setId(dept.getDeptId());
+            tree.setParentId(dept.getParentId());
             tree.setLabel(dept.getDeptName());
             tree.setOrderNum(dept.getOrderNum());
+            tree.setCreateTime(dept.getCreateTime());
             trees.add(tree);
         });
     }

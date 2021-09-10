@@ -5,9 +5,12 @@ import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
 import com.zclcs.common.core.base.BaseRsp;
 import com.zclcs.common.core.constant.StringConstant;
+import com.zclcs.common.core.entity.system.SystemRole;
+import com.zclcs.common.core.entity.system.ao.SelectSystemRoleAo;
 import com.zclcs.common.core.entity.system.ao.SystemRoleAo;
 import com.zclcs.common.core.entity.system.vo.SystemRoleVo;
 import com.zclcs.common.core.utils.BaseRspUtil;
+import com.zclcs.common.core.validate.strategy.UpdateStrategy;
 import com.zclcs.server.system.annotation.ControllerEndpoint;
 import com.zclcs.server.system.service.SystemRoleService;
 import io.swagger.annotations.Api;
@@ -18,8 +21,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,30 +47,33 @@ public class SystemRoleController {
 
     @GetMapping
     @ApiOperation(value = "分页")
-    public BaseRsp<BasePage<SystemRoleVo>> roleList(BasePageAo queryRequest, SystemRoleAo role) {
+    public BaseRsp<BasePage<SystemRoleVo>> roleList(@Validated BasePageAo queryRequest, SystemRoleAo role) {
         BasePage<SystemRoleVo> systemRolePage = roleService.findSystemRolePage(queryRequest, role);
         return BaseRspUtil.data(systemRolePage);
     }
 
     @GetMapping("options")
     @ApiOperation(value = "集合")
-    public BaseRsp<List<SystemRoleVo>> roles() {
-        List<SystemRoleVo> systemRoleList = roleService.findSystemRoleList();
+    public BaseRsp<List<SystemRoleVo>> roles(@Validated SelectSystemRoleAo selectSystemRoleAo) {
+        List<SystemRoleVo> systemRoleList = roleService.findSystemRoleList(selectSystemRoleAo);
         return BaseRspUtil.data(systemRoleList);
     }
 
-    @GetMapping("check/{roleName}")
+    @GetMapping("check/{roleId}/{roleName}")
     @ApiOperation(value = "检查用户角色名")
-    public boolean checkRoleName(@NotBlank(message = "{required}") @PathVariable String roleName) {
-        SystemRoleVo byName = roleService.findByName(roleName);
-        return byName == null;
+    public BaseRsp<Boolean> checkRoleName(@NotNull(message = "{required}") @PathVariable Long roleId, @NotBlank(message = "{required}") @PathVariable String roleName) {
+        SystemRole one = roleService.lambdaQuery().eq(SystemRole::getRoleId, roleId).one();
+        if (one.getRoleName().equals(roleName)) {
+            return BaseRspUtil.data(false);
+        }
+        return BaseRspUtil.data(roleService.lambdaQuery().eq(SystemRole::getRoleName, roleName).one() != null);
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('role:add')")
     @ApiOperation(value = "新增角色")
     @ControllerEndpoint(operation = "新增角色", exceptionMessage = "新增角色失败")
-    public void addRole(@Valid SystemRoleAo role) {
+    public void addRole(@RequestBody @Validated SystemRoleAo role) {
         this.roleService.createSystemRole(role);
     }
 
@@ -84,7 +90,7 @@ public class SystemRoleController {
     @PreAuthorize("hasAuthority('role:update')")
     @ApiOperation(value = "修改角色")
     @ControllerEndpoint(operation = "修改角色", exceptionMessage = "修改角色失败")
-    public void updateRole(@Valid SystemRoleAo role) {
+    public void updateRole(@RequestBody @Validated(UpdateStrategy.class) SystemRoleAo role) {
         this.roleService.updateSystemRole(role);
     }
 

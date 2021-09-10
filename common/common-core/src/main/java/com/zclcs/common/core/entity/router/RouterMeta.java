@@ -20,6 +20,8 @@ public class RouterMeta implements Serializable {
 
     private String title;
     private String icon;
-    private Boolean breadcrumb = true;
+    private Boolean hideBreadcrumb = true;
+    private Boolean hideMenu = true;
+    private Boolean ignoreKeepAlive = true;
 
 }

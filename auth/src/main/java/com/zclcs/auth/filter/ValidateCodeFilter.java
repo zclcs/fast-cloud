@@ -3,6 +3,7 @@ package com.zclcs.auth.filter;
 import com.zclcs.auth.service.ValidateCodeService;
 import com.zclcs.common.core.constant.EndpointConstant;
 import com.zclcs.common.core.constant.GrantTypeConstant;
+import com.zclcs.common.core.constant.HttpStatusConstant;
 import com.zclcs.common.core.constant.ParamsConstant;
 import com.zclcs.common.core.exception.ValidateCodeException;
 import com.zclcs.common.core.utils.BaseRspUtil;
@@ -47,6 +48,13 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
             try {
                 validateCode(httpServletRequest);
                 filterChain.doFilter(httpServletRequest, httpServletResponse);
+            } catch (ValidateCodeException e) {
+                if (e.getCode() != HttpStatusConstant.WCW) {
+                    BaseUtil.makeJsonResponse(httpServletResponse, e.getCode(), BaseRspUtil.message(e.getMessage()));
+                } else {
+                    BaseUtil.makeFailureResponse(httpServletResponse, BaseRspUtil.message(e.getMessage()));
+                }
+                log.error(e.getMessage(), e);
             } catch (Exception e) {
                 BaseUtil.makeFailureResponse(httpServletResponse, BaseRspUtil.message(e.getMessage()));
                 log.error(e.getMessage(), e);

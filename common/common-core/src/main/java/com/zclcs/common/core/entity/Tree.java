@@ -3,6 +3,7 @@ package com.zclcs.common.core.entity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,15 +12,17 @@ import java.util.List;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Tree<T> {
+public class Tree<T> implements Serializable {
 
-    private String id;
+    private static final long serialVersionUID = 1L;
+
+    private Long id;
 
     private String label;
 
     private List<Tree<T>> children;
 
-    private String parentId;
+    private Long parentId;
 
     private boolean hasParent = false;
 

@@ -1,15 +1,14 @@
 package com.zclcs.server.system.controller;
 
 
-import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BaseRsp;
 import com.zclcs.common.core.constant.StringConstant;
 import com.zclcs.common.core.entity.MenuTree;
 import com.zclcs.common.core.entity.router.VueRouter;
 import com.zclcs.common.core.entity.system.ao.SystemMenuAo;
 import com.zclcs.common.core.entity.system.vo.SystemMenuVo;
-import com.zclcs.common.core.entity.system.vo.UserRoutersVo;
 import com.zclcs.common.core.utils.BaseRspUtil;
+import com.zclcs.common.core.validate.strategy.UpdateStrategy;
 import com.zclcs.server.system.annotation.ControllerEndpoint;
 import com.zclcs.server.system.service.SystemMenuService;
 import io.swagger.annotations.Api;
@@ -20,7 +19,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.util.Arrays;
 import java.util.List;
@@ -45,26 +43,22 @@ public class SystemMenuController {
     private final SystemMenuService menuService;
 
     @GetMapping("/{username}")
-    @ApiOperation(value = "用户路由以及权限")
-    public BaseRsp<UserRoutersVo> getUserRouters(@NotBlank(message = "{required}") @PathVariable String username) {
-        UserRoutersVo result = new UserRoutersVo();
+    @ApiOperation(value = "用户路由")
+    public BaseRsp<List<VueRouter<SystemMenuVo>>> getUserRouters(@NotBlank(message = "{required}") @PathVariable String username) {
         List<VueRouter<SystemMenuVo>> userRouters = this.menuService.getUserRouters(username);
-        List<String> userPermissions = this.menuService.findUserPermissions(username);
-        result.setRoutes(userRouters);
-        result.setPermissions(userPermissions);
-        return BaseRspUtil.data(result);
+        return BaseRspUtil.data(userRouters);
     }
 
     @GetMapping
     @ApiOperation(value = "菜单")
-    public BaseRsp<BasePage<MenuTree>> menuList(SystemMenuAo menu) {
-        BasePage<MenuTree> systemMenus = this.menuService.findSystemMenus(menu);
+    public BaseRsp<List<MenuTree>> menuList(SystemMenuAo menu) {
+        List<MenuTree> systemMenus = (List<MenuTree>) this.menuService.findSystemMenus(menu);
         return BaseRspUtil.data(systemMenus);
     }
 
-    @GetMapping("/permissions")
+    @GetMapping("/permissions/{username}")
     @ApiOperation(value = "权限")
-    public BaseRsp<List<String>> findUserPermissions(String username) {
+    public BaseRsp<List<String>> findUserPermissions(@NotBlank(message = "{required}") @PathVariable String username) {
         return BaseRspUtil.data(this.menuService.findUserPermissions(username));
     }
 
@@ -72,7 +66,7 @@ public class SystemMenuController {
     @PreAuthorize("hasAuthority('menu:add')")
     @ApiOperation(value = "新增菜单/按钮")
     @ControllerEndpoint(operation = "新增菜单/按钮", exceptionMessage = "新增菜单/按钮失败")
-    public void addMenu(@Valid SystemMenuAo menu) {
+    public void addMenu(@RequestBody @Validated SystemMenuAo menu) {
         this.menuService.createSystemMenu(menu);
     }
 
@@ -89,7 +83,7 @@ public class SystemMenuController {
     @PreAuthorize("hasAuthority('menu:update')")
     @ApiOperation(value = "修改菜单/按钮")
     @ControllerEndpoint(operation = "修改菜单/按钮", exceptionMessage = "修改菜单/按钮失败")
-    public void updateMenu(@Valid SystemMenuAo menu) {
+    public void updateMenu(@RequestBody @Validated(UpdateStrategy.class) SystemMenuAo menu) {
         this.menuService.updateSystemMenu(menu);
     }
 

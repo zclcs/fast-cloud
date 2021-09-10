@@ -1,16 +1,11 @@
 package com.zclcs.common.core.entity.system.ao;
 
-import com.zclcs.common.core.validate.strategy.UpdateStrategy;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -27,17 +22,11 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "SystemUser对象", description = "用户表")
-public class SystemUserAo implements Serializable {
+public class SelectSystemUserAo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "用户编号")
-    @NotNull(message = "{required}", groups = UpdateStrategy.class)
-    private Long userId;
-
     @ApiModelProperty(value = "用户名")
-    @NotBlank(message = "{required}")
-    @Size(min = 4, max = 10, message = "{range}")
     private String username;
 
     @ApiModelProperty(value = "密码")
@@ -47,15 +36,12 @@ public class SystemUserAo implements Serializable {
     private Long deptId;
 
     @ApiModelProperty(value = "邮箱")
-    @Size(max = 50, message = "{noMoreThan}")
-    @Email(message = "{email}")
     private String email;
 
     @ApiModelProperty(value = "联系电话")
     private String mobile;
 
     @ApiModelProperty(value = "状态 0锁定 1有效")
-    @NotBlank(message = "{required}")
     private String status;
 
     @ApiModelProperty(value = "最近访问时间")
@@ -76,8 +62,8 @@ public class SystemUserAo implements Serializable {
     @ApiModelProperty(value = "描述")
     private String description;
 
-    @ApiModelProperty(value = "角色编号集合")
-    private List<Long> roleIds;
+    @ApiModelProperty(value = "角色集合")
+    private List<Long> roles;
 
     @ApiModelProperty(value = "数据权限集合")
     private List<Long> deptIds;

@@ -9,6 +9,7 @@ import lombok.experimental.Accessors;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 /**
  * <p>
@@ -22,7 +23,7 @@ import javax.validation.constraints.Size;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "OauthClientDetailsAo", description = "客户端配置表")
-public class OauthClientDetailsAo {
+public class OauthClientDetailsAo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

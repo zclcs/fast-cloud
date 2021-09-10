@@ -1,5 +1,6 @@
 package com.zclcs.common.core.entity;
 
+import com.zclcs.common.core.entity.system.vo.SystemUserRoleVo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
@@ -7,6 +8,7 @@ import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author MrBird
@@ -32,9 +34,7 @@ public class FebsAuthUser extends User {
 
     private String deptName;
 
-    private String roleId;
-
-    private String roleName;
+    private List<SystemUserRoleVo> roles;
 
     private Date lastLoginTime;
 

@@ -6,10 +6,13 @@ import com.zclcs.common.core.base.BasePageAo;
 import com.zclcs.common.core.base.BaseRsp;
 import com.zclcs.common.core.constant.StringConstant;
 import com.zclcs.common.core.entity.system.SystemLoginLog;
+import com.zclcs.common.core.entity.system.SystemUser;
+import com.zclcs.common.core.entity.system.ao.SelectSystemUserAo;
 import com.zclcs.common.core.entity.system.ao.SystemUserAo;
 import com.zclcs.common.core.entity.system.vo.SystemUserVo;
 import com.zclcs.common.core.utils.BaseRspUtil;
 import com.zclcs.common.core.utils.BaseUtil;
+import com.zclcs.common.core.validate.strategy.UpdateStrategy;
 import com.zclcs.server.system.annotation.ControllerEndpoint;
 import com.zclcs.server.system.service.SystemLoginLogService;
 import com.zclcs.server.system.service.SystemUserDataPermissionService;
@@ -24,8 +27,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -73,22 +76,34 @@ public class SystemUserController {
     @GetMapping
     @PreAuthorize("hasAuthority('user:view')")
     @ApiOperation(value = "分页")
-    public BaseRsp<BasePage<SystemUserVo>> userList(BasePageAo basePageAo, SystemUserAo user) {
-        BasePage<SystemUserVo> userDetailPage = userService.findUserDetailPage(basePageAo, user);
+    public BaseRsp<BasePage<SystemUserVo>> userPage(@Validated BasePageAo basePageAo, SelectSystemUserAo selectSystemUserAo) {
+        BasePage<SystemUserVo> userDetailPage = userService.findUserDetailPage(basePageAo, selectSystemUserAo);
         return BaseRspUtil.data(userDetailPage);
     }
 
-    @GetMapping("check/{username}")
+    @GetMapping("options")
+    @PreAuthorize("hasAuthority('user:view')")
+    @ApiOperation(value = "集合")
+    public BaseRsp<List<SystemUserVo>> userList(@Validated SelectSystemUserAo selectSystemUserAo) {
+        List<SystemUserVo> userDetailPage = userService.findUserList(selectSystemUserAo);
+        return BaseRspUtil.data(userDetailPage);
+    }
+
+    @GetMapping("check/{userId}/{username}")
     @ApiOperation(value = "检查用户名")
-    public boolean checkUserName(@NotBlank(message = "{required}") @PathVariable String username) {
-        return this.userService.findByName(username) == null;
+    public BaseRsp<Boolean> checkUserName(@NotNull(message = "{required}") @PathVariable Long userId, @NotBlank(message = "{required}") @PathVariable String username) {
+        SystemUser one = userService.lambdaQuery().eq(SystemUser::getUserId, userId).one();
+        if (one.getUsername().equals(username)) {
+            return BaseRspUtil.data(false);
+        }
+        return BaseRspUtil.data(this.userService.findByName(username) != null);
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('user:add')")
     @ApiOperation(value = "新增用户")
     @ControllerEndpoint(operation = "新增用户", exceptionMessage = "新增用户失败")
-    public void addUser(@Valid SystemUserAo user) {
+    public void addUser(@RequestBody @Validated SystemUserAo user) {
         this.userService.createUser(user);
     }
 
@@ -96,7 +111,7 @@ public class SystemUserController {
     @PreAuthorize("hasAuthority('user:update')")
     @ApiOperation(value = "修改用户")
     @ControllerEndpoint(operation = "修改用户", exceptionMessage = "修改用户失败")
-    public void updateUser(@Valid SystemUserAo user) {
+    public void updateUser(@RequestBody @Validated(UpdateStrategy.class) SystemUserAo user) {
         this.userService.updateUser(user);
     }
 
@@ -129,19 +144,40 @@ public class SystemUserController {
 //        this.userService.updateAvatar(avatar);
 //    }
 
-    @GetMapping("password/check")
-    @ApiOperation(value = "检查用户密码")
-    public boolean checkPassword(@NotBlank(message = "{required}") String password) {
+    @GetMapping("password/mine/check")
+    @ApiOperation(value = "检查当前用户密码")
+    public BaseRsp<Boolean> checkMyPassword(@NotBlank(message = "{required}") String password) {
         String currentUsername = BaseUtil.getCurrentUsername();
         SystemUserVo user = userService.findByName(currentUsername);
-        return user != null && passwordEncoder.matches(password, user.getPassword());
+        return BaseRspUtil.data(user != null && passwordEncoder.matches(password, user.getPassword()));
+    }
+
+    @GetMapping("password/check")
+    @ApiOperation(value = "检查用户密码")
+    public BaseRsp<Boolean> checkPassword(@NotBlank(message = "{required}") String username, @NotBlank(message = "{required}") String password) {
+        SystemUserVo user = userService.findByName(username);
+        return BaseRspUtil.data(user != null && passwordEncoder.matches(password, user.getPassword()));
+    }
+
+    @PutMapping("password/mine")
+    @ApiOperation(value = "修改当前用户密码")
+    @ControllerEndpoint(exceptionMessage = "修改当前用户密码失败")
+    public void updateMyPassword(@NotBlank(message = "{required}") String password) {
+        userService.updatePassword(null, password);
     }
 
     @PutMapping("password")
     @ApiOperation(value = "修改密码")
     @ControllerEndpoint(exceptionMessage = "修改密码失败")
-    public void updatePassword(@NotBlank(message = "{required}") String password) {
-        userService.updatePassword(password);
+    public void updatePassword(@NotBlank(message = "{required}") String username, @NotBlank(message = "{required}") String password) {
+        userService.updatePassword(username, password);
+    }
+
+    @PutMapping("status")
+    @ApiOperation(value = "禁用账号")
+    @ControllerEndpoint(exceptionMessage = "禁用账号失败")
+    public void updateStatus(@NotBlank(message = "{required}") String username) {
+        userService.updateStatus(username, null);
     }
 
     @PutMapping("password/reset")

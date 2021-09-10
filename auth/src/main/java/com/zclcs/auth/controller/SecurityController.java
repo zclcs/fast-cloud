@@ -54,7 +54,7 @@ public class SecurityController {
     @DeleteMapping("signout")
     @ApiOperation(value = "登出")
     public BaseRsp<String> signout(HttpServletRequest request, @RequestHeader("Authorization") String token) {
-        token = StringUtils.replace(token, "bearer ", StringConstant.EMPTY);
+        token = StringUtils.replace(token, "Bearer ", StringConstant.EMPTY).trim();
         consumerTokenServices.revokeToken(token);
         return BaseRspUtil.message("signout");
     }

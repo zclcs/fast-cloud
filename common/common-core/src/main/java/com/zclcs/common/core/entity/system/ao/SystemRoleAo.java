@@ -1,5 +1,6 @@
 package com.zclcs.common.core.entity.system.ao;
 
+import com.zclcs.common.core.validate.strategy.UpdateStrategy;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -7,7 +8,9 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -22,9 +25,13 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "SystemRole对象", description = "角色表")
-public class SystemRoleAo {
+public class SystemRoleAo implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    @ApiModelProperty(value = "角色id")
+    @NotNull(message = "{required}", groups = UpdateStrategy.class)
+    private Long roleId;
 
     @ApiModelProperty(value = "角色名称")
     @NotBlank(message = "{required}")

@@ -11,7 +11,7 @@ import java.util.List;
  */
 public abstract class BaseTreeUtil {
 
-    private final static String TOP_NODE_ID = "0";
+    private final static Long TOP_NODE_ID = 0L;
 
     /**
      * 用于构建菜单或部门树
@@ -25,13 +25,14 @@ public abstract class BaseTreeUtil {
         }
         List<Tree<T>> topNodes = new ArrayList<>();
         nodes.forEach(node -> {
-            String pid = node.getParentId();
+            Long pid = node.getParentId();
             if (pid == null || TOP_NODE_ID.equals(pid)) {
+                node.setHasParent(false);
                 topNodes.add(node);
                 return;
             }
             for (Tree<T> n : nodes) {
-                String id = n.getId();
+                Long id = n.getId();
                 if (id != null && id.equals(pid)) {
                     if (n.getChildren() == null) {
                         n.initChildren();
@@ -39,7 +40,7 @@ public abstract class BaseTreeUtil {
                     n.getChildren().add(node);
                     node.setHasParent(true);
                     n.setHasChildren(true);
-                    n.setHasParent(true);
+                    n.setHasParent(false);
                     return;
                 }
             }
@@ -63,15 +64,14 @@ public abstract class BaseTreeUtil {
             return null;
         }
         List<VueRouter<T>> topRoutes = new ArrayList<>();
-        VueRouter<T> router = new VueRouter<>();
         routes.forEach(route -> {
-            String parentId = route.getParentId();
+            Long parentId = route.getParentId();
             if (parentId == null || TOP_NODE_ID.equals(parentId)) {
                 topRoutes.add(route);
                 return;
             }
             for (VueRouter<T> parent : routes) {
-                String id = parent.getId();
+                Long id = parent.getId();
                 if (id != null && id.equals(parentId)) {
                     if (parent.getChildren() == null) {
                         parent.initChildren();
@@ -85,12 +85,6 @@ public abstract class BaseTreeUtil {
                 }
             }
         });
-        VueRouter<T> router404 = new VueRouter<>();
-        router404.setName("404");
-        router404.setComponent("error-page/404");
-        router404.setPath("*");
-
-        topRoutes.add(router404);
         return topRoutes;
     }
 }

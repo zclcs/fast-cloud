@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+
 /**
  * <p>
  * 角色菜单关联表
@@ -18,7 +20,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "SystemRoleMenuVo", description = "角色菜单关联表")
-public class SystemRoleMenuVo {
+public class SystemRoleMenuVo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+
 /**
  * <p>
  * 系统用户社交账户关联表
@@ -18,7 +20,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "SystemUserConnectionVo", description = "系统用户社交账户关联表")
-public class SystemUserConnectionVo {
+public class SystemUserConnectionVo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

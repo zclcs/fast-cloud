@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 /**
  * <p>
@@ -21,7 +22,7 @@ import javax.validation.constraints.Size;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "SystemUserConnectionAo", description = "系统用户社交账户关联表")
-public class SystemUserConnectionAo {
+public class SystemUserConnectionAo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

@@ -16,8 +16,16 @@
         role_id, role_name, remark, create_time, modify_time
     </sql>
     <sql id="baseSql">
-        select sr.role_id, sr.role_name, sr.remark, sr.create_time, sr.modify_time
+        select sr.role_id,
+               sr.role_name,
+               sr.remark,
+               sr.create_time,
+               sr.modify_time,
+               group_concat(sm.menu_id) as menuIdsString
         from system_role sr
+                 left join system_role_menu srm on sr.role_id = srm.role_id
+                 left join system_menu sm on srm.menu_id = sm.menu_id
+        group by sr.role_id, sr.role_name, sr.remark, sr.create_time, sr.modify_time
             ${ew.customSqlSegment}
     </sql>
     <sql id="baseSqlFromUserRole">

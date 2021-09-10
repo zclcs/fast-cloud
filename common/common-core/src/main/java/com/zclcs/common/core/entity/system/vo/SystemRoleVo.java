@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -23,7 +24,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "SystemRoleVo", description = "角色表")
-public class SystemRoleVo {
+public class SystemRoleVo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -45,5 +46,11 @@ public class SystemRoleVo {
 
     @ApiModelProperty(value = "角色菜单集合")
     private List<SystemRoleMenuVo> systemRoleMenuVos;
+
+    @ApiModelProperty(value = "角色菜单编号集合")
+    private String menuIdsString;
+
+    @ApiModelProperty(value = "角色菜单编号集合")
+    private List<Long> menuIds;
 
 }
