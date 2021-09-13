@@ -13,7 +13,6 @@ import com.zclcs.common.core.constant.MyConstant;
 import com.zclcs.common.core.entity.system.SystemRole;
 import com.zclcs.common.core.entity.system.SystemRoleMenu;
 import com.zclcs.common.core.entity.system.ao.SelectSystemRoleAo;
-import com.zclcs.common.core.entity.system.ao.SystemMenuAo;
 import com.zclcs.common.core.entity.system.ao.SystemRoleAo;
 import com.zclcs.common.core.entity.system.vo.SystemMenuVo;
 import com.zclcs.common.core.entity.system.vo.SystemRoleVo;
@@ -29,7 +28,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -92,9 +94,7 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
         BeanUtil.copyProperties(role, systemRole);
         systemRole.setCreateTime(DateUtil.date());
         this.save(systemRole);
-        List<SystemMenuVo> systemMenuList = menuService.findSystemMenuList(new SystemMenuAo());
-        setRoleMenus(systemRole, role.getMenuIds(), systemMenuList);
-
+        setRoleMenus(systemRole, role.getMenuIds());
     }
 
     @Override
@@ -115,18 +115,12 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
         baseMapper.updateById(systemRole);
         ArrayList<Long> roleIds = CollectionUtil.newArrayList(systemRole.getRoleId());
         this.roleMenuService.deleteRoleMenusByRoleId(roleIds);
-        List<SystemMenuVo> systemMenuList = menuService.findSystemMenuList(new SystemMenuAo());
-        setRoleMenus(systemRole, role.getMenuIds(), systemMenuList);
+        setRoleMenus(systemRole, role.getMenuIds());
     }
 
-    private void setRoleMenus(SystemRole role, List<Long> menuIds, List<SystemMenuVo> menuVos) {
+    private void setRoleMenus(SystemRole role, List<Long> menuIds) {
         List<SystemRoleMenu> roleMenus = new ArrayList<>();
-        Set<Long> parentMenuIds = new HashSet<>();
         menuIds.stream().filter(Objects::nonNull).forEach(menuId -> {
-            parentMenuIds.add(menuId);
-            getParentMenuId(menuId, parentMenuIds, menuVos);
-        });
-        parentMenuIds.stream().filter(Objects::nonNull).forEach(menuId -> {
             SystemRoleMenu roleMenu = new SystemRoleMenu();
             roleMenu.setMenuId(menuId);
             roleMenu.setRoleId(role.getRoleId());
