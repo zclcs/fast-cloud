@@ -63,7 +63,7 @@ public class ValidateCodeServiceImpl implements ValidateCodeService {
     }
 
     private Captcha createCaptcha(MyValidateCodeProperties code) {
-        Captcha captcha = null;
+        Captcha captcha;
         if (StringUtils.equalsIgnoreCase(code.getType(), ImageTypeConstant.GIF)) {
             captcha = new GifCaptcha(code.getWidth(), code.getHeight(), code.getLength());
         } else {
