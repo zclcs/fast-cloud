@@ -1,0 +1,107 @@
+server:
+  port: ${gateway-port:8301}
+
+spring:
+  boot:
+    admin:
+      client:
+        url: http://${admin-host:127.0.0.1}:${admin-port:8401}
+        username: ${admin-security-username:zclcs}
+        password: ${admin-security-password:123456}
+        instance:
+          prefer-ip: true
+
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
+      routes:
+        - id: ${auth-service-name:auth}
+          uri: lb://${auth-service-name:auth}
+          predicates:
+            - Path=/auth/**
+          filters:
+            - name: Hystrix
+              args:
+                name: authfallback
+                fallbackUri: forward:/fallback/${auth-service-name:auth}
+        - id: ${server-system-service-name:server-system}
+          uri: lb://${server-system-service-name:server-system}
+          predicates:
+            - Path=/system/**
+          filters:
+            - name: Hystrix
+              args:
+                name: systemfallback
+                fallbackUri: forward:/fallback/${server-system-service-name:server-system}
+      loadbalancer:
+        use404: true
+      default-filters:
+        - StripPrefix=1
+        - MyDocGatewayHeaderFilter
+
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.mongo.MongoReactiveAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoReactiveRepositoriesAutoConfiguration,org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration
+
+  # 网关增强配置
+  # data:
+  #   mongodb:
+  #     host: ${mongo.url}
+  #     port: 27017
+  #     database: cloud_route
+
+  redis:
+    database: ${gateway-redis-database:3}
+    host: ${redis-host:127.0.0.1}
+    port: ${redis-port:6379}
+    lettuce:
+      pool:
+        min-idle: 8
+        max-idle: 500
+        max-active: 2000
+        max-wait: 10000
+    timeout: 5000
+
+# 网关增强配置
+my:
+  gateway:
+    enhance: false
+    jwt:
+      secret: 123456
+      expiration: 36000
+  doc:
+    gateway:
+      enable: true
+      resources: ${doc-gateway-resources:"server-system,auth"}
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+    socialfallback:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+
+ribbon:
+  eager-load:
+    enabled: true
+
+management:
+  endpoint:
+    health:
+      show-details: ALWAYS
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
+

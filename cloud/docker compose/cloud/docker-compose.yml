@@ -1,0 +1,68 @@
+version: '3'
+
+services:
+  admin:
+    image: 192.168.33.10:3000/cloud/admin:latest
+    container_name: admin
+    networks:
+      - web_net
+    volumes:
+      - ./log/admin:/log/admin
+    env_file: run.env
+    ports:
+      - "8401:8401"
+  gateway:
+    image: 192.168.33.10:3000/cloud/gateway:latest
+    container_name: gateway
+    networks:
+      - web_net
+    volumes:
+      - ./log/gateway:/log/gateway
+    env_file: run.env
+    expose:
+      - "8301"
+  auth:
+    image: 192.168.33.10:3000/cloud/auth:latest
+    container_name: auth
+    networks:
+      - web_net
+    volumes:
+      - ./log/auth:/log/auth
+    env_file: run.env
+  tx-manager:
+    image: 192.168.33.10:3000/cloud/tx-manager:latest
+    container_name: tx-manager
+    networks:
+      - web_net
+    volumes:
+      - ./log/tx-manager:/log/tx-manager
+    env_file: run.env
+    ports:
+      - "8501:8501"
+  server-system:
+    image: 192.168.33.10:3000/cloud/server-system:latest
+    container_name: server-system
+    networks:
+      - web_net
+    volumes:
+      - ./log/server-system:/log/server-system
+      - ./.txlcn:/.txlcn
+    env_file: run.env
+    depends_on:
+      - tx-manager
+  nginx:
+    image: nginx:1.21.3
+    container_name: nginx-cloud
+    networks:
+      - web_net
+    privileged: true
+    user: root
+    ports:
+      - "8080:80"
+    volumes:
+      - ./web:/var/cloud/web
+      - ./nginx/:/etc/nginx/
+networks:
+  web_net:
+    external:
+      name: cloud_net

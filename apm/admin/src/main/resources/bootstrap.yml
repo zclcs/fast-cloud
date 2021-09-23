@@ -1,12 +1,17 @@
 spring:
+  profiles:
+    active: ${profiles-active:dev}
+
   application:
-    name: admin
+    name: ${admin-service-name:admin}
+
   cloud:
     nacos:
       config:
-        server-addr: ${nacos.url}:8001
+        server-addr: ${nacos-host:127.0.0.1}:${nacos-port:8001}
+        namespace: ${nacos-namespace:dev}
         group: DEFAULT_GROUP
-        prefix: admin
+        prefix: ${admin-service-name:admin}
         file-extension: yaml
 
 logging:

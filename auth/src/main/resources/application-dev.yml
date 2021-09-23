@@ -1,0 +1,118 @@
+server:
+  port: ${auth-port:8101}
+
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+  boot:
+    admin:
+      client:
+        url: http://${admin-host:127.0.0.1}:${admin-port:8401}
+        username: ${admin-security-username:zclcs}
+        password: ${admin-security-password:123456}
+        instance:
+          prefer-ip: true
+
+  datasource:
+    dynamic:
+      p6spy: ${datasource-logger-sql-enabled:true}
+      hikari:
+        connection-timeout: 30000
+        max-lifetime: 1800000
+        max-pool-size: 15
+        min-idle: 5
+        connection-test-query: select 1
+        pool-name: MyHikariCP
+      primary: primary
+      datasource:
+        primary:
+          driver-class-name: ${datasource-driver:com.mysql.cj.jdbc.Driver}
+          url: jdbc:${datasource-db-type:mysql}://${datasource-host:127.0.0.1}:${datasource-port:3306}/${admin-db-name:cloud_system}?${datasource-param:useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai}
+          username: ${datasource-username:root}
+          password: ${datasource-password:root}
+
+  redis:
+    database: ${auth-redis-database:0}
+    host: ${redis-host:127.0.0.1}
+    port: ${redis-port:6379}
+    lettuce:
+      pool:
+        min-idle: 8
+        max-idle: 500
+        max-active: 2000
+        max-wait: 10000
+    timeout: 5000
+
+mybatis-plus:
+  type-aliases-package: com.zclcs.common.core.entity.system
+  mapper-locations: classpath:com/zclcs/auth/mapper/*.xml
+  configuration:
+    jdbc-type-for-null: null
+  global-config:
+    banner: false
+
+info:
+  app:
+    name: ${spring.application.name}
+    description: "@project.description@"
+    version: "@project.version@"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+justauth:
+  enabled: true
+  type:
+    github:
+      client-id:
+      client-secret:
+      redirect-uri:
+    gitee:
+      client-id:
+      client-secret:
+      redirect-uri:
+    tencent_cloud:
+      client-id:
+      client-secret:
+      redirect-uri:
+    dingtalk:
+      client-id:
+      client-secret:
+      redirect-uri:
+    qq:
+      client-id:
+      client-secret:
+      redirect-uri:
+    microsoft:
+      client-id:
+      client-secret:
+      redirect-uri:
+  cache:
+    type: redis
+    prefix: 'MY::CLOUD::SOCIAL::STATE::'
+    timeout: 1h
+
+my:
+  frontUrl: 'http://localhost:9527'
+  doc:
+    enable: true
+    title: ${spring.application.name}文档
+    base-package: com.zclcs.auth.controller
+    description: ${my.doc.title}
+    name: zclcs
+    email: 2371219112@qq.com
+    url: https://github.com/zclcs
+    version: 2.2-RELEASE
+  cloud:
+    security:
+      enable: true
+      only-fetch-by-gateway: false
+      anon-uris: /actuator/**,/captcha,/social/**,/v2/api-docs,/v2/api-docs-ext,/login,/resource/**

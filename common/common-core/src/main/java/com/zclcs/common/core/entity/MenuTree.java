@@ -19,11 +19,15 @@ public class MenuTree extends Tree<SystemMenuVo> implements Serializable {
 
     private String path;
     private String component;
+    private String redirect;
     private String perms;
     private String icon;
     private String type;
     private String hideMenu;
     private String ignoreKeepAlive;
+    private String hideBreadcrumb;
+    private String hideChildrenInMenu;
+    private String currentActiveMenu;
     private Double orderNum;
     private Date createTime;
 }

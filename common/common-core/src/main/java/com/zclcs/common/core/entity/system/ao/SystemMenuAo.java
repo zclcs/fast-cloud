@@ -48,6 +48,10 @@ public class SystemMenuAo implements Serializable {
     @Size(max = 100, message = "{noMoreThan}")
     private String component;
 
+    @ApiModelProperty(value = "打开目录重定向的子菜单")
+    @Size(max = 100, message = "{noMoreThan}")
+    private String redirect;
+
     @ApiModelProperty(value = "权限标识")
     @Size(max = 50, message = "{noMoreThan}")
     private String perms;
@@ -64,6 +68,15 @@ public class SystemMenuAo implements Serializable {
 
     @ApiModelProperty(value = "是否忽略KeepAlive缓存 1是 0否")
     private String ignoreKeepAlive;
+
+    @ApiModelProperty(value = "隐藏该路由在面包屑上面的显示 1是 0否")
+    private String hideBreadcrumb;
+
+    @ApiModelProperty(value = "隐藏所有子菜单 1是 0否")
+    private String hideChildrenInMenu;
+
+    @ApiModelProperty(value = "当前激活的菜单。用于配置详情页时左侧激活的菜单路径")
+    private String currentActiveMenu;
 
     @ApiModelProperty(value = "排序")
     private Double orderNum;

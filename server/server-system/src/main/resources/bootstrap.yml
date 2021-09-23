@@ -1,16 +1,21 @@
 spring:
+  profiles:
+    active: ${profiles-active:dev}
+
   application:
-    name: server-system
+    name: ${server-system-service-name:server-system}
+
   cloud:
     nacos:
       config:
-        server-addr: ${nacos.url}:8001
+        server-addr: ${nacos-host:127.0.0.1}:${nacos-port:8001}
+        namespace: ${nacos-namespace:dev}
         group: DEFAULT_GROUP
-        prefix: server-system
+        prefix: ${server-system-service-name:server-system}
         file-extension: yaml
-        refreshable-dataids:
       discovery:
-        server-addr: ${nacos.url}:8001
+        server-addr: ${nacos-host:127.0.0.1}:${nacos-port:8001}
+        namespace: ${nacos-namespace:dev}
 
 logging:
   level:

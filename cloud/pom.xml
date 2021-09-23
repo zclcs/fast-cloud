@@ -15,6 +15,7 @@
         <module>../auth</module>
         <module>../apm</module>
         <module>../gateway</module>
+        <module>../server</module>
         <module>../tx-manager</module>
     </modules>
 
@@ -70,6 +71,11 @@
         <swagger.version>1.5.21</swagger.version>
         <!--hu tool 工具类-->
         <hutool-all.version>5.7.6</hutool-all.version>
+        <docker.jib.from.image>192.168.33.10:3000/library/jdk:8u212-jre</docker.jib.from.image>
+        <docker.jib.auth.username>admin</docker.jib.auth.username>
+        <docker.jib.auth.password>Harbor12345</docker.jib.auth.password>
+        <docker.jib.to.image>192.168.33.10:3000/cloud</docker.jib.to.image>
+        <image.version>1.1-SNAPSHOT</image.version>
     </properties>
 
     <dependencyManagement>
@@ -122,6 +128,56 @@
                 </includes>
             </resource>
         </resources>
+        <!-- Defines plugins that are used in the modules. -->
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.google.cloud.tools</groupId>
+                    <artifactId>jib-maven-plugin</artifactId>
+                    <version>3.1.4</version>
+                    <configuration>
+                        <from>
+                            <image>${docker.jib.from.image}</image>
+                            <auth>
+                                <username>${docker.jib.auth.username}</username>
+                                <password>${docker.jib.auth.password}</password>
+                            </auth>
+                        </from>
+                        <to>
+                            <image>${docker.jib.to.image}/${project.artifactId}</image>
+                            <tags>
+                                <tag>
+                                    ${image.version}
+                                </tag>
+                            </tags>
+                            <auth>
+                                <username>${docker.jib.auth.username}</username>
+                                <password>${docker.jib.auth.password}</password>
+                            </auth>
+                        </to>
+                        <allowInsecureRegistries>true</allowInsecureRegistries>
+                        <container>
+                            <environment>
+                                <TZ>Asia/Shanghai</TZ>
+                            </environment>
+                            <format>OCI</format>
+                            <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
+                        </container>
+                    </configuration>
+                    <executions>
+                        <!--将jib与mvn构建的生命周期绑定 mvn package自动构造镜像-->
+                        <!--打包及推送命令 mvn -DsendCredentialsOverHttp=true clean package -->
+                        <!--只打包jar命令 mvn -Djib.skip clean package -->
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>build</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
 </project>

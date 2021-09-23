@@ -29,8 +29,6 @@ public class VueRouter<T> implements Serializable {
     private String component;
     private String redirect;
     private RouterMeta meta;
-    private Boolean hidden = false;
-    private Boolean alwaysShow = false;
     private List<VueRouter<T>> children;
 
     @JsonIgnore

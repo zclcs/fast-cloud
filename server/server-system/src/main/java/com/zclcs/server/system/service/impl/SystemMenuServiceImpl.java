@@ -80,14 +80,17 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
             route.setId(menu.getMenuId());
             route.setParentId(menu.getParentId());
             route.setPath(menu.getPath());
-            route.setComponent(menu.getComponent());
             route.setName(menu.getMenuName());
+            route.setComponent(menu.getComponent());
+            route.setRedirect(menu.getRedirect());
             route.setMeta(new RouterMeta(
                     menu.getMenuName(),
                     menu.getIcon(),
-                    true,
                     menu.getHideMenu().equals(SystemMenuVo.YES),
-                    menu.getIgnoreKeepAlive().equals(SystemMenuVo.YES)));
+                    menu.getIgnoreKeepAlive().equals(SystemMenuVo.YES),
+                    menu.getHideBreadcrumb().equals(SystemMenuVo.YES),
+                    menu.getHideChildrenInMenu().equals(SystemMenuVo.YES),
+                    menu.getCurrentActiveMenu()));
             routes.add(route);
         });
         return BaseTreeUtil.buildVueRouter(routes);
@@ -133,14 +136,18 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
             tree.setId(menu.getMenuId());
             tree.setParentId(menu.getParentId());
             tree.setLabel(menu.getMenuName());
-            tree.setComponent(menu.getComponent());
-            tree.setIcon(menu.getIcon());
-            tree.setOrderNum(menu.getOrderNum());
             tree.setPath(menu.getPath());
+            tree.setComponent(menu.getComponent());
+            tree.setRedirect(menu.getRedirect());
+            tree.setPerms(menu.getPerms());
+            tree.setIcon(menu.getIcon());
             tree.setType(menu.getType());
             tree.setHideMenu(menu.getHideMenu());
             tree.setIgnoreKeepAlive(menu.getIgnoreKeepAlive());
-            tree.setPerms(menu.getPerms());
+            tree.setHideBreadcrumb(menu.getHideBreadcrumb());
+            tree.setHideChildrenInMenu(menu.getHideChildrenInMenu());
+            tree.setCurrentActiveMenu(menu.getCurrentActiveMenu());
+            tree.setOrderNum(menu.getOrderNum());
             tree.setCreateTime(menu.getCreateTime());
             trees.add(tree);
         });
@@ -150,6 +157,7 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
         if (menu.getParentId() == null) {
             menu.setParentId(SystemMenuVo.TOP_MENU_ID);
             menu.setType(SystemMenuVo.TYPE_DIR);
+            menu.setComponent(SystemMenuVo.LAYOUT);
         }
         if (SystemMenuVo.TYPE_BUTTON.equals(menu.getType())) {
             menu.setPath(null);

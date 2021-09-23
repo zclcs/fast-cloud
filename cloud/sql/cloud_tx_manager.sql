@@ -1,19 +1,3 @@
-/*
- Navicat Premium Data Transfer
-
- Source Server         : localhost
- Source Server Type    : MySQL
- Source Server Version : 50735
- Source Host           : localhost:3306
- Source Schema         : cloud_tx_manager
-
- Target Server Type    : MySQL
- Target Server Version : 50735
- File Encoding         : 65001
-
- Date: 10/09/2021 17:04:35
-*/
-
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -61,7 +45,7 @@ CREATE TABLE `t_tx_exception`
   AUTO_INCREMENT = 1
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci
-  ROW_FORMAT = DYNAMIC;
+  ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_tx_exception

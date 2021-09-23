@@ -77,7 +77,6 @@ public abstract class BaseTreeUtil {
                         parent.initChildren();
                     }
                     parent.getChildren().add(route);
-                    parent.setAlwaysShow(true);
                     parent.setHasChildren(true);
                     route.setHasParent(true);
                     parent.setHasParent(true);
