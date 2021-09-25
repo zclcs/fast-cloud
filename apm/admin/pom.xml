@@ -68,6 +68,7 @@
                         <jvmFlags>
                             <jvmFlag>-Xms256m</jvmFlag>
                             <jvmFlag>-Xmx512m</jvmFlag>
+                            <jvmFlag>-Dskywalking.agent.service_name=${project.artifactId}</jvmFlag>
                         </jvmFlags>
                         <mainClass>com.zclcs.monitor.admin.AdminApplication</mainClass>
                     </container>

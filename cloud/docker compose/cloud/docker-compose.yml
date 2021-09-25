@@ -6,8 +6,12 @@ services:
     container_name: admin
     networks:
       - web_net
+    environment:
+      # 设置时区
+      - "TZ=Asia/Shanghai"
     volumes:
       - ./log/admin:/log/admin
+      - ./agent:/agent
     env_file: run.env
     ports:
       - "8401:8401"
@@ -16,8 +20,12 @@ services:
     container_name: gateway
     networks:
       - web_net
+    environment:
+      # 设置时区
+      - "TZ=Asia/Shanghai"
     volumes:
       - ./log/gateway:/log/gateway
+      - ./agent:/agent
     env_file: run.env
     expose:
       - "8301"
@@ -26,17 +34,27 @@ services:
     container_name: auth
     networks:
       - web_net
+    environment:
+      # 设置时区
+      - "TZ=Asia/Shanghai"
     volumes:
       - ./log/auth:/log/auth
+      - ./agent:/agent
     env_file: run.env
   tx-manager:
     image: 192.168.33.10:3000/cloud/tx-manager:latest
     container_name: tx-manager
     networks:
       - web_net
+    environment:
+      # 设置时区
+      - "TZ=Asia/Shanghai"
     volumes:
       - ./log/tx-manager:/log/tx-manager
+      - ./agent:/agent
     env_file: run.env
+    expose:
+      - "8888"
     ports:
       - "8501:8501"
   server-system:
@@ -44,9 +62,13 @@ services:
     container_name: server-system
     networks:
       - web_net
+    environment:
+      # 设置时区
+      - "TZ=Asia/Shanghai"
     volumes:
       - ./log/server-system:/log/server-system
       - ./.txlcn:/.txlcn
+      - ./agent:/agent
     env_file: run.env
     depends_on:
       - tx-manager
@@ -55,10 +77,13 @@ services:
     container_name: nginx-cloud
     networks:
       - web_net
+    environment:
+      # 设置时区
+      - "TZ=Asia/Shanghai"
     privileged: true
     user: root
     ports:
-      - "8080:80"
+      - "9527:80"
     volumes:
       - ./web:/var/cloud/web
       - ./nginx/:/etc/nginx/

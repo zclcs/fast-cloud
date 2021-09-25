@@ -74,10 +74,16 @@ my:
     jwt:
       secret: 123456
       expiration: 36000
+
   doc:
     gateway:
       enable: true
       resources: ${doc-gateway-resources:"server-system,auth"}
+
+  log:
+    enable-elk: ${enable-elk:false}
+    enable-log-for-controller: ${enable-log-for-controller:false}
+    logstash-host: ${logstash-host:127.0.0.1:4560}
 
 hystrix:
   command:

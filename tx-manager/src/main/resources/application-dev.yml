@@ -43,6 +43,12 @@ management:
     health:
       show-details: ALWAYS
 
+my:
+  log:
+    enable-elk: ${enable-elk:false}
+    enable-log-for-controller: ${enable-log-for-controller:false}
+    logstash-host: ${logstash-host:127.0.0.1:4560}
+
 tx-lcn:
   manager:
     host: ${manager-host:0.0.0.0}
