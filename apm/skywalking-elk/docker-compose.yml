@@ -1,53 +1,34 @@
-version: '3'
+version: '3.8'
 
 services:
   elasticsearch:
-    image: elasticsearch:6.4.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
     container_name: elasticsearch
     networks:
       - web_net
-    environment:
-      - "cluster.name=elasticsearch"
-      - "xpack.security.enabled=false"
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - "node.name=elasticsearch_node_1"
-      - "TZ=Asia/Shanghai"
-    volumes:
-      - ./elasticsearch/data:/usr/share/elasticsearch/data
-      - ./elasticsearch/logs:/usr/share/elasticsearch/logs
-      - ./elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    restart: always
     ports:
       - "9200:9200"
-      - "9300:9300"
-  kibana:
-    image: kibana:6.4.1
-    container_name: kibana
-    networks:
-      - web_net
-    links:
-      - elasticsearch:es #配置elasticsearch域名为 es
-    depends_on:
-      - elasticsearch
+    healthcheck:
+      test: [ "CMD-SHELL", "curl --silent --fail localhost:9200/_cluster/health || exit 1" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
     environment:
-      - "elasticsearch.hosts=http://es:9200" #因为上面配置了域名，所以这里可以简写为 http://es:9200
-    ports:
-      - "5601:5601"
-  logstash:
-    image: logstash:6.4.1
-    container_name: logstash
-    networks:
-      - web_net
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - TZ=Asia/Shanghai
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
     volumes:
-      - ./logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
-    depends_on:
-      - elasticsearch
-    links:
-      - elasticsearch:es
-    ports:
-      - "4560:4560"
-  skywalking-oap:
-    image: apache/skywalking-oap-server:6.4.0
-    container_name: skywalking-oap
+      - data:/usr/share/elasticsearch/data
+  oap:
+    image: apache/skywalking-oap-server:8.7.0-es7
+    container_name: oap
     networks:
       - web_net
     depends_on:
@@ -58,24 +39,39 @@ services:
     ports:
       - "11800:11800"
       - "12800:12800"
+    healthcheck:
+      test: [ "CMD-SHELL", "/skywalking/bin/swctl ch" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
     environment:
-      - "TZ=Asia/Shanghai"
-    volumes:
-      - ./config:/apache-skywalking-apm-bin/config:ro
-  skywalking-ui:
-    image: apache/skywalking-ui:6.4.0
-    container_name: skywalking-ui
+      SW_STORAGE: elasticsearch7
+      SW_STORAGE_ES_CLUSTER_NODES: elasticsearch:9200
+      SW_HEALTH_CHECKER: default
+      SW_TELEMETRY: prometheus
+      JAVA_OPTS: "-Xms2048m -Xmx2048m"
+      TZ: Asia/Shanghai
+  ui:
+    image: apache/skywalking-ui:8.7.0
+    container_name: ui
     networks:
       - web_net
     depends_on:
-      - skywalking-oap
+      - oap
     links:
-      - skywalking-oap
+      - oap
+    restart: always
     ports:
       - "8080:8080"
     environment:
-      - "collector.ribbon.listOfServers=skywalking-oap:12800"
-      - "TZ=Asia/Shanghai"
+      SW_OAP_ADDRESS: http://oap:12800
+      TZ: Asia/Shanghai
+
+volumes:
+  data:
+    driver: local
+
 networks:
   web_net:
     external:

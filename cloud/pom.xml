@@ -71,13 +71,15 @@
         <swagger.version>1.5.21</swagger.version>
         <!--hu tool 工具类-->
         <hutool-all.version>5.7.6</hutool-all.version>
+        <!--上传日志到 skywalking-->
+        <apm-toolkit-logback-1.x.version>8.7.0</apm-toolkit-logback-1.x.version>
         <docker.jib.from.image>192.168.33.10:3000/library/openjdk8-skywalking:1.0.0</docker.jib.from.image>
         <docker.jib.auth.username>admin</docker.jib.auth.username>
         <docker.jib.auth.password>Harbor12345</docker.jib.auth.password>
         <docker.jib.to.image>192.168.33.10:3000/cloud</docker.jib.to.image>
         <image.version>1.1-SNAPSHOT</image.version>
-        <sk.jvm.agent>-javaagent:/agent/skywalking-agent.jar</sk.jvm.agent>
-        <sk.jvm.agent.host>-Dskywalking.collector.backend_service=skywalking-oap:11800</sk.jvm.agent.host>
+        <sk.jvm.agent.host>oap</sk.jvm.agent.host>
+        <sk.jvm.agent.port>11800</sk.jvm.agent.port>
     </properties>
 
     <dependencyManagement>
@@ -159,11 +161,14 @@
                         </to>
                         <allowInsecureRegistries>true</allowInsecureRegistries>
                         <container>
-                            <!--                            <args>-->
-                            <!--                                <arg>-javaagent:/zclcs/apache-skywalking-apm-bin/agent/skywalking-agent.jar</arg>-->
-                            <!--                                <arg>-Dskywalking.collector.backend_service=192.168.33.10:11800</arg>-->
-                            <!--                            </args>-->
                             <environment>
+                                <SW_AGENT_NAME>${project.artifactId}</SW_AGENT_NAME>
+                                <SW_AGENT_COLLECTOR_BACKEND_SERVICES>${sk.jvm.agent.host}:${sk.jvm.agent.port}
+                                </SW_AGENT_COLLECTOR_BACKEND_SERVICES>
+                                <SW_JDBC_TRACE_SQL_PARAMETERS>true</SW_JDBC_TRACE_SQL_PARAMETERS>
+                                <SW_FEIGN_COLLECT_REQUEST_BODY>true</SW_FEIGN_COLLECT_REQUEST_BODY>
+                                <SW_GRPC_LOG_SERVER_HOST>${sk.jvm.agent.host}</SW_GRPC_LOG_SERVER_HOST>
+                                <SW_GRPC_LOG_SERVER_PORT>${sk.jvm.agent.port}</SW_GRPC_LOG_SERVER_PORT>
                                 <TZ>Asia/Shanghai</TZ>
                             </environment>
                             <format>OCI</format>
@@ -172,8 +177,8 @@
                     </configuration>
                     <executions>
                         <!--将jib与mvn构建的生命周期绑定 mvn package自动构造镜像-->
-                        <!--打包及推送命令 mvn -DsendCredentialsOverHttp=true clean package -->
-                        <!--只打包jar命令 mvn -Djib.skip clean package -->
+                        <!--打包及推送命令 mvn clean package -DsendCredentialsOverHttp=true -->
+                        <!--只打包jar命令 mvn clean package -Djib.skip -->
                         <execution>
                             <phase>package</phase>
                             <goals>

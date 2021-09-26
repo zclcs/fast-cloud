@@ -8,9 +8,9 @@ services:
       - web_net
     environment:
       # 设置密码
-      - "MYSQL_ROOT_PASSWORD=123456"
+      MYSQL_ROOT_PASSWORD: 123456
       # 设置时区
-      - "TZ=Asia/Shanghai"
+      TZ: Asia/Shanghai
     ports:
       - "3306:3306"
     volumes:
@@ -39,7 +39,7 @@ services:
       - web_net
     environment:
       # 设置时区
-      - "TZ=Asia/Shanghai"
+      TZ: Asia/Shanghai
     env_file: run.env
     volumes:
       - ./nacos/standalone-logs/:/home/nacos/logs

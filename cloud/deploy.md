@@ -109,11 +109,11 @@ ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
 ### 构建jdk skywalking 基础镜像
 
-> - 下载`wget https://archive.apache.org/dist/skywalking/6.4.0/apache-skywalking-apm-6.4.0.tar.gz`
-> - 解压`tar zxf apache-skywalking-apm-6.4.0.tar.gz`
-> - 压缩agent`tar zcvf  agent.tar.gz ./apache-skywalking-apm-bin/agent`
+> - 下载`wget https://dlcdn.apache.org/skywalking/8.7.0/apache-skywalking-apm-es7-8.7.0.tar.gz`
+> - 解压`tar zxf apache-skywalking-apm-es7-8.7.0.tar.gz`
+> - 复制agent`cp -r ./apache-skywalking-apm-bin-es7/agent ./agent`
+> - 压缩agent`tar zcvf  agent.tar.gz ./agent`
 > - 使用/agent Dockerfile 构建基础镜像`docker build -t 192.168.33.10:3000/library/openjdk8-skywalking:1.0.0 .`
-> - docker 打包`docker build -t 192.168.33.10:3000/library/openjdk8-skywalking:1.0.0 .`
 > - push 镜像到harbor仓库`docker push 192.168.33.10:3000/library/openjdk8-skywalking:1.0.0`
 > - 进入本项目目录执行maven命令(如果harbor账号密码不是默认记得改，地址及端口也是一样)：`mvn -DsendCredentialsOverHttp=true clean package`
 
@@ -130,5 +130,5 @@ ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 > - 在`cloud`目录下创建`web`目录, 复制前端`dist`目录下的文件到`web`目录
 > - 进入`cloud`目录, 执行`docker-compose up -d`
 
-## 额外配置：skywalking 监控服务调用
+## 额外配置：skywalking 监控服务调用 以及日志上传
 

@@ -7,11 +7,11 @@ services:
     networks:
       - web_net
     environment:
-      # 设置时区
-      - "TZ=Asia/Shanghai"
+      JAVA_TOOL_OPTIONS: "-Xms256m -Xmx512m -javaagent:/agent/skywalking-agent.jar"
     volumes:
       - ./log/admin:/log/admin
-      - ./log/admin/skywalking:/zclcs/apache-skywalking-apm-bin/agent/logs
+      - ./log/admin/skywalking:/agent/logs
+      - ./agent/agent.config:/agent/config/agent.config
     env_file: run.env
     ports:
       - "8401:8401"
@@ -21,11 +21,11 @@ services:
     networks:
       - web_net
     environment:
-      # 设置时区
-      - "TZ=Asia/Shanghai"
+      JAVA_TOOL_OPTIONS: "-Xms256m -Xmx512m -javaagent:/agent/skywalking-agent.jar"
     volumes:
       - ./log/gateway:/log/gateway
-      - ./log/gateway/skywalking:/zclcs/apache-skywalking-apm-bin/agent/logs
+      - ./log/gateway/skywalking:/agent/logs
+      - ./agent/agent.config:/agent/config/agent.config
     env_file: run.env
     expose:
       - "8301"
@@ -35,11 +35,11 @@ services:
     networks:
       - web_net
     environment:
-      # 设置时区
-      - "TZ=Asia/Shanghai"
+      JAVA_TOOL_OPTIONS: "-Xms256m -Xmx512m -javaagent:/agent/skywalking-agent.jar"
     volumes:
       - ./log/auth:/log/auth
-      - ./log/auth/skywalking:/zclcs/apache-skywalking-apm-bin/agent/logs
+      - ./log/auth/skywalking:/agent/logs
+      - ./agent/agent.config:/agent/config/agent.config
     env_file: run.env
   tx-manager:
     image: 192.168.33.10:3000/cloud/tx-manager:latest
@@ -47,11 +47,11 @@ services:
     networks:
       - web_net
     environment:
-      # 设置时区
-      - "TZ=Asia/Shanghai"
+      JAVA_TOOL_OPTIONS: "-Xms256m -Xmx512m -javaagent:/agent/skywalking-agent.jar"
     volumes:
       - ./log/tx-manager:/log/tx-manager
-      - ./log/tx-manager/skywalking:/zclcs/apache-skywalking-apm-bin/agent/logs
+      - ./log/tx-manager/skywalking:/agent/logs
+      - ./agent/agent.config:/agent/config/agent.config
     env_file: run.env
     expose:
       - "8888"
@@ -63,12 +63,12 @@ services:
     networks:
       - web_net
     environment:
-      # 设置时区
-      - "TZ=Asia/Shanghai"
+      JAVA_TOOL_OPTIONS: "-Xms256m -Xmx512m -javaagent:/agent/skywalking-agent.jar"
     volumes:
       - ./log/server-system:/log/server-system
       - ./.txlcn:/.txlcn
-      - ./log/server-system/skywalking:/zclcs/apache-skywalking-apm-bin/agent/logs
+      - ./log/server-system/skywalking:/agent/logs
+      - ./agent/agent.config:/agent/config/agent.config
     env_file: run.env
     depends_on:
       - tx-manager
@@ -79,7 +79,7 @@ services:
       - web_net
     environment:
       # 设置时区
-      - "TZ=Asia/Shanghai"
+      TZ: "Asia/Shanghai"
     privileged: true
     user: root
     ports:
