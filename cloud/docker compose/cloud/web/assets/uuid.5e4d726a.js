@@ -1,1 +1,0 @@
-const t=[];for(let o=0;o<=15;o++)t[o]=o.toString(16);function r(){let r="";for(let o=1;o<=36;o++)r+=9===o||14===o||19===o||24===o?"-":15===o?4:20===o?t[4*Math.random()|8]:t[16*Math.random()|0];return r.replace(/-/g,"")}export{r as b};
