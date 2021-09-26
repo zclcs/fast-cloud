@@ -71,6 +71,8 @@
                             <jvmFlag>-Xms256m</jvmFlag>
                             <jvmFlag>-Xmx512m</jvmFlag>
                             <jvmFlag>-Dskywalking.agent.service_name=${project.artifactId}</jvmFlag>
+                            <jvmFlag>-javaagent:/zclcs/apache-skywalking-apm-bin/agent/skywalking-agent.jar</jvmFlag>
+                            <jvmFlag>-Dskywalking.collector.backend_service=skywalking-oap:11800</jvmFlag>
                         </jvmFlags>
                         <mainClass>com.zclcs.server.system.ServerSystemApplication</mainClass>
                     </container>

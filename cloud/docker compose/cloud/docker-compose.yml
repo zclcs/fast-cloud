@@ -11,7 +11,7 @@ services:
       - "TZ=Asia/Shanghai"
     volumes:
       - ./log/admin:/log/admin
-      - ./agent:/agent
+      - ./log/admin/skywalking:/zclcs/apache-skywalking-apm-bin/agent/logs
     env_file: run.env
     ports:
       - "8401:8401"
@@ -25,7 +25,7 @@ services:
       - "TZ=Asia/Shanghai"
     volumes:
       - ./log/gateway:/log/gateway
-      - ./agent:/agent
+      - ./log/gateway/skywalking:/zclcs/apache-skywalking-apm-bin/agent/logs
     env_file: run.env
     expose:
       - "8301"
@@ -39,7 +39,7 @@ services:
       - "TZ=Asia/Shanghai"
     volumes:
       - ./log/auth:/log/auth
-      - ./agent:/agent
+      - ./log/auth/skywalking:/zclcs/apache-skywalking-apm-bin/agent/logs
     env_file: run.env
   tx-manager:
     image: 192.168.33.10:3000/cloud/tx-manager:latest
@@ -51,7 +51,7 @@ services:
       - "TZ=Asia/Shanghai"
     volumes:
       - ./log/tx-manager:/log/tx-manager
-      - ./agent:/agent
+      - ./log/tx-manager/skywalking:/zclcs/apache-skywalking-apm-bin/agent/logs
     env_file: run.env
     expose:
       - "8888"
@@ -68,7 +68,7 @@ services:
     volumes:
       - ./log/server-system:/log/server-system
       - ./.txlcn:/.txlcn
-      - ./agent:/agent
+      - ./log/server-system/skywalking:/zclcs/apache-skywalking-apm-bin/agent/logs
     env_file: run.env
     depends_on:
       - tx-manager

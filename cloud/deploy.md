@@ -109,8 +109,8 @@ ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
 ### 构建jdk skywalking 基础镜像
 
-> - 下载`wget https://archive.apache.org/dist/skywalking/8.1.0/apache-skywalking-apm-8.7.0.tar.gz`
-> - 解压`tar zxf apache-skywalking-apm-8.7.0.tar.gz`
+> - 下载`wget https://archive.apache.org/dist/skywalking/6.4.0/apache-skywalking-apm-6.4.0.tar.gz`
+> - 解压`tar zxf apache-skywalking-apm-6.4.0.tar.gz`
 > - 压缩agent`tar zcvf  agent.tar.gz ./apache-skywalking-apm-bin/agent`
 > - 使用/agent Dockerfile 构建基础镜像`docker build -t 192.168.33.10:3000/library/openjdk8-skywalking:1.0.0 .`
 > - docker 打包`docker build -t 192.168.33.10:3000/library/openjdk8-skywalking:1.0.0 .`

@@ -159,10 +159,10 @@
                         </to>
                         <allowInsecureRegistries>true</allowInsecureRegistries>
                         <container>
-                            <args>
-                                <arg>-javaagent:/agent/skywalking-agent.jar</arg>
-                                <arg>-Dskywalking.collector.backend_service=192.168.33.10:11800</arg>
-                            </args>
+                            <!--                            <args>-->
+                            <!--                                <arg>-javaagent:/zclcs/apache-skywalking-apm-bin/agent/skywalking-agent.jar</arg>-->
+                            <!--                                <arg>-Dskywalking.collector.backend_service=192.168.33.10:11800</arg>-->
+                            <!--                            </args>-->
                             <environment>
                                 <TZ>Asia/Shanghai</TZ>
                             </environment>
