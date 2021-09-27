@@ -39,13 +39,13 @@ public class MyLogAutoConfigure {
         this.properties = properties;
     }
 
-    @ConditionalOnProperty(name = "my.log.enable-log-for-controller", havingValue = "true")
+    @ConditionalOnProperty(name = "my.log.LOG_ENABLE_LOG_FOR_CONTROLLER", havingValue = "true")
     @Bean
     public ControllerLogAspect controllerLogAspect() {
         return new ControllerLogAspect();
     }
 
-    @ConditionalOnProperty(name = "my.log.enable-elk", havingValue = "true")
+    @ConditionalOnProperty(name = "my.log.LOG_ENABLE_ELK", havingValue = "true")
     @Bean
     public void enableElk() throws JsonProcessingException {
         LogstashTcpSocketAppender appender = new LogstashTcpSocketAppender();

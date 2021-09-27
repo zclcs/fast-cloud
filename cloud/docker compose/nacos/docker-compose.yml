@@ -3,10 +3,10 @@ services:
   nacos:
     image: nacos/nacos-server:2.0.3
     container_name: nacos-standalone-mysql
-    env_file: run.env
     volumes:
       - ./nacos/standalone-logs/:/home/nacos/logs
       - ./nacos/init.d/custom.properties:/home/nacos/init.d/custom.properties
+    env_file: .env
     ports:
       - "8848:8848"
       - "9848:9848"

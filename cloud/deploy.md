@@ -132,3 +132,8 @@ ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
 ## 额外配置：skywalking 监控服务调用 以及日志上传
 
+> - 创建`skywalking-elk`目录, 复制项目 /skywalking-elk下的内容，上传至服务器
+> - 进入`skywalking-elk`目录, 执行`docker-compose up -d`
+> - 打开项目中的配置`# skywalking java 环境`下的环境变量，注释`# 不部署 skywalking java 环境`
+> - 进入`cloud`目录, 执行`docker-compose up -d`
+

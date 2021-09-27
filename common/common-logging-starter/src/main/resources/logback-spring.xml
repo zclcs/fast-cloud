@@ -4,8 +4,9 @@
     <property name="log.path" value="log/${springAppName}"/>
     <property name="log.maxHistory" value="15"/>
     <property name="log.colorPattern"
-              value="%magenta(%d{yyyy-MM-dd HH:mm:ss}) %highlight(%-5level) %boldCyan(${springAppName:-}) %yellow(%thread) %green(%logger) %msg%n"/>
-    <property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5level ${springAppName:-} %thread %logger %msg%n"/>
+              value="%magenta(%d{yyyy-MM-dd HH:mm:ss}) %highlight([%X{tid}]) %highlight(%-5level) %boldCyan(${springAppName:-}) %yellow(%thread) %green(%logger) %msg%n"/>
+    <property name="log.pattern"
+              value="%d{yyyy-MM-dd HH:mm:ss} [%X{tid}]  %-5level ${springAppName:-} %thread %logger %msg%n"/>
     <property name="log.grpc.pattern"
               value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%X{tid}] [%thread] %-5level ${springAppName:-} %logger{36} -%msg%n"/>
 

@@ -1,17 +1,17 @@
 spring:
   profiles:
-    active: ${profiles-active:dev}
+    active: ${PROFILES_ACTIVE:dev}
 
   application:
-    name: ${tx-manager-service-name:tx-manager}
+    name: ${SERVICE_NAME_TX_MANAGER:tx-manager}
 
   cloud:
     nacos:
       config:
-        server-addr: ${nacos-host:127.0.0.1}:${nacos-port:8001}
-        namespace: ${nacos-namespace:dev}
+        server-addr: ${NACOS_HOST:127.0.0.1}:${NACOS_PORT:8001}
+        namespace: ${NACOS_NAMESPACE:dev}
         group: DEFAULT_GROUP
-        prefix: ${tx-manager-service-name:tx-manager}
+        prefix: ${SERVICE_NAME_TX_MANAGER:tx-manager}
         file-extension: yaml
 
 logging:

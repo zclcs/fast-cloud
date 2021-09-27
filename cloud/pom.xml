@@ -78,8 +78,6 @@
         <docker.jib.auth.password>Harbor12345</docker.jib.auth.password>
         <docker.jib.to.image>192.168.33.10:3000/cloud</docker.jib.to.image>
         <image.version>1.1-SNAPSHOT</image.version>
-        <sk.jvm.agent.host>oap</sk.jvm.agent.host>
-        <sk.jvm.agent.port>11800</sk.jvm.agent.port>
     </properties>
 
     <dependencyManagement>
@@ -163,12 +161,6 @@
                         <container>
                             <environment>
                                 <SW_AGENT_NAME>${project.artifactId}</SW_AGENT_NAME>
-                                <SW_AGENT_COLLECTOR_BACKEND_SERVICES>${sk.jvm.agent.host}:${sk.jvm.agent.port}
-                                </SW_AGENT_COLLECTOR_BACKEND_SERVICES>
-                                <SW_JDBC_TRACE_SQL_PARAMETERS>true</SW_JDBC_TRACE_SQL_PARAMETERS>
-                                <SW_FEIGN_COLLECT_REQUEST_BODY>true</SW_FEIGN_COLLECT_REQUEST_BODY>
-                                <SW_GRPC_LOG_SERVER_HOST>${sk.jvm.agent.host}</SW_GRPC_LOG_SERVER_HOST>
-                                <SW_GRPC_LOG_SERVER_PORT>${sk.jvm.agent.port}</SW_GRPC_LOG_SERVER_PORT>
                                 <TZ>Asia/Shanghai</TZ>
                             </environment>
                             <format>OCI</format>

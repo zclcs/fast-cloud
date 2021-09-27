@@ -7,12 +7,12 @@ services:
     networks:
       - web_net
     environment:
-      JAVA_TOOL_OPTIONS: "-Xms256m -Xmx512m -javaagent:/agent/skywalking-agent.jar"
+      JAVA_TOOL_OPTIONS: "${ADMIN_JAVA_OPS}"
     volumes:
       - ./log/admin:/log/admin
       - ./log/admin/skywalking:/agent/logs
       - ./agent/agent.config:/agent/config/agent.config
-    env_file: run.env
+    env_file: .env
     ports:
       - "8401:8401"
   gateway:
@@ -21,40 +21,36 @@ services:
     networks:
       - web_net
     environment:
-      JAVA_TOOL_OPTIONS: "-Xms256m -Xmx512m -javaagent:/agent/skywalking-agent.jar"
+      JAVA_TOOL_OPTIONS: "${GATEWAY_JAVA_OPS}"
     volumes:
       - ./log/gateway:/log/gateway
       - ./log/gateway/skywalking:/agent/logs
       - ./agent/agent.config:/agent/config/agent.config
-    env_file: run.env
-    expose:
-      - "8301"
+    env_file: .env
   auth:
     image: 192.168.33.10:3000/cloud/auth:latest
     container_name: auth
     networks:
       - web_net
     environment:
-      JAVA_TOOL_OPTIONS: "-Xms256m -Xmx512m -javaagent:/agent/skywalking-agent.jar"
+      JAVA_TOOL_OPTIONS: "${AUTH_JAVA_OPS}"
     volumes:
       - ./log/auth:/log/auth
       - ./log/auth/skywalking:/agent/logs
       - ./agent/agent.config:/agent/config/agent.config
-    env_file: run.env
+    env_file: .env
   tx-manager:
     image: 192.168.33.10:3000/cloud/tx-manager:latest
     container_name: tx-manager
     networks:
       - web_net
     environment:
-      JAVA_TOOL_OPTIONS: "-Xms256m -Xmx512m -javaagent:/agent/skywalking-agent.jar"
+      JAVA_TOOL_OPTIONS: "${TX_MANAGER_JAVA_OPS}"
     volumes:
       - ./log/tx-manager:/log/tx-manager
       - ./log/tx-manager/skywalking:/agent/logs
       - ./agent/agent.config:/agent/config/agent.config
-    env_file: run.env
-    expose:
-      - "8888"
+    env_file: .env
     ports:
       - "8501:8501"
   server-system:
@@ -63,13 +59,13 @@ services:
     networks:
       - web_net
     environment:
-      JAVA_TOOL_OPTIONS: "-Xms256m -Xmx512m -javaagent:/agent/skywalking-agent.jar"
+      JAVA_TOOL_OPTIONS: "${SERVER_SYSTEM_JAVA_OPS}"
     volumes:
       - ./log/server-system:/log/server-system
       - ./.txlcn:/.txlcn
       - ./log/server-system/skywalking:/agent/logs
       - ./agent/agent.config:/agent/config/agent.config
-    env_file: run.env
+    env_file: .env
     depends_on:
       - tx-manager
   nginx:

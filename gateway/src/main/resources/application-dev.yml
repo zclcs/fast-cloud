@@ -1,13 +1,13 @@
 server:
-  port: ${gateway-port:8301}
+  port: ${PORT_GATEWAY:8301}
 
 spring:
   boot:
     admin:
       client:
-        url: http://${admin-host:127.0.0.1}:${admin-port:8401}
-        username: ${admin-security-username:zclcs}
-        password: ${admin-security-password:123456}
+        url: http://${ADMIN_HOST:127.0.0.1}:${PORT_ADMIN:8401}
+        username: ${ADMIN_SECURITY_USERNAME:zclcs}
+        password: ${ADMIN_SECURITY_PASSWORD:123456}
         instance:
           prefer-ip: true
 
@@ -21,24 +21,24 @@ spring:
             allowedHeaders: "*"
             allowCredentials: true
       routes:
-        - id: ${auth-service-name:auth}
-          uri: lb://${auth-service-name:auth}
+        - id: ${SERVICE_NAME_AUTH:auth}
+          uri: lb://${SERVICE_NAME_AUTH:auth}
           predicates:
             - Path=/auth/**
           filters:
             - name: Hystrix
               args:
                 name: authfallback
-                fallbackUri: forward:/fallback/${auth-service-name:auth}
-        - id: ${server-system-service-name:server-system}
-          uri: lb://${server-system-service-name:server-system}
+                fallbackUri: forward:/fallback/${SERVICE_NAME_AUTH:auth}
+        - id: ${SERVICE_NAME_SERVER_SYSTEM:server-system}
+          uri: lb://${SERVICE_NAME_SERVER_SYSTEM:server-system}
           predicates:
             - Path=/system/**
           filters:
             - name: Hystrix
               args:
                 name: systemfallback
-                fallbackUri: forward:/fallback/${server-system-service-name:server-system}
+                fallbackUri: forward:/fallback/${SERVICE_NAME_SERVER_SYSTEM:server-system}
       loadbalancer:
         use404: true
       default-filters:
@@ -56,9 +56,9 @@ spring:
   #     database: cloud_route
 
   redis:
-    database: ${gateway-redis-database:3}
-    host: ${redis-host:127.0.0.1}
-    port: ${redis-port:6379}
+    database: ${REDIS_GATEWAY_DATABASE:3}
+    host: ${REDIS_HOST:127.0.0.1}
+    port: ${REDIS_PORT:6379}
     lettuce:
       pool:
         min-idle: 8
@@ -78,12 +78,12 @@ my:
   doc:
     gateway:
       enable: true
-      resources: ${doc-gateway-resources:"server-system,auth"}
+      resources: ${DOC_GATEWAY_RESOURCES:"server-system,auth"}
 
   log:
-    enable-elk: ${enable-elk:false}
-    enable-log-for-controller: ${enable-log-for-controller:false}
-    logstash-host: ${logstash-host:127.0.0.1:4560}
+    enable-elk: ${LOG_ENABLE_ELK:false}
+    enable-log-for-controller: ${LOG_ENABLE_LOG_FOR_CONTROLLER:false}
+    logstash-host: ${LOG_LOGSTASH_HOST:127.0.0.1:4560}
 
 hystrix:
   command:

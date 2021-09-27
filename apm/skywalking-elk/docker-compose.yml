@@ -16,10 +16,10 @@ services:
       retries: 3
       start_period: 40s
     environment:
-      - discovery.type=single-node
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - TZ=Asia/Shanghai
+      discovery.type: "single-node"
+      bootstrap.memory_lock: "true"
+      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+      TZ: "Asia/Shanghai"
     ulimits:
       memlock:
         soft: -1

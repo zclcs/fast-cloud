@@ -1,21 +1,21 @@
 spring:
   profiles:
-    active: ${profiles-active:dev}
+    active: ${PROFILES_ACTIVE:dev}
 
   application:
-    name: ${auth-service-name:auth}
+    name: ${SERVICE_NAME_AUTH:auth}
 
   cloud:
     nacos:
       config:
-        server-addr: ${nacos-host:127.0.0.1}:${nacos-port:8001}
-        namespace: ${nacos-namespace:dev}
+        server-addr: ${NACOS_HOST:127.0.0.1}:${NACOS_PORT:8001}
+        namespace: ${NACOS_NAMESPACE:dev}
         group: DEFAULT_GROUP
-        prefix: ${auth-service-name:auth}
+        prefix: ${SERVICE_NAME_AUTH:auth}
         file-extension: yaml
       discovery:
-        server-addr: ${nacos-host:127.0.0.1}:${nacos-port:8001}
-        namespace: ${nacos-namespace:dev}
+        server-addr: ${NACOS_HOST:127.0.0.1}:${NACOS_PORT:8001}
+        namespace: ${NACOS_NAMESPACE:dev}
 
   thymeleaf:
     cache: false

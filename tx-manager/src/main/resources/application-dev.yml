@@ -1,25 +1,25 @@
 server:
-  port: ${tx-manager-port:8501}
+  port: ${PORT_TX_MANAGER:8501}
 spring:
   boot:
     admin:
       client:
-        url: http://${admin-host:127.0.0.1}:${admin-port:8401}
-        username: ${admin-security-username:zclcs}
-        password: ${admin-security-password:123456}
+        url: http://${ADMIN_HOST:127.0.0.1}:${PORT_ADMIN:8401}
+        username: ${ADMIN_SECURITY_USERNAME:zclcs}
+        password: ${ADMIN_SECURITY_PASSWORD:123456}
         instance:
           prefer-ip: true
 
   datasource:
-    driver-class-name: ${datasource-driver:com.mysql.cj.jdbc.Driver}
-    url: jdbc:${datasource-db-type:mysql}://${datasource-host:127.0.0.1}:${datasource-port:3306}/${tx-manager-db-name:cloud_tx_manager}?${datasource-param:useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai}
-    username: ${datasource-username:root}
-    password: ${datasource-password:root}
+    driver-class-name: ${DATASOURCE_DRIVER:com.mysql.cj.jdbc.Driver}
+    url: jdbc:${DATASOURCE_DB_TYPE:mysql}://${DATASOURCE_HOST:127.0.0.1}:${DATASOURCE_PORT:3306}/${DB_NAME_TX_MANAGER:cloud_tx_manager}?${DATASOURCE_PARAM:useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai}
+    username: ${DATASOURCE_USERNAME:root}
+    password: ${DATASOURCE_PASSWORD:root}
 
   redis:
-    database: ${tx-manager-redis-database:2}
-    host: ${redis-host:127.0.0.1}
-    port: ${redis-port:6379}
+    database: ${REDIS_TX_MANAGER_DATABASE:2}
+    host: ${REDIS_HOST:127.0.0.1}
+    port: ${REDIS_PORT:6379}
     lettuce:
       pool:
         min-idle: 8
@@ -45,20 +45,20 @@ management:
 
 my:
   log:
-    enable-elk: ${enable-elk:false}
-    enable-log-for-controller: ${enable-log-for-controller:false}
-    logstash-host: ${logstash-host:127.0.0.1:4560}
+    enable-elk: ${LOG_ENABLE_ELK:false}
+    enable-log-for-controller: ${LOG_ENABLE_LOG_FOR_CONTROLLER:false}
+    logstash-host: ${LOG_LOGSTASH_HOST:127.0.0.1:4560}
 
 tx-lcn:
   manager:
-    host: ${manager-host:0.0.0.0}
+    host: ${TX_MANAGER_PORT:0.0.0.0}
     # TM监听Socket端口.
-    port: ${manager-port:8888}
+    port: ${TX_CLIENT_MANAGER_PORT:8888}
     # TM控制台密码
-    admin-key: ${manager-admin-key:123456}
+    admin-key: ${TX_MANAGER_ADMIN_KEY:123456}
   logger:
     # 开启日志记录
-    enabled: ${logger-enabled:true}
+    enabled: ${TX_LOGGER_ENABLED:true}
     driver-class-name: ${spring.datasource.driver-class-name}
     jdbc-url: ${spring.datasource.url}
     username: ${spring.datasource.username}

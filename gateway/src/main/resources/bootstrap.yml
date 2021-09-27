@@ -1,24 +1,24 @@
 spring:
   profiles:
-    active: ${profiles-active:dev}
+    active: ${PROFILES_ACTIVE:dev}
 
   main:
     allow-bean-definition-overriding: true
 
   application:
-    name: ${gateway-service-name:gateway}
+    name: ${SERVICE_NAME_GATEWAY:gateway}
 
   cloud:
     nacos:
       config:
-        server-addr: ${nacos-host:127.0.0.1}:${nacos-port:8001}
-        namespace: ${nacos-namespace:dev}
+        server-addr: ${NACOS_HOST:127.0.0.1}:${NACOS_PORT:8001}
+        namespace: ${NACOS_NAMESPACE:dev}
         group: DEFAULT_GROUP
-        prefix: ${gateway-service-name:gateway}
+        prefix: ${SERVICE_NAME_GATEWAY:gateway}
         file-extension: yaml
       discovery:
-        server-addr: ${nacos-host:127.0.0.1}:${nacos-port:8001}
-        namespace: ${nacos-namespace:dev}
+        server-addr: ${NACOS_HOST:127.0.0.1}:${NACOS_PORT:8001}
+        namespace: ${NACOS_NAMESPACE:dev}
 
 logging:
   level:
