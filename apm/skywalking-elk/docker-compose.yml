@@ -25,7 +25,7 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - data:/usr/share/elasticsearch/data
+      - ./elasticsearch/data:/usr/share/elasticsearch/data
   oap:
     image: apache/skywalking-oap-server:8.7.0-es7
     container_name: oap
@@ -67,10 +67,6 @@ services:
     environment:
       SW_OAP_ADDRESS: http://oap:12800
       TZ: Asia/Shanghai
-
-volumes:
-  data:
-    driver: local
 
 networks:
   web_net:
