@@ -1,8 +1,8 @@
-package com.zclcs.common.core.aspect;
+package com.zclcs.server.system.aspect;
 
 import com.zclcs.common.core.exception.MyException;
 import com.zclcs.common.core.utils.BaseUtil;
-import com.zclcs.common.core.annotation.ControllerEndpoint;
+import com.zclcs.server.system.annotation.ControllerEndpoint;
 import com.zclcs.server.system.service.SystemLogService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +26,7 @@ public class ControllerEndpointAspect extends BaseAspectSupport {
 
     private final SystemLogService systemLogService;
 
-    @Pointcut("@annotation(com.zclcs.common.core.annotation.ControllerEndpoint)")
+    @Pointcut("@annotation(com.zclcs.server.system.annotation.ControllerEndpoint)")
     public void pointcut() {
     }
 

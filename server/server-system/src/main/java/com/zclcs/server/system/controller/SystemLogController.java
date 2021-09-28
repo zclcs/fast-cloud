@@ -8,7 +8,7 @@ import com.zclcs.common.core.constant.StringConstant;
 import com.zclcs.common.core.entity.system.ao.SystemLogAo;
 import com.zclcs.common.core.entity.system.vo.SystemLogVo;
 import com.zclcs.common.core.utils.BaseRspUtil;
-import com.zclcs.common.core.annotation.ControllerEndpoint;
+import com.zclcs.server.system.annotation.ControllerEndpoint;
 import com.zclcs.server.system.service.SystemLogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

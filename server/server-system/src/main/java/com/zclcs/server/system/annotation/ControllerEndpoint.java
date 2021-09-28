@@ -1,4 +1,4 @@
-package com.zclcs.common.core.annotation;
+package com.zclcs.server.system.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

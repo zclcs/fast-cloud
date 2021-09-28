@@ -13,7 +13,7 @@ import com.zclcs.common.core.entity.system.vo.SystemUserVo;
 import com.zclcs.common.core.utils.BaseRspUtil;
 import com.zclcs.common.core.utils.BaseUtil;
 import com.zclcs.common.core.validate.strategy.UpdateStrategy;
-import com.zclcs.common.core.annotation.ControllerEndpoint;
+import com.zclcs.server.system.annotation.ControllerEndpoint;
 import com.zclcs.server.system.service.SystemLoginLogService;
 import com.zclcs.server.system.service.SystemUserDataPermissionService;
 import com.zclcs.server.system.service.SystemUserService;
