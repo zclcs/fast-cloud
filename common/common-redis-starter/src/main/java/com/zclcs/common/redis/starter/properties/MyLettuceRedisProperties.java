@@ -3,7 +3,7 @@ package com.zclcs.common.redis.starter.properties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * @author MrBird
+ * @author zclcs
  */
 @ConfigurationProperties(prefix = "my.lettuce.redis")
 public class MyLettuceRedisProperties {

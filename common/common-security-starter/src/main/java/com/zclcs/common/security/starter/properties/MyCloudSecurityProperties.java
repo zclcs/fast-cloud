@@ -4,7 +4,7 @@ import com.zclcs.common.core.constant.EndpointConstant;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * @author MrBird
+ * @author zclcs
  */
 @ConfigurationProperties(prefix = "my.cloud.security")
 public class MyCloudSecurityProperties {

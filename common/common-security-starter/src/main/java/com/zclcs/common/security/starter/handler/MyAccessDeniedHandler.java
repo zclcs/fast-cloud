@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @author MrBird
+ * @author zclcs
  */
 public class MyAccessDeniedHandler implements AccessDeniedHandler {
 

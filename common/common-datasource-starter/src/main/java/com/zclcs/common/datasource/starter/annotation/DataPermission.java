@@ -3,7 +3,7 @@ package com.zclcs.common.datasource.starter.annotation;
 import java.lang.annotation.*;
 
 /**
- * @author MrBird
+ * @author zclcs
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

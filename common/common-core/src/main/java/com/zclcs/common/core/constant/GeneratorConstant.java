@@ -3,7 +3,7 @@ package com.zclcs.common.core.constant;
 /**
  * 代码生成常量
  *
- * @author MrBird
+ * @author zclcs
  */
 public interface GeneratorConstant {
 

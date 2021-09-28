@@ -3,7 +3,7 @@ package com.zclcs.common.core.exception;
 /**
  * FEBS系统异常
  *
- * @author MrBird
+ * @author zclcs
  */
 public class MyException extends RuntimeException {
 

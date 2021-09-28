@@ -5,7 +5,7 @@ import com.zclcs.common.core.constant.HttpStatusConstant;
 /**
  * 验证码类型异常
  *
- * @author MrBird
+ * @author zclcs
  */
 public class ValidateCodeException extends RuntimeException {
 

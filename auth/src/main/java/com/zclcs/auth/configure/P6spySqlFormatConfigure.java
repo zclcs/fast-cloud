@@ -7,7 +7,7 @@ import com.p6spy.engine.spy.appender.MessageFormattingStrategy;
 /**
  * 自定义 p6spy sql输出格式
  *
- * @author MrBird
+ * @author zclcs
  */
 public class P6spySqlFormatConfigure implements MessageFormattingStrategy {
 

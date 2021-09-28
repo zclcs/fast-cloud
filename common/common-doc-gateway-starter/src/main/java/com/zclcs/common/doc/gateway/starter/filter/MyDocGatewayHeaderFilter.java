@@ -7,7 +7,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 
 /**
- * @author MrBird
+ * @author zclcs
  */
 @SuppressWarnings("all")
 public class MyDocGatewayHeaderFilter extends AbstractGatewayFilterFactory {

@@ -29,7 +29,7 @@ import java.util.Set;
  * 重写UserInfoTokenServices
  * {@link UserInfoTokenServices#loadAuthentication(String)}
  *
- * @author MrBird
+ * @author zclcs
  */
 public class MyUserInfoTokenServices implements ResourceServerTokenServices {
 

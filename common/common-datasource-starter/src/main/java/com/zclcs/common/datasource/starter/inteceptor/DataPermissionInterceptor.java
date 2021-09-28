@@ -26,7 +26,7 @@ import java.sql.Connection;
 import java.util.Properties;
 
 /**
- * @author MrBird
+ * @author zclcs
  */
 @Slf4j
 @Intercepts({@Signature(type = StatementHandler.class, method = "prepare", args = {Connection.class, Integer.class})})

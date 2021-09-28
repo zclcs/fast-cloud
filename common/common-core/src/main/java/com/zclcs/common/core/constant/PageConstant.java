@@ -3,7 +3,7 @@ package com.zclcs.common.core.constant;
 /**
  * 分页常量
  *
- * @author MrBird
+ * @author zclcs
  */
 public interface PageConstant {
 

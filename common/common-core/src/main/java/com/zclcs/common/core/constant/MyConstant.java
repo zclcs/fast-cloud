@@ -3,7 +3,7 @@ package com.zclcs.common.core.constant;
 /**
  * FEBS系统常量类
  *
- * @author MrBird
+ * @author zclcs
  */
 public interface MyConstant {
 

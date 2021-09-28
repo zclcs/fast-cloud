@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @author MrBird
+ * @author zclcs
  */
 @Component
 public class MyWebLoginFailureHandler implements AuthenticationFailureHandler {

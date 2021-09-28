@@ -3,7 +3,7 @@ package com.zclcs.common.core.constant;
 /**
  * 请求参数常量
  *
- * @author MrBird
+ * @author zclcs
  */
 public interface ParamsConstant {
 

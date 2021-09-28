@@ -3,7 +3,7 @@ package com.zclcs.common.core.constant;
 /**
  * 业务状态常量类
  *
- * @author MrBird
+ * @author zclcs
  */
 public interface HttpStatusConstant {
 

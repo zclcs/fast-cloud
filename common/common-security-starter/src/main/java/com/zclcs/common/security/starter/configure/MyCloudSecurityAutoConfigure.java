@@ -24,7 +24,7 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.util.Base64Utils;
 
 /**
- * @author MrBird
+ * @author zclcs
  */
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableConfigurationProperties(MyCloudSecurityProperties.class)

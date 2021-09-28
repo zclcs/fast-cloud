@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author MrBird
+ * @author zclcs
  */
 @Primary
 public class MyDocGatewayResourceConfigure implements SwaggerResourcesProvider {

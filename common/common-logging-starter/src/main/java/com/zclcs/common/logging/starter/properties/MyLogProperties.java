@@ -3,7 +3,7 @@ package com.zclcs.common.logging.starter.properties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * @author xuefrye
+ * @author zclcs
  */
 @ConfigurationProperties(prefix = "my.log")
 public class MyLogProperties {

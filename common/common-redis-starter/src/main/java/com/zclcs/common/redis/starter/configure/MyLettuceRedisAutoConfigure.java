@@ -19,7 +19,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 /**
  * Lettuce Redis配置
  *
- * @author MrBird
+ * @author zclcs
  */
 @EnableConfigurationProperties(MyLettuceRedisProperties.class)
 @ConditionalOnProperty(value = "my.lettuce.redis.enable", havingValue = "true", matchIfMissing = true)

@@ -3,7 +3,7 @@ package com.zclcs.common.core.constant;
 /**
  * 认证类型常量类
  *
- * @author MrBird
+ * @author zclcs
  */
 public interface GrantTypeConstant {
 

@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * @author MrBird
+ * @author zclcs
  */
 public class MyCloudSecurityInterceptorConfigure implements WebMvcConfigurer {
 

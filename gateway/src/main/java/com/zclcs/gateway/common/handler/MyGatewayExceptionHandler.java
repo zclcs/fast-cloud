@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author MrBird
+ * @author zclcs
  */
 @Slf4j
 public class MyGatewayExceptionHandler extends DefaultErrorWebExceptionHandler {

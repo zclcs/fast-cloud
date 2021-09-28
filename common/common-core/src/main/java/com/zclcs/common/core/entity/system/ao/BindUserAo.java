@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 /**
- * @author MrBird
+ * @author zclcs
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

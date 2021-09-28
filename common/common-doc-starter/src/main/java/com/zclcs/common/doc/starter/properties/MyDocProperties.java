@@ -3,7 +3,7 @@ package com.zclcs.common.doc.starter.properties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * @author MrBird
+ * @author zclcs
  */
 @ConfigurationProperties(prefix = "my.doc")
 public class MyDocProperties {

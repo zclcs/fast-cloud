@@ -5,7 +5,7 @@ groups:
         expr: up == 0
         for: 20s
         labels:
-          user: MrBird
+          user: zclcs
         annotations:
           summary: "Instance {{ $labels.instance }} down"
           description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 20 s."

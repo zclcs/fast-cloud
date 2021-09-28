@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @author MrBird
+ * @author zclcs
  */
 public class MyServerProtectInterceptor implements HandlerInterceptor {
 

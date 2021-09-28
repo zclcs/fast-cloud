@@ -23,7 +23,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import java.util.List;
 
 /**
- * @author MrBird
+ * @author zclcs
  */
 @Configuration
 @EnableSwagger2

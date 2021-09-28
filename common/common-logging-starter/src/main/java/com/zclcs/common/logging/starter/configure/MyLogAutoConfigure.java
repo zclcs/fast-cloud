@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @author xuefrye
+ * @author zclcs
  */
 @Configuration
 @EnableConfigurationProperties(MyLogProperties.class)

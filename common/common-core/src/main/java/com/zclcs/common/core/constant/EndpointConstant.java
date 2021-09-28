@@ -3,7 +3,7 @@ package com.zclcs.common.core.constant;
 /**
  * 端点常量
  *
- * @author MrBird
+ * @author zclcs
  */
 public interface EndpointConstant {
 

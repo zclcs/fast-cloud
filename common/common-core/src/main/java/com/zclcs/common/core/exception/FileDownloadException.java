@@ -3,7 +3,7 @@ package com.zclcs.common.core.exception;
 /**
  * 文件下载异常
  *
- * @author MrBird
+ * @author zclcs
  */
 public class FileDownloadException extends RuntimeException {
     private static final long serialVersionUID = -4353976687870027960L;

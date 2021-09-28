@@ -8,7 +8,7 @@ import me.zhyd.oauth.request.AuthRequest;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 
 /**
- * @author MrBird
+ * @author zclcs
  */
 public interface SocialLoginService {
 

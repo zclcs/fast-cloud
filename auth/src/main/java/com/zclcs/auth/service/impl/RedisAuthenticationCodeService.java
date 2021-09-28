@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * 授权码保存到Redis，以确保认证服务器集群的一致性
  *
- * @author MrBird
+ * @author zclcs
  */
 @Slf4j
 @Service

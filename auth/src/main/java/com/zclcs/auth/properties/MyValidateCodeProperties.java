@@ -4,7 +4,7 @@ import com.zclcs.common.core.constant.ImageTypeConstant;
 import lombok.Data;
 
 /**
- * @author MrBird
+ * @author zclcs
  */
 @Data
 public class MyValidateCodeProperties {

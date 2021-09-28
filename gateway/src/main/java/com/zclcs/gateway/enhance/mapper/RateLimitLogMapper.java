@@ -8,7 +8,7 @@ import reactor.core.publisher.Flux;
 import java.util.Collection;
 
 /**
- * @author MrBird
+ * @author zclcs
  */
 @Repository
 public interface RateLimitLogMapper extends ReactiveMongoRepository<RateLimitLog, String> {

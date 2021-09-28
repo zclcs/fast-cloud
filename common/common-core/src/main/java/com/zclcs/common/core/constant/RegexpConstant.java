@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 /**
  * 正则常量
  *
- * @author MrBird
+ * @author zclcs
  */
 public interface RegexpConstant {
 

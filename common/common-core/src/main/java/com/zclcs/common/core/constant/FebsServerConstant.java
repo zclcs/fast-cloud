@@ -1,7 +1,7 @@
 package com.zclcs.common.core.constant;
 
 /**
- * @author MrBird
+ * @author zclcs
  */
 public interface FebsServerConstant {
 

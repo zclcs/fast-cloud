@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @author MrBird
+ * @author zclcs
  */
 @Slf4j
 public class MyAuthExceptionEntryPoint implements AuthenticationEntryPoint {
