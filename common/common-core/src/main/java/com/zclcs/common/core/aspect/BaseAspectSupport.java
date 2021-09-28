@@ -1,4 +1,4 @@
-package com.zclcs.server.system.aspect;
+package com.zclcs.common.core.aspect;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;

@@ -10,7 +10,7 @@ import com.zclcs.common.core.entity.system.ao.SystemDeptAo;
 import com.zclcs.common.core.entity.system.vo.SystemDeptVo;
 import com.zclcs.common.core.utils.BaseRspUtil;
 import com.zclcs.common.core.validate.strategy.UpdateStrategy;
-import com.zclcs.server.system.annotation.ControllerEndpoint;
+import com.zclcs.common.core.annotation.ControllerEndpoint;
 import com.zclcs.server.system.service.SystemDeptService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -53,7 +53,7 @@ public class SystemDeptController {
     }
 
     @GetMapping("options")
-    @ApiOperation(value = "集合")
+    @ApiOperation(value = "前端下拉框")
     @PreAuthorize("hasAuthority('dept:view')")
     public BaseRsp<List<DeptTree>> deptTree(@Valid SelectSystemDeptAo dept) {
         List<DeptTree> list = this.deptService.findDeptTree(dept);

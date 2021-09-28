@@ -13,7 +13,7 @@ import com.zclcs.common.core.entity.system.vo.SystemUserVo;
 import com.zclcs.common.core.utils.BaseRspUtil;
 import com.zclcs.common.core.utils.BaseUtil;
 import com.zclcs.common.core.validate.strategy.UpdateStrategy;
-import com.zclcs.server.system.annotation.ControllerEndpoint;
+import com.zclcs.common.core.annotation.ControllerEndpoint;
 import com.zclcs.server.system.service.SystemLoginLogService;
 import com.zclcs.server.system.service.SystemUserDataPermissionService;
 import com.zclcs.server.system.service.SystemUserService;
@@ -66,12 +66,6 @@ public class SystemUserController {
         loginLog.setBrowser(request.getHeader("user-agent"));
         this.loginLogService.save(loginLog);
     }
-
-//    @GetMapping("index")
-//    public BaseRsp<Object> index() {
-//
-//    }
-
 
     @GetMapping
     @PreAuthorize("hasAuthority('user:view')")
@@ -131,18 +125,6 @@ public class SystemUserController {
         List<Long> ids = Arrays.stream(userIds.split(StringConstant.COMMA)).map(Long::valueOf).collect(Collectors.toList());
         this.userService.deleteUsers(ids);
     }
-
-//    @PutMapping("profile")
-//    @ControllerEndpoint(exceptionMessage = "修改个人信息失败")
-//    public void updateProfile(@Valid SystemUser user) {
-//        this.userService.updateProfile(user);
-//    }
-
-//    @PutMapping("avatar")
-//    @ControllerEndpoint(exceptionMessage = "修改头像失败")
-//    public void updateAvatar(@NotBlank(message = "{required}") String avatar) {
-//        this.userService.updateAvatar(avatar);
-//    }
 
     @GetMapping("password/mine/check")
     @ApiOperation(value = "检查当前用户密码")
