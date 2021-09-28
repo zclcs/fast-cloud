@@ -23,7 +23,7 @@ CREATE TABLE `oauth_client_details`
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '客户端配置表'
-  ROW_FORMAT = Dynamic;
+  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of oauth_client_details
@@ -34,45 +34,6 @@ VALUES ('app', '', '$2a$10$8Qk/efslEpO1Af1kyw/rp.DdJGsdnET8UCp1vGDzpQEa.1qBklvua
 INSERT INTO `oauth_client_details`
 VALUES ('zclcs', ' ', '$2a$10$aSZTvMOtUAYUQ.75z2n3ceJd6dCIk9Vy3J/SKZUE4hBLd6sz7.6ge', 'all', 'password,refresh_token',
         NULL, NULL, 86400, 8640000, NULL, 0, '123456');
-
--- ----------------------------
--- Table structure for system_data_permission_test
--- ----------------------------
-DROP TABLE IF EXISTS `system_data_permission_test`;
-CREATE TABLE `system_data_permission_test`
-(
-    `id`          int(11)                                                NOT NULL,
-    `field1`      varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `field2`      varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `field3`      varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `field4`      varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `dept_id`     int(11)                                                NOT NULL,
-    `create_time` datetime                                               NOT NULL,
-    PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB
-  CHARACTER SET = utf8mb4
-  COLLATE = utf8mb4_general_ci COMMENT = '用户权限测试'
-  ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of system_data_permission_test
--- ----------------------------
-INSERT INTO `system_data_permission_test`
-VALUES (1, '小米', '小米10Pro', '4999', '珍珠白', 1, '2020-04-14 15:00:38');
-INSERT INTO `system_data_permission_test`
-VALUES (2, '腾讯', '黑鲨游戏手机3', '3799', '铠甲灰', 2, '2020-04-14 15:01:36');
-INSERT INTO `system_data_permission_test`
-VALUES (3, '华为', '华为P30', '3299', '天空之境', 1, '2020-04-14 15:03:11');
-INSERT INTO `system_data_permission_test`
-VALUES (4, '华为', '华为P40Pro', '6488', '亮黑色', 3, '2020-04-14 15:04:31');
-INSERT INTO `system_data_permission_test`
-VALUES (5, 'vivo', 'Vivo iQOO 3', '3998', '拉力橙', 4, '2020-04-14 15:05:55');
-INSERT INTO `system_data_permission_test`
-VALUES (6, '一加', '一加7T', '3199', '冰际蓝', 5, '2020-04-14 15:06:53');
-INSERT INTO `system_data_permission_test`
-VALUES (7, '三星', '三星Galaxy S10', '4098', '浩玉白', 6, '2020-04-14 15:08:25');
-INSERT INTO `system_data_permission_test`
-VALUES (8, '苹果', 'iPhone 11 pro max', '9198', '暗夜绿', 4, '2020-04-14 15:09:20');
 
 -- ----------------------------
 -- Table structure for system_dept
@@ -93,7 +54,7 @@ CREATE TABLE `system_dept`
   AUTO_INCREMENT = 7
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '部门表'
-  ROW_FORMAT = Dynamic;
+  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_dept
@@ -110,133 +71,6 @@ INSERT INTO `system_dept`
 VALUES (5, 0, '人事部', 3, '2018-01-04 15:42:32', '2019-01-23 06:27:59');
 INSERT INTO `system_dept`
 VALUES (6, 0, '测试部', 4, '2018-01-04 15:42:38', '2019-01-17 08:15:47');
-
--- ----------------------------
--- Table structure for system_export
--- ----------------------------
-DROP TABLE IF EXISTS `system_export`;
-CREATE TABLE `system_export`
-(
-    `field1`      varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL,
-    `field2`      int(11)                                                 NOT NULL,
-    `field3`      varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `create_time` datetime                                                NOT NULL
-) ENGINE = MyISAM
-  CHARACTER SET = utf8mb4
-  COLLATE = utf8mb4_general_ci COMMENT = 'excel导入导出测试'
-  ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of system_export
--- ----------------------------
-INSERT INTO `system_export`
-VALUES ('字段1', 1, 'mrbird0@gmail.com', '2019-07-25 19:08:01');
-INSERT INTO `system_export`
-VALUES ('字段1', 2, 'mrbird1@gmail.com', '2019-07-25 19:08:01');
-INSERT INTO `system_export`
-VALUES ('字段1', 3, 'mrbird2@gmail.com', '2019-07-25 19:08:01');
-INSERT INTO `system_export`
-VALUES ('字段1', 4, 'mrbird3@gmail.com', '2019-07-25 19:08:01');
-INSERT INTO `system_export`
-VALUES ('字段1', 5, 'mrbird4@gmail.com', '2019-07-25 19:08:01');
-INSERT INTO `system_export`
-VALUES ('字段1', 6, 'mrbird5@gmail.com', '2019-07-25 19:08:01');
-INSERT INTO `system_export`
-VALUES ('字段1', 7, 'mrbird6@gmail.com', '2019-07-25 19:08:01');
-INSERT INTO `system_export`
-VALUES ('字段1', 8, 'mrbird7@gmail.com', '2019-07-25 19:08:01');
-
--- ----------------------------
--- Table structure for system_generator_config
--- ----------------------------
-DROP TABLE IF EXISTS `system_generator_config`;
-CREATE TABLE `system_generator_config`
-(
-    `id`                   int(11)                                                 NOT NULL COMMENT '主键',
-    `author`               varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL COMMENT '作者',
-    `base_package`         varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '基础包名',
-    `entity_package`       varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'entity文件存放路径',
-    `mapper_package`       varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL COMMENT 'mapper文件存放路径',
-    `mapper_xml_package`   varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL COMMENT 'mapper xml文件存放路径',
-    `service_package`      varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL COMMENT 'servcie文件存放路径',
-    `service_impl_package` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL COMMENT 'serviceimpl文件存放路径',
-    `controller_package`   varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL COMMENT 'controller文件存放路径',
-    `is_trim`              char(1) CHARACTER SET utf8 COLLATE utf8_general_ci      NOT NULL COMMENT '是否去除前缀 1是 0否',
-    `trim_value`           varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL DEFAULT NULL COMMENT '前缀内容',
-    PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB
-  CHARACTER SET = utf8mb4
-  COLLATE = utf8mb4_general_ci COMMENT = '代码生成配置表'
-  ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of system_generator_config
--- ----------------------------
-INSERT INTO `system_generator_config`
-VALUES (1, 'MrBird', 'cc.mrbird.febs.server.generator.gen', 'com.zclcs.common.core.entity', 'mapper', 'mapper',
-        'service', 'service.impl', 'controller', '1', 't_');
-
--- ----------------------------
--- Table structure for system_job
--- ----------------------------
-DROP TABLE IF EXISTS `system_job`;
-CREATE TABLE `system_job`
-(
-    `job_id`          bigint(20)                                             NOT NULL AUTO_INCREMENT COMMENT '任务id',
-    `bean_name`       varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'spring bean名称',
-    `method_name`     varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '方法名',
-    `params`          varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '参数',
-    `cron_expression` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'cron表达式',
-    `status`          char(2) CHARACTER SET utf8 COLLATE utf8_general_ci     NOT NULL COMMENT '任务状态  0：正常  1：暂停',
-    `remark`          varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
-    `create_time`     datetime                                               NULL DEFAULT NULL COMMENT '创建时间',
-    PRIMARY KEY (`job_id`) USING BTREE,
-    INDEX `system_job_create_time` (`create_time`) USING BTREE
-) ENGINE = InnoDB
-  AUTO_INCREMENT = 5
-  CHARACTER SET = utf8mb4
-  COLLATE = utf8mb4_general_ci COMMENT = '定时任务表'
-  ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of system_job
--- ----------------------------
-INSERT INTO `system_job`
-VALUES (1, 'taskList', 'test', 'hello', '0/1 * * * * ?', '1', '有参任务调度测试', '2018-02-24 16:26:14');
-INSERT INTO `system_job`
-VALUES (2, 'taskList', 'test1', NULL, '0/10 * * * * ?', '1', '无参任务调度测试', '2018-02-24 17:06:23');
-INSERT INTO `system_job`
-VALUES (3, 'taskList', 'test2', '{\"name\":\"mrbird\",\"age\":18}', '0/1 * * * * ?', '1', 'JSON类型参数任务测试',
-        '2018-02-26 09:28:26');
-INSERT INTO `system_job`
-VALUES (4, 'taskList', 'test3', '', '0/5 * * * * ?', '1', '测试异常，没有编写test3任务', '2018-02-26 11:15:30');
-
--- ----------------------------
--- Table structure for system_job_log
--- ----------------------------
-DROP TABLE IF EXISTS `system_job_log`;
-CREATE TABLE `system_job_log`
-(
-    `log_id`      bigint(20)                                              NOT NULL AUTO_INCREMENT COMMENT '任务日志id',
-    `job_id`      bigint(20)                                              NOT NULL COMMENT '任务id',
-    `bean_name`   varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'spring bean名称',
-    `method_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '方法名',
-    `params`      varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '参数',
-    `status`      char(2) CHARACTER SET utf8 COLLATE utf8_general_ci      NOT NULL COMMENT '任务状态    0：成功    1：失败',
-    `error`       text CHARACTER SET utf8 COLLATE utf8_general_ci         NULL COMMENT '失败信息',
-    `times`       decimal(11, 0)                                          NULL DEFAULT NULL COMMENT '耗时(单位：毫秒)',
-    `create_time` datetime                                                NULL DEFAULT NULL COMMENT '创建时间',
-    PRIMARY KEY (`log_id`) USING BTREE,
-    INDEX `system_job_log_create_time` (`create_time`) USING BTREE
-) ENGINE = MyISAM
-  AUTO_INCREMENT = 1
-  CHARACTER SET = utf8mb4
-  COLLATE = utf8mb4_general_ci COMMENT = '调度日志表'
-  ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of system_job_log
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for system_log
@@ -260,7 +94,7 @@ CREATE TABLE `system_log`
   AUTO_INCREMENT = 136
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '用户操作日志表'
-  ROW_FORMAT = Dynamic;
+  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_log
@@ -814,7 +648,7 @@ CREATE TABLE `system_login_log`
   AUTO_INCREMENT = 1
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '登录日志表'
-  ROW_FORMAT = Dynamic;
+  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_login_log
@@ -850,7 +684,7 @@ CREATE TABLE `system_menu`
   AUTO_INCREMENT = 31
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '菜单表'
-  ROW_FORMAT = Dynamic;
+  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_menu
@@ -959,7 +793,7 @@ CREATE TABLE `system_role`
   AUTO_INCREMENT = 3
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '角色表'
-  ROW_FORMAT = Dynamic;
+  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_role
@@ -983,7 +817,7 @@ CREATE TABLE `system_role_menu`
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '角色菜单关联表'
-  ROW_FORMAT = Dynamic;
+  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_role_menu
@@ -1070,28 +904,6 @@ INSERT INTO `system_role_menu`
 VALUES (1, 30);
 
 -- ----------------------------
--- Table structure for system_trade_log
--- ----------------------------
-DROP TABLE IF EXISTS `system_trade_log`;
-CREATE TABLE `system_trade_log`
-(
-    `id`          int(11)                                                NOT NULL AUTO_INCREMENT COMMENT 'id',
-    `goods_id`    int(11)                                                NOT NULL COMMENT '商品id',
-    `goods_name`  varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商品名称',
-    `status`      varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '状态',
-    `create_time` datetime                                               NOT NULL COMMENT '创建时间',
-    PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB
-  AUTO_INCREMENT = 1
-  CHARACTER SET = utf8mb4
-  COLLATE = utf8mb4_general_ci COMMENT = '分布式事务测试'
-  ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of system_trade_log
--- ----------------------------
-
--- ----------------------------
 -- Table structure for system_user
 -- ----------------------------
 DROP TABLE IF EXISTS `system_user`;
@@ -1119,7 +931,7 @@ CREATE TABLE `system_user`
   AUTO_INCREMENT = 10
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '用户表'
-  ROW_FORMAT = Dynamic;
+  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_user
@@ -1151,7 +963,7 @@ CREATE TABLE `system_user_connection`
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '系统用户社交账户关联表'
-  ROW_FORMAT = Dynamic;
+  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_user_connection
@@ -1169,7 +981,7 @@ CREATE TABLE `system_user_data_permission`
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '用户数据权限关联表'
-  ROW_FORMAT = Dynamic;
+  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_user_data_permission
@@ -1201,7 +1013,7 @@ CREATE TABLE `system_user_role`
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '用户角色关联表'
-  ROW_FORMAT = Dynamic;
+  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_user_role
