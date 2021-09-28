@@ -98,12 +98,6 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
-        <!-- admin 监控服务 -->
-        <dependency>
-            <groupId>de.codecentric</groupId>
-            <artifactId>spring-boot-admin-starter-client</artifactId>
-            <version>${spring-boot-admin.version}</version>
-        </dependency>
         <!-- prometheus 监控数据可视化 -->
         <dependency>
             <groupId>io.micrometer</groupId>

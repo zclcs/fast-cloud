@@ -1,22 +1,8 @@
 version: '3'
 
 services:
-  admin:
-    image: 192.168.33.10:3000/cloud/admin:latest
-    container_name: admin
-    networks:
-      - web_net
-    environment:
-      JAVA_TOOL_OPTIONS: "${ADMIN_JAVA_OPS}"
-    volumes:
-      - ./log/admin:/log/admin
-      - ./log/admin/skywalking:/agent/logs
-      - ./agent/agent.config:/agent/config/agent.config
-    env_file: .env
-    ports:
-      - "8401:8401"
   gateway:
-    image: 192.168.33.10:3000/cloud/gateway:latest
+    image: ${CLOUD_DEPOSITORY_URL}/gateway:${CLOUD_DEPOSITORY_TAG}
     container_name: gateway
     networks:
       - web_net
@@ -25,10 +11,10 @@ services:
     volumes:
       - ./log/gateway:/log/gateway
       - ./log/gateway/skywalking:/agent/logs
-      - ./agent/agent.config:/agent/config/agent.config
+      - ${CLOUD_AGENT_CONFIG}
     env_file: .env
   auth:
-    image: 192.168.33.10:3000/cloud/auth:latest
+    image: ${CLOUD_DEPOSITORY_URL}/auth:${CLOUD_DEPOSITORY_TAG}
     container_name: auth
     networks:
       - web_net
@@ -37,10 +23,10 @@ services:
     volumes:
       - ./log/auth:/log/auth
       - ./log/auth/skywalking:/agent/logs
-      - ./agent/agent.config:/agent/config/agent.config
+      - ${CLOUD_AGENT_CONFIG}
     env_file: .env
   tx-manager:
-    image: 192.168.33.10:3000/cloud/tx-manager:latest
+    image: ${CLOUD_DEPOSITORY_URL}/tx-manager:${CLOUD_DEPOSITORY_TAG}
     container_name: tx-manager
     networks:
       - web_net
@@ -49,12 +35,12 @@ services:
     volumes:
       - ./log/tx-manager:/log/tx-manager
       - ./log/tx-manager/skywalking:/agent/logs
-      - ./agent/agent.config:/agent/config/agent.config
+      - ${CLOUD_AGENT_CONFIG}
     env_file: .env
     ports:
       - "8501:8501"
   server-system:
-    image: 192.168.33.10:3000/cloud/server-system:latest
+    image: ${CLOUD_DEPOSITORY_URL}/server-system:${CLOUD_DEPOSITORY_TAG}
     container_name: server-system
     networks:
       - web_net
@@ -64,7 +50,7 @@ services:
       - ./log/server-system:/log/server-system
       - ./.txlcn:/.txlcn
       - ./log/server-system/skywalking:/agent/logs
-      - ./agent/agent.config:/agent/config/agent.config
+      - ${CLOUD_AGENT_CONFIG}
     env_file: .env
     depends_on:
       - tx-manager

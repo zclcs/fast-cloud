@@ -2,15 +2,6 @@ server:
   port: ${PORT_GATEWAY:8301}
 
 spring:
-  boot:
-    admin:
-      client:
-        url: http://${ADMIN_HOST:127.0.0.1}:${PORT_ADMIN:8401}
-        username: ${ADMIN_SECURITY_USERNAME:zclcs}
-        password: ${ADMIN_SECURITY_PASSWORD:123456}
-        instance:
-          prefer-ip: true
-
   cloud:
     gateway:
       globalcors:
@@ -81,9 +72,7 @@ my:
       resources: ${DOC_GATEWAY_RESOURCES:"server-system,auth"}
 
   log:
-    enable-elk: ${LOG_ENABLE_ELK:false}
-    enable-log-for-controller: ${LOG_ENABLE_LOG_FOR_CONTROLLER:false}
-    logstash-host: ${LOG_LOGSTASH_HOST:127.0.0.1:4560}
+    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}
 
 hystrix:
   command:
@@ -101,13 +90,4 @@ hystrix:
 ribbon:
   eager-load:
     enabled: true
-
-management:
-  endpoint:
-    health:
-      show-details: ALWAYS
-  endpoints:
-    web:
-      exposure:
-        include: health,info,gateway
 

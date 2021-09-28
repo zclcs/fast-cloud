@@ -20,12 +20,6 @@
     <description>服务提供模块</description>
 
     <dependencies>
-        <!-- 收集微服务日志到ELK -->
-        <dependency>
-            <groupId>net.logstash.logback</groupId>
-            <artifactId>logstash-logback-encoder</artifactId>
-            <version>${logstash-logback-encoder.version}</version>
-        </dependency>
     </dependencies>
 
 </project>

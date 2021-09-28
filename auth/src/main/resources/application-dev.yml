@@ -6,15 +6,6 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
 
-  boot:
-    admin:
-      client:
-        url: http://${ADMIN_HOST:127.0.0.1}:${PORT_ADMIN:8401}
-        username: ${ADMIN_SECURITY_USERNAME:zclcs}
-        password: ${ADMIN_SECURITY_PASSWORD:123456}
-        instance:
-          prefer-ip: true
-
   datasource:
     dynamic:
       p6spy: ${DATASOURCE_LOGGER_SQL_ENABLED:true}
@@ -52,21 +43,6 @@ mybatis-plus:
     jdbc-type-for-null: null
   global-config:
     banner: false
-
-info:
-  app:
-    name: ${spring.application.name}
-    description: "@project.description@"
-    version: "@project.version@"
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
-  endpoint:
-    health:
-      show-details: ALWAYS
 
 justauth:
   enabled: true
@@ -116,9 +92,7 @@ my:
     security:
       enable: true
       only-fetch-by-gateway: false
-      anon-uris: /actuator/**,/captcha,/social/**,/v2/api-docs,/v2/api-docs-ext,/login,/resource/**
+      anon-uris: /captcha,/social/**,/v2/api-docs,/v2/api-docs-ext,/login,/resource/**
 
   log:
-    enable-elk: ${LOG_ENABLE_ELK:false}
-    enable-log-for-controller: ${LOG_ENABLE_LOG_FOR_CONTROLLER:false}
-    logstash-host: ${LOG_LOGSTASH_HOST:127.0.0.1:4560}
+    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}

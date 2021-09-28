@@ -1,15 +1,7 @@
 server:
   port: ${PORT_TX_MANAGER:8501}
-spring:
-  boot:
-    admin:
-      client:
-        url: http://${ADMIN_HOST:127.0.0.1}:${PORT_ADMIN:8401}
-        username: ${ADMIN_SECURITY_USERNAME:zclcs}
-        password: ${ADMIN_SECURITY_PASSWORD:123456}
-        instance:
-          prefer-ip: true
 
+spring:
   datasource:
     driver-class-name: ${DATASOURCE_DRIVER:com.mysql.cj.jdbc.Driver}
     url: jdbc:${DATASOURCE_DB_TYPE:mysql}://${DATASOURCE_HOST:127.0.0.1}:${DATASOURCE_PORT:3306}/${DB_NAME_TX_MANAGER:cloud_tx_manager}?${DATASOURCE_PARAM:useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai}
@@ -28,26 +20,9 @@ spring:
         max-wait: 10000
     timeout: 5000
 
-info:
-  app:
-    name: ${spring.application.name}
-    description: "@project.description@"
-    version: "@project.version@"
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
-  endpoint:
-    health:
-      show-details: ALWAYS
-
 my:
   log:
-    enable-elk: ${LOG_ENABLE_ELK:false}
-    enable-log-for-controller: ${LOG_ENABLE_LOG_FOR_CONTROLLER:false}
-    logstash-host: ${LOG_LOGSTASH_HOST:127.0.0.1:4560}
+    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}
 
 tx-lcn:
   manager:

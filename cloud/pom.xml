@@ -13,7 +13,6 @@
     <modules>
         <module>../common</module>
         <module>../auth</module>
-        <module>../apm</module>
         <module>../gateway</module>
         <module>../server</module>
         <module>../tx-manager</module>
@@ -53,12 +52,8 @@
         <dynamic-datasource.version>2.5.7</dynamic-datasource.version>
         <!-- p6spy 打印数据库日志 -->
         <p6spy.version>3.8.5</p6spy.version>
-        <!-- admin 监控服务 -->
-        <spring-boot-admin.version>2.2.0</spring-boot-admin.version>
         <!-- 生成验证码 -->
         <easy-captcha.version>1.6.2</easy-captcha.version>
-        <!-- 输出到json形式的日志 -->
-        <logstash-logback-encoder.version>6.1</logstash-logback-encoder.version>
         <!-- 整合第三方登录 -->
         <justauth.version>1.1.0</justauth.version>
         <!-- jwt token 生成 -->
