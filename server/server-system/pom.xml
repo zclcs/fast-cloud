@@ -67,7 +67,7 @@
                 <artifactId>jib-maven-plugin</artifactId>
                 <configuration>
                     <container>
-                        <mainClass>com.zclcs.server.system.ServerSystemApplication</mainClass>
+                        <mainClass>com.zclcs.ServerSystemApplication</mainClass>
                     </container>
                 </configuration>
             </plugin>
