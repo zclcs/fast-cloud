@@ -1,4 +1,4 @@
-package com.zclcs.server.system;
+package com.zclcs;
 
 import com.codingapi.txlcn.tc.config.EnableDistributedTransaction;
 import com.zclcs.common.security.starter.annotation.EnableMyCloudResourceServer;

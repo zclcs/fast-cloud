@@ -1,6 +1,7 @@
 package com.zclcs.server.system.controller;
 
 
+import com.zclcs.common.core.annotation.ControllerEndpoint;
 import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
 import com.zclcs.common.core.base.BaseRsp;
@@ -13,7 +14,6 @@ import com.zclcs.common.core.entity.system.vo.SystemUserVo;
 import com.zclcs.common.core.utils.BaseRspUtil;
 import com.zclcs.common.core.utils.BaseUtil;
 import com.zclcs.common.core.validate.strategy.UpdateStrategy;
-import com.zclcs.server.system.annotation.ControllerEndpoint;
 import com.zclcs.server.system.service.SystemLoginLogService;
 import com.zclcs.server.system.service.SystemUserDataPermissionService;
 import com.zclcs.server.system.service.SystemUserService;
@@ -109,14 +109,6 @@ public class SystemUserController {
         this.userService.updateUser(user);
     }
 
-    @GetMapping("/{userId}")
-    @PreAuthorize("hasAuthority('user:update')")
-    @ApiOperation(value = "获取数据权限")
-    public BaseRsp<List<Long>> findUserDataPermissions(@NotBlank(message = "{required}") @PathVariable Long userId) {
-        List<Long> dataPermissions = this.userDataPermissionService.findByUserId(userId);
-        return BaseRspUtil.data(dataPermissions);
-    }
-
     @DeleteMapping("/{userIds}")
     @PreAuthorize("hasAuthority('user:delete')")
     @ApiOperation(value = "删除用户")
@@ -124,6 +116,14 @@ public class SystemUserController {
     public void deleteUsers(@NotBlank(message = "{required}") @PathVariable String userIds) {
         List<Long> ids = Arrays.stream(userIds.split(StringConstant.COMMA)).map(Long::valueOf).collect(Collectors.toList());
         this.userService.deleteUsers(ids);
+    }
+
+    @GetMapping("/{userId}")
+    @PreAuthorize("hasAuthority('user:update')")
+    @ApiOperation(value = "获取数据权限")
+    public BaseRsp<List<Long>> findUserDataPermissions(@NotBlank(message = "{required}") @PathVariable Long userId) {
+        List<Long> dataPermissions = this.userDataPermissionService.findByUserId(userId);
+        return BaseRspUtil.data(dataPermissions);
     }
 
     @GetMapping("password/mine/check")
@@ -143,21 +143,21 @@ public class SystemUserController {
 
     @PutMapping("password/mine")
     @ApiOperation(value = "修改当前用户密码")
-    @ControllerEndpoint(exceptionMessage = "修改当前用户密码失败")
+    @ControllerEndpoint(operation = "修改当前用户密码", exceptionMessage = "修改当前用户密码失败")
     public void updateMyPassword(@NotBlank(message = "{required}") String password) {
         userService.updatePassword(null, password);
     }
 
     @PutMapping("password")
     @ApiOperation(value = "修改密码")
-    @ControllerEndpoint(exceptionMessage = "修改密码失败")
+    @ControllerEndpoint(operation = "修改密码", exceptionMessage = "修改密码失败")
     public void updatePassword(@NotBlank(message = "{required}") String username, @NotBlank(message = "{required}") String password) {
         userService.updatePassword(username, password);
     }
 
     @PutMapping("status")
     @ApiOperation(value = "禁用账号")
-    @ControllerEndpoint(exceptionMessage = "禁用账号失败")
+    @ControllerEndpoint(operation = "禁用账号", exceptionMessage = "禁用账号失败")
     public void updateStatus(@NotBlank(message = "{required}") String username) {
         userService.updateStatus(username, null);
     }
@@ -165,7 +165,7 @@ public class SystemUserController {
     @PutMapping("password/reset")
     @PreAuthorize("hasAuthority('user:reset')")
     @ApiOperation(value = "重置用户密码")
-    @ControllerEndpoint(exceptionMessage = "重置用户密码失败")
+    @ControllerEndpoint(operation = "重置用户密码", exceptionMessage = "重置用户密码失败")
     public void resetPassword(@NotBlank(message = "{required}") String usernames) {
         List<String> usernameList = Arrays.stream(usernames.split(StringConstant.COMMA)).collect(Collectors.toList());
         this.userService.resetPassword(usernameList);

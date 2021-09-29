@@ -5,28 +5,24 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
 import com.zclcs.common.core.constant.MyConstant;
 import com.zclcs.common.core.entity.system.SystemLog;
 import com.zclcs.common.core.entity.system.ao.SystemLogAo;
 import com.zclcs.common.core.entity.system.vo.SystemLogVo;
+import com.zclcs.common.core.utils.BaseAddressUtil;
 import com.zclcs.common.core.utils.BaseSortUtil;
 import com.zclcs.server.system.mapper.SystemLogMapper;
 import com.zclcs.server.system.service.SystemLogService;
-import com.zclcs.server.system.utils.BaseAddressUtil;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.Serializable;
-import java.lang.reflect.Method;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * <p>
@@ -39,8 +35,6 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class SystemLogServiceImpl extends ServiceImpl<SystemLogMapper, SystemLog> implements SystemLogService {
-
-    private final ObjectMapper objectMapper;
 
     @Override
     public BasePage<SystemLogVo> findLogPage(BasePageAo basePageAo, SystemLogAo log) {
@@ -66,66 +60,17 @@ public class SystemLogServiceImpl extends ServiceImpl<SystemLogMapper, SystemLog
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void saveLog(ProceedingJoinPoint point, Method method, String ip, String operation, String username, long start) {
+    public void saveLog(String className, String methodName, String params, String ip, String operation, String username, long start) {
         SystemLog log = new SystemLog();
         log.setIp(ip);
-
         log.setUsername(username);
         log.setTime(BigDecimal.valueOf(System.currentTimeMillis() - start));
         log.setOperation(operation);
-
-        String className = point.getTarget().getClass().getName();
-        String methodName = method.getName();
         log.setMethod(className + "." + methodName + "()");
-
-        Object[] args = point.getArgs();
-        LocalVariableTableParameterNameDiscoverer u = new LocalVariableTableParameterNameDiscoverer();
-        String[] paramNames = u.getParameterNames(method);
-        if (args != null && paramNames != null) {
-            StringBuilder params = new StringBuilder();
-            params = handleParams(params, args, Arrays.asList(paramNames));
-            log.setParams(params.toString());
-        }
+        log.setParams(Optional.ofNullable(params).orElse(""));
         log.setCreateTime(new Date());
         log.setLocation(BaseAddressUtil.getCityInfo(ip));
         // 保存系统日志
         save(log);
-    }
-
-    @SuppressWarnings("all")
-    private StringBuilder handleParams(StringBuilder params, Object[] args, List paramNames) {
-        try {
-            for (int i = 0; i < args.length; i++) {
-                if (args[i] instanceof Map) {
-                    Set set = ((Map) args[i]).keySet();
-                    List<Object> list = new ArrayList<>();
-                    List<Object> paramList = new ArrayList<>();
-                    for (Object key : set) {
-                        list.add(((Map) args[i]).get(key));
-                        paramList.add(key);
-                    }
-                    return handleParams(params, list.toArray(), paramList);
-                } else {
-                    if (args[i] instanceof Serializable) {
-                        Class<?> aClass = args[i].getClass();
-                        try {
-                            aClass.getDeclaredMethod("toString", new Class[]{null});
-                            // 如果不抛出 NoSuchMethodException 异常则存在 toString 方法 ，安全的 writeValueAsString ，否则 走 Object的 toString方法
-                            params.append(" ").append(paramNames.get(i)).append(": ").append(objectMapper.writeValueAsString(args[i]));
-                        } catch (NoSuchMethodException e) {
-                            params.append(" ").append(paramNames.get(i)).append(": ").append(objectMapper.writeValueAsString(args[i].toString()));
-                        }
-                    } else if (args[i] instanceof MultipartFile) {
-                        MultipartFile file = (MultipartFile) args[i];
-                        params.append(" ").append(paramNames.get(i)).append(": ").append(file.getName());
-                    } else {
-                        params.append(" ").append(paramNames.get(i)).append(": ").append(args[i]);
-                    }
-                }
-            }
-        } catch (Exception ignore) {
-            params.append("参数解析失败");
-        }
-        return params;
     }
 }

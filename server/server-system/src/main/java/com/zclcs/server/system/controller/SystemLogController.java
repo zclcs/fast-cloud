@@ -1,6 +1,7 @@
 package com.zclcs.server.system.controller;
 
 
+import com.zclcs.common.core.annotation.ControllerEndpoint;
 import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
 import com.zclcs.common.core.base.BaseRsp;
@@ -8,13 +9,13 @@ import com.zclcs.common.core.constant.StringConstant;
 import com.zclcs.common.core.entity.system.ao.SystemLogAo;
 import com.zclcs.common.core.entity.system.vo.SystemLogVo;
 import com.zclcs.common.core.utils.BaseRspUtil;
-import com.zclcs.server.system.annotation.ControllerEndpoint;
 import com.zclcs.server.system.service.SystemLogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
@@ -45,6 +46,11 @@ public class SystemLogController {
     public BaseRsp<BasePage<SystemLogVo>> logList(BasePageAo basePageAo, SystemLogAo log) {
         BasePage<SystemLogVo> page = this.logService.findLogPage(basePageAo, log);
         return BaseRspUtil.data(page);
+    }
+
+    @PostMapping
+    public void saveLog(@RequestBody @Validated SystemLogAo log) {
+        this.logService.saveLog(log.getClassName(), log.getMethodName(), log.getParams(), log.getIp(), log.getOperation(), log.getUsername(), log.getStart());
     }
 
     @DeleteMapping("{logIds}")

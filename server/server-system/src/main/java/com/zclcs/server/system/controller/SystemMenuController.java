@@ -1,6 +1,7 @@
 package com.zclcs.server.system.controller;
 
 
+import com.zclcs.common.core.annotation.ControllerEndpoint;
 import com.zclcs.common.core.base.BaseRsp;
 import com.zclcs.common.core.constant.StringConstant;
 import com.zclcs.common.core.entity.MenuTree;
@@ -9,7 +10,6 @@ import com.zclcs.common.core.entity.system.ao.SystemMenuAo;
 import com.zclcs.common.core.entity.system.vo.SystemMenuVo;
 import com.zclcs.common.core.utils.BaseRspUtil;
 import com.zclcs.common.core.validate.strategy.UpdateStrategy;
-import com.zclcs.server.system.annotation.ControllerEndpoint;
 import com.zclcs.server.system.service.SystemMenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

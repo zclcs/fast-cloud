@@ -1,4 +1,4 @@
-package com.zclcs.server.system.utils;
+package com.zclcs.common.core.utils;
 
 import com.zclcs.common.core.constant.MyConstant;
 import lombok.extern.slf4j.Slf4j;

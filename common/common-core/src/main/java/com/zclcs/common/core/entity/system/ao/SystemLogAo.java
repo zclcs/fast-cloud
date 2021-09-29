@@ -1,13 +1,13 @@
 package com.zclcs.common.core.entity.system.ao;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.zclcs.common.core.validate.strategy.UpdateStrategy;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -29,8 +29,14 @@ public class SystemLogAo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "日志id")
-    @TableId(value = "id", type = IdType.AUTO)
+    @NotNull(message = "{required}", groups = UpdateStrategy.class)
     private Long id;
+
+    @ApiModelProperty(value = "类名")
+    private String className;
+
+    @ApiModelProperty(value = "方法名")
+    private String methodName;
 
     @ApiModelProperty(value = "操作用户")
     private String username;
@@ -49,6 +55,9 @@ public class SystemLogAo implements Serializable {
 
     @ApiModelProperty(value = "操作者ip")
     private String ip;
+
+    @ApiModelProperty(value = "方法开始时间")
+    private Long start;
 
     @ApiModelProperty(value = "创建时间")
     private Date createTime;

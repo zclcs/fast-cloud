@@ -91,7 +91,7 @@ CREATE TABLE `system_log`
     INDEX `system_log_create_time` (`create_time`) USING BTREE,
     INDEX `system_log_username` (`username`) USING BTREE
 ) ENGINE = MyISAM
-  AUTO_INCREMENT = 136
+  AUTO_INCREMENT = 143
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '用户操作日志表'
   ROW_FORMAT = DYNAMIC;
@@ -628,6 +628,34 @@ INSERT INTO `system_log`
 VALUES (135, 'zclcs', '修改菜单/按钮', 33, 'com.zclcs.server.system.controller.SystemMenuController.updateMenu()',
         ' menu: \"SystemMenuAo(menuId=30, parentId=28, menuName=工作台, path=workbench, component=/dashboard/workbench/index, redirect=null, perms=null, icon=ant-design:alert-filled, type=0, hideMenu=0, ignoreKeepAlive=0, hideBreadcrumb=1, hideChildrenInMenu=0, currentActiveMenu=/dashboard, orderNum=2.0)\"',
         '127.0.0.1', '2021-09-15 09:59:16', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (136, 'zclcs', '修改角色', 103, 'com.zclcs.server.system.controller.SystemRoleController.updateRole()',
+        ' role: \"SystemRoleAo(roleId=3, roleName=111, remark=null, menuIds=[29, 30, 28])\"', '127.0.0.1',
+        '2021-09-29 14:55:39', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (137, 'zclcs', '修改角色', 103, 'com.zclcs.server.system.controller.SystemRoleController.updateRole()',
+        ' role: \"SystemRoleAo(roleId=3, roleName=111, remark=null, menuIds=[28, 29, 30])\"', '127.0.0.1',
+        '2021-09-29 14:59:06', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (138, 'zclcs', '修改角色', 98, 'com.zclcs.server.system.controller.SystemRoleController.updateRole()',
+        ' role: \"SystemRoleAo(roleId=3, roleName=111, remark=null, menuIds=[28, 29, 30])\"', '127.0.0.1',
+        '2021-09-29 15:03:33', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (139, 'zclcs', '修改角色', 115, 'com.zclcs.server.system.controller.SystemRoleController.updateRole()',
+        ' role: \"SystemRoleAo(roleId=3, roleName=111, remark=null, menuIds=[28, 29, 30])\"', '127.0.0.1',
+        '2021-09-29 15:13:34', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (140, 'zclcs', '修改角色', 997, 'com.zclcs.server.system.controller.SystemRoleController.updateRole()',
+        ' role: \"SystemRoleAo(roleId=3, roleName=111, remark=null, menuIds=[28, 29, 30])\"', '127.0.0.1',
+        '2021-09-29 15:39:54', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (141, 'zclcs', '修改角色', 40, 'com.zclcs.server.system.controller.SystemRoleController.updateRole()',
+        ' role: \"SystemRoleAo(roleId=3, roleName=111, remark=null, menuIds=[28, 29, 30])\"', '127.0.0.1',
+        '2021-09-29 15:40:16', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (142, 'zclcs', '修改角色', 991, 'com.zclcs.server.system.controller.SystemRoleController.updateRole()',
+        ' role: \"SystemRoleAo(roleId=3, roleName=111, remark=null, menuIds=[28, 29, 30])\"', '127.0.0.1',
+        '2021-09-29 15:44:17', '内网IP|0|0|内网IP|内网IP');
 
 -- ----------------------------
 -- Table structure for system_login_log
@@ -790,7 +818,7 @@ CREATE TABLE `system_role`
     `modify_time` datetime                                                NULL DEFAULT NULL COMMENT '修改时间',
     PRIMARY KEY (`role_id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 3
+  AUTO_INCREMENT = 4
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '角色表'
   ROW_FORMAT = DYNAMIC;
@@ -802,6 +830,8 @@ INSERT INTO `system_role`
 VALUES (1, '管理员', '管理员', '2017-12-27 16:23:11', '2021-09-14 17:30:28');
 INSERT INTO `system_role`
 VALUES (2, '查看', NULL, '2021-09-09 14:54:42', '2021-09-13 14:55:53');
+INSERT INTO `system_role`
+VALUES (3, '111', NULL, '2021-09-29 14:46:45', '2021-09-29 15:44:16');
 
 -- ----------------------------
 -- Table structure for system_role_menu
@@ -899,9 +929,15 @@ VALUES (1, 27);
 INSERT INTO `system_role_menu`
 VALUES (1, 28);
 INSERT INTO `system_role_menu`
+VALUES (3, 28);
+INSERT INTO `system_role_menu`
 VALUES (1, 29);
 INSERT INTO `system_role_menu`
+VALUES (3, 29);
+INSERT INTO `system_role_menu`
 VALUES (1, 30);
+INSERT INTO `system_role_menu`
+VALUES (3, 30);
 
 -- ----------------------------
 -- Table structure for system_user
