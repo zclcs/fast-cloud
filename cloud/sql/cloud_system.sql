@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : docker_192.168.30.10
+ Source Server         : localhost
  Source Server Type    : MySQL
  Source Server Version : 50735
- Source Host           : 192.168.33.10:3306
+ Source Host           : localhost:3306
  Source Schema         : cloud_system
 
  Target Server Type    : MySQL
  Target Server Version : 50735
  File Encoding         : 65001
 
- Date: 11/10/2021 16:38:20
+ Date: 15/10/2021 10:22:24
 */
 
 SET NAMES utf8mb4;
@@ -107,7 +107,7 @@ CREATE TABLE `system_log`
     INDEX `system_log_create_time` (`create_time`) USING BTREE,
     INDEX `system_log_username` (`username`) USING BTREE
 ) ENGINE = MyISAM
-  AUTO_INCREMENT = 143
+  AUTO_INCREMENT = 167
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '用户操作日志表'
   ROW_FORMAT = DYNAMIC;
@@ -672,6 +672,106 @@ INSERT INTO `system_log`
 VALUES (142, 'zclcs', '修改角色', 991, 'com.zclcs.server.system.controller.SystemRoleController.updateRole()',
         ' role: \"SystemRoleAo(roleId=3, roleName=111, remark=null, menuIds=[28, 29, 30])\"', '127.0.0.1',
         '2021-09-29 15:44:17', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (143, 'zclcs', '新增菜单/按钮', 917, 'com.zclcs.server.system.controller.SystemMenuController.addMenu()',
+        ' menu: \"SystemMenuAo(menuId=null, parentId=null, menuName=快速开发, path=/gen, component=null, redirect=null, perms=null, icon=ant-design:code-filled, type=2, hideMenu=0, ignoreKeepAlive=null, hideBreadcrumb=0, hideChildrenInMenu=0, currentActiveMenu=null, orderNum=3.0)\"',
+        '127.0.0.1', '2021-10-11 17:30:39', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (144, 'zclcs', '新增菜单/按钮', 63, 'com.zclcs.server.system.controller.SystemMenuController.addMenu()',
+        ' menu: \"SystemMenuAo(menuId=null, parentId=31, menuName=配置管理, path=/gen/config, component=/cloud/gen/config/index, redirect=null, perms=null, icon=ant-design:contacts-outlined, type=0, hideMenu=0, ignoreKeepAlive=0, hideBreadcrumb=0, hideChildrenInMenu=0, currentActiveMenu=null, orderNum=1.0)\"',
+        '127.0.0.1', '2021-10-11 17:32:55', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (145, 'zclcs', '新增菜单/按钮', 77, 'com.zclcs.server.system.controller.SystemMenuController.addMenu()',
+        ' menu: \"SystemMenuAo(menuId=null, parentId=31, menuName=代码生成, path=/code, component=/cloud/code/index, redirect=null, perms=null, icon=ant-design:code-sandbox-outlined, type=0, hideMenu=0, ignoreKeepAlive=0, hideBreadcrumb=0, hideChildrenInMenu=0, currentActiveMenu=null, orderNum=2.0)\"',
+        '127.0.0.1', '2021-10-12 09:05:22', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (146, 'zclcs', '修改菜单/按钮', 65, 'com.zclcs.server.system.controller.SystemMenuController.updateMenu()',
+        ' menu: \"SystemMenuAo(menuId=33, parentId=31, menuName=代码生成, path=/code, component=/cloud/gen/code/index, redirect=null, perms=null, icon=ant-design:code-sandbox-outlined, type=0, hideMenu=0, ignoreKeepAlive=0, hideBreadcrumb=0, hideChildrenInMenu=0, currentActiveMenu=null, orderNum=2.0)\"',
+        '127.0.0.1', '2021-10-12 09:05:39', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (147, 'zclcs', '修改菜单/按钮', 70, 'com.zclcs.server.system.controller.SystemMenuController.updateMenu()',
+        ' menu: \"SystemMenuAo(menuId=32, parentId=31, menuName=代码生成配置管理, path=/gen/config, component=/cloud/gen/config/index, redirect=null, perms=null, icon=ant-design:contacts-outlined, type=0, hideMenu=0, ignoreKeepAlive=0, hideBreadcrumb=0, hideChildrenInMenu=0, currentActiveMenu=null, orderNum=1.0)\"',
+        '127.0.0.1', '2021-10-12 15:22:17', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (148, 'zclcs', '修改菜单/按钮', 59, 'com.zclcs.server.system.controller.SystemMenuController.updateMenu()',
+        ' menu: \"SystemMenuAo(menuId=32, parentId=31, menuName=代码生成配置管理, path=/code/gen/config, component=/cloud/code/gen/config/index, redirect=null, perms=null, icon=ant-design:contacts-outlined, type=0, hideMenu=0, ignoreKeepAlive=0, hideBreadcrumb=0, hideChildrenInMenu=0, currentActiveMenu=null, orderNum=1.0)\"',
+        '127.0.0.1', '2021-10-12 15:25:06', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (149, 'zclcs', '修改菜单/按钮', 68, 'com.zclcs.server.system.controller.SystemMenuController.updateMenu()',
+        ' menu: \"SystemMenuAo(menuId=33, parentId=31, menuName=代码生成, path=/code/gen, component=/cloud/code/gen/code/index, redirect=null, perms=null, icon=ant-design:code-sandbox-outlined, type=0, hideMenu=0, ignoreKeepAlive=0, hideBreadcrumb=0, hideChildrenInMenu=0, currentActiveMenu=null, orderNum=2.0)\"',
+        '127.0.0.1', '2021-10-12 15:25:26', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (150, 'zclcs', '修改菜单/按钮', 83, 'com.zclcs.server.system.controller.SystemMenuController.updateMenu()',
+        ' menu: \"SystemMenuAo(menuId=32, parentId=31, menuName=代码生成配置管理, path=/gen/config, component=/cloud/gen/config/index, redirect=null, perms=null, icon=ant-design:contacts-outlined, type=0, hideMenu=0, ignoreKeepAlive=0, hideBreadcrumb=0, hideChildrenInMenu=0, currentActiveMenu=null, orderNum=1.0)\"',
+        '127.0.0.1', '2021-10-12 15:25:42', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (151, 'zclcs', '修改菜单/按钮', 60, 'com.zclcs.server.system.controller.SystemMenuController.updateMenu()',
+        ' menu: \"SystemMenuAo(menuId=33, parentId=31, menuName=代码生成, path=/gen/gen, component=/cloud/gen/gen/index, redirect=null, perms=null, icon=ant-design:code-sandbox-outlined, type=0, hideMenu=0, ignoreKeepAlive=0, hideBreadcrumb=0, hideChildrenInMenu=0, currentActiveMenu=null, orderNum=2.0)\"',
+        '127.0.0.1', '2021-10-12 15:25:55', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (152, 'zclcs', '新增菜单/按钮', 71, 'com.zclcs.server.system.controller.SystemMenuController.addMenu()',
+        ' menu: \"SystemMenuAo(menuId=null, parentId=32, menuName=获取代码生成配置, path=null, component=null, redirect=null, perms=gen:config, icon=null, type=1, hideMenu=null, ignoreKeepAlive=null, hideBreadcrumb=null, hideChildrenInMenu=null, currentActiveMenu=null, orderNum=null)\"',
+        '127.0.0.1', '2021-10-12 15:30:37', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (153, 'zclcs', '新增菜单/按钮', 96, 'com.zclcs.server.system.controller.SystemMenuController.addMenu()',
+        ' menu: \"SystemMenuAo(menuId=null, parentId=32, menuName=修改代码生成配置, path=null, component=null, redirect=null, perms=gen:config:update, icon=null, type=1, hideMenu=null, ignoreKeepAlive=null, hideBreadcrumb=null, hideChildrenInMenu=null, currentActiveMenu=null, orderNum=null)\"',
+        '127.0.0.1', '2021-10-12 15:31:00', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (154, 'zclcs', '新增菜单/按钮', 79, 'com.zclcs.server.system.controller.SystemMenuController.addMenu()',
+        ' menu: \"SystemMenuAo(menuId=null, parentId=33, menuName=查看代码生成, path=null, component=null, redirect=null, perms=gen:generate, icon=null, type=1, hideMenu=null, ignoreKeepAlive=null, hideBreadcrumb=null, hideChildrenInMenu=null, currentActiveMenu=null, orderNum=null)\"',
+        '127.0.0.1', '2021-10-12 15:32:24', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (155, 'zclcs', '修改菜单/按钮', 63, 'com.zclcs.server.system.controller.SystemMenuController.updateMenu()',
+        ' menu: \"SystemMenuAo(menuId=34, parentId=32, menuName=查看代码生成配置, path=null, component=null, redirect=null, perms=gen:config, icon=null, type=1, hideMenu=null, ignoreKeepAlive=null, hideBreadcrumb=null, hideChildrenInMenu=null, currentActiveMenu=null, orderNum=null)\"',
+        '127.0.0.1', '2021-10-12 15:32:46', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (156, 'zclcs', '新增菜单/按钮', 64, 'com.zclcs.server.system.controller.SystemMenuController.addMenu()',
+        ' menu: \"SystemMenuAo(menuId=null, parentId=33, menuName=生成代码, path=null, component=null, redirect=null, perms=gen:generate:gen, icon=null, type=1, hideMenu=null, ignoreKeepAlive=null, hideBreadcrumb=null, hideChildrenInMenu=null, currentActiveMenu=null, orderNum=null)\"',
+        '127.0.0.1', '2021-10-12 15:36:02', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (157, 'zclcs', '修改角色', 131, 'com.zclcs.server.system.controller.SystemRoleController.updateRole()',
+        ' role: \"SystemRoleAo(roleId=1, roleName=管理员, remark=管理员, menuIds=[29, 28, 30, 5, 2, 1, 6, 7, 8, 9, 20, 3, 15, 12, 16, 22, 23, 11, 10, 13, 14, 24, 17, 4, 18, 19, 25, 27, 26, 31, 32, 34, 35, 33, 36, 37])\"',
+        '127.0.0.1', '2021-10-12 15:36:42', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (158, 'zclcs', '修改角色', 86, 'com.zclcs.server.system.controller.SystemRoleController.updateRole()',
+        ' role: \"SystemRoleAo(roleId=1, roleName=管理员, remark=管理员, menuIds=[29, 28, 30, 5, 2, 1, 6, 7, 8, 9, 20, 3, 12, 15, 16, 22, 23, 10, 11, 13, 14, 24, 4, 17, 18, 19, 25, 26, 27, 34, 36, 33, 37, 35, 32, 31])\"',
+        '127.0.0.1', '2021-10-12 15:36:51', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (159, 'zclcs', '删除角色', 78, 'com.zclcs.server.system.controller.SystemRoleController.deleteRoles()',
+        ' roleIds: \"3\"', '127.0.0.1', '2021-10-12 15:36:58', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (160, 'zclcs', '修改密码', 1050, 'com.zclcs.server.system.controller.SystemUserController.updatePassword()',
+        ' username: \"test\" password: \"123456\"', '127.0.0.1', '2021-10-13 16:12:51', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (161, 'zclcs', '修改代码生成配置', 1296,
+        'com.zclcs.server.generator.controller.GeneratorConfigController.updateGeneratorConfig()',
+        ' generatorConfig: GeneratorConfigAo(id=1, author=zclcs, basePackage=com.zclcs, entityPackage=entity, aoPackage=entity.ao, voPackage=entity.vo, mapperPackage=mapper, mapperXmlPackage=mapper, servicePackage=service, serviceImplPackage=service.impl, controllerPackage=controller, isTrim=0, trimValue=null)',
+        '127.0.0.1', '2021-10-14 09:37:24', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (162, 'zclcs', '修改代码生成配置', 61,
+        'com.zclcs.server.generator.controller.GeneratorConfigController.updateGeneratorConfig()',
+        ' generatorConfig: GeneratorConfigAo(id=1, author=zclcs, basePackage=com.zclcs, entityPackage=entity, aoPackage=entity.ao, voPackage=entity.vo, mapperPackage=mapper, mapperXmlPackage=mapper, servicePackage=service, serviceImplPackage=service.impl, controllerPackage=controller, isTrim=0, trimValue=null)',
+        '127.0.0.1', '2021-10-14 09:39:42', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (163, 'zclcs', '修改代码生成配置', 68,
+        'com.zclcs.server.generator.controller.GeneratorConfigController.updateGeneratorConfig()',
+        ' generatorConfig: GeneratorConfigAo(id=1, author=zclcs, basePackage=com.zclcs, entityPackage=entity, aoPackage=entity.ao, voPackage=entity.vo, mapperPackage=mapper, mapperXmlPackage=mapper, servicePackage=service1, serviceImplPackage=service.impl, controllerPackage=controller, isTrim=0, trimValue=null)',
+        '127.0.0.1', '2021-10-14 09:40:42', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (164, 'zclcs', '修改代码生成配置', 89,
+        'com.zclcs.server.generator.controller.GeneratorConfigController.updateGeneratorConfig()',
+        ' generatorConfig: GeneratorConfigAo(id=1, author=zclcs, basePackage=com.zclcs, entityPackage=entity, aoPackage=entity.ao, voPackage=entity.vo, mapperPackage=mapper, mapperXmlPackage=mapper, servicePackage=service, serviceImplPackage=service.impl, controllerPackage=controller, isTrim=0, trimValue=null)',
+        '127.0.0.1', '2021-10-14 09:40:46', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (165, 'zclcs', '修改代码生成配置', 1023,
+        'com.zclcs.server.generator.controller.GeneratorConfigController.updateGeneratorConfig()',
+        ' generatorConfig: GeneratorConfigAo(id=1, author=zclcs, basePackage=com.zclcs, entityPackage=common.core.entity, aoPackage=common.core.entity.ao, voPackage=common.core.entity.vo, mapperPackage=server.test.mapper, mapperXmlPackage=server.test.mapper, servicePackage=server.test.service, serviceImplPackage=server.test.service.impl, controllerPackage=server.test.controller, isTrim=0, trimValue=null)',
+        '127.0.0.1', '2021-10-14 16:58:45', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `system_log`
+VALUES (166, 'zclcs', '修改代码生成配置', 87,
+        'com.zclcs.server.generator.controller.GeneratorConfigController.updateGeneratorConfig()',
+        ' generatorConfig: GeneratorConfigAo(id=1, author=zclcs, basePackage=com.zclcs, entityPackage=common.core.entity.test, aoPackage=common.core.entity.test.ao, voPackage=common.core.entity.test.vo, mapperPackage=server.test.mapper, mapperXmlPackage=server.test.mapper, servicePackage=server.test.service, serviceImplPackage=server.test.service.impl, controllerPackage=server.test.controller, isTrim=0, trimValue=null)',
+        '127.0.0.1', '2021-10-14 17:00:21', '内网IP|0|0|内网IP|内网IP');
 
 -- ----------------------------
 -- Table structure for system_login_log
@@ -725,7 +825,7 @@ CREATE TABLE `system_menu`
     INDEX `system_menu_parent_id` (`parent_id`) USING BTREE,
     INDEX `system_menu_menu_id` (`menu_id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 31
+  AUTO_INCREMENT = 38
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '菜单表'
   ROW_FORMAT = DYNAMIC;
@@ -820,6 +920,27 @@ VALUES (29, 28, '分析页', 'analysis', '/dashboard/analysis/index', NULL, NULL
 INSERT INTO `system_menu`
 VALUES (30, 28, '工作台', 'workbench', '/dashboard/workbench/index', NULL, NULL, 'ant-design:alert-filled', '0', '0', '0',
         '1', '0', '/dashboard', 2, '2021-09-14 17:28:37', '2021-09-15 09:59:16');
+INSERT INTO `system_menu`
+VALUES (31, 0, '快速开发', '/gen', 'Layout', NULL, NULL, 'ant-design:code-filled', '2', '0', '0', '0', '0', NULL, 3,
+        '2021-10-11 17:30:38', NULL);
+INSERT INTO `system_menu`
+VALUES (32, 31, '代码生成配置管理', '/gen/config', '/cloud/gen/config/index', NULL, NULL, 'ant-design:contacts-outlined', '0',
+        '0', '0', '0', '0', NULL, 1, '2021-10-11 17:32:55', '2021-10-12 15:25:41');
+INSERT INTO `system_menu`
+VALUES (33, 31, '代码生成', '/gen/gen', '/cloud/gen/gen/index', NULL, NULL, 'ant-design:code-sandbox-outlined', '0', '0',
+        '0', '0', '0', NULL, 2, '2021-10-12 09:05:22', '2021-10-12 15:25:55');
+INSERT INTO `system_menu`
+VALUES (34, 32, '查看代码生成配置', NULL, NULL, NULL, 'gen:config', NULL, '1', '0', '0', '0', '0', NULL, NULL,
+        '2021-10-12 15:30:37', '2021-10-12 15:32:46');
+INSERT INTO `system_menu`
+VALUES (35, 32, '修改代码生成配置', NULL, NULL, NULL, 'gen:config:update', NULL, '1', '0', '0', '0', '0', NULL, NULL,
+        '2021-10-12 15:31:00', NULL);
+INSERT INTO `system_menu`
+VALUES (36, 33, '查看代码生成', NULL, NULL, NULL, 'gen:generate', NULL, '1', '0', '0', '0', '0', NULL, NULL,
+        '2021-10-12 15:32:24', NULL);
+INSERT INTO `system_menu`
+VALUES (37, 33, '生成代码', NULL, NULL, NULL, 'gen:generate:gen', NULL, '1', '0', '0', '0', '0', NULL, NULL,
+        '2021-10-12 15:36:02', NULL);
 
 -- ----------------------------
 -- Table structure for system_role
@@ -834,7 +955,7 @@ CREATE TABLE `system_role`
     `modify_time` datetime                                                NULL DEFAULT NULL COMMENT '修改时间',
     PRIMARY KEY (`role_id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 4
+  AUTO_INCREMENT = 3
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '角色表'
   ROW_FORMAT = DYNAMIC;
@@ -843,11 +964,9 @@ CREATE TABLE `system_role`
 -- Records of system_role
 -- ----------------------------
 INSERT INTO `system_role`
-VALUES (1, '管理员', '管理员', '2017-12-27 16:23:11', '2021-09-14 17:30:28');
+VALUES (1, '管理员', '管理员', '2017-12-27 16:23:11', '2021-10-12 15:36:51');
 INSERT INTO `system_role`
 VALUES (2, '查看', NULL, '2021-09-09 14:54:42', '2021-09-13 14:55:53');
-INSERT INTO `system_role`
-VALUES (3, '111', NULL, '2021-09-29 14:46:45', '2021-09-29 15:44:16');
 
 -- ----------------------------
 -- Table structure for system_role_menu
@@ -945,15 +1064,23 @@ VALUES (1, 27);
 INSERT INTO `system_role_menu`
 VALUES (1, 28);
 INSERT INTO `system_role_menu`
-VALUES (3, 28);
-INSERT INTO `system_role_menu`
 VALUES (1, 29);
-INSERT INTO `system_role_menu`
-VALUES (3, 29);
 INSERT INTO `system_role_menu`
 VALUES (1, 30);
 INSERT INTO `system_role_menu`
-VALUES (3, 30);
+VALUES (1, 31);
+INSERT INTO `system_role_menu`
+VALUES (1, 32);
+INSERT INTO `system_role_menu`
+VALUES (1, 33);
+INSERT INTO `system_role_menu`
+VALUES (1, 34);
+INSERT INTO `system_role_menu`
+VALUES (1, 35);
+INSERT INTO `system_role_menu`
+VALUES (1, 36);
+INSERT INTO `system_role_menu`
+VALUES (1, 37);
 
 -- ----------------------------
 -- Table structure for system_user
@@ -993,7 +1120,7 @@ VALUES (1, 'zclcs', '$2a$10$jW0seNaFSgT.Iimo5PWtPu7wumhjQv29vsNVxzLb5qYwuHdDIs7i
         '17788888888', '1', '2019-06-14 20:39:22', '2020-04-15 16:00:32', '2020-04-15 16:03:13', '0', '1', 'white',
         'gaOngJwsRYRaVAuXXcmB.png', '我是帅比作者。');
 INSERT INTO `system_user`
-VALUES (9, 'test', '$2a$10$URqQzGO9Hw9v5lyb2vsJFOBccfrxmuGdziyflizqEAH.LaonKk2mi', 5, NULL, NULL, '1',
+VALUES (9, 'test', '$2a$10$6B71x6cxjOdsrLzydosAfuwiV5G5h7q2.4SoXERNy9A4u2mru8ora', 5, NULL, NULL, '1',
         '2021-09-08 09:19:38', '2021-09-13 14:19:49', NULL, NULL, NULL, NULL, 'default.jpg', NULL);
 
 -- ----------------------------
