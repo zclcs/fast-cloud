@@ -14,6 +14,7 @@ import com.zclcs.common.core.validate.strategy.UpdateStrategy;
 import com.zclcs.server.system.service.SystemRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -60,7 +61,7 @@ public class SystemRoleController {
 
     @GetMapping("check/{roleId}/{roleName}")
     @ApiOperation(value = "检查用户角色名")
-    public BaseRsp<Boolean> checkRoleName(@NotNull(message = "{required}") @PathVariable Long roleId, @NotBlank(message = "{required}") @PathVariable String roleName) {
+    public BaseRsp<Boolean> checkRoleName(@ApiParam(value = "角色id", required = true) @NotNull(message = "{required}") @PathVariable Long roleId, @ApiParam(value = "角色名") @NotBlank(message = "{required}") @PathVariable String roleName) {
         SystemRole one = roleService.lambdaQuery().eq(SystemRole::getRoleId, roleId).one();
         if (one.getRoleName().equals(roleName)) {
             return BaseRspUtil.data(false);
@@ -80,7 +81,7 @@ public class SystemRoleController {
     @PreAuthorize("hasAuthority('role:delete')")
     @ApiOperation(value = "删除角色")
     @ControllerEndpoint(operation = "删除角色", exceptionMessage = "删除角色失败")
-    public void deleteRoles(@NotBlank(message = "{required}") @PathVariable String roleIds) {
+    public void deleteRoles(@ApiParam(value = "角色id集合(,分隔)", required = true) @NotBlank(message = "{required}") @PathVariable String roleIds) {
         List<Long> ids = Arrays.stream(roleIds.split(StringConstant.COMMA)).map(Long::valueOf).collect(Collectors.toList());
         this.roleService.deleteSystemRoles(ids);
     }

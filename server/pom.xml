@@ -11,6 +11,8 @@
 
     <modules>
         <module>server-system</module>
+        <module>server-generator</module>
+        <module>server-test</module>
     </modules>
 
     <artifactId>server</artifactId>

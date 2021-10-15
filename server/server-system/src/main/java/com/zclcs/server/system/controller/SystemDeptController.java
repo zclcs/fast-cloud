@@ -14,6 +14,7 @@ import com.zclcs.common.core.validate.strategy.UpdateStrategy;
 import com.zclcs.server.system.service.SystemDeptService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -80,7 +81,7 @@ public class SystemDeptController {
     @PreAuthorize("hasAuthority('dept:delete')")
     @ControllerEndpoint(operation = "删除部门", exceptionMessage = "删除部门失败")
     @ApiOperation(value = "删除部门")
-    public void deleteDepts(@NotBlank(message = "{required}") @PathVariable String deptIds) {
+    public void deleteDepts(@ApiParam(value = "部门id集合(,分隔)", required = true) @NotBlank(message = "{required}") @PathVariable String deptIds) {
         List<Long> ids = Arrays.stream(deptIds.split(StringConstant.COMMA)).map(Long::valueOf).collect(Collectors.toList());
         this.deptService.deleteDept(ids);
     }

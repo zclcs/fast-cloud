@@ -30,6 +30,24 @@ spring:
               args:
                 name: systemfallback
                 fallbackUri: forward:/fallback/${SERVICE_NAME_SERVER_SYSTEM:server-system}
+        - id: ${SERVICE_NAME_SERVER_GENERATOR:server-generator}
+          uri: lb://${SERVICE_NAME_SERVER_GENERATOR:server-generator}
+          predicates:
+            - Path=/generator/**
+          filters:
+            - name: Hystrix
+              args:
+                name: systemfallback
+                fallbackUri: forward:/fallback/${SERVICE_NAME_SERVER_GENERATOR:server-generator}
+        - id: ${SERVICE_NAME_SERVER_TEST:server-test}
+          uri: lb://${SERVICE_NAME_SERVER_TEST:server-test}
+          predicates:
+            - Path=/test/**
+          filters:
+            - name: Hystrix
+              args:
+                name: systemfallback
+                fallbackUri: forward:/fallback/${SERVICE_NAME_SERVER_TEST:server-test}
       loadbalancer:
         use404: true
       default-filters:
@@ -69,7 +87,7 @@ my:
   doc:
     gateway:
       enable: true
-      resources: ${DOC_GATEWAY_RESOURCES:"server-system,auth"}
+      resources: ${DOC_GATEWAY_RESOURCES:auth,server-system,server-generator,server-test}
 
   log:
     enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}
@@ -90,4 +108,3 @@ hystrix:
 ribbon:
   eager-load:
     enabled: true
-

@@ -37,7 +37,7 @@ public class SystemDeptAo implements Serializable {
 
     @NotBlank(message = "{required}")
     @Size(max = 20, message = "{noMoreThan}")
-    @ApiModelProperty(value = "部门名称")
+    @ApiModelProperty(value = "部门名称", required = true)
     private String deptName;
 
     @ApiModelProperty(value = "排序")

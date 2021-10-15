@@ -33,7 +33,7 @@ public class SystemRoleAo implements Serializable {
     @NotNull(message = "{required}", groups = UpdateStrategy.class)
     private Long roleId;
 
-    @ApiModelProperty(value = "角色名称")
+    @ApiModelProperty(value = "角色名称", required = true)
     @NotBlank(message = "{required}")
     @Size(max = 10, message = "{noMoreThan}")
     private String roleName;

@@ -15,12 +15,20 @@ public interface GeneratorConstant {
     /**
      * 生成代码的临时目录
      */
-    String TEMP_PATH = "febs_gen_temp/";
+    String TEMP_PATH = "my_gen_temp/";
 
     /**
      * java类型文件后缀
      */
     String JAVA_FILE_SUFFIX = ".java";
+    /**
+     * java类型文件后缀
+     */
+    String AO_FILE_SUFFIX = "Ao.java";
+    /**
+     * java类型文件后缀
+     */
+    String VO_FILE_SUFFIX = "Vo.java";
     /**
      * mapper文件类型后缀
      */
@@ -32,7 +40,7 @@ public interface GeneratorConstant {
     /**
      * service impl文件类型后缀
      */
-    String SERVICEIMPL_FILE_SUFFIX = "ServiceImpl.java";
+    String SERVICE_IMPL_FILE_SUFFIX = "ServiceImpl.java";
     /**
      * controller文件类型后缀
      */
@@ -40,11 +48,19 @@ public interface GeneratorConstant {
     /**
      * mapper xml文件类型后缀
      */
-    String MAPPERXML_FILE_SUFFIX = "Mapper.xml";
+    String MAPPER_XML_FILE_SUFFIX = "Mapper.xml";
     /**
      * entity模板
      */
     String ENTITY_TEMPLATE = "entity.ftl";
+    /**
+     * 入参
+     */
+    String AO_TEMPLATE = "ao.ftl";
+    /**
+     * 出参
+     */
+    String VO_TEMPLATE = "vo.ftl";
     /**
      * mapper模板
      */
@@ -56,7 +72,7 @@ public interface GeneratorConstant {
     /**
      * service impl接口模板
      */
-    String SERVICEIMPL_TEMPLATE = "serviceImpl.ftl";
+    String SERVICE_IMPL_TEMPLATE = "serviceImpl.ftl";
     /**
      * controller接口模板
      */
@@ -64,5 +80,5 @@ public interface GeneratorConstant {
     /**
      * mapper xml接口模板
      */
-    String MAPPERXML_TEMPLATE = "mapperXml.ftl";
+    String MAPPER_XML_TEMPLATE = "mapperXml.ftl";
 }

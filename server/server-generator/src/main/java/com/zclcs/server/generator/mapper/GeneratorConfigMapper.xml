@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zclcs.server.generator.mapper.GeneratorConfigMapper">
+
+    <sql id="baseSql">
+        select gc.id,
+               gc.author,
+               gc.base_package,
+               gc.entity_package,
+               gc.ao_package,
+               gc.vo_package,
+               gc.mapper_package,
+               gc.mapper_xml_package,
+               gc.service_package,
+               gc.service_impl_package,
+               gc.controller_package,
+               gc.is_trim,
+               gc.trim_value
+        from generator_config gc
+            ${ew.customSqlSegment}
+    </sql>
+    <select id="findPageVo" resultType="com.zclcs.common.core.entity.generator.vo.GeneratorConfigVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="findListVo" resultType="com.zclcs.common.core.entity.generator.vo.GeneratorConfigVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="findOneVo" resultType="com.zclcs.common.core.entity.generator.vo.GeneratorConfigVo">
+        <include refid="baseSql"/>
+    </select>
+
+</mapper>

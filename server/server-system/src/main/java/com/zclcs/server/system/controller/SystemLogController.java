@@ -1,6 +1,5 @@
 package com.zclcs.server.system.controller;
 
-
 import com.zclcs.common.core.annotation.ControllerEndpoint;
 import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
@@ -12,6 +11,7 @@ import com.zclcs.common.core.utils.BaseRspUtil;
 import com.zclcs.server.system.service.SystemLogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -49,6 +49,7 @@ public class SystemLogController {
     }
 
     @PostMapping
+    @ApiOperation(value = "保存日志")
     public void saveLog(@RequestBody @Validated SystemLogAo log) {
         this.logService.saveLog(log.getClassName(), log.getMethodName(), log.getParams(), log.getIp(), log.getOperation(), log.getUsername(), log.getStart());
     }
@@ -57,7 +58,7 @@ public class SystemLogController {
     @PreAuthorize("hasAuthority('log:delete')")
     @ControllerEndpoint(exceptionMessage = "删除日志失败")
     @ApiOperation(value = "删除日志")
-    public void deleteLogs(@NotBlank(message = "{required}") @PathVariable String logIds) {
+    public void deleteLogs(@ApiParam(value = "日志id集合(,分隔)", required = true) @NotBlank(message = "{required}") @PathVariable String logIds) {
         List<Long> ids = Arrays.stream(logIds.split(StringConstant.COMMA)).map(Long::valueOf).collect(Collectors.toList());
         this.logService.deleteLogs(ids);
     }

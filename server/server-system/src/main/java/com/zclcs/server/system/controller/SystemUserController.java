@@ -6,6 +6,7 @@ import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
 import com.zclcs.common.core.base.BaseRsp;
 import com.zclcs.common.core.constant.StringConstant;
+import com.zclcs.common.core.constant.SwaggerParamTypeConstant;
 import com.zclcs.common.core.entity.system.SystemLoginLog;
 import com.zclcs.common.core.entity.system.SystemUser;
 import com.zclcs.common.core.entity.system.ao.SelectSystemUserAo;
@@ -17,10 +18,10 @@ import com.zclcs.common.core.validate.strategy.UpdateStrategy;
 import com.zclcs.server.system.service.SystemLoginLogService;
 import com.zclcs.server.system.service.SystemUserDataPermissionService;
 import com.zclcs.server.system.service.SystemUserService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
@@ -85,7 +86,8 @@ public class SystemUserController {
 
     @GetMapping("check/{userId}/{username}")
     @ApiOperation(value = "检查用户名")
-    public BaseRsp<Boolean> checkUserName(@NotNull(message = "{required}") @PathVariable Long userId, @NotBlank(message = "{required}") @PathVariable String username) {
+    public BaseRsp<Boolean> checkUserName(@ApiParam(value = "用户id", required = true) @NotNull(message = "{required}") @PathVariable Long userId,
+                                          @ApiParam(value = "用户名", required = true) @NotBlank(message = "{required}") @PathVariable String username) {
         SystemUser one = userService.lambdaQuery().eq(SystemUser::getUserId, userId).one();
         if (one.getUsername().equals(username)) {
             return BaseRspUtil.data(false);
@@ -113,50 +115,62 @@ public class SystemUserController {
     @PreAuthorize("hasAuthority('user:delete')")
     @ApiOperation(value = "删除用户")
     @ControllerEndpoint(operation = "删除用户", exceptionMessage = "删除用户失败")
-    public void deleteUsers(@NotBlank(message = "{required}") @PathVariable String userIds) {
+    public void deleteUsers(@ApiParam(value = "用户id集合(,分隔)", required = true) @NotBlank(message = "{required}") @PathVariable String userIds) {
         List<Long> ids = Arrays.stream(userIds.split(StringConstant.COMMA)).map(Long::valueOf).collect(Collectors.toList());
         this.userService.deleteUsers(ids);
     }
 
     @GetMapping("/{userId}")
-    @PreAuthorize("hasAuthority('user:update')")
+    @PreAuthorize("hasAuthority('user:view')")
     @ApiOperation(value = "获取数据权限")
-    public BaseRsp<List<Long>> findUserDataPermissions(@NotBlank(message = "{required}") @PathVariable Long userId) {
+    public BaseRsp<List<Long>> findUserDataPermissions(@ApiParam(value = "用户id", required = true) @NotBlank(message = "{required}") @PathVariable Long userId) {
         List<Long> dataPermissions = this.userDataPermissionService.findByUserId(userId);
         return BaseRspUtil.data(dataPermissions);
     }
 
-    @GetMapping("password/mine/check")
+    @GetMapping("password/mine/check/{password}")
     @ApiOperation(value = "检查当前用户密码")
-    public BaseRsp<Boolean> checkMyPassword(@NotBlank(message = "{required}") String password) {
+    public BaseRsp<Boolean> checkMyPassword(@ApiParam(value = "密码", required = true) @NotBlank(message = "{required}") @PathVariable String password) {
         String currentUsername = BaseUtil.getCurrentUsername();
         SystemUserVo user = userService.findByName(currentUsername);
         return BaseRspUtil.data(user != null && passwordEncoder.matches(password, user.getPassword()));
     }
 
-    @GetMapping("password/check")
+    @GetMapping("password/{username}/check/{password}")
     @ApiOperation(value = "检查用户密码")
-    public BaseRsp<Boolean> checkPassword(@NotBlank(message = "{required}") String username, @NotBlank(message = "{required}") String password) {
+    public BaseRsp<Boolean> checkPassword(@ApiParam(value = "用户名", required = true) @NotBlank(message = "{required}") @PathVariable String username,
+                                          @ApiParam(value = "密码", required = true) @NotBlank(message = "{required}") @PathVariable String password) {
         SystemUserVo user = userService.findByName(username);
         return BaseRspUtil.data(user != null && passwordEncoder.matches(password, user.getPassword()));
     }
 
     @PutMapping("password/mine")
-    @ApiOperation(value = "修改当前用户密码")
+    @ApiOperation(value = "修改当前用户密码", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "password", value = "密码", required = true, paramType = SwaggerParamTypeConstant.QUERY)
+    })
     @ControllerEndpoint(operation = "修改当前用户密码", exceptionMessage = "修改当前用户密码失败")
     public void updateMyPassword(@NotBlank(message = "{required}") String password) {
         userService.updatePassword(null, password);
     }
 
     @PutMapping("password")
-    @ApiOperation(value = "修改密码")
+    @ApiOperation(value = "修改密码", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "username", value = "用户名", required = true, paramType = SwaggerParamTypeConstant.QUERY),
+            @ApiImplicitParam(name = "password", value = "密码", required = true, paramType = SwaggerParamTypeConstant.QUERY)
+    })
     @ControllerEndpoint(operation = "修改密码", exceptionMessage = "修改密码失败")
-    public void updatePassword(@NotBlank(message = "{required}") String username, @NotBlank(message = "{required}") String password) {
+    public void updatePassword(@NotBlank(message = "{required}") String username,
+                               @NotBlank(message = "{required}") String password) {
         userService.updatePassword(username, password);
     }
 
     @PutMapping("status")
-    @ApiOperation(value = "禁用账号")
+    @ApiOperation(value = "禁用账号", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "username", value = "用户名", required = true, paramType = SwaggerParamTypeConstant.QUERY)
+    })
     @ControllerEndpoint(operation = "禁用账号", exceptionMessage = "禁用账号失败")
     public void updateStatus(@NotBlank(message = "{required}") String username) {
         userService.updateStatus(username, null);
@@ -164,7 +178,10 @@ public class SystemUserController {
 
     @PutMapping("password/reset")
     @PreAuthorize("hasAuthority('user:reset')")
-    @ApiOperation(value = "重置用户密码")
+    @ApiOperation(value = "重置用户密码", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "usernames", value = "用户名集合(,分隔)", required = true, paramType = SwaggerParamTypeConstant.QUERY)
+    })
     @ControllerEndpoint(operation = "重置用户密码", exceptionMessage = "重置用户密码失败")
     public void resetPassword(@NotBlank(message = "{required}") String usernames) {
         List<String> usernameList = Arrays.stream(usernames.split(StringConstant.COMMA)).collect(Collectors.toList());

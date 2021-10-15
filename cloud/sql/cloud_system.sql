@@ -1,3 +1,19 @@
+/*
+ Navicat Premium Data Transfer
+
+ Source Server         : docker_192.168.30.10
+ Source Server Type    : MySQL
+ Source Server Version : 50735
+ Source Host           : 192.168.33.10:3306
+ Source Schema         : cloud_system
+
+ Target Server Type    : MySQL
+ Target Server Version : 50735
+ File Encoding         : 65001
+
+ Date: 11/10/2021 16:38:20
+*/
+
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 

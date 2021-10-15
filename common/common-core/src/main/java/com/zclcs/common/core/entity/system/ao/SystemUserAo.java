@@ -35,7 +35,7 @@ public class SystemUserAo implements Serializable {
     @NotNull(message = "{required}", groups = UpdateStrategy.class)
     private Long userId;
 
-    @ApiModelProperty(value = "用户名")
+    @ApiModelProperty(value = "用户名", required = true)
     @NotBlank(message = "{required}")
     @Size(min = 4, max = 10, message = "{range}")
     private String username;
@@ -54,7 +54,7 @@ public class SystemUserAo implements Serializable {
     @ApiModelProperty(value = "联系电话")
     private String mobile;
 
-    @ApiModelProperty(value = "状态 0锁定 1有效")
+    @ApiModelProperty(value = "状态 0锁定 1有效", required = true)
     @NotBlank(message = "{required}")
     private String status;
 

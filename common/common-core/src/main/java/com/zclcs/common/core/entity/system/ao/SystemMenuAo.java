@@ -35,7 +35,7 @@ public class SystemMenuAo implements Serializable {
     @ApiModelProperty(value = "上级菜单id")
     private Long parentId;
 
-    @ApiModelProperty(value = "菜单/按钮名称")
+    @ApiModelProperty(value = "菜单/按钮名称", required = true)
     @NotBlank(message = "{required}")
     @Size(max = 10, message = "{noMoreThan}")
     private String menuName;
@@ -59,7 +59,7 @@ public class SystemMenuAo implements Serializable {
     @ApiModelProperty(value = "图标")
     private String icon;
 
-    @ApiModelProperty(value = "类型 0菜单 1按钮 2目录")
+    @ApiModelProperty(value = "类型 0菜单 1按钮 2目录", required = true)
     @NotBlank(message = "{required}")
     private String type;
 

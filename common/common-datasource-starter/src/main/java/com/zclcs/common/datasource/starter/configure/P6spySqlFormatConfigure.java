@@ -1,4 +1,4 @@
-package com.zclcs.server.system.configure;
+package com.zclcs.common.datasource.starter.configure;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;

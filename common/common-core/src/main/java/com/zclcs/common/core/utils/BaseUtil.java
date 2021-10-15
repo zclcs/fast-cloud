@@ -2,7 +2,9 @@ package com.zclcs.common.core.utils;
 
 import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zclcs.common.core.constant.PageConstant;
 import com.zclcs.common.core.constant.RegexpConstant;
 import com.zclcs.common.core.constant.StringConstant;
 import com.zclcs.common.core.entity.CurrentUser;
@@ -28,9 +30,7 @@ import reactor.core.publisher.Mono;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.Objects;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
@@ -174,6 +174,19 @@ public abstract class BaseUtil {
         response.getHeaders().add(HttpHeaders.CONTENT_TYPE, contentType);
         DataBuffer dataBuffer = response.bufferFactory().wrap(JSONObject.toJSONString(value).getBytes());
         return response.writeWith(Mono.just(dataBuffer));
+    }
+
+    /**
+     * 封装前端分页表格所需数据
+     *
+     * @param pageInfo pageInfo
+     * @return Map<String, Object>
+     */
+    public static Map<String, Object> getDataTable(IPage<?> pageInfo) {
+        Map<String, Object> data = new HashMap<>(4);
+        data.put(PageConstant.ROWS, pageInfo.getRecords());
+        data.put(PageConstant.TOTAL, pageInfo.getTotal());
+        return data;
     }
 
     /**

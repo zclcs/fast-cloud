@@ -13,6 +13,7 @@ import com.zclcs.common.core.validate.strategy.UpdateStrategy;
 import com.zclcs.server.system.service.SystemMenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -44,7 +45,7 @@ public class SystemMenuController {
 
     @GetMapping("/{username}")
     @ApiOperation(value = "用户路由")
-    public BaseRsp<List<VueRouter<SystemMenuVo>>> getUserRouters(@NotBlank(message = "{required}") @PathVariable String username) {
+    public BaseRsp<List<VueRouter<SystemMenuVo>>> getUserRouters(@ApiParam(value = "用户名", required = true) @NotBlank(message = "{required}") @PathVariable String username) {
         List<VueRouter<SystemMenuVo>> userRouters = this.menuService.getUserRouters(username);
         return BaseRspUtil.data(userRouters);
     }
@@ -58,7 +59,7 @@ public class SystemMenuController {
 
     @GetMapping("/permissions/{username}")
     @ApiOperation(value = "权限")
-    public BaseRsp<List<String>> findUserPermissions(@NotBlank(message = "{required}") @PathVariable String username) {
+    public BaseRsp<List<String>> findUserPermissions(@ApiParam(value = "用户名", required = true) @NotBlank(message = "{required}") @PathVariable String username) {
         return BaseRspUtil.data(this.menuService.findUserPermissions(username));
     }
 
@@ -74,7 +75,7 @@ public class SystemMenuController {
     @PreAuthorize("hasAuthority('menu:delete')")
     @ApiOperation(value = "删除菜单/按钮")
     @ControllerEndpoint(operation = "删除菜单/按钮", exceptionMessage = "删除菜单/按钮失败")
-    public void deleteMenus(@NotBlank(message = "{required}") @PathVariable String menuIds) {
+    public void deleteMenus(@ApiParam(value = "菜单/按钮id集合(,分隔)", required = true) @NotBlank(message = "{required}") @PathVariable String menuIds) {
         List<Long> ids = Arrays.stream(menuIds.split(StringConstant.COMMA)).map(Long::valueOf).collect(Collectors.toList());
         this.menuService.deleteMenus(ids);
     }
