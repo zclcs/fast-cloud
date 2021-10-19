@@ -47,16 +47,14 @@ public interface MinioBucketService extends IService<MinioBucket> {
      *
      * @param minioBucketAo minioBucketAo、
      * @return 桶id
-     * @throws Exception 桶创建异常
      */
-    Long createMinioBucket(MinioBucketAo minioBucketAo) throws Exception;
+    Long createMinioBucket(MinioBucketAo minioBucketAo);
 
     /**
      * 删除
      *
      * @param ids ids
-     * @throws Exception 桶删除异常
      */
-    void deleteMinioBucket(List<Long> ids) throws Exception;
+    void deleteMinioBucket(List<Long> ids);
 
 }

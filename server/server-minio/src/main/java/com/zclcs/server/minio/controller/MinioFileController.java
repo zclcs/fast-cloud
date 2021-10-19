@@ -80,14 +80,14 @@ public class MinioFileController {
             @ApiImplicitParam(name = "file", value = "文件", required = true, dataType = "__File"),
             @ApiImplicitParam(name = "bucketName", value = "桶名称")
     })
-    public void addMinioFile(@RequestParam(value = "file") MultipartFile file, String bucketName) throws Exception {
+    public void addMinioFile(@RequestParam(value = "file") MultipartFile file, String bucketName) {
         this.minioFileService.createMinioFile(file, bucketName);
     }
 
     @DeleteMapping("/{fileIds}")
     @PreAuthorize("hasAuthority('file:delete')")
     @ApiOperation(value = "删除文件")
-    public void deleteMinioFile(@ApiParam(value = "文件id集合(,分隔)", required = true) @NotBlank(message = "{required}") @PathVariable String fileIds) throws Exception {
+    public void deleteMinioFile(@ApiParam(value = "文件id集合(,分隔)", required = true) @NotBlank(message = "{required}") @PathVariable String fileIds) {
         List<String> ids = Arrays.stream(fileIds.split(StringConstant.COMMA)).collect(Collectors.toList());
         this.minioFileService.deleteMinioFile(ids);
     }

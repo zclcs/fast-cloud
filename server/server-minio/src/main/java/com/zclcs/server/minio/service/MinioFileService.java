@@ -47,16 +47,14 @@ public interface MinioFileService extends IService<MinioFile> {
      *
      * @param multipartFile file
      * @param bucketName    桶名称
-     * @throws Exception 异常
      */
-    void createMinioFile(MultipartFile multipartFile, String bucketName) throws Exception;
+    void createMinioFile(MultipartFile multipartFile, String bucketName);
 
     /**
      * 删除
      *
      * @param ids ids
-     * @throws Exception 异常
      */
-    void deleteMinioFile(List<String> ids) throws Exception;
+    void deleteMinioFile(List<String> ids);
 
 }

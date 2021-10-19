@@ -66,14 +66,14 @@ public class MinioBucketController {
     @PostMapping
     @PreAuthorize("hasAuthority('bucket:add')")
     @ApiOperation(value = "新增桶")
-    public void addMinioBucket(@RequestBody @Validated MinioBucketAo minioBucketAo) throws Exception {
+    public void addMinioBucket(@RequestBody @Validated MinioBucketAo minioBucketAo) {
         this.minioBucketService.createMinioBucket(minioBucketAo);
     }
 
     @DeleteMapping("/{bucketIds}")
     @PreAuthorize("hasAuthority('bucket:delete')")
     @ApiOperation(value = "删除桶")
-    public void deleteMinioBucket(@ApiParam(value = "桶id集合(,分隔)", required = true) @NotBlank(message = "{required}") @PathVariable String bucketIds) throws Exception {
+    public void deleteMinioBucket(@ApiParam(value = "桶id集合(,分隔)", required = true) @NotBlank(message = "{required}") @PathVariable String bucketIds) {
         List<Long> ids = Arrays.stream(bucketIds.split(StringConstant.COMMA)).map(Long::valueOf).collect(Collectors.toList());
         this.minioBucketService.deleteMinioBucket(ids);
     }
