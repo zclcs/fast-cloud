@@ -11,6 +11,7 @@ import com.zclcs.common.core.entity.minio.MinioBucket;
 import com.zclcs.common.core.entity.minio.MinioFile;
 import com.zclcs.common.core.entity.minio.ao.MinioBucketAo;
 import com.zclcs.common.core.entity.minio.vo.MinioBucketVo;
+import com.zclcs.common.core.exception.MyMinioException;
 import com.zclcs.server.minio.mapper.MinioBucketMapper;
 import com.zclcs.server.minio.mapper.MinioFileMapper;
 import com.zclcs.server.minio.service.MinioBucketService;
@@ -76,6 +77,9 @@ public class MinioBucketServiceImpl extends ServiceImpl<MinioBucketMapper, Minio
 
     @Override
     public void deleteMinioBucket(List<Long> ids) throws Exception {
+        if (minioFileMapper.selectCount(new QueryWrapper<MinioFile>().lambda().in(MinioFile::getBucketId, ids)) != 0) {
+            throw new MyMinioException("请先删除文件，再删除桶");
+        }
         List<MinioBucket> list = this.lambdaQuery().in(MinioBucket::getId, ids).list();
         for (MinioBucket minioBucket : list) {
             minioUtil.removeBucket(minioBucket.getBucketName());
