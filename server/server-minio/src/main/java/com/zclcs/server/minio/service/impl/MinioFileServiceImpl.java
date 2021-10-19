@@ -11,6 +11,7 @@ import com.zclcs.common.core.entity.minio.MinioFile;
 import com.zclcs.common.core.entity.minio.ao.MinioBucketAo;
 import com.zclcs.common.core.entity.minio.vo.FileUploadVo;
 import com.zclcs.common.core.entity.minio.vo.MinioFileVo;
+import com.zclcs.common.core.exception.MyMinioException;
 import com.zclcs.server.minio.mapper.MinioFileMapper;
 import com.zclcs.server.minio.service.MinioBucketService;
 import com.zclcs.server.minio.service.MinioFileService;
@@ -62,10 +63,17 @@ public class MinioFileServiceImpl extends ServiceImpl<MinioFileMapper, MinioFile
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void createMinioFile(MultipartFile multipartFile, String bucketName) throws Exception {
+    public void createMinioFile(MultipartFile multipartFile, String bucketName) {
         String defaultBucket = Optional.ofNullable(bucketName).filter(StrUtil::isBlank).orElse("default");
-        Long bucketId = minioBucketService.createMinioBucket(MinioBucketAo.builder().bucketName(defaultBucket).build());
-        FileUploadVo fileUploadVo = minioUtil.uploadFile(multipartFile, defaultBucket);
+        Long bucketId;
+        FileUploadVo fileUploadVo;
+        try {
+            bucketId = minioBucketService.createMinioBucket(MinioBucketAo.builder().bucketName(defaultBucket).build());
+            fileUploadVo = minioUtil.uploadFile(multipartFile, defaultBucket);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            throw new MyMinioException("调用minio失败，" + e.getMessage());
+        }
         MinioFile minioFile = new MinioFile();
         BeanUtil.copyProperties(fileUploadVo, minioFile);
         minioFile.setBucketId(bucketId);
@@ -74,10 +82,15 @@ public class MinioFileServiceImpl extends ServiceImpl<MinioFileMapper, MinioFile
     }
 
     @Override
-    public void deleteMinioFile(List<String> ids) throws Exception {
+    public void deleteMinioFile(List<String> ids) {
         for (String id : ids) {
             MinioFileVo minioFile = this.findMinioFile(MinioFileVo.builder().id(id).build());
-            minioUtil.removeObject(minioFile.getBucketName(), minioFile.getFileName());
+            try {
+                minioUtil.removeObject(minioFile.getBucketName(), minioFile.getFileName());
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+                throw new MyMinioException("调用minio失败，" + e.getMessage());
+            }
             this.removeById(id);
         }
     }

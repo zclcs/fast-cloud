@@ -61,12 +61,17 @@ public class MinioBucketServiceImpl extends ServiceImpl<MinioBucketMapper, Minio
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Long createMinioBucket(MinioBucketAo minioBucketAo) throws Exception {
+    public Long createMinioBucket(MinioBucketAo minioBucketAo) {
         int count = this.count(new QueryWrapper<MinioBucket>().lambda().eq(MinioBucket::getBucketName, minioBucketAo.getBucketName()));
         if (count == 0) {
             MinioBucket minioBucket = new MinioBucket();
             BeanUtil.copyProperties(minioBucketAo, minioBucket);
-            minioUtil.createBucket(minioBucket.getBucketName());
+            try {
+                minioUtil.createBucket(minioBucket.getBucketName());
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+                throw new MyMinioException("调用minio失败，" + e.getMessage());
+            }
             minioBucket.setCreateTime(DateUtil.date());
             this.save(minioBucket);
             return minioBucket.getId();
@@ -76,13 +81,18 @@ public class MinioBucketServiceImpl extends ServiceImpl<MinioBucketMapper, Minio
     }
 
     @Override
-    public void deleteMinioBucket(List<Long> ids) throws Exception {
+    public void deleteMinioBucket(List<Long> ids) {
         if (minioFileMapper.selectCount(new QueryWrapper<MinioFile>().lambda().in(MinioFile::getBucketId, ids)) != 0) {
             throw new MyMinioException("请先删除文件，再删除桶");
         }
         List<MinioBucket> list = this.lambdaQuery().in(MinioBucket::getId, ids).list();
         for (MinioBucket minioBucket : list) {
-            minioUtil.removeBucket(minioBucket.getBucketName());
+            try {
+                minioUtil.removeBucket(minioBucket.getBucketName());
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+                throw new MyMinioException("调用minio失败，" + e.getMessage());
+            }
             this.removeById(minioBucket.getId());
             minioFileMapper.delete(new QueryWrapper<MinioFile>().lambda().eq(MinioFile::getBucketId, minioBucket.getId()));
         }

@@ -1,6 +1,5 @@
 package com.zclcs.server.minio.controller;
 
-import com.zclcs.common.core.annotation.ControllerEndpoint;
 import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
 import com.zclcs.common.core.base.BaseRsp;
@@ -76,7 +75,6 @@ public class MinioFileController {
 
     @PostMapping
     //@PreAuthorize("hasAuthority('file:add')")
-    //@ControllerEndpoint(operation = "新增文件", exceptionMessage = "新增文件失败")
     @ApiOperation(value = "新增文件")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "file", value = "文件", required = true, dataType = "__File"),
@@ -88,7 +86,6 @@ public class MinioFileController {
 
     @DeleteMapping("/{fileIds}")
     @PreAuthorize("hasAuthority('file:delete')")
-    @ControllerEndpoint(operation = "删除文件", exceptionMessage = "删除文件失败")
     @ApiOperation(value = "删除文件")
     public void deleteMinioFile(@ApiParam(value = "文件id集合(,分隔)", required = true) @NotBlank(message = "{required}") @PathVariable String fileIds) throws Exception {
         List<String> ids = Arrays.stream(fileIds.split(StringConstant.COMMA)).collect(Collectors.toList());
