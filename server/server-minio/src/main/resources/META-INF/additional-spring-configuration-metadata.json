@@ -1,0 +1,29 @@
+{
+  "properties": [
+    {
+      "name": "minio",
+      "type": "java.lang.String",
+      "description": "分布式文件."
+    },
+    {
+      "name": "minio.endpoint",
+      "type": "java.lang.String",
+      "description": "部署地址."
+    },
+    {
+      "name": "minio.root-user",
+      "type": "java.lang.String",
+      "description": "用户名."
+    },
+    {
+      "name": "minio.root-password",
+      "type": "java.lang.String",
+      "description": "密码."
+    },
+    {
+      "name": "minio.domain-name",
+      "type": "java.lang.String",
+      "description": "域名."
+    }
+  ]
+}

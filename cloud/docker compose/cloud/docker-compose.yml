@@ -13,6 +13,8 @@ services:
       - ./log/gateway/skywalking:/agent/logs
       - ${CLOUD_AGENT_CONFIG}
     env_file: .env
+    ports:
+      - "8301:8301"
   auth:
     image: ${CLOUD_DEPOSITORY_URL}/auth:${CLOUD_DEPOSITORY_TAG}
     container_name: auth
@@ -54,34 +56,49 @@ services:
     env_file: .env
     depends_on:
       - tx-manager
-  # 生产可以不用部署
-  server-generator:
-    image: ${CLOUD_DEPOSITORY_URL}/server-generator:${CLOUD_DEPOSITORY_TAG}
-    container_name: server-generator
+  #  # 生产可以不用部署
+  #  server-generator:
+  #    image: ${CLOUD_DEPOSITORY_URL}/server-generator:${CLOUD_DEPOSITORY_TAG}
+  #    container_name: server-generator
+  #    networks:
+  #      - web_net
+  #    environment:
+  #      JAVA_TOOL_OPTIONS: "${SERVER_GENERATOR_JAVA_OPS}"
+  #    volumes:
+  #      - ./log/server-generator:/log/server-generator
+  #      - ./.txlcn:/.txlcn
+  #      - ./log/server-generator/skywalking:/agent/logs
+  #      - ${CLOUD_AGENT_CONFIG}
+  #    env_file: .env
+  #    depends_on:
+  #      - tx-manager
+  #  # 生产可以不用部署
+  #  server-test:
+  #    image: ${CLOUD_DEPOSITORY_URL}/server-test:${CLOUD_DEPOSITORY_TAG}
+  #    container_name: server-test
+  #    networks:
+  #      - web_net
+  #    environment:
+  #      JAVA_TOOL_OPTIONS: "${SERVER_TEST_JAVA_OPS}"
+  #    volumes:
+  #      - ./log/server-test:/log/server-test
+  #      - ./.txlcn:/.txlcn
+  #      - ./log/server-test/skywalking:/agent/logs
+  #      - ${CLOUD_AGENT_CONFIG}
+  #    env_file: .env
+  #    depends_on:
+  #      - tx-manager
+  server-minio:
+    image: ${CLOUD_DEPOSITORY_URL}/server-minio:${CLOUD_DEPOSITORY_TAG}
+    container_name: server-minio
     networks:
       - web_net
     environment:
-      JAVA_TOOL_OPTIONS: "${SERVER_GENERATOR_JAVA_OPS}"
+      JAVA_TOOL_OPTIONS: "${SERVER_MINIO_JAVA_OPS}"
     volumes:
-      - ./log/server-generator:/log/server-generator
+      - ./log/server-minio:/log/server-minio
       - ./.txlcn:/.txlcn
-      - ./log/server-generator/skywalking:/agent/logs
-      - ${CLOUD_AGENT_CONFIG}
-    env_file: .env
-    depends_on:
-      - tx-manager
-  # 生产可以不用部署
-  server-test:
-    image: ${CLOUD_DEPOSITORY_URL}/server-test:${CLOUD_DEPOSITORY_TAG}
-    container_name: server-test
-    networks:
-      - web_net
-    environment:
-      JAVA_TOOL_OPTIONS: "${SERVER_TEST_JAVA_OPS}"
-    volumes:
-      - ./log/server-test:/log/server-test
-      - ./.txlcn:/.txlcn
-      - ./log/server-test/skywalking:/agent/logs
+      - ./log/server-minio/skywalking:/agent/logs
       - ${CLOUD_AGENT_CONFIG}
     env_file: .env
     depends_on:

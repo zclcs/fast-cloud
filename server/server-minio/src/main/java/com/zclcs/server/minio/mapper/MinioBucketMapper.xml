@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zclcs.server.minio.mapper.MinioBucketMapper">
+
+    <sql id="baseSql">
+        select mb.id, mb.bucket_name, mb.create_time, mb.modify_time
+        from minio_bucket mb
+            ${ew.customSqlSegment}
+    </sql>
+    <select id="findPageVo" resultType="com.zclcs.common.core.entity.minio.vo.MinioBucketVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="findListVo" resultType="com.zclcs.common.core.entity.minio.vo.MinioBucketVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="findOneVo" resultType="com.zclcs.common.core.entity.minio.vo.MinioBucketVo">
+        <include refid="baseSql"/>
+    </select>
+</mapper>

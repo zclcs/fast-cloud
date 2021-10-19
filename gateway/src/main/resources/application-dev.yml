@@ -37,7 +37,7 @@ spring:
           filters:
             - name: Hystrix
               args:
-                name: systemfallback
+                name: generatorfallback
                 fallbackUri: forward:/fallback/${SERVICE_NAME_SERVER_GENERATOR:server-generator}
         - id: ${SERVICE_NAME_SERVER_TEST:server-test}
           uri: lb://${SERVICE_NAME_SERVER_TEST:server-test}
@@ -46,8 +46,17 @@ spring:
           filters:
             - name: Hystrix
               args:
-                name: systemfallback
+                name: testfallback
                 fallbackUri: forward:/fallback/${SERVICE_NAME_SERVER_TEST:server-test}
+        - id: ${SERVICE_NAME_SERVER_MINIO:server-minio}
+          uri: lb://${SERVICE_NAME_SERVER_MINIO:server-minio}
+          predicates:
+            - Path=/minio/**
+          filters:
+            - name: Hystrix
+              args:
+                name: miniofallback
+                fallbackUri: forward:/fallback/${SERVICE_NAME_SERVER_MINIO:server-minio}
       loadbalancer:
         use404: true
       default-filters:
@@ -108,3 +117,4 @@ hystrix:
 ribbon:
   eager-load:
     enabled: true
+

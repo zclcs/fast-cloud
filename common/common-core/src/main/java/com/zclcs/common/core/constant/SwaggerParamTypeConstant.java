@@ -28,4 +28,9 @@ public interface SwaggerParamTypeConstant {
      */
     String BODY = "body";
 
+    /**
+     * FORM
+     */
+    String FORM = "form";
+
 }

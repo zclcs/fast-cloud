@@ -13,7 +13,6 @@
     <modules>
         <module>common-core</module>
         <module>common-doc</module>
-        <module>common-code-generator</module>
         <module>common-doc-gateway-starter</module>
         <module>common-doc-starter</module>
         <module>common-logging-starter</module>

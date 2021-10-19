@@ -1,5 +1,6 @@
 package com.zclcs.common.doc.gateway.starter.handler;
 
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import com.zclcs.common.doc.gateway.starter.properties.MyDocGatewayProperties;
 import org.springframework.http.HttpStatus;
@@ -58,8 +59,12 @@ public class MyDocGatewayHandler {
         List<SwaggerResource> swaggerResources = this.swaggerResources.get();
         List<SwaggerResource> filterList = new ArrayList<>();
         String resources = properties.getResources();
+        System.out.println(resources);
         String[] resourcesArray = StrUtil.splitToArray(resources, ",");
-        if (resourcesArray != null && resources.length() > 0) {
+        for (String s : resourcesArray) {
+            System.out.println(s);
+        }
+        if (ArrayUtil.isNotEmpty(resourcesArray)) {
             boolean include = false;
             for (SwaggerResource resource : swaggerResources) {
                 if (Arrays.stream(resourcesArray).anyMatch(r -> StrUtil.equalsIgnoreCase(r, resource.getName()))) {
@@ -68,6 +73,9 @@ public class MyDocGatewayHandler {
                 if (include) {
                     filterList.add(resource);
                 }
+            }
+            for (SwaggerResource swaggerResource : filterList) {
+                System.out.println(swaggerResource.getName());
             }
             return Mono.just((new ResponseEntity<>(filterList, HttpStatus.OK)));
         }

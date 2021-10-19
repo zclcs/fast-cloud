@@ -1,7 +1,7 @@
 package com.zclcs.common.core.exception;
 
 /**
- * FEBS系统异常
+ * 系统异常
  *
  * @author zclcs
  */

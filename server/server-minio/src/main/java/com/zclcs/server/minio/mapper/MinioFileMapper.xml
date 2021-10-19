@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zclcs.server.minio.mapper.MinioFileMapper">
+
+    <sql id="baseSql">
+        select mf.id,
+               mf.bucket_id,
+               mb.bucket_name,
+               mf.file_name,
+               mf.original_file_name,
+               mf.file_path,
+               mf.create_time,
+               mf.modify_time
+        from minio_file mf
+                 join minio_bucket mb on mf.bucket_id = mb.id
+            ${ew.customSqlSegment}
+    </sql>
+    <select id="findPageVo" resultType="com.zclcs.common.core.entity.minio.vo.MinioFileVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="findListVo" resultType="com.zclcs.common.core.entity.minio.vo.MinioFileVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="findOneVo" resultType="com.zclcs.common.core.entity.minio.vo.MinioFileVo">
+        <include refid="baseSql"/>
+    </select>
+</mapper>

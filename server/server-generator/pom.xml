@@ -37,14 +37,14 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.zclcs</groupId>
-            <artifactId>common-code-generator</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
+        </dependency>
+        <!-- freemarker 模板 -->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
         </dependency>
         <dependency>
             <groupId>com.codingapi.txlcn</groupId>
