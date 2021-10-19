@@ -1,11 +1,6 @@
 {
   "properties": [
     {
-      "name": "minio",
-      "type": "java.lang.String",
-      "description": "分布式文件."
-    },
-    {
       "name": "minio.endpoint",
       "type": "java.lang.String",
       "description": "部署地址."
