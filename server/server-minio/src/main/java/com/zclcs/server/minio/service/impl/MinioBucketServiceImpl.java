@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
+import com.zclcs.common.core.constant.MinioConstant;
 import com.zclcs.common.core.entity.minio.MinioBucket;
 import com.zclcs.common.core.entity.minio.MinioFile;
 import com.zclcs.common.core.entity.minio.ao.MinioBucketAo;
@@ -22,6 +23,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 桶 Service实现
@@ -62,13 +64,15 @@ public class MinioBucketServiceImpl extends ServiceImpl<MinioBucketMapper, Minio
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Long createMinioBucket(MinioBucketAo minioBucketAo) {
+        String policy = Optional.ofNullable(minioBucketAo.getBucketPolicy()).filter(StrUtil::isBlank).orElse(MinioConstant.NONE);
         int count = this.count(new QueryWrapper<MinioBucket>().lambda().eq(MinioBucket::getBucketName, minioBucketAo.getBucketName()));
         if (count == 0) {
             MinioBucket minioBucket = new MinioBucket();
             BeanUtil.copyProperties(minioBucketAo, minioBucket);
+            minioBucket.setBucketPolicy(policy);
             try {
                 minioUtil.createBucket(minioBucket.getBucketName());
-                minioUtil.setBucketPolicy(minioBucket.getBucketName(), minioBucket.getBucketPolicy());
+                minioUtil.setBucketPolicy(minioBucket.getBucketName(), policy);
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
                 throw new MyMinioException("调用minio失败，" + e.getMessage());

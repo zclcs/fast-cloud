@@ -9,9 +9,9 @@ CREATE TABLE `minio_bucket`
 (
     `id`            bigint(20)                                                   NOT NULL AUTO_INCREMENT COMMENT '桶id',
     `bucket_name`   varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '桶名称',
-    `bucket_policy` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'write-only' COMMENT '桶权限',
-    `create_time`   datetime                                                     NULL     DEFAULT NULL COMMENT '创建时间',
-    `modify_time`   datetime                                                     NULL     DEFAULT NULL COMMENT '修改时间',
+    `bucket_policy` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '桶权限',
+    `create_time`   datetime                                                     NULL DEFAULT NULL COMMENT '创建时间',
+    `modify_time`   datetime                                                     NULL DEFAULT NULL COMMENT '修改时间',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1

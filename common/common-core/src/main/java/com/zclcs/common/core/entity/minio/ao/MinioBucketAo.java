@@ -39,7 +39,6 @@ public class MinioBucketAo implements Serializable {
     private String bucketName;
 
     @Size(max = 50, message = "{noMoreThan}")
-    @NotBlank(message = "{required}")
     @ApiModelProperty(value = "桶权限", required = true)
     private String bucketPolicy;
 

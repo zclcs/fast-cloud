@@ -19,4 +19,8 @@ public interface MinioConstant {
      * bucket权限-读写
      */
     String READ_WRITE = "read-write";
+    /**
+     * bucket权限-无
+     */
+    String NONE = "none";
 }
