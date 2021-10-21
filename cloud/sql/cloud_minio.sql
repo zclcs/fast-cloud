@@ -1,19 +1,3 @@
-/*
- Navicat Premium Data Transfer
-
- Source Server         : localhost
- Source Server Type    : MySQL
- Source Server Version : 50735
- Source Host           : localhost:3306
- Source Schema         : cloud_minio
-
- Target Server Type    : MySQL
- Target Server Version : 50735
- File Encoding         : 65001
-
- Date: 18/10/2021 17:05:08
-*/
-
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -23,16 +7,17 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `minio_bucket`;
 CREATE TABLE `minio_bucket`
 (
-    `id`          bigint(20)                                                   NOT NULL AUTO_INCREMENT COMMENT '桶id',
-    `bucket_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '桶名称',
-    `create_time` datetime                                                     NULL DEFAULT NULL COMMENT '创建时间',
-    `modify_time` datetime                                                     NULL DEFAULT NULL COMMENT '修改时间',
+    `id`            bigint(20)                                                   NOT NULL AUTO_INCREMENT COMMENT '桶id',
+    `bucket_name`   varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '桶名称',
+    `bucket_policy` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'write-only' COMMENT '桶权限',
+    `create_time`   datetime                                                     NULL     DEFAULT NULL COMMENT '创建时间',
+    `modify_time`   datetime                                                     NULL     DEFAULT NULL COMMENT '修改时间',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 4
+  AUTO_INCREMENT = 1
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = 'minio桶'
-  ROW_FORMAT = Dynamic;
+  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for minio_file
@@ -52,6 +37,6 @@ CREATE TABLE `minio_file`
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = 'minio文件'
-  ROW_FORMAT = Dynamic;
+  ROW_FORMAT = DYNAMIC;
 
 SET FOREIGN_KEY_CHECKS = 1;
