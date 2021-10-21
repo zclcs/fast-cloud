@@ -48,7 +48,9 @@ minio:
   endpoint: ${ENDPOINT:http://192.168.33.10:9000}
   root-user: ${ROOT_USER:minio}
   root-password: ${ROOT_PASSWORD:minio123}
-  domain-name: ${DOMAIN_NAME}
+  domain-name: ${DOMAIN_NAME:}
+  host: ${HOST:192.168.33.10}
+  port: ${PORT:9000}
 
 my:
   doc:

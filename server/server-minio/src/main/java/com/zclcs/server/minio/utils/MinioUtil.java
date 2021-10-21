@@ -28,6 +28,23 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class MinioUtil {
 
+    /**
+     * 桶占位符
+     */
+    private static final String BUCKET_PARAM = "${bucket}";
+    /**
+     * bucket权限-读
+     */
+    private static final String READ_ONLY = "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"AWS\":[\"*\"]},\"Action\":[\"s3:GetBucketLocation\",\"s3:ListBucket\"],\"Resource\":[\"arn:aws:s3:::" + BUCKET_PARAM + "\"]},{\"Effect\":\"Allow\",\"Principal\":{\"AWS\":[\"*\"]},\"Action\":[\"s3:GetObject\"],\"Resource\":[\"arn:aws:s3:::" + BUCKET_PARAM + "/*\"]}]}";
+    /**
+     * bucket权限-写
+     */
+    private static final String WRITE_ONLY = "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"AWS\":[\"*\"]},\"Action\":[\"s3:GetBucketLocation\",\"s3:ListBucketMultipartUploads\"],\"Resource\":[\"arn:aws:s3:::" + BUCKET_PARAM + "\"]},{\"Effect\":\"Allow\",\"Principal\":{\"AWS\":[\"*\"]},\"Action\":[\"s3:AbortMultipartUpload\",\"s3:DeleteObject\",\"s3:ListMultipartUploadParts\",\"s3:PutObject\"],\"Resource\":[\"arn:aws:s3:::" + BUCKET_PARAM + "/*\"]}]}";
+    /**
+     * bucket权限-读写
+     */
+    private static final String READ_WRITE = "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"AWS\":[\"*\"]},\"Action\":[\"s3:GetBucketLocation\",\"s3:ListBucket\",\"s3:ListBucketMultipartUploads\"],\"Resource\":[\"arn:aws:s3:::" + BUCKET_PARAM + "\"]},{\"Effect\":\"Allow\",\"Principal\":{\"AWS\":[\"*\"]},\"Action\":[\"s3:DeleteObject\",\"s3:GetObject\",\"s3:ListMultipartUploadParts\",\"s3:PutObject\",\"s3:AbortMultipartUpload\"],\"Resource\":[\"arn:aws:s3:::" + BUCKET_PARAM + "/*\"]}]}";
+
     private final MinioProperties minioProperties;
 
     private final MinioClient client;
@@ -37,6 +54,29 @@ public class MinioUtil {
      */
     public void createBucket(String bucketName) throws Exception {
         client.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
+    }
+
+    /**
+     * 更新桶权限策略
+     *
+     * @param bucket 桶
+     * @param policy 权限
+     */
+    public void setBucketPolicy(String bucket, String policy) throws Exception {
+        switch (policy) {
+            case "read-only":
+                client.setBucketPolicy(SetBucketPolicyArgs.builder().bucket(bucket).config(READ_ONLY.replace(BUCKET_PARAM, bucket)).build());
+                break;
+            case "write-only":
+                client.setBucketPolicy(SetBucketPolicyArgs.builder().bucket(bucket).config(WRITE_ONLY.replace(BUCKET_PARAM, bucket)).build());
+                break;
+            case "read-write":
+                client.setBucketPolicy(SetBucketPolicyArgs.builder().bucket(bucket).config(READ_WRITE.replace(BUCKET_PARAM, bucket)).build());
+                break;
+            case "none":
+            default:
+                break;
+        }
     }
 
     /**
@@ -106,6 +146,17 @@ public class MinioUtil {
     public String getObjectUrl(String bucketName, String objectName, Integer expires) throws Exception {
 
         return client.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder().bucket(bucketName).object(objectName).expiry(expires).build());
+    }
+
+    /**
+     * 获取文件信息
+     *
+     * @param bucketName bucket名称
+     * @param objectName 文件名称
+     * @return 信息
+     */
+    public StatObjectResponse statObject(String bucketName, String objectName) throws Exception {
+        return client.statObject(StatObjectArgs.builder().bucket(bucketName).object(objectName).build());
     }
 
     /**

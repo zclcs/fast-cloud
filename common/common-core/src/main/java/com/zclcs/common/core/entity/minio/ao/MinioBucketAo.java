@@ -3,9 +3,7 @@ package com.zclcs.common.core.entity.minio.ao;
 import com.zclcs.common.core.validate.strategy.UpdateStrategy;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
@@ -15,16 +13,18 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 桶 Ao
+ * minio桶 Ao
  *
  * @author zclcs
- * @date 2021-10-18 10:37:09.922
+ * @date 2021-10-21 16:45:35.202
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value = "MinioBucketAo对象", description = "桶")
-@Builder
+@ApiModel(value = "MinioBucketAo对象", description = "minio桶")
 public class MinioBucketAo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,6 +37,11 @@ public class MinioBucketAo implements Serializable {
     @NotBlank(message = "{required}")
     @ApiModelProperty(value = "桶名称", required = true)
     private String bucketName;
+
+    @Size(max = 50, message = "{noMoreThan}")
+    @NotBlank(message = "{required}")
+    @ApiModelProperty(value = "桶权限", required = true)
+    private String bucketPolicy;
 
     @ApiModelProperty(value = "创建时间")
     private Date createTime;

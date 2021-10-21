@@ -68,6 +68,7 @@ public class MinioBucketServiceImpl extends ServiceImpl<MinioBucketMapper, Minio
             BeanUtil.copyProperties(minioBucketAo, minioBucket);
             try {
                 minioUtil.createBucket(minioBucket.getBucketName());
+                minioUtil.setBucketPolicy(minioBucket.getBucketName(), minioBucket.getBucketPolicy());
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
                 throw new MyMinioException("调用minio失败，" + e.getMessage());

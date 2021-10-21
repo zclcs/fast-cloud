@@ -19,6 +19,16 @@
       "name": "minio.domain-name",
       "type": "java.lang.String",
       "description": "域名."
+    },
+    {
+      "name": "minio.host",
+      "type": "java.lang.String",
+      "description": "ip."
+    },
+    {
+      "name": "minio.port",
+      "type": "java.lang.String",
+      "description": "端口."
     }
   ]
 }

@@ -9,10 +9,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 桶 Vo
+ * minio桶 Vo
  *
  * @author zclcs
- * @date 2021-10-18 10:37:09.922
+ * @date 2021-10-21 16:45:35.202
  */
 @Data
 @AllArgsConstructor
@@ -20,7 +20,7 @@ import java.util.Date;
 @Builder
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value = "MinioBucketVo对象", description = "桶")
+@ApiModel(value = "MinioBucketVo对象", description = "minio桶")
 public class MinioBucketVo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -30,6 +30,9 @@ public class MinioBucketVo implements Serializable {
 
     @ApiModelProperty(value = "桶名称")
     private String bucketName;
+
+    @ApiModelProperty(value = "桶权限")
+    private String bucketPolicy;
 
     @ApiModelProperty(value = "创建时间")
     private Date createTime;

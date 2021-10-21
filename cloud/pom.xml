@@ -46,8 +46,6 @@
         <excelkit.version>2.0.71</excelkit.version>
         <!-- mybatis-plus 半自动orm框架 -->
         <mybatis-plus.version>3.2.0</mybatis-plus.version>
-        <!-- mybatis-plus-generator 代码生成 -->
-        <mybatis-plus-generator.version>3.2.0</mybatis-plus-generator.version>
         <!-- dynamic-datasource 多数据源依赖 -->
         <dynamic-datasource.version>2.5.7</dynamic-datasource.version>
         <!-- p6spy 打印数据库日志 -->
@@ -70,6 +68,7 @@
         <minio.version>8.3.1</minio.version>
         <!--上传日志到 skywalking-->
         <apm-toolkit-logback-1.x.version>8.7.0</apm-toolkit-logback-1.x.version>
+        <!--docker 镜像配置-->
         <docker.jib.from.image>192.168.33.10:3000/library/openjdk8-skywalking:1.0.0</docker.jib.from.image>
         <docker.jib.auth.username>admin</docker.jib.auth.username>
         <docker.jib.auth.password>Harbor12345</docker.jib.auth.password>

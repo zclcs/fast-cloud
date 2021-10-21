@@ -14,16 +14,16 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 桶 Entity
+ * minio桶 Entity
  *
  * @author zclcs
- * @date 2021-10-18 10:37:09.922
+ * @date 2021-10-21 16:45:35.202
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("minio_bucket")
-@ApiModel(value = "MinioBucket对象", description = "桶")
+@ApiModel(value = "MinioBucket对象", description = "minio桶")
 public class MinioBucket extends Model<MinioBucket> {
 
     /**
@@ -37,6 +37,12 @@ public class MinioBucket extends Model<MinioBucket> {
      */
     @TableField("bucket_name")
     private String bucketName;
+
+    /**
+     * 桶权限
+     */
+    @TableField("bucket_policy")
+    private String bucketPolicy;
 
     /**
      * 创建时间

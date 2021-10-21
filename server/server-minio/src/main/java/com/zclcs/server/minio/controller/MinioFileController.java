@@ -9,6 +9,7 @@ import com.zclcs.common.core.exception.MyMinioException;
 import com.zclcs.common.core.utils.BaseRspUtil;
 import com.zclcs.server.minio.service.MinioFileService;
 import com.zclcs.server.minio.utils.MinioUtil;
+import io.minio.StatObjectResponse;
 import io.minio.errors.MinioException;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
@@ -93,13 +94,14 @@ public class MinioFileController {
     }
 
     @GetMapping("/preViewPicture/{fileId}")
-    @ApiOperation(value = "浏览图片文件")
+    @ApiOperation(value = "浏览图片或下载文件", notes = "用于权限不是读/写的桶")
     public void preViewPicture(@ApiParam(value = "文件id", required = true) @NotBlank(message = "{required}") @PathVariable("fileId") String fileId, HttpServletResponse response) throws Exception {
         MinioFileVo minioFile = minioFileService.findMinioFile(MinioFileVo.builder().id(fileId).build());
         if (minioFile == null) {
             throw new MyMinioException("文件不存在");
         }
-        response.setContentType("image/jpeg");
+        StatObjectResponse statObjectResponse = minioUtil.statObject(minioFile.getBucketName(), minioFile.getFileName());
+        response.setContentType(statObjectResponse.contentType());
         try (ServletOutputStream out = response.getOutputStream()) {
             InputStream stream = minioUtil.getObject(minioFile.getBucketName(), minioFile.getFileName());
             ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -115,7 +117,7 @@ public class MinioFileController {
     }
 
     @GetMapping("/download/{fileId}")
-    @ApiOperation(value = "下载文件")
+    @ApiOperation(value = "下载文件", notes = "用于权限不是读/写的桶")
     public ResponseEntity<byte[]> download(@ApiParam(value = "文件id", required = true) @NotBlank(message = "{required}") @PathVariable("fileId") String fileId) throws Exception {
         MinioFileVo minioFile = minioFileService.findMinioFile(MinioFileVo.builder().id(fileId).build());
         if (minioFile == null) {

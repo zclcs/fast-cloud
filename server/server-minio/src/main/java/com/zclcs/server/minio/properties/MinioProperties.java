@@ -32,4 +32,14 @@ public class MinioProperties {
      */
     private String domainName;
 
+    /**
+     * ip地址
+     */
+    private String host;
+
+    /**
+     * 端口
+     */
+    private String port;
+
 }

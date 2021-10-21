@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
+import com.zclcs.common.core.constant.MinioConstant;
 import com.zclcs.common.core.entity.minio.MinioFile;
 import com.zclcs.common.core.entity.minio.ao.MinioBucketAo;
 import com.zclcs.common.core.entity.minio.vo.FileUploadVo;
@@ -68,7 +69,7 @@ public class MinioFileServiceImpl extends ServiceImpl<MinioFileMapper, MinioFile
         Long bucketId;
         FileUploadVo fileUploadVo;
         try {
-            bucketId = minioBucketService.createMinioBucket(MinioBucketAo.builder().bucketName(defaultBucket).build());
+            bucketId = minioBucketService.createMinioBucket(MinioBucketAo.builder().bucketPolicy(MinioConstant.READ_WRITE).bucketName(defaultBucket).build());
             fileUploadVo = minioUtil.uploadFile(multipartFile, defaultBucket);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
