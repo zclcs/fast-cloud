@@ -1,19 +1,3 @@
-/*
- Navicat Premium Data Transfer
-
- Source Server         : localhost
- Source Server Type    : MySQL
- Source Server Version : 50735
- Source Host           : localhost:3306
- Source Schema         : nacos
-
- Target Server Type    : MySQL
- Target Server Version : 50735
- File Encoding         : 65001
-
- Date: 18/10/2021 17:10:30
-*/
-
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -42,7 +26,7 @@ CREATE TABLE `config_info`
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `uk_configinfo_datagrouptenant` (`data_id`, `group_id`, `tenant_id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 132
+  AUTO_INCREMENT = 126
   CHARACTER SET = utf8
   COLLATE = utf8_bin COMMENT = 'config_info'
   ROW_FORMAT = DYNAMIC;
@@ -82,9 +66,9 @@ VALUES (121, 'server-test.yaml', 'DEFAULT_GROUP',
         '', 'dev', '', '', '', 'yaml', '');
 INSERT INTO `config_info`
 VALUES (125, 'server-minio.yaml', 'DEFAULT_GROUP',
-        'server:\n  port: ${PORT_SERVER_MINIO:8204}\n\nspring:\n  aop:\n    proxy-target-class: true\n\n  jackson:\n    date-format: yyyy-MM-dd HH:mm:ss\n    time-zone: GMT+8\n\n  freemarker:\n    check-template-location: false\n\n  datasource:\n    dynamic:\n      p6spy: ${DATASOURCE_LOGGER_SQL_ENABLED:true}\n      hikari:\n        connection-timeout: 30000\n        max-lifetime: 1800000\n        max-pool-size: 15\n        min-idle: 5\n        connection-test-query: select 1\n        pool-name: MyHikariCP\n      primary: primary\n      datasource:\n        primary:\n          driver-class-name: ${DATASOURCE_DRIVER:com.mysql.cj.jdbc.Driver}\n          url: jdbc:${DATASOURCE_DB_TYPE:mysql}://${DATASOURCE_HOST:127.0.0.1}:${DATASOURCE_PORT:3306}/${DB_NAME_MINIO:cloud_minio}?${DATASOURCE_PARAM:useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai}\n          username: ${DATASOURCE_USERNAME:root}\n          password: ${DATASOURCE_PASSWORD:root}\n\nmybatis-plus:\n  type-aliases-package: com.zclcs.common.core.entity.minio\n  mapper-locations: classpath:com/zclcs/server/minio/mapper/*.xml\n  configuration:\n    jdbc-type-for-null: null\n  global-config:\n    banner: false\n\nsecurity:\n  oauth2:\n    resource:\n      id: ${spring.application.name}\n      user-info-uri: http://${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}/auth/user\n\nminio:\n  endpoint: ${ENDPOINT:http://192.168.33.10:9000}\n  root-user: ${ROOT_USER:minio}\n  root-password: ${ROOT_PASSWORD:minio123}\n  domain-name: ${DOMAIN_NAME}\n\nmy:\n  doc:\n    enable: true\n    title: ${spring.application.name}文档\n    base-package: com.zclcs.server.minio.controller\n    description: ${my.doc.title}\n    name: zclcs\n    email: 2371219112@qq.com\n    url: https://github.com/zclcs\n    version: 2.2-RELEASE\n\n  cloud:\n    security:\n      enable: true\n      anon-uris: /v2/api-docs,/v2/api-docs-ext\n      only-fetch-by-gateway: false\n\n  log:\n    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}\n\ntx-lcn:\n  client:\n    manager-address: ${TX_CLIENT_MANAGER_HOST:127.0.0.1}:${TX_CLIENT_MANAGER_PORT:8888}',
-        '84a273b70a15fad81f6d29497d1a9bc5', '2021-10-18 02:22:24', '2021-10-18 08:57:18', 'nacos', '0:0:0:0:0:0:0:1',
-        '', 'dev', '', '', '', 'yaml', '');
+        'server:\n  port: ${PORT_SERVER_MINIO:8204}\n\nspring:\n  aop:\n    proxy-target-class: true\n\n  jackson:\n    date-format: yyyy-MM-dd HH:mm:ss\n    time-zone: GMT+8\n\n  freemarker:\n    check-template-location: false\n\n  datasource:\n    dynamic:\n      p6spy: ${DATASOURCE_LOGGER_SQL_ENABLED:true}\n      hikari:\n        connection-timeout: 30000\n        max-lifetime: 1800000\n        max-pool-size: 15\n        min-idle: 5\n        connection-test-query: select 1\n        pool-name: MyHikariCP\n      primary: primary\n      datasource:\n        primary:\n          driver-class-name: ${DATASOURCE_DRIVER:com.mysql.cj.jdbc.Driver}\n          url: jdbc:${DATASOURCE_DB_TYPE:mysql}://${DATASOURCE_HOST:127.0.0.1}:${DATASOURCE_PORT:3306}/${DB_NAME_MINIO:cloud_minio}?${DATASOURCE_PARAM:useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai}\n          username: ${DATASOURCE_USERNAME:root}\n          password: ${DATASOURCE_PASSWORD:root}\n\nmybatis-plus:\n  type-aliases-package: com.zclcs.common.core.entity.minio\n  mapper-locations: classpath:com/zclcs/server/minio/mapper/*.xml\n  configuration:\n    jdbc-type-for-null: null\n  global-config:\n    banner: false\n\nsecurity:\n  oauth2:\n    resource:\n      id: ${spring.application.name}\n      user-info-uri: http://${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}/auth/user\n\nminio:\n  endpoint: ${ENDPOINT:http://192.168.33.10:9000}\n  root-user: ${ROOT_USER:minio}\n  root-password: ${ROOT_PASSWORD:minio123}\n  domain-name: ${DOMAIN_NAME:}\n  host: ${HOST:192.168.33.10}\n  port: ${PORT:9000}\n\nmy:\n  doc:\n    enable: true\n    title: ${spring.application.name}文档\n    base-package: com.zclcs.server.minio.controller\n    description: ${my.doc.title}\n    name: zclcs\n    email: 2371219112@qq.com\n    url: https://github.com/zclcs\n    version: 2.2-RELEASE\n\n  cloud:\n    security:\n      enable: true\n      anon-uris: /v2/api-docs,/v2/api-docs-ext\n      only-fetch-by-gateway: false\n\n  log:\n    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}\n\ntx-lcn:\n  client:\n    manager-address: ${TX_CLIENT_MANAGER_HOST:127.0.0.1}:${TX_CLIENT_MANAGER_PORT:8888}',
+        'd2cf4809ead5e74c2703ec946fba884c', '2021-10-18 02:22:24', '2021-10-21 04:17:22', 'nacos', '192.168.33.1', '',
+        'dev', '', '', '', 'yaml', '');
 
 -- ----------------------------
 -- Table structure for config_info_aggr
@@ -250,7 +234,7 @@ CREATE TABLE `his_config_info`
     INDEX `idx_gmt_modified` (`gmt_modified`) USING BTREE,
     INDEX `idx_did` (`data_id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 132
+  AUTO_INCREMENT = 4
   CHARACTER SET = utf8
   COLLATE = utf8_bin COMMENT = '多租户改造'
   ROW_FORMAT = DYNAMIC;
@@ -258,6 +242,21 @@ CREATE TABLE `his_config_info`
 -- ----------------------------
 -- Records of his_config_info
 -- ----------------------------
+INSERT INTO `his_config_info`
+VALUES (125, 1, 'server-minio.yaml', 'DEFAULT_GROUP', '',
+        'server:\n  port: ${PORT_SERVER_MINIO:8204}\n\nspring:\n  aop:\n    proxy-target-class: true\n\n  jackson:\n    date-format: yyyy-MM-dd HH:mm:ss\n    time-zone: GMT+8\n\n  freemarker:\n    check-template-location: false\n\n  datasource:\n    dynamic:\n      p6spy: ${DATASOURCE_LOGGER_SQL_ENABLED:true}\n      hikari:\n        connection-timeout: 30000\n        max-lifetime: 1800000\n        max-pool-size: 15\n        min-idle: 5\n        connection-test-query: select 1\n        pool-name: MyHikariCP\n      primary: primary\n      datasource:\n        primary:\n          driver-class-name: ${DATASOURCE_DRIVER:com.mysql.cj.jdbc.Driver}\n          url: jdbc:${DATASOURCE_DB_TYPE:mysql}://${DATASOURCE_HOST:127.0.0.1}:${DATASOURCE_PORT:3306}/${DB_NAME_MINIO:cloud_minio}?${DATASOURCE_PARAM:useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai}\n          username: ${DATASOURCE_USERNAME:root}\n          password: ${DATASOURCE_PASSWORD:root}\n\nmybatis-plus:\n  type-aliases-package: com.zclcs.common.core.entity.minio\n  mapper-locations: classpath:com/zclcs/server/minio/mapper/*.xml\n  configuration:\n    jdbc-type-for-null: null\n  global-config:\n    banner: false\n\nsecurity:\n  oauth2:\n    resource:\n      id: ${spring.application.name}\n      user-info-uri: http://${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}/auth/user\n\nminio:\n  endpoint: ${ENDPOINT:http://192.168.33.10:9000}\n  root-user: ${ROOT_USER:minio}\n  root-password: ${ROOT_PASSWORD:minio123}\n  domain-name: ${DOMAIN_NAME}\n\nmy:\n  doc:\n    enable: true\n    title: ${spring.application.name}文档\n    base-package: com.zclcs.server.minio.controller\n    description: ${my.doc.title}\n    name: zclcs\n    email: 2371219112@qq.com\n    url: https://github.com/zclcs\n    version: 2.2-RELEASE\n\n  cloud:\n    security:\n      enable: true\n      anon-uris: /v2/api-docs,/v2/api-docs-ext\n      only-fetch-by-gateway: false\n\n  log:\n    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}\n\ntx-lcn:\n  client:\n    manager-address: ${TX_CLIENT_MANAGER_HOST:127.0.0.1}:${TX_CLIENT_MANAGER_PORT:8888}',
+        '84a273b70a15fad81f6d29497d1a9bc5', '2021-10-21 17:06:44', '2021-10-21 04:06:44', 'nacos', '192.168.33.1', 'U',
+        'dev');
+INSERT INTO `his_config_info`
+VALUES (125, 2, 'server-minio.yaml', 'DEFAULT_GROUP', '',
+        'server:\n  port: ${PORT_SERVER_MINIO:8204}\n\nspring:\n  aop:\n    proxy-target-class: true\n\n  jackson:\n    date-format: yyyy-MM-dd HH:mm:ss\n    time-zone: GMT+8\n\n  freemarker:\n    check-template-location: false\n\n  datasource:\n    dynamic:\n      p6spy: ${DATASOURCE_LOGGER_SQL_ENABLED:true}\n      hikari:\n        connection-timeout: 30000\n        max-lifetime: 1800000\n        max-pool-size: 15\n        min-idle: 5\n        connection-test-query: select 1\n        pool-name: MyHikariCP\n      primary: primary\n      datasource:\n        primary:\n          driver-class-name: ${DATASOURCE_DRIVER:com.mysql.cj.jdbc.Driver}\n          url: jdbc:${DATASOURCE_DB_TYPE:mysql}://${DATASOURCE_HOST:127.0.0.1}:${DATASOURCE_PORT:3306}/${DB_NAME_MINIO:cloud_minio}?${DATASOURCE_PARAM:useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai}\n          username: ${DATASOURCE_USERNAME:root}\n          password: ${DATASOURCE_PASSWORD:root}\n\nmybatis-plus:\n  type-aliases-package: com.zclcs.common.core.entity.minio\n  mapper-locations: classpath:com/zclcs/server/minio/mapper/*.xml\n  configuration:\n    jdbc-type-for-null: null\n  global-config:\n    banner: false\n\nsecurity:\n  oauth2:\n    resource:\n      id: ${spring.application.name}\n      user-info-uri: http://${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}/auth/user\n\nminio:\n  endpoint: ${ENDPOINT:http://192.168.33.10:9000}\n  root-user: ${ROOT_USER:minio}\n  root-password: ${ROOT_PASSWORD:minio123}\n  domain-name: ${DOMAIN_NAME}\n\nmy:\n  doc:\n    enable: true\n    title: ${spring.application.name}文档\n    base-package: com.zclcs.server.minio.controller\n    description: ${my.doc.title}\n    name: zclcs\n    email: 2371219112@qq.com\n    url: https://github.com/zclcs\n    version: 2.2-RELEASE\n\n  cloud:\n    security:\n      enable: true\n      anon-uris: /v2/api-docs,/v2/api-docs-ext,/file/preViewPicture/**\n      only-fetch-by-gateway: false\n\n  log:\n    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}\n\ntx-lcn:\n  client:\n    manager-address: ${TX_CLIENT_MANAGER_HOST:127.0.0.1}:${TX_CLIENT_MANAGER_PORT:8888}',
+        '714016427065c01d3c2419e349de67f0', '2021-10-21 17:17:00', '2021-10-21 04:17:01', 'nacos', '192.168.33.1', 'U',
+        'dev');
+INSERT INTO `his_config_info`
+VALUES (125, 3, 'server-minio.yaml', 'DEFAULT_GROUP', '',
+        'server:\n  port: ${PORT_SERVER_MINIO:8204}\n\nspring:\n  aop:\n    proxy-target-class: true\n\n  jackson:\n    date-format: yyyy-MM-dd HH:mm:ss\n    time-zone: GMT+8\n\n  freemarker:\n    check-template-location: false\n\n  datasource:\n    dynamic:\n      p6spy: ${DATASOURCE_LOGGER_SQL_ENABLED:true}\n      hikari:\n        connection-timeout: 30000\n        max-lifetime: 1800000\n        max-pool-size: 15\n        min-idle: 5\n        connection-test-query: select 1\n        pool-name: MyHikariCP\n      primary: primary\n      datasource:\n        primary:\n          driver-class-name: ${DATASOURCE_DRIVER:com.mysql.cj.jdbc.Driver}\n          url: jdbc:${DATASOURCE_DB_TYPE:mysql}://${DATASOURCE_HOST:127.0.0.1}:${DATASOURCE_PORT:3306}/${DB_NAME_MINIO:cloud_minio}?${DATASOURCE_PARAM:useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai}\n          username: ${DATASOURCE_USERNAME:root}\n          password: ${DATASOURCE_PASSWORD:root}\n\nmybatis-plus:\n  type-aliases-package: com.zclcs.common.core.entity.minio\n  mapper-locations: classpath:com/zclcs/server/minio/mapper/*.xml\n  configuration:\n    jdbc-type-for-null: null\n  global-config:\n    banner: false\n\nsecurity:\n  oauth2:\n    resource:\n      id: ${spring.application.name}\n      user-info-uri: http://${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}/auth/user\n\nminio:\n  endpoint: ${ENDPOINT:http://192.168.33.10:9000}\n  root-user: ${ROOT_USER:minio}\n  root-password: ${ROOT_PASSWORD:minio123}\n  domain-name: ${DOMAIN_NAME}\n\nmy:\n  doc:\n    enable: true\n    title: ${spring.application.name}文档\n    base-package: com.zclcs.server.minio.controller\n    description: ${my.doc.title}\n    name: zclcs\n    email: 2371219112@qq.com\n    url: https://github.com/zclcs\n    version: 2.2-RELEASE\n\n  cloud:\n    security:\n      enable: true\n      anon-uris: /v2/api-docs,/v2/api-docs-ext\n      only-fetch-by-gateway: false\n\n  log:\n    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}\n\ntx-lcn:\n  client:\n    manager-address: ${TX_CLIENT_MANAGER_HOST:127.0.0.1}:${TX_CLIENT_MANAGER_PORT:8888}',
+        '84a273b70a15fad81f6d29497d1a9bc5', '2021-10-21 17:17:22', '2021-10-21 04:17:22', 'nacos', '192.168.33.1', 'U',
+        'dev');
 
 -- ----------------------------
 -- Table structure for permissions

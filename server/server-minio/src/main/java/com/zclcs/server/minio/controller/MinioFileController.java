@@ -75,7 +75,7 @@ public class MinioFileController {
     }
 
     @PostMapping
-    //@PreAuthorize("hasAuthority('file:add')")
+    @PreAuthorize("hasAuthority('file:add')")
     @ApiOperation(value = "新增文件")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "file", value = "文件", required = true, dataType = "__File"),
@@ -95,6 +95,7 @@ public class MinioFileController {
 
     @GetMapping("/preViewPicture/{fileId}")
     @ApiOperation(value = "浏览图片或下载文件", notes = "用于权限不是读/写的桶")
+    @PreAuthorize("hasAuthority('file:view')")
     public void preViewPicture(@ApiParam(value = "文件id", required = true) @NotBlank(message = "{required}") @PathVariable("fileId") String fileId, HttpServletResponse response) throws Exception {
         MinioFileVo minioFile = minioFileService.findMinioFile(MinioFileVo.builder().id(fileId).build());
         if (minioFile == null) {
@@ -118,6 +119,7 @@ public class MinioFileController {
 
     @GetMapping("/download/{fileId}")
     @ApiOperation(value = "下载文件", notes = "用于权限不是读/写的桶")
+    @PreAuthorize("hasAuthority('file:download')")
     public ResponseEntity<byte[]> download(@ApiParam(value = "文件id", required = true) @NotBlank(message = "{required}") @PathVariable("fileId") String fileId) throws Exception {
         MinioFileVo minioFile = minioFileService.findMinioFile(MinioFileVo.builder().id(fileId).build());
         if (minioFile == null) {
