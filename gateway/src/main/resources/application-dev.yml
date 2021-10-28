@@ -15,7 +15,7 @@ spring:
         - id: ${SERVICE_NAME_AUTH:auth}
           uri: lb://${SERVICE_NAME_AUTH:auth}
           predicates:
-            - Path=/auth/**
+            - Path=${SERVICE_PATH_AUTH:/auth}/**
           filters:
             - name: Hystrix
               args:
@@ -24,7 +24,7 @@ spring:
         - id: ${SERVICE_NAME_SERVER_SYSTEM:server-system}
           uri: lb://${SERVICE_NAME_SERVER_SYSTEM:server-system}
           predicates:
-            - Path=/system/**
+            - Path=${SERVICE_PATH_SERVER_SYSTEM:/system}/**
           filters:
             - name: Hystrix
               args:
@@ -33,7 +33,7 @@ spring:
         - id: ${SERVICE_NAME_SERVER_GENERATOR:server-generator}
           uri: lb://${SERVICE_NAME_SERVER_GENERATOR:server-generator}
           predicates:
-            - Path=/generator/**
+            - Path=${SERVICE_PATH_SERVER_GENERATOR:/generator}/**
           filters:
             - name: Hystrix
               args:
@@ -42,7 +42,7 @@ spring:
         - id: ${SERVICE_NAME_SERVER_TEST:server-test}
           uri: lb://${SERVICE_NAME_SERVER_TEST:server-test}
           predicates:
-            - Path=/test/**
+            - Path=${SERVICE_PATH_SERVER_TEST:/test}/**
           filters:
             - name: Hystrix
               args:
@@ -51,7 +51,7 @@ spring:
         - id: ${SERVICE_NAME_SERVER_MINIO:server-minio}
           uri: lb://${SERVICE_NAME_SERVER_MINIO:server-minio}
           predicates:
-            - Path=/minio/**
+            - Path=${SERVICE_PATH_SERVER_MINIO:/minio}/**
           filters:
             - name: Hystrix
               args:
@@ -61,7 +61,6 @@ spring:
         use404: true
       default-filters:
         - StripPrefix=1
-        - MyDocGatewayHeaderFilter
 
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.mongo.MongoReactiveAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoReactiveRepositoriesAutoConfiguration,org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration
@@ -92,11 +91,6 @@ my:
     jwt:
       secret: 123456
       expiration: 36000
-
-  doc:
-    gateway:
-      enable: true
-      resources: ${DOC_GATEWAY_RESOURCES:auth,server-system,server-generator,server-test}
 
   log:
     enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}

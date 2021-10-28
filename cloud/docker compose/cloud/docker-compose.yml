@@ -13,8 +13,6 @@ services:
       - ./log/gateway/skywalking:/agent/logs
       - ${CLOUD_AGENT_CONFIG}
     env_file: .env
-    ports:
-      - "8301:8301"
   auth:
     image: ${CLOUD_DEPOSITORY_URL}/auth:${CLOUD_DEPOSITORY_TAG}
     container_name: auth
@@ -103,6 +101,18 @@ services:
     env_file: .env
     depends_on:
       - tx-manager
+  server-knife4j:
+    image: ${CLOUD_DEPOSITORY_URL}/server-knife4j:${CLOUD_DEPOSITORY_TAG}
+    container_name: server-knife4j
+    networks:
+      - web_net
+    environment:
+      JAVA_TOOL_OPTIONS: "${SERVER_KNIFE4J_JAVA_OPS}"
+    volumes:
+      - ./log/server-knife4j:/log/server-knife4j
+    env_file: .env
+    ports:
+      - "8401:8401"
   nginx:
     image: nginx:1.21.3
     container_name: nginx-cloud

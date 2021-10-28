@@ -23,7 +23,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value = "SystemLogVo", description = "用户操作日志表")
+@ApiModel(value = "SystemLogAo", description = "用户操作日志表")
 public class SystemLogAo implements Serializable {
 
     private static final long serialVersionUID = 1L;

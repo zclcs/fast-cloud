@@ -1,8 +1,6 @@
 package com.zclcs.common.doc.starter.configure;
 
-
-import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
-import com.google.common.collect.Lists;
+import com.github.xiaoymin.knife4j.core.util.CollectionUtils;
 import com.zclcs.common.doc.starter.properties.MyDocProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -18,7 +16,7 @@ import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 import java.util.List;
 
@@ -26,8 +24,7 @@ import java.util.List;
  * @author zclcs
  */
 @Configuration
-@EnableSwagger2
-@EnableKnife4j
+@EnableSwagger2WebMvc
 @Import(BeanValidatorPluginsConfiguration.class)
 @EnableConfigurationProperties(MyDocProperties.class)
 @ConditionalOnProperty(value = "my.doc.enable", havingValue = "true", matchIfMissing = true)
@@ -47,8 +44,7 @@ public class MyDocAutoConfigure {
                 .select()
                 .apis(RequestHandlerSelectors.basePackage(properties.getBasePackage()))
                 .paths(PathSelectors.any())
-
-                .build().securityContexts(Lists.newArrayList(securityContext())).securitySchemes(Lists.<SecurityScheme>newArrayList(apiKey()));
+                .build().securityContexts(CollectionUtils.newArrayList(securityContext())).securitySchemes(CollectionUtils.<SecurityScheme>newArrayList(apiKey()));
     }
 
     private ApiInfo groupApiInfo() {
@@ -83,6 +79,6 @@ public class MyDocAutoConfigure {
         AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
-        return Lists.newArrayList(new SecurityReference("BearerToken", authorizationScopes));
+        return CollectionUtils.newArrayList(new SecurityReference("BearerToken", authorizationScopes));
     }
 }

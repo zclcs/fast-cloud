@@ -40,11 +40,6 @@
         </dependency>
         <dependency>
             <groupId>com.zclcs</groupId>
-            <artifactId>common-doc-gateway-starter</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.zclcs</groupId>
             <artifactId>common-redis-starter</artifactId>
             <version>${project.version}</version>
         </dependency>
