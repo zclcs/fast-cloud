@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zclcs.server.dict.mapper.DictTableMapper">
+
+    <sql id="baseSql">
+        select dt.id, dt.dict_name_id, dt.code, dt.title, dt.remark, dtn.dict_name, dtn.dict_title
+        from dict_table dt
+                 inner join dict_table_name dtn on dt.dict_name_id = dtn.id
+            ${ew.customSqlSegment}
+    </sql>
+    <select id="findPageVo" resultType="com.zclcs.common.core.entity.dict.vo.DictTableVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="findListVo" resultType="com.zclcs.common.core.entity.dict.vo.DictTableVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="findOneVo" resultType="com.zclcs.common.core.entity.dict.vo.DictTableVo">
+        <include refid="baseSql"/>
+    </select>
+</mapper>

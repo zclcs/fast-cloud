@@ -14,6 +14,7 @@
         <module>server-generator</module>
         <module>server-test</module>
         <module>server-minio</module>
+        <module>server-dict</module>
     </modules>
 
     <artifactId>server</artifactId>

@@ -6,7 +6,6 @@ import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
 import com.zclcs.common.core.base.BaseRsp;
 import com.zclcs.common.core.constant.GeneratorConstant;
-import com.zclcs.common.core.constant.SwaggerParamTypeConstant;
 import com.zclcs.common.core.entity.generator.Column;
 import com.zclcs.common.core.entity.generator.GeneratorConfig;
 import com.zclcs.common.core.entity.generator.Table;
@@ -18,12 +17,13 @@ import com.zclcs.common.core.utils.BaseUtil;
 import com.zclcs.server.generator.helper.GeneratorHelper;
 import com.zclcs.server.generator.service.GeneratorConfigService;
 import com.zclcs.server.generator.service.GeneratorService;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.validation.annotation.Validated;
@@ -81,23 +81,21 @@ public class GeneratorController {
     @GetMapping("tables")
     @PreAuthorize("hasAuthority('gen:generate')")
     @ApiOperation(value = "查询代码生成表")
-    public BaseRsp<BasePage<Table>> tablesInfo(@ApiParam(value = "表名") String name, @ApiParam(value = "库名") String datasource, BasePageAo request) {
+    public BaseRsp<BasePage<Table>> tablesInfo(@ApiParam(value = "表名") String name,
+                                               @ApiParam(value = "库名") String datasource,
+                                               BasePageAo request) {
         BasePage<Table> tables = generatorService.getTables(name, request, GeneratorConstant.DATABASE_TYPE, datasource);
         return BaseRspUtil.data(tables);
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('gen:generate:gen')")
-    @ApiOperation(value = "生成代码", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "name", value = "表名", required = true, paramType = SwaggerParamTypeConstant.QUERY),
-            @ApiImplicitParam(name = "datasource", value = "库名", required = true, paramType = SwaggerParamTypeConstant.QUERY),
-            @ApiImplicitParam(name = "remark", value = "对象中文名", paramType = SwaggerParamTypeConstant.QUERY)
-    })
-    public void generate(@NotBlank(message = "{required}") String name,
-                         @NotBlank(message = "{required}") String datasource,
-                         @NotBlank(message = "{required}") String objectName,
-                         String remark, HttpServletResponse response) throws Exception {
+    @ApiOperation(value = "生成代码")
+    public void generate(@ApiParam(value = "表名", required = true) @NotBlank(message = "{required}") String name,
+                         @ApiParam(value = "库名", required = true) @NotBlank(message = "{required}") String datasource,
+                         @ApiParam(value = "对象中文名", required = true) @NotBlank(message = "{required}") String objectName,
+                         @ApiParam(value = "备注") String remark,
+                         HttpServletResponse response) throws Exception {
         GeneratorConfigVo generatorConfigVo = generatorConfigService.findGeneratorConfig();
         if (generatorConfigVo == null) {
             throw new MyException("代码生成配置为空");

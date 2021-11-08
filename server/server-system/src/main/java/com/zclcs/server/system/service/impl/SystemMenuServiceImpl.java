@@ -63,7 +63,7 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
         List<MenuTree> trees = new ArrayList<>();
         buildTrees(trees, menus);
 
-        if (StringUtils.equals(menu.getType(), SystemMenuVo.TYPE_BUTTON)) {
+        if (StringUtils.equals(menu.getType(), SystemMenuVo.TYPE_BUTTON) || StrUtil.isNotBlank(menu.getMenuName())) {
             return trees;
         } else {
             return BaseTreeUtil.build(trees);

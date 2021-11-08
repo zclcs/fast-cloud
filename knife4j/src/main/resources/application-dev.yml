@@ -27,3 +27,7 @@ knife4j:
         uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}
         location: ${SERVICE_PATH_SERVER_MINIO:/minio}/v2/api-docs?group=default
         swaggerVersion: 2.0
+      - name: 字典服务
+        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}
+        location: ${SERVICE_PATH_SERVER_DICT:/dict}/v2/api-docs?group=default
+        swaggerVersion: 2.0

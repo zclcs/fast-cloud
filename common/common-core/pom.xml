@@ -115,6 +115,11 @@
             <artifactId>common-doc</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.houkunlin</groupId>
+            <artifactId>system-dict-starter</artifactId>
+            <version>${system-dict-starter.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

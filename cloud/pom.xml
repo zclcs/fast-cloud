@@ -58,7 +58,7 @@
         <!-- jwt token 生成 -->
         <jjwt.version>0.9.1</jjwt.version>
         <!-- knife4j 接口文档 -->
-        <knife4j.version>2.0.8</knife4j.version>
+        <knife4j.version>2.0.9</knife4j.version>
         <!-- swagger 文档 -->
         <swagger.version>1.5.21</swagger.version>
         <!--hu tool 工具类-->
@@ -67,6 +67,10 @@
         <minio.version>8.3.1</minio.version>
         <!--上传日志到 skywalking-->
         <apm-toolkit-logback-1.x.version>8.7.0</apm-toolkit-logback-1.x.version>
+        <!--系统字典-->
+        <system-dict-starter.version>1.4.5</system-dict-starter.version>
+        <!--okhttp-->
+        <okhttp.version>4.9.0</okhttp.version>
         <!--docker 镜像配置-->
         <docker.jib.from.image>192.168.33.10:3000/library/openjdk8-skywalking:1.0.0</docker.jib.from.image>
         <docker.jib.auth.username>admin</docker.jib.auth.username>

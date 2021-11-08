@@ -70,4 +70,9 @@ public interface MyConstant {
      */
     String JSON_UTF8 = "application/json;charset=UTF-8";
 
+    /**
+     * http contentType
+     */
+    Long TOP_PARENT_ID = 0L;
+
 }

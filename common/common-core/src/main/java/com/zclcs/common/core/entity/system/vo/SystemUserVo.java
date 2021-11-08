@@ -1,5 +1,6 @@
 package com.zclcs.common.core.entity.system.vo;
 
+import com.houkunlin.system.dict.starter.json.DictText;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -76,6 +77,7 @@ public class SystemUserVo {
     private String mobile;
 
     @ApiModelProperty(value = "状态 0锁定 1有效")
+    @DictText("user_status")
     private String status;
 
     @ApiModelProperty(value = "创建时间")
@@ -88,9 +90,11 @@ public class SystemUserVo {
     private Date lastLoginTime;
 
     @ApiModelProperty(value = "性别 0男 1女 2保密")
+    @DictText("user_gender")
     private String gender;
 
     @ApiModelProperty(value = "是否开启tab，0关闭 1开启")
+    @DictText("user_is_tab")
     private String isTab;
 
     @ApiModelProperty(value = "主题")

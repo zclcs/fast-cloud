@@ -57,6 +57,15 @@ spring:
               args:
                 name: miniofallback
                 fallbackUri: forward:/fallback/${SERVICE_NAME_SERVER_MINIO:server-minio}
+        - id: ${SERVICE_NAME_SERVER_DICT:server-dict}
+          uri: lb://${SERVICE_NAME_SERVER_DICT:server-dict}
+          predicates:
+            - Path=${SERVICE_PATH_SERVER_DICT:/dict}/**
+          filters:
+            - name: Hystrix
+              args:
+                name: miniofallback
+                fallbackUri: forward:/fallback/${SERVICE_NAME_SERVER_DICT:server-dict}
       loadbalancer:
         use404: true
       default-filters:

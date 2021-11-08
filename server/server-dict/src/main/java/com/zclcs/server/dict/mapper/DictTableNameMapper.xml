@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zclcs.server.dict.mapper.DictTableNameMapper">
+
+    <sql id="baseSql">
+        select dtn.id, dtn.dict_name, dtn.dict_title, dtn.sort, dtn.type, dtn.remark
+        from dict_table_name dtn
+            ${ew.customSqlSegment}
+    </sql>
+    <select id="findPageVo" resultType="com.zclcs.common.core.entity.dict.vo.DictTableNameVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="findListVo" resultType="com.zclcs.common.core.entity.dict.vo.DictTableNameVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="findOneVo" resultType="com.zclcs.common.core.entity.dict.vo.DictTableNameVo">
+        <include refid="baseSql"/>
+    </select>
+</mapper>

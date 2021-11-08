@@ -81,7 +81,6 @@ my:
   doc:
     enable: true
     title: ${spring.application.name}文档
-    base-package: com.zclcs.auth.controller
     description: ${my.doc.title}
     name: zclcs
     email: 2371219112@qq.com

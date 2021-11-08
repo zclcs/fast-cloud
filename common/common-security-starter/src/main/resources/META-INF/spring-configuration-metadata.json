@@ -8,12 +8,6 @@
   ],
   "properties": [
     {
-      "name": "my.doc.base-package",
-      "type": "java.lang.String",
-      "description": "接口扫描路径，如Controller路径",
-      "sourceType": "com.zclcs.common.doc.starter.properties.MyDocProperties"
-    },
-    {
       "name": "my.doc.description",
       "type": "java.lang.String",
       "description": "文档描述",

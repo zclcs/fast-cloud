@@ -16,6 +16,7 @@ public class DeptTree extends Tree<SystemDeptVo> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private Boolean harPar;
     private Double orderNum;
     private Date createTime;
 }

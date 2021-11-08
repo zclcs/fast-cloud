@@ -1,0 +1,95 @@
+server:
+  port: ${PORT_SERVER_DICT:8205}
+
+spring:
+  aop:
+    proxy-target-class: true
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+  freemarker:
+    check-template-location: false
+
+  datasource:
+    dynamic:
+      p6spy: ${DATASOURCE_LOGGER_SQL_ENABLED:true}
+      hikari:
+        connection-timeout: 30000
+        max-lifetime: 1800000
+        max-pool-size: 15
+        min-idle: 5
+        connection-test-query: select 1
+        pool-name: MyHikariCP
+      primary: primary
+      datasource:
+        primary:
+          driver-class-name: ${DATASOURCE_DRIVER:com.mysql.cj.jdbc.Driver}
+          url: jdbc:${DATASOURCE_DB_TYPE:mysql}://${DATASOURCE_HOST:127.0.0.1}:${DATASOURCE_PORT:3306}/${DB_NAME_DICT:cloud_dict}?${DATASOURCE_PARAM:useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai}
+          username: ${DATASOURCE_USERNAME:root}
+          password: ${DATASOURCE_PASSWORD:root}
+
+  redis:
+    database: ${REDIS_DICT_DATABASE:1}
+    host: ${REDIS_HOST:127.0.0.1}
+    port: ${REDIS_PORT:6379}
+    lettuce:
+      pool:
+        min-idle: 8
+        max-idle: 500
+        max-active: 2000
+        max-wait: 10000
+    timeout: 5000
+
+system:
+  dict:
+    mq-type: none
+    text-value-default-null: true
+    on-boot-refresh-dict: true
+    cache:
+      enabled: true
+      maximum-size: 500
+      initial-capacity: 50
+      duration: 30s
+      miss-num: 50
+    controller:
+      enabled: true
+      prefix: /cache
+
+mybatis-plus:
+  type-aliases-package: com.zclcs.common.core.entity.dict
+  mapper-locations: classpath:com/zclcs/server/dict/mapper/*.xml
+  configuration:
+    jdbc-type-for-null: null
+  global-config:
+    banner: false
+
+security:
+  oauth2:
+    resource:
+      id: ${spring.application.name}
+      user-info-uri: http://${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}/auth/user
+
+my:
+  doc:
+    enable: true
+    title: ${spring.application.name}文档
+    description: ${my.doc.title}
+    name: zclcs
+    email: 2371219112@qq.com
+    url: https://github.com/zclcs
+    version: 2.2-RELEASE
+
+  cloud:
+    security:
+      enable: true
+      anon-uris: /v2/api-docs,/v2/api-docs-ext
+      only-fetch-by-gateway: false
+
+  log:
+    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}
+
+tx-lcn:
+  client:
+    manager-address: ${TX_CLIENT_MANAGER_HOST:127.0.0.1}:${TX_CLIENT_MANAGER_PORT:8888}

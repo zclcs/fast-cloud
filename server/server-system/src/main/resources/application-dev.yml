@@ -30,6 +30,18 @@ spring:
           username: ${DATASOURCE_USERNAME:root}
           password: ${DATASOURCE_PASSWORD:root}
 
+  redis:
+    database: ${REDIS_DICT_DATABASE:1}
+    host: ${REDIS_HOST:127.0.0.1}
+    port: ${REDIS_PORT:6379}
+    lettuce:
+      pool:
+        min-idle: 8
+        max-idle: 500
+        max-active: 2000
+        max-wait: 10000
+    timeout: 5000
+
 mybatis-plus:
   type-aliases-package: com.zclcs.common.core.entity.system
   mapper-locations: classpath:com/zclcs/server/system/mapper/*.xml
@@ -48,7 +60,6 @@ my:
   doc:
     enable: true
     title: ${spring.application.name}文档
-    base-package: com.zclcs.server.system.controller
     description: ${my.doc.title}
     name: zclcs
     email: 2371219112@qq.com

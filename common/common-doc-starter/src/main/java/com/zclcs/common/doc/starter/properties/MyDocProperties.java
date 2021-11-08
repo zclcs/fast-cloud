@@ -13,10 +13,6 @@ public class MyDocProperties {
      */
     private Boolean enable = true;
     /**
-     * 接口扫描路径，如Controller路径
-     */
-    private String basePackage;
-    /**
      * 文档标题
      */
     private String title;
@@ -60,14 +56,6 @@ public class MyDocProperties {
      * 版本
      */
     private String version;
-
-    public String getBasePackage() {
-        return basePackage;
-    }
-
-    public void setBasePackage(String basePackage) {
-        this.basePackage = basePackage;
-    }
 
     public String getTitle() {
         return title;
@@ -169,7 +157,6 @@ public class MyDocProperties {
     public String toString() {
         return "MyDocProperties{" +
                 "enable=" + enable +
-                ", basePackage='" + basePackage + '\'' +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", descriptionColor='" + descriptionColor + '\'' +

@@ -2,6 +2,7 @@ package com.zclcs.common.doc.starter.configure;
 
 import com.github.xiaoymin.knife4j.core.util.CollectionUtils;
 import com.zclcs.common.doc.starter.properties.MyDocProperties;
+import io.swagger.annotations.Api;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -42,7 +43,7 @@ public class MyDocAutoConfigure {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(groupApiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage(properties.getBasePackage()))
+                .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))
                 .paths(PathSelectors.any())
                 .build().securityContexts(CollectionUtils.newArrayList(securityContext())).securitySchemes(CollectionUtils.<SecurityScheme>newArrayList(apiKey()));
     }

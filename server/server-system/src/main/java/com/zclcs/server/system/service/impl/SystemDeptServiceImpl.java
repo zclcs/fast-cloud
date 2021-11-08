@@ -2,6 +2,7 @@ package com.zclcs.server.system.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -9,6 +10,7 @@ import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
+import com.zclcs.common.core.constant.MyConstant;
 import com.zclcs.common.core.entity.DeptTree;
 import com.zclcs.common.core.entity.Tree;
 import com.zclcs.common.core.entity.system.SystemDept;
@@ -79,7 +81,11 @@ public class SystemDeptServiceImpl extends ServiceImpl<SystemDeptMapper, SystemD
         List<SystemDeptVo> depts = findDeptList(dept);
         List<DeptTree> trees = new ArrayList<>();
         buildTrees(trees, depts);
-        return (List<DeptTree>) BaseTreeUtil.build(trees);
+        if (StrUtil.isNotBlank(dept.getDeptName())) {
+            return trees;
+        } else {
+            return (List<DeptTree>) BaseTreeUtil.build(trees);
+        }
     }
 
     @Override
@@ -88,16 +94,6 @@ public class SystemDeptServiceImpl extends ServiceImpl<SystemDeptMapper, SystemD
         deptIds.add(deptId);
         getChild(deptIds, this.lambdaQuery().eq(SystemDept::getDeptId, deptId).one());
         return deptIds;
-    }
-
-    private void getChild(List<Long> allDeptId, SystemDept systemDept) {
-        List<SystemDept> one = this.lambdaQuery().eq(SystemDept::getParentId, systemDept.getDeptId()).list();
-        if (CollUtil.isNotEmpty(one)) {
-            for (SystemDept dept : one) {
-                allDeptId.add(dept.getDeptId());
-                getChild(allDeptId, dept);
-            }
-        }
     }
 
     @Override
@@ -127,7 +123,13 @@ public class SystemDeptServiceImpl extends ServiceImpl<SystemDeptMapper, SystemD
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteDept(List<Long> deptIds) {
-        this.delete(deptIds);
+        List<Long> allDeptIds = new ArrayList<>(deptIds);
+        for (Long id : deptIds) {
+            List<Long> childDeptIds = getChildDeptId(id);
+            allDeptIds.addAll(childDeptIds);
+        }
+        ArrayList<Long> distinct = CollectionUtil.distinct(allDeptIds);
+        this.delete(distinct);
     }
 
     private void buildTrees(List<DeptTree> trees, List<SystemDeptVo> deptVos) {
@@ -135,11 +137,22 @@ public class SystemDeptServiceImpl extends ServiceImpl<SystemDeptMapper, SystemD
             DeptTree tree = new DeptTree();
             tree.setId(dept.getDeptId());
             tree.setParentId(dept.getParentId());
+            tree.setHarPar(!dept.getParentId().equals(MyConstant.TOP_PARENT_ID));
             tree.setLabel(dept.getDeptName());
             tree.setOrderNum(dept.getOrderNum());
             tree.setCreateTime(dept.getCreateTime());
             trees.add(tree);
         });
+    }
+
+    private void getChild(List<Long> allDeptId, SystemDept systemDept) {
+        List<SystemDept> one = this.lambdaQuery().eq(SystemDept::getParentId, systemDept.getDeptId()).list();
+        if (CollUtil.isNotEmpty(one)) {
+            for (SystemDept dept : one) {
+                allDeptId.add(dept.getDeptId());
+                getChild(allDeptId, dept);
+            }
+        }
     }
 
     private void delete(List<Long> deptIds) {

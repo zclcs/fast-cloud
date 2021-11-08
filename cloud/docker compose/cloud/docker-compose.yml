@@ -101,18 +101,28 @@ services:
     env_file: .env
     depends_on:
       - tx-manager
-  server-knife4j:
-    image: ${CLOUD_DEPOSITORY_URL}/server-knife4j:${CLOUD_DEPOSITORY_TAG}
-    container_name: server-knife4j
+  knife4j:
+    image: ${CLOUD_DEPOSITORY_URL}/knife4j:${CLOUD_DEPOSITORY_TAG}
+    container_name: knife4j
     networks:
       - web_net
     environment:
       JAVA_TOOL_OPTIONS: "${SERVER_KNIFE4J_JAVA_OPS}"
     volumes:
-      - ./log/server-knife4j:/log/server-knife4j
+      - ./log/knife4j:/log/knife4j
     env_file: .env
     ports:
       - "8401:8401"
+  server-dict:
+    image: ${CLOUD_DEPOSITORY_URL}/server-dict:${CLOUD_DEPOSITORY_TAG}
+    container_name: server-dict
+    networks:
+      - web_net
+    environment:
+      JAVA_TOOL_OPTIONS: "${SERVER_DICT_JAVA_OPS}"
+    volumes:
+      - ./log/server-dict:/log/server-dict
+    env_file: .env
   nginx:
     image: nginx:1.21.3
     container_name: nginx-cloud

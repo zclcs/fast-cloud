@@ -1,5 +1,6 @@
 package com.zclcs.common.core.entity.system.vo;
 
+import com.houkunlin.system.dict.starter.json.DictText;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -79,19 +80,24 @@ public class SystemMenuVo implements Serializable {
     @ApiModelProperty(value = "图标")
     private String icon;
 
-    @ApiModelProperty(value = "类型 0菜单 1按钮")
+    @ApiModelProperty(value = "类型 0菜单 1按钮 2目录")
+    @DictText("menu_type")
     private String type;
 
     @ApiModelProperty(value = "是否隐藏菜单 1是 0否")
+    @DictText("yes_no")
     private String hideMenu;
 
     @ApiModelProperty(value = "是否忽略KeepAlive缓存 1是 0否")
+    @DictText("yes_no")
     private String ignoreKeepAlive;
 
     @ApiModelProperty(value = "隐藏该路由在面包屑上面的显示 1是 0否")
+    @DictText("yes_no")
     private String hideBreadcrumb;
 
     @ApiModelProperty(value = "隐藏所有子菜单 1是 0否")
+    @DictText("yes_no")
     private String hideChildrenInMenu;
 
     @ApiModelProperty(value = "当前激活的菜单。用于配置详情页时左侧激活的菜单路径")

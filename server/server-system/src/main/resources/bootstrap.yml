@@ -13,6 +13,10 @@ spring:
         group: DEFAULT_GROUP
         prefix: ${SERVICE_NAME_SERVER_SYSTEM:server-system}
         file-extension: yaml
+        ext-config:
+          - data-id: dict.yaml
+            group: DEFAULT_GROUP
+            refresh: true
       discovery:
         server-addr: ${NACOS_HOST:127.0.0.1}:${NACOS_PORT:8848}
         namespace: ${NACOS_NAMESPACE:dev}
