@@ -68,7 +68,7 @@
         <!--上传日志到 skywalking-->
         <apm-toolkit-logback-1.x.version>8.7.0</apm-toolkit-logback-1.x.version>
         <!--系统字典-->
-        <system-dict-starter.version>1.4.5</system-dict-starter.version>
+        <system-dict-starter.version>1.4.5-BUILD-SNAPSHOT</system-dict-starter.version>
         <!--okhttp-->
         <okhttp.version>4.9.0</okhttp.version>
         <!--docker 镜像配置-->
@@ -78,6 +78,13 @@
         <docker.jib.to.image>192.168.33.10:3000/cloud</docker.jib.to.image>
         <image.version>1.1-SNAPSHOT</image.version>
     </properties>
+
+    <repositories>
+        <repository>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+            <id>sonatype</id>
+        </repository>
+    </repositories>
 
     <dependencyManagement>
         <dependencies>

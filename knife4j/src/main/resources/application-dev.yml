@@ -7,27 +7,27 @@ knife4j:
   cloud:
     enable: true
     routes:
-      - name: 鉴权服务
+      - name: ${SERVICE_NAME_AUTH:auth}
         uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}
         location: ${SERVICE_PATH_AUTH:/auth}/v2/api-docs?group=default
         swaggerVersion: 2.0
-      - name: 系统服务
+      - name: ${SERVICE_NAME_SERVER_SYSTEM:server-system}
         uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}
         location: ${SERVICE_PATH_SERVER_SYSTEM:/system}/v2/api-docs?group=default
         swaggerVersion: 2.0
-      - name: 快速开发服务
+      - name: ${SERVICE_NAME_SERVER_GENERATOR:server-generator}
         uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}
         location: ${SERVICE_PATH_SERVER_GENERATOR:/generator}/v2/api-docs?group=default
         swaggerVersion: 2.0
-      - name: 测试服务
+      - name: ${SERVICE_NAME_SERVER_TEST:server-test}
         uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}
         location: ${SERVICE_PATH_SERVER_TEST:/test}/v2/api-docs?group=default
         swaggerVersion: 2.0
-      - name: 文件服务
+      - name: ${SERVICE_NAME_SERVER_MINIO:server-minio}
         uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}
         location: ${SERVICE_PATH_SERVER_MINIO:/minio}/v2/api-docs?group=default
         swaggerVersion: 2.0
-      - name: 字典服务
+      - name: ${SERVICE_NAME_SERVER_DICT:server-dict}
         uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}
         location: ${SERVICE_PATH_SERVER_DICT:/dict}/v2/api-docs?group=default
         swaggerVersion: 2.0
