@@ -3,7 +3,6 @@ package com.zclcs.server.dict.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.houkunlin.system.dict.starter.bean.DictValueVo;
@@ -76,7 +75,6 @@ public class DictTableServiceImpl extends ServiceImpl<DictTableMapper, DictTable
         DictTable dictTable = new DictTable();
         BeanUtil.copyProperties(dictTableAo, dictTable);
         this.save(dictTable);
-        // TODO: 刷新只会刷新 ·dict:v· 的值 应该连带 ·dict:t· 一起刷新
         refreshDictValue(dictTable.getId());
     }
 
@@ -86,7 +84,6 @@ public class DictTableServiceImpl extends ServiceImpl<DictTableMapper, DictTable
         DictTable dictTable = new DictTable();
         BeanUtil.copyProperties(dictTableAo, dictTable);
         this.updateById(dictTable);
-        // TODO: 刷新只会刷新 ·dict:v· 的值 应该连带 ·dict:t· 一起刷新
         refreshDictValue(dictTable.getId());
     }
 
@@ -95,7 +92,6 @@ public class DictTableServiceImpl extends ServiceImpl<DictTableMapper, DictTable
     public void deleteDictTable(List<Long> ids) {
         List<DictTableVo> dictTableList = this.findDictTableList(DictTableVo.builder().ids(ids).build());
         this.removeByIds(ids);
-        // TODO: 刷新只会刷新 ·dict:v· 的值 应该连带 ·dict:t· 一起刷新
         deleteDictValue(dictTableList);
     }
 
@@ -105,7 +101,6 @@ public class DictTableServiceImpl extends ServiceImpl<DictTableMapper, DictTable
         List<DictTableVo> dictTableList = this.findDictTableList(DictTableVo.builder().dictNameIds(ids).build());
         List<Long> tableId = dictTableList.stream().map(DictTableVo::getId).collect(Collectors.toList());
         this.removeByIds(tableId);
-        // TODO: 刷新只会刷新 ·dict:v· 的值 应该连带 ·dict:t· 一起刷新
         deleteDictValue(dictTableList);
     }
 
@@ -128,7 +123,6 @@ public class DictTableServiceImpl extends ServiceImpl<DictTableMapper, DictTable
                     .build();
             dictValueVos.add(dictValueVo);
         }
-        log.error(JSONUtil.toJsonStr(dictValueVos));
         dictProvider.refreshDictListCache(dictValueVos);
     }
 }

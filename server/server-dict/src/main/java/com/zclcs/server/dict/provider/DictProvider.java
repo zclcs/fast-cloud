@@ -1,6 +1,5 @@
 package com.zclcs.server.dict.provider;
 
-import cn.hutool.core.collection.CollectionUtil;
 import com.houkunlin.system.dict.starter.bean.DictTypeVo;
 import com.houkunlin.system.dict.starter.bean.DictValueVo;
 import com.houkunlin.system.dict.starter.notice.RefreshDictEvent;
@@ -38,8 +37,7 @@ public class DictProvider {
      * @param dictValueVos 所有字典项
      */
     public void refreshDictListCache(List<DictValueVo> dictValueVos) {
-        Iterable<DictValueVo> dictValueVoIterable = CollectionUtil.asIterable(dictValueVos.iterator());
-        publisher.publishEvent(new RefreshDictValueEvent(dictValueVoIterable));
+        publisher.publishEvent(new RefreshDictValueEvent(dictValueVos));
     }
 
     /**

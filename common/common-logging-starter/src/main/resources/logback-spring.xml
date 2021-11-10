@@ -85,8 +85,8 @@
     <!--屏蔽 nacos包下的warn级别以上的日志 -->
     <logger name="com.alibaba.nacos.client.naming" level="warn" additivity="false"/>
 
-    <!--屏蔽 nacos包下的warn级别以上的日志 -->
-    <logger name="com.houkunlin" level="debug" additivity="true"/>
+    <!-- 字典依赖日志 -->
+    <logger name="com.houkunlin" level="debug" additivity="false"/>
 
     <root level="debug">
         <appender-ref ref="console"/>
