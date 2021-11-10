@@ -39,4 +39,12 @@ public class Column {
      * 属性名称
      */
     private String field;
+    /**
+     * 注释中是否有字典
+     */
+    private Boolean hasDict;
+    /**
+     * 注释中带的字典
+     */
+    private String remarkDict;
 }

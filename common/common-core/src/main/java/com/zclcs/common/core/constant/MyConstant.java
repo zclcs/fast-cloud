@@ -71,8 +71,13 @@ public interface MyConstant {
     String JSON_UTF8 = "application/json;charset=UTF-8";
 
     /**
-     * http contentType
+     * 根节点id
      */
     Long TOP_PARENT_ID = 0L;
+
+    /**
+     * 注释中的字典信息
+     */
+    String DICT_REMARK = "@@";
 
 }

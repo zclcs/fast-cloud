@@ -13,6 +13,10 @@ spring:
         group: DEFAULT_GROUP
         prefix: ${SERVICE_NAME_TX_MANAGER:tx-manager}
         file-extension: yaml
+        ext-config:
+          - data-id: flyway.yaml
+            group: DEFAULT_GROUP
+            refresh: true
 
 logging:
   level:

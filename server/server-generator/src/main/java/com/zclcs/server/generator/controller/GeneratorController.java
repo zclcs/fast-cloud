@@ -1,11 +1,13 @@
 package com.zclcs.server.generator.controller;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties;
 import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
 import com.zclcs.common.core.base.BaseRsp;
 import com.zclcs.common.core.constant.GeneratorConstant;
+import com.zclcs.common.core.constant.MyConstant;
 import com.zclcs.common.core.entity.generator.Column;
 import com.zclcs.common.core.entity.generator.GeneratorConfig;
 import com.zclcs.common.core.entity.generator.Table;
@@ -62,12 +64,6 @@ public class GeneratorController {
     @PreAuthorize("hasAuthority('gen:generate')")
     @ApiOperation(value = "查询代码生成数据源")
     public BaseRsp<List<Map<String, String>>> datasource() {
-        /*Map<String, DataSourceProperty> datasource = properties.getDatasource();
-        List<String> databases = new ArrayList<>();
-        datasource.forEach((k, v) -> {
-            String name = StringUtils.substringBefore(StringUtils.substringAfterLast(v.getUrl(), "/"), "?");
-            databases.add(name);
-        });*/
         List<String> databases = generatorService.getDatabases(null);
         List<Map<String, String>> data = new ArrayList<>();
         databases.forEach(s -> {
@@ -113,6 +109,16 @@ public class GeneratorController {
         generatorConfig.setTableComment(remark);
         // 生成代码到临时目录
         List<Column> columns = generatorService.getColumns(GeneratorConstant.DATABASE_TYPE, datasource, name);
+        for (Column column : columns) {
+            String columnRemark = column.getRemark();
+            if (StrUtil.contains(columnRemark, MyConstant.DICT_REMARK)) {
+                column.setHasDict(true);
+                List<String> strings = StrUtil.splitTrim(columnRemark, MyConstant.DICT_REMARK);
+                column.setRemarkDict(strings.get(strings.size() - 1));
+            } else {
+                column.setHasDict(false);
+            }
+        }
         generatorHelper.generateEntityFile(columns, generatorConfig);
         generatorHelper.generateAoFile(columns, generatorConfig);
         generatorHelper.generateVoFile(columns, generatorConfig);

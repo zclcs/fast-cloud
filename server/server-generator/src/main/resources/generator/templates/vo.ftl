@@ -6,6 +6,7 @@ package ${basePackage}.${entityPackage};
 <#if hasBigDecimal = true>
     import java.math.BigDecimal;
 </#if>
+import com.houkunlin.system.dict.starter.json.DictText;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -33,6 +34,9 @@ public class ${className}Vo implements Serializable {
 <#if columns??>
     <#list columns as column>
     @ApiModelProperty(value = "${column.remark}")
+    <#if column.hasDict = true>
+    @DictText("${column.remarkDict}")
+    </#if>
     <#if (column.type = 'varchar' || column.type = 'text' || column.type = 'uniqueidentifier'
     || column.type = 'varchar2' || column.type = 'nvarchar' || column.type = 'VARCHAR2'
     || column.type = 'VARCHAR'|| column.type = 'CLOB' || column.type = 'char')>
