@@ -46,7 +46,7 @@ system:
   dict:
     mq-type: none
     text-value-default-null: true
-    on-boot-refresh-dict: true
+    on-boot-refresh-dict: false
     cache:
       enabled: true
       maximum-size: 500
