@@ -6,7 +6,7 @@ import com.zclcs.common.core.entity.generator.ao.GeneratorConfigAo;
 import com.zclcs.common.core.entity.generator.vo.GeneratorConfigVo;
 
 /**
- * @author MrBird
+ * @author zclcs
  */
 public interface GeneratorConfigService extends IService<GeneratorConfig> {
 

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import java.lang.annotation.*;
 
 /**
- * @author MrBird
+ * @author zclcs
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

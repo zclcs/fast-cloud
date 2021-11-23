@@ -1,7 +1,7 @@
 package com.zclcs.common.core.entity.generator;
 
 /**
- * @author MrBird
+ * @author zclcs
  */
 public class FieldType {
 

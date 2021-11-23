@@ -8,7 +8,7 @@ import com.zclcs.common.core.entity.generator.Table;
 import java.util.List;
 
 /**
- * @author MrBird
+ * @author zclcs
  */
 public interface GeneratorService {
 

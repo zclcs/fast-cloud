@@ -3,7 +3,7 @@ package com.zclcs.common.core.entity.generator;
 import lombok.Data;
 
 /**
- * @author MrBird
+ * @author zclcs
  */
 @Data
 public class Column {

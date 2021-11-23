@@ -11,7 +11,7 @@ import lombok.Data;
 import javax.validation.constraints.Size;
 
 /**
- * @author MrBird
+ * @author zclcs
  */
 @Data
 @TableName("generator_config")
