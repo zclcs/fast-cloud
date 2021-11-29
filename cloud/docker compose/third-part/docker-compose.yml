@@ -4,15 +4,12 @@ services:
   mysql:
     image: mysql:5.7.35
     container_name: mysql-cloud
-    networks:
-      - web_net
+    network_mode: host
     environment:
       # 设置密码
       MYSQL_ROOT_PASSWORD: 123456
       # 设置时区
       TZ: Asia/Shanghai
-    ports:
-      - "3306:3306"
     volumes:
       #挂载 MySQL数据
       - ./mysql/data:/var/lib/mysql
@@ -21,8 +18,7 @@ services:
   redis:
     image: redis:6.2.5
     container_name: redis-cloud
-    networks:
-      - web_net
+    network_mode: host
     environment:
       # 设置时区
       TZ: Asia/Shanghai
@@ -30,13 +26,10 @@ services:
     volumes:
       - ./redis/data:/data #挂载 Redis数据
       - ./redis/conf/redis.conf:/usr/local/etc/redis/redis.conf #挂载 Redis配置
-    ports:
-      - "6379:6379"
   nacos:
     image: nacos/nacos-server:2.0.3
     container_name: nacos-standalone-mysql
-    networks:
-      - web_net
+    network_mode: host
     environment:
       # 设置时区
       TZ: Asia/Shanghai
@@ -44,17 +37,12 @@ services:
       - ./nacos/standalone-logs/:/home/nacos/logs
       - ./nacos/init.d/custom.properties:/home/nacos/init.d/custom.properties
     env_file: .env
-    ports:
-      - "8848:8848"
-      - "9848:9848"
-      - "9555:9555"
     depends_on:
       - mysql
   minio:
     image: minio/minio:RELEASE.2021-10-06T23-36-31Z
     container_name: minio
-    networks:
-      - web_net
+    network_mode: host
     environment:
       # 设置时区
       TZ: Asia/Shanghai
@@ -63,11 +51,6 @@ services:
       #管理后台密码，最小8个字符
       MINIO_ROOT_PASSWORD: ${ROOT_PASSWORD}
     env_file: .env
-    ports:
-      # api 端口
-      - "9000:9000"
-      # 控制台端口
-      - "9001:9001"
     volumes:
       #映射当前目录下的data目录至容器内/data目录
       - ./minio/data:/data
@@ -75,7 +58,3 @@ services:
       - ./minio/config:/root/.minio/
     command: server --console-address ':9001' /data  #指定容器中的目录 /data
     privileged: true
-networks:
-  web_net:
-    external:
-      name: cloud_net

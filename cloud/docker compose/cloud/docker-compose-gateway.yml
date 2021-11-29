@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  gateway:
+    image: ${CLOUD_DEPOSITORY_URL}/gateway:${CLOUD_DEPOSITORY_TAG}
+    container_name: gateway
+    network_mode: host
+    environment:
+      JAVA_TOOL_OPTIONS: "${GATEWAY_JAVA_OPS}"
+    volumes:
+      - ./log/gateway:/log/gateway
+      - ./log/gateway/skywalking:/agent/logs
+      - ${CLOUD_AGENT_CONFIG}
+    env_file: .env

@@ -13,12 +13,7 @@ spring:
         group: DEFAULT_GROUP
         prefix: ${SERVICE_NAME_KNIFE4J:knife4j}
         file-extension: yaml
-
-logging:
-  level:
-    com:
-      alibaba:
-        cloud:
-          nacos:
-            client:
-              NacosPropertySourceBuilder: error
+        ext-config:
+          - data-id: logging.yaml
+            group: DEFAULT_GROUP
+            refresh: true

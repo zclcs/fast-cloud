@@ -4,8 +4,7 @@ services:
   gateway:
     image: ${CLOUD_DEPOSITORY_URL}/gateway:${CLOUD_DEPOSITORY_TAG}
     container_name: gateway
-    networks:
-      - web_net
+    network_mode: host
     environment:
       JAVA_TOOL_OPTIONS: "${GATEWAY_JAVA_OPS}"
     volumes:
@@ -16,8 +15,7 @@ services:
   auth:
     image: ${CLOUD_DEPOSITORY_URL}/auth:${CLOUD_DEPOSITORY_TAG}
     container_name: auth
-    networks:
-      - web_net
+    network_mode: host
     environment:
       JAVA_TOOL_OPTIONS: "${AUTH_JAVA_OPS}"
     volumes:
@@ -28,8 +26,7 @@ services:
   tx-manager:
     image: ${CLOUD_DEPOSITORY_URL}/tx-manager:${CLOUD_DEPOSITORY_TAG}
     container_name: tx-manager
-    networks:
-      - web_net
+    network_mode: host
     environment:
       JAVA_TOOL_OPTIONS: "${TX_MANAGER_JAVA_OPS}"
     volumes:
@@ -37,13 +34,10 @@ services:
       - ./log/tx-manager/skywalking:/agent/logs
       - ${CLOUD_AGENT_CONFIG}
     env_file: .env
-    ports:
-      - "8501:8501"
   server-system:
     image: ${CLOUD_DEPOSITORY_URL}/server-system:${CLOUD_DEPOSITORY_TAG}
     container_name: server-system
-    networks:
-      - web_net
+    network_mode: host
     environment:
       JAVA_TOOL_OPTIONS: "${SERVER_SYSTEM_JAVA_OPS}"
     volumes:
@@ -58,8 +52,7 @@ services:
   server-generator:
     image: ${CLOUD_DEPOSITORY_URL}/server-generator:${CLOUD_DEPOSITORY_TAG}
     container_name: server-generator
-    networks:
-      - web_net
+    network_mode: host
     environment:
       JAVA_TOOL_OPTIONS: "${SERVER_GENERATOR_JAVA_OPS}"
     volumes:
@@ -71,26 +64,24 @@ services:
     depends_on:
       - tx-manager
   # 生产可以不用部署
-  #  server-test:
-  #    image: ${CLOUD_DEPOSITORY_URL}/server-test:${CLOUD_DEPOSITORY_TAG}
-  #    container_name: server-test
-  #    networks:
-  #      - web_net
-  #    environment:
-  #      JAVA_TOOL_OPTIONS: "${SERVER_TEST_JAVA_OPS}"
-  #    volumes:
-  #      - ./log/server-test:/log/server-test
-  #      - ./.txlcn:/.txlcn
-  #      - ./log/server-test/skywalking:/agent/logs
-  #      - ${CLOUD_AGENT_CONFIG}
-  #    env_file: .env
-  #    depends_on:
-  #      - tx-manager
+  server-test:
+    image: ${CLOUD_DEPOSITORY_URL}/server-test:${CLOUD_DEPOSITORY_TAG}
+    container_name: server-test
+    network_mode: host
+    environment:
+      JAVA_TOOL_OPTIONS: "${SERVER_TEST_JAVA_OPS}"
+    volumes:
+      - ./log/server-test:/log/server-test
+      - ./.txlcn:/.txlcn
+      - ./log/server-test/skywalking:/agent/logs
+      - ${CLOUD_AGENT_CONFIG}
+    env_file: .env
+    depends_on:
+      - tx-manager
   server-minio:
     image: ${CLOUD_DEPOSITORY_URL}/server-minio:${CLOUD_DEPOSITORY_TAG}
     container_name: server-minio
-    networks:
-      - web_net
+    network_mode: host
     environment:
       JAVA_TOOL_OPTIONS: "${SERVER_MINIO_JAVA_OPS}"
     volumes:
@@ -104,20 +95,16 @@ services:
   knife4j:
     image: ${CLOUD_DEPOSITORY_URL}/knife4j:${CLOUD_DEPOSITORY_TAG}
     container_name: knife4j
-    networks:
-      - web_net
+    network_mode: host
     environment:
       JAVA_TOOL_OPTIONS: "${SERVER_KNIFE4J_JAVA_OPS}"
     volumes:
       - ./log/knife4j:/log/knife4j
     env_file: .env
-    ports:
-      - "8401:8401"
   server-dict:
     image: ${CLOUD_DEPOSITORY_URL}/server-dict:${CLOUD_DEPOSITORY_TAG}
     container_name: server-dict
-    networks:
-      - web_net
+    network_mode: host
     environment:
       JAVA_TOOL_OPTIONS: "${SERVER_DICT_JAVA_OPS}"
     volumes:
@@ -126,19 +113,12 @@ services:
   nginx:
     image: nginx:1.21.3
     container_name: nginx-cloud
-    networks:
-      - web_net
+    network_mode: host
     environment:
       # 设置时区
       TZ: "Asia/Shanghai"
     privileged: true
     user: root
-    ports:
-      - "9527:80"
     volumes:
       - ./web:/var/cloud/web
       - ./nginx/:/etc/nginx/
-networks:
-  web_net:
-    external:
-      name: cloud_net

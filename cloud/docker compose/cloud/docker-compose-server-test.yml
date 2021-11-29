@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  # 生产可以不用部署
+  server-test:
+    image: ${CLOUD_DEPOSITORY_URL}/server-test:${CLOUD_DEPOSITORY_TAG}
+    container_name: server-test
+    network_mode: host
+    environment:
+      JAVA_TOOL_OPTIONS: "${SERVER_TEST_JAVA_OPS}"
+    volumes:
+      - ./log/server-test:/log/server-test
+      - ./.txlcn:/.txlcn
+      - ./log/server-test/skywalking:/agent/logs
+      - ${CLOUD_AGENT_CONFIG}
+    env_file: .env

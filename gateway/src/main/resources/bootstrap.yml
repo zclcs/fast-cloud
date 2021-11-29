@@ -16,24 +16,10 @@ spring:
         group: DEFAULT_GROUP
         prefix: ${SERVICE_NAME_GATEWAY:gateway}
         file-extension: yaml
+        ext-config:
+          - data-id: logging.yaml
+            group: DEFAULT_GROUP
+            refresh: true
       discovery:
         server-addr: ${NACOS_HOST:127.0.0.1}:${NACOS_PORT:8848}
         namespace: ${NACOS_NAMESPACE:dev}
-
-logging:
-  level:
-    org:
-      springframework:
-        boot:
-          actuate:
-            endpoint:
-              EndpointId: error
-        data:
-          convert:
-            CustomConversions: error
-    com:
-      alibaba:
-        cloud:
-          nacos:
-            client:
-              NacosPropertySourceBuilder: error

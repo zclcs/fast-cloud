@@ -1,11 +1,11 @@
 package com.zclcs.server.dict.mapper;
 
-import com.zclcs.common.core.entity.dict.DictTableLevel;
-import com.zclcs.common.core.entity.dict.vo.DictTableLevelVo;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.zclcs.common.core.base.BasePage;
+import com.zclcs.common.core.entity.dict.DictTableLevel;
+import com.zclcs.common.core.entity.dict.vo.DictTableLevelVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

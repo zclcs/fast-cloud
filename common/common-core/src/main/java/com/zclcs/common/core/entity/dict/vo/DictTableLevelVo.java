@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -32,17 +32,18 @@ public class DictTableLevelVo implements Serializable {
     @ApiModelProperty(value = "字典表名id集合")
     private List<Long> ids;
 
-    @ApiModelProperty(value = "父项id-默认为0")
+    @NotNull(message = "{required}")
+    @ApiModelProperty(value = "父项id", required = true)
     private Long parentId;
 
-    @ApiModelProperty(value = "表名id")
+    @NotNull(message = "{required}")
+    @ApiModelProperty(value = "表名id", required = true)
     private Long dictNameId;
 
     @ApiModelProperty(value = "表名id集合")
     private List<Long> dictNameIds;
 
-    @NotBlank(message = "{required}")
-    @ApiModelProperty(value = "字典名", required = true)
+    @ApiModelProperty(value = "字典名")
     private String dictName;
 
     @ApiModelProperty(value = "字典名中文")

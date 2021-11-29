@@ -40,6 +40,10 @@ public class DictTableLevelServiceImpl extends ServiceImpl<DictTableLevelMapper,
 
     @Override
     public List<DictTableLevelTreeVo> findDictTableLevelTreeVo(DictTableLevelVo dictTableLevelVo) {
+        if (dictTableLevelVo.getParentId() != null && !dictTableLevelVo.getParentId().equals(MyConstant.TOP_PARENT_ID)) {
+            dictTableLevelVo.setIds(getChildDictTableLevelId(dictTableLevelVo.getParentId()));
+            dictTableLevelVo.setParentId(null);
+        }
         List<DictTableLevelVo> tableLevelVos = findDictTableLevelList(dictTableLevelVo);
         List<DictTableLevelTreeVo> trees = new ArrayList<>();
         buildTrees(trees, tableLevelVos);

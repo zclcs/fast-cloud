@@ -3,6 +3,7 @@ package com.zclcs.common.core.service;
 import com.zclcs.common.core.constant.MyServerConstant;
 import com.zclcs.common.core.entity.system.ao.SystemLogAo;
 import com.zclcs.common.core.service.fallback.SystemLogServiceFallback;
+import com.zclcs.common.core.service.fegin.configure.FeignConfigure;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 /**
  * @author zclcs
  */
-@FeignClient(value = MyServerConstant.SERVER_SYSTEM, contextId = "systemLogServiceClient", fallbackFactory = SystemLogServiceFallback.class)
+@FeignClient(value = MyServerConstant.SERVER_SYSTEM, contextId = "systemLogServiceClient", fallbackFactory = SystemLogServiceFallback.class, configuration = FeignConfigure.class)
 public interface SystemLogService {
 
     /**
