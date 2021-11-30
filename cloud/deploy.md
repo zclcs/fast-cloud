@@ -131,7 +131,6 @@ ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 ## 部署第三方依赖：mysql、redis、nacos
 
 > - 创建`third-part`目录, 复制项目 /cloud/third-part下的内容，上传至服务器
-> - 执行`docker network create -d bridge cloud_net`, 创建网络群组
 > - 复制`third-part`目录下的文件, 上传服务器
 > - 进入`third-part`目录, 执行`docker-compose up -d`
 > - 这个时候nacos会启动失败，原因是没有创建数据库，查看项目sql目录，通过sql名称建库
