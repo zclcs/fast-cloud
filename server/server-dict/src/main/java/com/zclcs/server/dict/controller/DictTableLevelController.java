@@ -45,6 +45,13 @@ public class DictTableLevelController {
         return BaseRspUtil.data(dictTableLevelTreeVo);
     }
 
+    @GetMapping("option")
+    @ApiOperation(value = "层级字典查询（树结构）下拉框")
+    public BaseRsp<List<DictTableLevelTreeVo>> findDictTableLevelOption(DictTableLevelVo dictTableLevelVo) {
+        List<DictTableLevelTreeVo> dictTableLevelTreeVo = this.dictTableLevelService.findDictTableLevelTreeVo(dictTableLevelVo);
+        return BaseRspUtil.data(dictTableLevelTreeVo);
+    }
+
     @GetMapping("list")
     @ApiOperation(value = "层级字典查询（集合）")
     public BaseRsp<List<DictTableLevelVo>> findDictTableLevelList(DictTableLevelVo dictTableLevelVo) {
