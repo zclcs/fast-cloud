@@ -11,7 +11,7 @@
  Target Server Version : 50735
  File Encoding         : 65001
 
- Date: 11/11/2021 09:30:39
+ Date: 30/11/2021 08:42:20
 */
 
 SET NAMES utf8mb4;
@@ -42,7 +42,7 @@ CREATE TABLE `config_info`
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `uk_configinfo_datagrouptenant` (`data_id`, `group_id`, `tenant_id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 139
+  AUTO_INCREMENT = 135
   CHARACTER SET = utf8
   COLLATE = utf8_bin COMMENT = 'config_info'
   ROW_FORMAT = DYNAMIC;
@@ -110,6 +110,11 @@ VALUES (133, 'flyway.yaml', 'DEFAULT_GROUP',
         'spring:\r\n  flyway:\r\n    enabled: true\r\n    # 迁移前校验 SQL 文件是否存在问题\r\n    validate-on-migrate: true\r\n    # 禁止清理数据库表 生产环境一定要启用\r\n    clean-disabled: true\r\n    # 文件编码\r\n    encoding: UTF-8\r\n    # 校验路径下是否存在 SQL 文件\r\n    check-location: false\r\n    # 最开始已经存在表结构，且不存在 flyway_schema_history 表时，需要设置为 true\r\n    baseline-on-migrate: true',
         '009b47e8c9b2a86c2a8b5615f331a93f', '2021-11-10 18:54:07', '2021-11-10 18:54:07', NULL, '192.168.33.1', '',
         'dev', '数据库版本管理配置', NULL, NULL, 'yaml', NULL);
+INSERT INTO `config_info`
+VALUES (134, 'logging.yaml', 'DEFAULT_GROUP',
+        'logging:\r\n  level:\r\n    org:\r\n      springframework:\r\n        data:\r\n          convert:\r\n            CustomConversions: error\r\n    com:\r\n      alibaba:\r\n        cloud:\r\n          nacos:\r\n            client:\r\n              NacosPropertySourceBuilder: error',
+        '9fb50b8e377afdbf444623cd5f94bff7', '2021-11-29 18:41:52', '2021-11-29 18:41:52', NULL, '192.168.33.1', '',
+        'dev', NULL, NULL, NULL, 'yaml', NULL);
 
 -- ----------------------------
 -- Table structure for config_info_aggr
@@ -275,7 +280,7 @@ CREATE TABLE `his_config_info`
     INDEX `idx_gmt_modified` (`gmt_modified`) USING BTREE,
     INDEX `idx_did` (`data_id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 29
+  AUTO_INCREMENT = 30
   CHARACTER SET = utf8
   COLLATE = utf8_bin COMMENT = '多租户改造'
   ROW_FORMAT = DYNAMIC;
@@ -422,6 +427,11 @@ INSERT INTO `his_config_info`
 VALUES (130, 28, 'server-dict.yaml', 'DEFAULT_GROUP', '',
         'server:\n  port: ${PORT_SERVER_DICT:8205}\n\nspring:\n  aop:\n    proxy-target-class: true\n\n  jackson:\n    date-format: yyyy-MM-dd HH:mm:ss\n    time-zone: GMT+8\n\n  freemarker:\n    check-template-location: false\n\n  datasource:\n    dynamic:\n      p6spy: ${DATASOURCE_LOGGER_SQL_ENABLED:true}\n      hikari:\n        connection-timeout: 30000\n        max-lifetime: 1800000\n        max-pool-size: 15\n        min-idle: 5\n        connection-test-query: select 1\n        pool-name: MyHikariCP\n      primary: primary\n      datasource:\n        primary:\n          driver-class-name: ${DATASOURCE_DRIVER:com.mysql.cj.jdbc.Driver}\n          url: jdbc:${DATASOURCE_DB_TYPE:mysql}://${DATASOURCE_HOST:127.0.0.1}:${DATASOURCE_PORT:3306}/${DB_NAME_DICT:cloud_dict}?${DATASOURCE_PARAM:useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai}\n          username: ${DATASOURCE_USERNAME:root}\n          password: ${DATASOURCE_PASSWORD:root}\n\n  redis:\n    database: ${REDIS_DICT_DATABASE:1}\n    host: ${REDIS_HOST:127.0.0.1}\n    port: ${REDIS_PORT:6379}\n    lettuce:\n      pool:\n        min-idle: 8\n        max-idle: 500\n        max-active: 2000\n        max-wait: 10000\n    timeout: 5000\n\nsystem:\n  dict:\n    mq-type: none\n    text-value-default-null: true\n    on-boot-refresh-dict: false\n    cache:\n      enabled: true\n      maximum-size: 500\n      initial-capacity: 50\n      duration: 30s\n      miss-num: 50\n    controller:\n      enabled: true\n      prefix: /cache\n\nmybatis-plus:\n  type-aliases-package: com.zclcs.common.core.entity.dict\n  mapper-locations: classpath:com/zclcs/server/dict/mapper/*.xml\n  configuration:\n    jdbc-type-for-null: null\n  global-config:\n    banner: false\n\nsecurity:\n  oauth2:\n    resource:\n      id: ${spring.application.name}\n      user-info-uri: http://${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}/auth/user\n\nmy:\n  doc:\n    enable: true\n    title: ${spring.application.name}文档\n    description: ${my.doc.title}\n    name: zclcs\n    email: 2371219112@qq.com\n    url: https://github.com/zclcs\n    version: 2.2-RELEASE\n\n  cloud:\n    security:\n      enable: true\n      anon-uris: /v2/api-docs,/v2/api-docs-ext\n      only-fetch-by-gateway: false\n\n  log:\n    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}\n\ntx-lcn:\n  client:\n    manager-address: ${TX_CLIENT_MANAGER_HOST:127.0.0.1}:${TX_CLIENT_MANAGER_PORT:8888}',
         'c0d72e0ad2d7253a920d8bb74c2601bf', '2021-11-11 09:29:53', '2021-11-10 19:29:54', 'nacos', '192.168.33.1', 'U',
+        'dev');
+INSERT INTO `his_config_info`
+VALUES (0, 29, 'logging.yaml', 'DEFAULT_GROUP', '',
+        'logging:\r\n  level:\r\n    org:\r\n      springframework:\r\n        data:\r\n          convert:\r\n            CustomConversions: error\r\n    com:\r\n      alibaba:\r\n        cloud:\r\n          nacos:\r\n            client:\r\n              NacosPropertySourceBuilder: error',
+        '9fb50b8e377afdbf444623cd5f94bff7', '2021-11-30 08:41:52', '2021-11-29 18:41:52', NULL, '192.168.33.1', 'I',
         'dev');
 
 -- ----------------------------
