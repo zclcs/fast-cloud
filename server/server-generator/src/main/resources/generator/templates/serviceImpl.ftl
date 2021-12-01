@@ -33,24 +33,30 @@ public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${c
     @Override
     public BasePage<${className}Vo> find${className}Page(BasePageAo basePageAo, ${className}Vo ${className?uncap_first}Vo) {
         BasePage<${className}Vo> basePage = new BasePage<>(basePageAo.getPageNum(), basePageAo.getPageSize());
-        QueryWrapper<${className}Vo> queryWrapper = new QueryWrapper<>();
-        // TODO 设置查询条件
+        QueryWrapper<${className}Vo> queryWrapper = getQueryWrapper(${className?uncap_first}Vo);
+        // TODO 设置分页查询条件
         return this.baseMapper.findPageVo(basePage, queryWrapper);
     }
 
     @Override
     public List<${className}Vo> find${className}List(${className}Vo ${className?uncap_first}Vo) {
-        QueryWrapper<${className}Vo> queryWrapper = new QueryWrapper<>();
-        // TODO 设置查询条件
+        QueryWrapper<${className}Vo> queryWrapper = getQueryWrapper(${className?uncap_first}Vo);
+        // TODO 设置集合查询条件
         return this.baseMapper.findListVo(queryWrapper);
     }
 
     @Override
     public ${className}Vo find${className}(${className}Vo ${className?uncap_first}Vo) {
-        QueryWrapper<${className}Vo> queryWrapper = new QueryWrapper<>();
-        // TODO 设置查询条件
+        QueryWrapper<${className}Vo> queryWrapper = getQueryWrapper(${className?uncap_first}Vo);
+        // TODO 设置单个查询条件
         return this.baseMapper.findOneVo(queryWrapper);
     }
+
+    private QueryWrapper<${className}Vo> getQueryWrapper(${className}Vo ${className?uncap_first}Vo) {
+        QueryWrapper<${className}Vo> queryWrapper = new QueryWrapper<>();
+        // TODO 设置公共查询条件
+        return queryWrapper;
+   }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
