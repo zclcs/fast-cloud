@@ -1,6 +1,7 @@
 package com.zclcs.common.core.utils;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -80,7 +81,9 @@ public abstract class BaseUtil {
         StringBuilder result = new StringBuilder();
         String[] arr = value.split(StringConstant.UNDER_LINE);
         for (String s : arr) {
-            result.append((String.valueOf(s.charAt(0))).toUpperCase()).append(s.substring(1));
+            if (StrUtil.isNotBlank(s)) {
+                result.append((String.valueOf(s.charAt(0))).toUpperCase()).append(s.substring(1));
+            }
         }
         return result.toString();
     }

@@ -83,6 +83,7 @@
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
+                <!-- 单独打包 mvn -DsendCredentialsOverHttp=true clean package -pl ../auth -am -->
                 <configuration>
                     <container>
                         <mainClass>com.zclcs.auth.AuthApplication</mainClass>

@@ -110,6 +110,9 @@ public class GeneratorController {
         // 生成代码到临时目录
         List<Column> columns = generatorService.getColumns(GeneratorConstant.DATABASE_TYPE, datasource, name);
         for (Column column : columns) {
+            if (column.getIsKey()) {
+                generatorConfig.setKeyName(column.getName());
+            }
             String columnRemark = column.getRemark();
             if (StrUtil.contains(columnRemark, MyConstant.DICT_REMARK)) {
                 column.setHasDict(true);
@@ -118,6 +121,7 @@ public class GeneratorController {
             } else {
                 column.setHasDict(false);
             }
+            column.setIsArray(StrUtil.contains(columnRemark, MyConstant.DICT_ARRAY));
         }
         generatorHelper.generateEntityFile(columns, generatorConfig);
         generatorHelper.generateAoFile(columns, generatorConfig);

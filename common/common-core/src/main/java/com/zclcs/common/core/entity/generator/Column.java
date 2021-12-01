@@ -47,4 +47,8 @@ public class Column {
      * 注释中带的字典
      */
     private String remarkDict;
+    /**
+     * 字典是否是数组
+     */
+    private Boolean isArray;
 }

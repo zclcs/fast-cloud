@@ -136,5 +136,9 @@ public class GeneratorConfig {
      * 数据表对应的对象名
      */
     private transient String objectName;
+    /**
+     * 数据表对应的主键字段名
+     */
+    private transient String keyName;
 
 }

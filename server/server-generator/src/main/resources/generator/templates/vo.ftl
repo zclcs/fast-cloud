@@ -6,6 +6,7 @@ package ${basePackage}.${entityPackage};
 <#if hasBigDecimal = true>
     import java.math.BigDecimal;
 </#if>
+import com.houkunlin.system.dict.starter.json.Array;
 import com.houkunlin.system.dict.starter.json.DictText;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -34,7 +35,10 @@ public class ${className}Vo implements Serializable {
 <#if columns??>
     <#list columns as column>
     @ApiModelProperty(value = "${column.remark}")
-    <#if column.hasDict = true>
+    <#if column.hasDict = true && column.isArray = true>
+    @DictText(value = "${column.remarkDict}", array = @Array)
+    </#if>
+    <#if column.hasDict = true && column.isArray = false>
     @DictText("${column.remarkDict}")
     </#if>
     <#if (column.type = 'varchar' || column.type = 'text' || column.type = 'uniqueidentifier'

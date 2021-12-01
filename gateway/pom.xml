@@ -95,6 +95,7 @@
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
+                <!-- 单独打包 mvn -DsendCredentialsOverHttp=true clean package -pl ../gateway -am -->
                 <configuration>
                     <container>
                         <mainClass>com.zclcs.gateway.GatewayApplication</mainClass>

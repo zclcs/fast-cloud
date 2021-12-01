@@ -80,4 +80,9 @@ public interface MyConstant {
      */
     String DICT_REMARK = "@@";
 
+    /**
+     * 字典是否是array
+     */
+    String DICT_ARRAY = "array";
+
 }

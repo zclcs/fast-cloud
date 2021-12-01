@@ -29,7 +29,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @TableName("${tableName}")
 @ApiModel(value = "${className}对象", description = "${tableComment}")
-public class ${className} extends Model<${className}> {
+public class ${className} {
 
 <#if columns??>
     <#list columns as column>
@@ -67,8 +67,5 @@ public class ${className} extends Model<${className}> {
 
     </#list>
 </#if>
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
+
 }
