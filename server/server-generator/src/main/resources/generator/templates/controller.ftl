@@ -8,6 +8,7 @@ import com.zclcs.common.core.constant.StringConstant;
 import ${basePackage}.${aoPackage}.${className}Ao;
 import ${basePackage}.${voPackage}.${className}Vo;
 import com.zclcs.common.core.utils.BaseRspUtil;
+import com.zclcs.common.core.validate.strategy.UpdateStrategy;
 import ${basePackage}.${servicePackage}.${className}Service;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -85,7 +86,7 @@ public class ${className}Controller {
     @PreAuthorize("hasAuthority('${objectName?uncap_first}:update')")
     @ControllerEndpoint(operation = "修改${tableComment}", exceptionMessage = "修改${tableComment}失败")
     @ApiOperation(value = "修改${tableComment}")
-    public void update${className}(@RequestBody @Validated ${className}Ao ${className?uncap_first}Ao) {
+    public void update${className}(@RequestBody @Validated(UpdateStrategy.class) ${className}Ao ${className?uncap_first}Ao) {
         this.${className?uncap_first}Service.update${className}(${className?uncap_first}Ao);
     }
 }
