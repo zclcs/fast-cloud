@@ -101,6 +101,8 @@ services:
     volumes:
       - ./log/knife4j:/log/knife4j
     env_file: .env
+    depends_on:
+      - tx-manager
   server-dict:
     image: ${CLOUD_DEPOSITORY_URL}/server-dict:${CLOUD_DEPOSITORY_TAG}
     container_name: server-dict
