@@ -52,6 +52,13 @@ public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${c
         return this.baseMapper.findOneVo(queryWrapper);
     }
 
+    @Override
+    public Integer count${className}(${className}Vo ${className?uncap_first}Vo) {
+    QueryWrapper<${className}Vo> queryWrapper = getQueryWrapper(${className?uncap_first}Vo);
+        // TODO 设置统计查询条件
+        return this.baseMapper.countVo(queryWrapper);
+    }
+
     private QueryWrapper<${className}Vo> getQueryWrapper(${className}Vo ${className?uncap_first}Vo) {
         QueryWrapper<${className}Vo> queryWrapper = new QueryWrapper<>();
         // TODO 设置公共查询条件

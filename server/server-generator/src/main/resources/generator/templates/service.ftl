@@ -43,6 +43,14 @@ public interface ${className}Service extends IService<${className}> {
     ${className}Vo find${className}(${className}Vo ${className?uncap_first}Vo);
 
     /**
+     * 统计
+     *
+     * @param ${className?uncap_first}Vo ${className?uncap_first}Vo
+     * @return ${className}Vo
+     */
+    Integer count${className}(${className}Vo ${className?uncap_first}Vo);
+
+    /**
      * 新增
      *
      * @param ${className?uncap_first}Ao ${className?uncap_first}Ao

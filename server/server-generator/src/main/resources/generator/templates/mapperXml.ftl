@@ -5,6 +5,9 @@
     <sql id="baseSql">
         // TODO 设置分页、集合、单个查询sql
     </sql>
+    <sql id="baseCountSql">
+        // TODO 设置统计查询sql
+    </sql>
     <select id="findPageVo" resultType="${basePackage}.${voPackage}.${className}Vo">
         <include refid="baseSql"/>
     </select>
@@ -13,5 +16,8 @@
     </select>
     <select id="findOneVo" resultType="${basePackage}.${voPackage}.${className}Vo">
         <include refid="baseSql"/>
+    </select>
+    <select id="countVo" resultType="java.lang.Integer">
+        <include refid="baseCountSql"/>
     </select>
 </mapper>

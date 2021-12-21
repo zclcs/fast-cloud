@@ -43,4 +43,12 @@ public interface ${className}Mapper extends BaseMapper<${className}> {
      */
     ${className}Vo findOneVo(@Param(Constants.WRAPPER) Wrapper<${className}Vo> ew);
 
+    /**
+     * 统计
+     *
+     * @param ew 查询条件
+     * @return 对象
+     */
+    Integer countVo(@Param(Constants.WRAPPER) Wrapper<${className}Vo> ew);
+
 }
