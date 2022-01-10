@@ -110,7 +110,7 @@ public class SocialLoginController extends BaseController {
      *
      * @param registUser registUser
      * @param authUser   authUser
-     * @return FebsResponse
+     * @return Response
      */
     @ResponseBody
     @PostMapping("sign/login")
@@ -150,7 +150,7 @@ public class SocialLoginController extends BaseController {
      * 根据用户名获取绑定关系
      *
      * @param username 用户名
-     * @return FebsResponse
+     * @return Response
      */
     @ResponseBody
     @GetMapping("connections/{username}")

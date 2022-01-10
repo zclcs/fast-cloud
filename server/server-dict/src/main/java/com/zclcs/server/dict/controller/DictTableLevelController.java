@@ -1,6 +1,5 @@
 package com.zclcs.server.dict.controller;
 
-import com.zclcs.common.core.annotation.ControllerEndpoint;
 import com.zclcs.common.core.base.BaseRsp;
 import com.zclcs.common.core.constant.StringConstant;
 import com.zclcs.common.core.entity.dict.ao.DictTableLevelAo;
@@ -40,6 +39,7 @@ public class DictTableLevelController {
 
     @GetMapping
     @ApiOperation(value = "层级字典查询（树结构）")
+    @PreAuthorize("hasAuthority('tableLevel:view')")
     public BaseRsp<List<DictTableLevelTreeVo>> findDictTableLevelTreeVo(@Validated DictTableLevelVo dictTableLevelVo) {
         List<DictTableLevelTreeVo> dictTableLevelTreeVo = this.dictTableLevelService.findDictTableLevelTreeVo(dictTableLevelVo);
         return BaseRspUtil.data(dictTableLevelTreeVo);
@@ -47,6 +47,7 @@ public class DictTableLevelController {
 
     @GetMapping("option")
     @ApiOperation(value = "层级字典查询（树结构）下拉框")
+    @PreAuthorize("hasAuthority('tableLevel:view')")
     public BaseRsp<List<DictTableLevelTreeVo>> findDictTableLevelOption(DictTableLevelVo dictTableLevelVo) {
         List<DictTableLevelTreeVo> dictTableLevelTreeVo = this.dictTableLevelService.findDictTableLevelTreeVo(dictTableLevelVo);
         return BaseRspUtil.data(dictTableLevelTreeVo);
@@ -54,6 +55,7 @@ public class DictTableLevelController {
 
     @GetMapping("list")
     @ApiOperation(value = "层级字典查询（集合）")
+    @PreAuthorize("hasAuthority('tableLevel:view')")
     public BaseRsp<List<DictTableLevelVo>> findDictTableLevelList(DictTableLevelVo dictTableLevelVo) {
         List<DictTableLevelVo> dictTableLevelTreeVo = this.dictTableLevelService.findDictTableLevelList(dictTableLevelVo);
         return BaseRspUtil.data(dictTableLevelTreeVo);
@@ -68,6 +70,7 @@ public class DictTableLevelController {
 
     @GetMapping("one")
     @ApiOperation(value = "层级字典查询（单个）")
+    @PreAuthorize("hasAuthority('tableLevel:view')")
     public BaseRsp<DictTableLevelVo> findDictTableLevel(DictTableLevelVo dictTableLevelVo) {
         DictTableLevelVo dictTableLevel = this.dictTableLevelService.findDictTableLevel(dictTableLevelVo);
         return BaseRspUtil.data(dictTableLevel);
@@ -75,7 +78,6 @@ public class DictTableLevelController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('tableLevel:add')")
-    @ControllerEndpoint(operation = "新增层级字典", exceptionMessage = "新增层级字典失败")
     @ApiOperation(value = "新增层级字典")
     public void addDictTableLevel(@RequestBody @Validated DictTableLevelAo dictTableLevelAo) {
         this.dictTableLevelService.createDictTableLevel(dictTableLevelAo);
@@ -83,7 +85,6 @@ public class DictTableLevelController {
 
     @DeleteMapping("/{tableLevelIds}")
     @PreAuthorize("hasAuthority('tableLevel:delete')")
-    @ControllerEndpoint(operation = "删除层级字典", exceptionMessage = "删除层级字典失败")
     @ApiOperation(value = "删除层级字典")
     public void deleteDictTableLevel(@ApiParam(value = "层级字典id集合(,分隔)", required = true) @NotBlank(message = "{required}") @PathVariable String tableLevelIds) {
         List<Long> ids = Arrays.stream(tableLevelIds.split(StringConstant.COMMA)).map(Long::valueOf).collect(Collectors.toList());
@@ -92,7 +93,6 @@ public class DictTableLevelController {
 
     @PutMapping
     @PreAuthorize("hasAuthority('tableLevel:update')")
-    @ControllerEndpoint(operation = "修改层级字典", exceptionMessage = "修改层级字典失败")
     @ApiOperation(value = "修改层级字典")
     public void updateDictTableLevel(@RequestBody @Validated DictTableLevelAo dictTableLevelAo) {
         this.dictTableLevelService.updateDictTableLevel(dictTableLevelAo);

@@ -1,9 +1,9 @@
 package com.zclcs.common.core.entity.test.vo;
 
+import com.houkunlin.system.dict.starter.json.DictText;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
@@ -12,9 +12,12 @@ import java.io.Serializable;
  * 班级 Vo
  *
  * @author zclcs
- * @date 2021-10-15 09:28:31.675
+ * @date 2022-01-10 14:54:16.690
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "TestClassVo对象", description = "班级")
@@ -27,6 +30,10 @@ public class TestClassVo implements Serializable {
 
     @ApiModelProperty(value = "名称")
     private String name;
+
+    @ApiModelProperty(value = "类型 @@yes_no")
+    @DictText("yes_no")
+    private String type;
 
 
 }

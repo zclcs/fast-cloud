@@ -37,7 +37,7 @@ public class SystemMenuAo implements Serializable {
 
     @ApiModelProperty(value = "菜单/按钮名称", required = true)
     @NotBlank(message = "{required}")
-    @Size(max = 10, message = "{noMoreThan}")
+    @Size(max = 30, message = "{noMoreThan}")
     private String menuName;
 
     @ApiModelProperty(value = "对应路由path")
@@ -62,6 +62,9 @@ public class SystemMenuAo implements Serializable {
     @ApiModelProperty(value = "类型 0菜单 1按钮 2目录", required = true)
     @NotBlank(message = "{required}")
     private String type;
+
+    @ApiModelProperty(value = "类型 0菜单 1按钮 2目录")
+    private String types;
 
     @ApiModelProperty(value = "是否隐藏菜单 1是 0否")
     private String hideMenu;

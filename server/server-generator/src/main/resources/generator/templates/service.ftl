@@ -54,15 +54,17 @@ public interface ${className}Service extends IService<${className}> {
      * 新增
      *
      * @param ${className?uncap_first}Ao ${className?uncap_first}Ao
+     * @return ${className}
      */
-    void create${className}(${className}Ao ${className?uncap_first}Ao);
+     ${className} create${className}(${className}Ao ${className?uncap_first}Ao);
 
     /**
      * 修改
      *
      * @param ${className?uncap_first}Ao ${className?uncap_first}Ao
+     * @return ${className}
      */
-    void update${className}(${className}Ao ${className?uncap_first}Ao);
+     ${className} update${className}(${className}Ao ${className?uncap_first}Ao);
 
     /**
      * 删除

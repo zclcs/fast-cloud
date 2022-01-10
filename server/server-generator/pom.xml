@@ -70,7 +70,6 @@
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
-                <!-- 单独打包 mvn -DsendCredentialsOverHttp=true clean package -pl ../server/server-generator -am -->
                 <configuration>
                     <container>
                         <mainClass>com.zclcs.ServerGeneratorApplication</mainClass>

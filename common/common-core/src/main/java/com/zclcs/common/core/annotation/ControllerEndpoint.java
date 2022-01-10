@@ -13,6 +13,4 @@ import java.lang.annotation.Target;
 public @interface ControllerEndpoint {
 
     String operation() default "";
-
-    String exceptionMessage() default "系统内部异常";
 }

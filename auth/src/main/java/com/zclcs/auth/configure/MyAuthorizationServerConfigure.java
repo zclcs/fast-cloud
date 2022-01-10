@@ -80,7 +80,6 @@ public class MyAuthorizationServerConfigure extends AuthorizationServerConfigure
     @Primary
     public DefaultTokenServices defaultTokenServices() {
         DefaultTokenServices tokenServices = new DefaultTokenServices();
-
         tokenServices.setTokenStore(tokenStore());
         tokenServices.setSupportRefreshToken(true);
         tokenServices.setClientDetailsService(redisClientDetailsService);

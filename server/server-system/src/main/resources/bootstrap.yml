@@ -23,7 +23,10 @@ spring:
           - data-id: flyway.yaml
             group: DEFAULT_GROUP
             refresh: true
-          - data-id: logging.yaml
+          - data-id: tx-client.yaml
+            group: DEFAULT_GROUP
+            refresh: true
+          - data-id: server.yaml
             group: DEFAULT_GROUP
             refresh: true
       discovery:

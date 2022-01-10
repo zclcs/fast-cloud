@@ -17,13 +17,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import java.util.List;
-
 /**
  * 班级 Service实现
  *
  * @author zclcs
- * @date 2021-10-15 09:48:59.045
+ * @date 2022-01-10 14:54:16.690
  */
 @Service
 @RequiredArgsConstructor
@@ -33,39 +31,54 @@ public class TestClassServiceImpl extends ServiceImpl<TestClassMapper, TestClass
     @Override
     public BasePage<TestClassVo> findTestClassPage(BasePageAo basePageAo, TestClassVo testClassVo) {
         BasePage<TestClassVo> basePage = new BasePage<>(basePageAo.getPageNum(), basePageAo.getPageSize());
-        QueryWrapper<TestClassVo> queryWrapper = new QueryWrapper<>();
-        // TODO 设置查询条件
+        QueryWrapper<TestClassVo> queryWrapper = getQueryWrapper(testClassVo);
+        // TODO 设置分页查询条件
         return this.baseMapper.findPageVo(basePage, queryWrapper);
     }
 
     @Override
     public List<TestClassVo> findTestClassList(TestClassVo testClassVo) {
-        QueryWrapper<TestClassVo> queryWrapper = new QueryWrapper<>();
-        // TODO 设置查询条件
+        QueryWrapper<TestClassVo> queryWrapper = getQueryWrapper(testClassVo);
+        // TODO 设置集合查询条件
         return this.baseMapper.findListVo(queryWrapper);
     }
 
     @Override
     public TestClassVo findTestClass(TestClassVo testClassVo) {
-        QueryWrapper<TestClassVo> queryWrapper = new QueryWrapper<>();
-        // TODO 设置查询条件
+        QueryWrapper<TestClassVo> queryWrapper = getQueryWrapper(testClassVo);
+        // TODO 设置单个查询条件
         return this.baseMapper.findOneVo(queryWrapper);
     }
 
     @Override
+    public Integer countTestClass(TestClassVo testClassVo) {
+    QueryWrapper<TestClassVo> queryWrapper = getQueryWrapper(testClassVo);
+        // TODO 设置统计查询条件
+        return this.baseMapper.countVo(queryWrapper);
+    }
+
+    private QueryWrapper<TestClassVo> getQueryWrapper(TestClassVo testClassVo) {
+        QueryWrapper<TestClassVo> queryWrapper = new QueryWrapper<>();
+        // TODO 设置公共查询条件
+        return queryWrapper;
+   }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
-    public void createTestClass(TestClassAo testClassAo) {
+    public TestClass createTestClass(TestClassAo testClassAo) {
         TestClass testClass = new TestClass();
         BeanUtil.copyProperties(testClassAo, testClass);
         this.save(testClass);
+        return testClass;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateTestClass(TestClassAo testClassAo) {
+    public TestClass updateTestClass(TestClassAo testClassAo) {
         TestClass testClass = new TestClass();
         BeanUtil.copyProperties(testClassAo, testClass);
         this.updateById(testClass);
+        return testClass;
     }
 
     @Override

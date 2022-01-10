@@ -1,7 +1,7 @@
 package com.zclcs.common.core.constant;
 
 /**
- * FEBS系统常量类
+ * 系统常量类
  *
  * @author zclcs
  */

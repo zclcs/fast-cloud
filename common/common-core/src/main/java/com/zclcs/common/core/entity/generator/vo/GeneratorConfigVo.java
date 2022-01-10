@@ -123,5 +123,9 @@ public class GeneratorConfigVo {
      * 数据表对应的类名
      */
     private String className;
+    /**
+     * 数据表对应的主键字段名
+     */
+    private String keyName;
 
 }

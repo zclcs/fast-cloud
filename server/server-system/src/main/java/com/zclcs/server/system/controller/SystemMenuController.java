@@ -66,15 +66,15 @@ public class SystemMenuController {
     @PostMapping
     @PreAuthorize("hasAuthority('menu:add')")
     @ApiOperation(value = "新增菜单/按钮")
-    @ControllerEndpoint(operation = "新增菜单/按钮", exceptionMessage = "新增菜单/按钮失败")
-    public void addMenu(@RequestBody @Validated SystemMenuAo menu) {
-        this.menuService.createSystemMenu(menu);
+    @ControllerEndpoint(operation = "新增菜单/按钮")
+    public BaseRsp<Long> addMenu(@RequestBody @Validated SystemMenuAo menu) {
+        return BaseRspUtil.data(this.menuService.createSystemMenu(menu));
     }
 
     @DeleteMapping("/{menuIds}")
     @PreAuthorize("hasAuthority('menu:delete')")
     @ApiOperation(value = "删除菜单/按钮")
-    @ControllerEndpoint(operation = "删除菜单/按钮", exceptionMessage = "删除菜单/按钮失败")
+    @ControllerEndpoint(operation = "删除菜单/按钮")
     public void deleteMenus(@ApiParam(value = "菜单/按钮id集合(,分隔)", required = true) @NotBlank(message = "{required}") @PathVariable String menuIds) {
         List<Long> ids = Arrays.stream(menuIds.split(StringConstant.COMMA)).map(Long::valueOf).collect(Collectors.toList());
         this.menuService.deleteMenus(ids);
@@ -83,7 +83,7 @@ public class SystemMenuController {
     @PutMapping
     @PreAuthorize("hasAuthority('menu:update')")
     @ApiOperation(value = "修改菜单/按钮")
-    @ControllerEndpoint(operation = "修改菜单/按钮", exceptionMessage = "修改菜单/按钮失败")
+    @ControllerEndpoint(operation = "修改菜单/按钮")
     public void updateMenu(@RequestBody @Validated(UpdateStrategy.class) SystemMenuAo menu) {
         this.menuService.updateSystemMenu(menu);
     }

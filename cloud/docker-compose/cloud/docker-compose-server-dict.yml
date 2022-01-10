@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  server-dict:
+    image: ${CLOUD_DEPOSITORY_URL}/server-dict:${CLOUD_DEPOSITORY_TAG}
+    container_name: server-dict
+    network_mode: host
+    command: sh -c "/wait && java ${SERVER_DICT_JAVA_OPS} -cp /app/resources:/app/classes:/app/libs/* ${SERVER_DICT_MAIN_CLASS}"
+    environment:
+      WAIT_HOSTS: ${NACOS_HOST}:${PORT_TX_MANAGER}
+      WAIT_SLEEP_INTERVAL: ${DOCKER_WAIT_SLEEP_INTERVAL}
+      WAIT_HOST_CONNECT_TIMEOUT: ${DOCKER_WAIT_HOST_CONNECT_TIMEOUT}
+      WAIT_TIMEOUT: ${DOCKER_WAIT_TIMEOUT}
+    volumes:
+      - ./log/server-dict:/log/server-dict
+      - ./.txlcn:/.txlcn
+      - ./log/server-dict/skywalking:/agent/logs
+      - ${CLOUD_AGENT_CONFIG}
+    env_file: .env

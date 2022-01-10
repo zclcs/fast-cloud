@@ -3,8 +3,7 @@ package com.zclcs.common.core.entity.test.ao;
 import com.zclcs.common.core.validate.strategy.UpdateStrategy;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotNull;
@@ -15,9 +14,12 @@ import java.io.Serializable;
  * 班级 Ao
  *
  * @author zclcs
- * @date 2021-10-15 09:28:31.675
+ * @date 2022-01-10 14:54:16.690
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "TestClassAo对象", description = "班级")
@@ -32,6 +34,10 @@ public class TestClassAo implements Serializable {
     @Size(max = 255, message = "{noMoreThan}")
     @ApiModelProperty(value = "名称")
     private String name;
+
+    @Size(max = 40, message = "{noMoreThan}")
+    @ApiModelProperty(value = "类型 @@yes_no")
+    private String type;
 
 
 }

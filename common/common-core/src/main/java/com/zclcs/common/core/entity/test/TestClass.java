@@ -16,14 +16,14 @@ import java.io.Serializable;
  * 班级 Entity
  *
  * @author zclcs
- * @date 2021-10-15 09:28:31.675
+ * @date 2022-01-10 14:54:16.690
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("test_class")
 @ApiModel(value = "TestClass对象", description = "班级")
-public class TestClass extends Model<TestClass> {
+public class TestClass {
 
     /**
      * 主键
@@ -37,8 +37,11 @@ public class TestClass extends Model<TestClass> {
     @TableField("name")
     private String name;
 
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
+    /**
+     * 类型 @@yes_no
+     */
+    @TableField("type")
+    private String type;
+
+
 }

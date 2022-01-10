@@ -67,18 +67,20 @@ public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${c
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void create${className}(${className}Ao ${className?uncap_first}Ao) {
+    public ${className} create${className}(${className}Ao ${className?uncap_first}Ao) {
         ${className} ${className?uncap_first} = new ${className}();
         BeanUtil.copyProperties(${className?uncap_first}Ao, ${className?uncap_first});
         this.save(${className?uncap_first});
+        return ${className?uncap_first};
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void update${className}(${className}Ao ${className?uncap_first}Ao) {
+    public ${className} update${className}(${className}Ao ${className?uncap_first}Ao) {
         ${className} ${className?uncap_first} = new ${className}();
         BeanUtil.copyProperties(${className?uncap_first}Ao, ${className?uncap_first});
         this.updateById(${className?uncap_first});
+        return ${className?uncap_first};
     }
 
     @Override

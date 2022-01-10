@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zclcs.gateway.mapper.BlackListMapper">
+
+    <sql id="baseSql">
+        select sbl.black_id,
+               sbl.black_ip,
+               sbl.request_uri,
+               sbl.request_method,
+               sbl.limit_from,
+               sbl.limit_to,
+               sbl.location,
+               sbl.black_status,
+               sbl.create_time,
+               sbl.modify_time
+        from system_black_list sbl
+            ${ew.customSqlSegment}
+    </sql>
+    <sql id="baseCountSql">
+        select count(*)
+        from system_black_list sbl
+            ${ew.customSqlSegment}
+    </sql>
+    <select id="findPageVo" resultType="com.zclcs.common.core.entity.system.vo.BlackListVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="findListVo" resultType="com.zclcs.common.core.entity.system.vo.BlackListVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="findOneVo" resultType="com.zclcs.common.core.entity.system.vo.BlackListVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="countVo" resultType="java.lang.Integer">
+        <include refid="baseCountSql"/>
+    </select>
+</mapper>

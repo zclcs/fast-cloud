@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zclcs.gateway.mapper.BlockLogMapper">
+
+    <sql id="baseSql">
+        select sbl.block_id,
+               sbl.block_ip,
+               sbl.request_uri,
+               sbl.request_method,
+               sbl.location,
+               sbl.create_time,
+               sbl.modify_time
+        from system_block_log sbl
+            ${ew.customSqlSegment}
+    </sql>
+    <sql id="baseCountSql">
+        select count(*)
+        from system_block_log sbl
+            ${ew.customSqlSegment}
+    </sql>
+    <select id="findPageVo" resultType="com.zclcs.common.core.entity.system.vo.BlockLogVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="findListVo" resultType="com.zclcs.common.core.entity.system.vo.BlockLogVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="findOneVo" resultType="com.zclcs.common.core.entity.system.vo.BlockLogVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="countVo" resultType="java.lang.Integer">
+        <include refid="baseCountSql"/>
+    </select>
+</mapper>

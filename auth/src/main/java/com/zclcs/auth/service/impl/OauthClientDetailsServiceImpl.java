@@ -1,9 +1,11 @@
 package com.zclcs.auth.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zclcs.auth.manager.UserManager;
 import com.zclcs.auth.mapper.OauthClientDetailsMapper;
 import com.zclcs.auth.service.OauthClientDetailsService;
 import com.zclcs.common.core.base.BasePage;
@@ -21,6 +23,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * <p>
@@ -37,6 +40,7 @@ import java.util.List;
 public class OauthClientDetailsServiceImpl extends ServiceImpl<OauthClientDetailsMapper, OauthClientDetails> implements OauthClientDetailsService {
 
     private final PasswordEncoder passwordEncoder;
+    private final UserManager userManager;
     private final RedisClientDetailsService redisClientDetailsService;
 
     @Override
@@ -46,6 +50,8 @@ public class OauthClientDetailsServiceImpl extends ServiceImpl<OauthClientDetail
         BasePage<OauthClientDetailsVo> page = new BasePage<>(findOauthClientDetailsPageAo.getPageNum(), findOauthClientDetailsPageAo.getPageSize());
         BasePage<OauthClientDetailsVo> result = this.baseMapper.findPageVo(page, queryWrapper);
         result.getList().forEach(oauthClientDetailsVo -> {
+            Optional.ofNullable(oauthClientDetailsVo.getAuthorities()).filter(StrUtil::isNotBlank).ifPresent(s ->
+                    oauthClientDetailsVo.setMenuIds(userManager.findMenuIdsByPermissions(oauthClientDetailsVo.getAuthorities())));
             oauthClientDetailsVo.setClientSecret(null);
             oauthClientDetailsVo.setOriginSecret(null);
         });
@@ -68,6 +74,7 @@ public class OauthClientDetailsServiceImpl extends ServiceImpl<OauthClientDetail
         }
         OauthClientDetails oauthClientDetails = new OauthClientDetails();
         BeanUtil.copyProperties(oauthClientDetailsAo, oauthClientDetails);
+        setAuthorities(oauthClientDetailsAo.getMenuIds(), oauthClientDetails);
         oauthClientDetails.setOriginSecret(oauthClientDetails.getClientSecret());
         oauthClientDetails.setClientSecret(passwordEncoder.encode(oauthClientDetails.getClientSecret()));
         boolean saved = this.save(oauthClientDetails);
@@ -85,6 +92,7 @@ public class OauthClientDetailsServiceImpl extends ServiceImpl<OauthClientDetail
         queryWrapper.eq(OauthClientDetails::getClientId, clientId);
         OauthClientDetails oauthClientDetails = new OauthClientDetails();
         BeanUtil.copyProperties(oauthClientDetailsAo, oauthClientDetails);
+        setAuthorities(oauthClientDetailsAo.getMenuIds(), oauthClientDetails);
         oauthClientDetails.setClientId(null);
         oauthClientDetails.setClientSecret(null);
         boolean updated = this.update(oauthClientDetails, queryWrapper);
@@ -105,5 +113,10 @@ public class OauthClientDetailsServiceImpl extends ServiceImpl<OauthClientDetail
             log.info("删除ClientId为({})的Client", clientIds);
             clientIds.forEach(c -> this.redisClientDetailsService.removeRedisCache(String.valueOf(c)));
         }
+    }
+
+    private void setAuthorities(List<Long> menuIds, OauthClientDetails oauthClientDetails) {
+        String permissions = userManager.findPermissions(menuIds);
+        oauthClientDetails.setAuthorities(permissions);
     }
 }

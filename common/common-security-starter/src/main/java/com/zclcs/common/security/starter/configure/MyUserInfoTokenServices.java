@@ -1,9 +1,10 @@
 package com.zclcs.common.security.starter.configure;
 
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.TypeReference;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.*;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -31,12 +32,12 @@ import java.util.Set;
  *
  * @author zclcs
  */
+@Slf4j
 public class MyUserInfoTokenServices implements ResourceServerTokenServices {
-
-    protected final Log logger = LogFactory.getLog(this.getClass());
 
     private final String userInfoEndpointUrl;
     private final String clientId;
+    private final ObjectMapper objectMapper = new ObjectMapper();
     private OAuth2RestOperations restTemplate;
     private String tokenType = "Bearer";
     private AuthoritiesExtractor authoritiesExtractor = new FixedAuthoritiesExtractor();
@@ -70,9 +71,7 @@ public class MyUserInfoTokenServices implements ResourceServerTokenServices {
         Map<String, Object> map = this.getMap(this.userInfoEndpointUrl, accessToken);
         String error = "error";
         if (map.containsKey(error)) {
-            if (this.logger.isDebugEnabled()) {
-                this.logger.debug("userinfo returned error: " + map.get(error));
-            }
+            log.debug("userinfo returned error: " + map.get(error));
 
             throw new InvalidTokenException(accessToken);
         } else {
@@ -80,23 +79,24 @@ public class MyUserInfoTokenServices implements ResourceServerTokenServices {
         }
     }
 
+    @SneakyThrows
     private OAuth2Authentication extractAuthentication(Map<String, Object> map) {
         Object principal = this.getPrincipal(map);
         List<GrantedAuthority> authorities = this.authoritiesExtractor.extractAuthorities(map);
 
-        String oauth2RequestString = JSONObject.toJSONString(map.get("oauth2Request"));
-        JSONObject oauth2Request = JSONObject.parseObject(oauth2RequestString);
+        String oauth2RequestString = objectMapper.writeValueAsString(map.get("oauth2Request"));
+
+        ObjectNode jsonNodes = objectMapper.readValue(oauth2RequestString, ObjectNode.class);
         TypeReference<Set<String>> setTypeReference = new TypeReference<Set<String>>() {
         };
-
-        Map<String, String> requestParameters = JSONObject.parseObject(oauth2Request.getString("requestParameters"), new TypeReference<Map<String, String>>() {
+        Map<String, String> requestParameters = objectMapper.readValue(jsonNodes.get("requestParameters").toString(), new TypeReference<Map<String, String>>() {
         });
-        boolean approved = oauth2Request.getBooleanValue("approved");
-        Set<String> scope = JSONObject.parseObject(oauth2Request.getString("scope"), setTypeReference);
-        Set<String> resourceIds = JSONObject.parseObject(oauth2Request.getString("resourceIds"), setTypeReference);
-        String redirectUri = oauth2Request.getString("redirectUri");
-        Set<String> responseTypes = JSONObject.parseObject(oauth2Request.getString("responseTypes"), setTypeReference);
-        Map<String, Serializable> extensions = JSONObject.parseObject(oauth2Request.getString("extensions"), new TypeReference<Map<String, Serializable>>() {
+        boolean approved = jsonNodes.get("approved").asBoolean();
+        Set<String> scope = objectMapper.readValue(jsonNodes.get("scope").toString(), setTypeReference);
+        Set<String> resourceIds = objectMapper.readValue(jsonNodes.get("resourceIds").toString(), setTypeReference);
+        String redirectUri = jsonNodes.get("redirectUri").toString();
+        Set<String> responseTypes = objectMapper.readValue(jsonNodes.get("responseTypes").toString(), setTypeReference);
+        Map<String, Serializable> extensions = objectMapper.readValue(jsonNodes.get("extensions").toString(), new TypeReference<Map<String, Serializable>>() {
         });
 
         OAuth2Request request = new OAuth2Request(requestParameters, this.clientId, authorities, approved, scope, resourceIds, redirectUri, responseTypes, extensions);
@@ -117,9 +117,7 @@ public class MyUserInfoTokenServices implements ResourceServerTokenServices {
 
     @SuppressWarnings("all")
     private Map<String, Object> getMap(String path, String accessToken) {
-        if (this.logger.isDebugEnabled()) {
-            this.logger.debug("Getting user info from: " + path);
-        }
+        log.debug("Getting user info from: " + path);
 
         try {
             OAuth2RestOperations restTemplate = this.restTemplate;
@@ -138,7 +136,7 @@ public class MyUserInfoTokenServices implements ResourceServerTokenServices {
 
             return (Map) restTemplate.getForEntity(path, Map.class, new Object[0]).getBody();
         } catch (Exception e) {
-            this.logger.warn("Could not fetch user details: " + e.getClass() + ", " + e.getMessage());
+            log.warn("Could not fetch user details: " + e.getClass() + ", " + e.getMessage());
             return Collections.singletonMap("error", "Could not fetch user details");
         }
     }

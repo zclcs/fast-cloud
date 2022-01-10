@@ -1,7 +1,9 @@
 package com.zclcs.auth.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zclcs.common.redis.starter.service.RedisService;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -29,11 +31,14 @@ public class RedisClientDetailsService extends JdbcClientDetailsService {
 
     private final RedisService redisService;
 
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
     public RedisClientDetailsService(DataSource dataSource, RedisService redisService) {
         super(dataSource);
         this.redisService = redisService;
     }
 
+    @SneakyThrows
     @Override
     public ClientDetails loadClientByClientId(String clientId) throws InvalidClientException {
         ClientDetails clientDetails = null;
@@ -41,7 +46,7 @@ public class RedisClientDetailsService extends JdbcClientDetailsService {
         if (StringUtils.isBlank(value)) {
             clientDetails = cacheAndGetClient(clientId);
         } else {
-            clientDetails = JSONObject.parseObject(value, BaseClientDetails.class);
+            clientDetails = objectMapper.readValue(value, BaseClientDetails.class);
         }
 
         return clientDetails;
@@ -52,6 +57,7 @@ public class RedisClientDetailsService extends JdbcClientDetailsService {
      *
      * @param clientId clientId
      */
+    @SneakyThrows
     public ClientDetails cacheAndGetClient(String clientId) {
         ClientDetails clientDetails = null;
         clientDetails = super.loadClientByClientId(clientId);
@@ -63,7 +69,8 @@ public class RedisClientDetailsService extends JdbcClientDetailsService {
                         autoApproveScopes.stream().map(this::convert).collect(Collectors.toSet())
                 );
             }
-            redisService.hset(CACHE_CLIENT_KEY, clientId, JSONObject.toJSONString(baseClientDetails));
+
+            redisService.hset(CACHE_CLIENT_KEY, clientId, objectMapper.writeValueAsString(baseClientDetails));
         }
         return clientDetails;
     }
@@ -91,7 +98,13 @@ public class RedisClientDetailsService extends JdbcClientDetailsService {
             log.error("oauth_client_details表数据为空，请检查");
             return;
         }
-        list.forEach(client -> redisService.hset(CACHE_CLIENT_KEY, client.getClientId(), JSONObject.toJSONString(client)));
+        list.forEach(client -> {
+            try {
+                redisService.hset(CACHE_CLIENT_KEY, client.getClientId(), objectMapper.writeValueAsString(client));
+            } catch (JsonProcessingException e) {
+                log.error(e.getMessage(), e);
+            }
+        });
     }
 
     private String convert(String value) {

@@ -6,6 +6,8 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.codingapi.txlcn.tc.annotation.LcnTransaction;
+import com.zclcs.common.core.constant.StringConstant;
 import com.zclcs.common.core.entity.MenuTree;
 import com.zclcs.common.core.entity.Tree;
 import com.zclcs.common.core.entity.router.RouterMeta;
@@ -25,6 +27,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -98,20 +101,27 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
 
     @Override
     public List<SystemMenuVo> findSystemMenuList(SystemMenuAo menu) {
+        List<String> types = new ArrayList<>();
+        Optional.ofNullable(menu.getTypes()).filter(StrUtil::isNotBlank)
+                .ifPresent(s -> types.addAll(Arrays.asList(menu.getTypes().split(StringConstant.COMMA))));
         QueryWrapper<SystemMenuVo> queryWrapper = new QueryWrapper<>();
         queryWrapper.like(StrUtil.isNotBlank(menu.getMenuName()), "sm.menu_name", menu.getMenuName());
+        queryWrapper.like(StrUtil.isNotBlank(menu.getType()), "sm.type", menu.getType());
+        queryWrapper.in(CollectionUtil.isNotEmpty(types), "sm.type", types);
         queryWrapper.orderByAsc("sm.order_num");
         return this.baseMapper.findListVo(queryWrapper);
     }
 
     @Override
+    @LcnTransaction
     @Transactional(rollbackFor = Exception.class)
-    public void createSystemMenu(SystemMenuAo menu) {
+    public Long createSystemMenu(SystemMenuAo menu) {
         SystemMenu systemMenu = new SystemMenu();
         BeanUtil.copyProperties(menu, systemMenu);
         systemMenu.setCreateTime(DateUtil.date());
         setMenu(systemMenu);
         this.save(systemMenu);
+        return systemMenu.getMenuId();
     }
 
     @Override

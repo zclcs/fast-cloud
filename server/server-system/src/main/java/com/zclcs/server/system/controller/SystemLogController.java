@@ -1,6 +1,5 @@
 package com.zclcs.server.system.controller;
 
-import com.zclcs.common.core.annotation.ControllerEndpoint;
 import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
 import com.zclcs.common.core.base.BaseRsp;
@@ -42,7 +41,7 @@ public class SystemLogController {
 
     @GetMapping
     @ApiOperation(value = "分页")
-    @PreAuthorize("hasAuthority('log:view')")
+    @PreAuthorize("hasAuthority('userLog:view')")
     public BaseRsp<BasePage<SystemLogVo>> logList(BasePageAo basePageAo, SystemLogAo log) {
         BasePage<SystemLogVo> page = this.logService.findLogPage(basePageAo, log);
         return BaseRspUtil.data(page);
@@ -54,9 +53,8 @@ public class SystemLogController {
         this.logService.saveLog(log.getClassName(), log.getMethodName(), log.getParams(), log.getIp(), log.getOperation(), log.getUsername(), log.getStart());
     }
 
-    @DeleteMapping("{logIds}")
+    @DeleteMapping("/{logIds}")
     @PreAuthorize("hasAuthority('log:delete')")
-    @ControllerEndpoint(exceptionMessage = "删除日志失败")
     @ApiOperation(value = "删除日志")
     public void deleteLogs(@ApiParam(value = "日志id集合(,分隔)", required = true) @NotBlank(message = "{required}") @PathVariable String logIds) {
         List<Long> ids = Arrays.stream(logIds.split(StringConstant.COMMA)).map(Long::valueOf).collect(Collectors.toList());

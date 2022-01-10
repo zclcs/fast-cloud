@@ -4,15 +4,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zclcs.common.core.annotation.ControllerEndpoint;
 import com.zclcs.common.core.entity.system.ao.SystemLogAo;
 import com.zclcs.common.core.exception.MyException;
-import com.zclcs.common.core.service.SystemLogService;
+import com.zclcs.common.core.service.SystemService;
 import com.zclcs.common.core.utils.BaseUtil;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,12 +27,21 @@ import java.util.*;
 @Aspect
 @Slf4j
 @Component
-@RequiredArgsConstructor
 public class ControllerEndpointAspect extends BaseAspectSupport {
 
-    private final SystemLogService systemLogService;
+    private SystemService systemService;
 
-    private final ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
+
+    @Autowired(required = false)
+    public void setSystemLogService(SystemService systemService) {
+        this.systemService = systemService;
+    }
+
+    @Autowired
+    public void setObjectMapper(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 
     @Pointcut("execution(* com.zclcs..*.controller..*.*(..)) && @annotation(com.zclcs.common.core.annotation.ControllerEndpoint)")
     public void pointcut() {
@@ -69,15 +78,12 @@ public class ControllerEndpointAspect extends BaseAspectSupport {
                 systemLogAo.setOperation(operation);
                 systemLogAo.setUsername(username);
                 systemLogAo.setStart(start);
-                systemLogService.saveLog(systemLogAo);
+                systemService.saveLog(systemLogAo);
             }
             return result;
         } catch (Throwable throwable) {
-            log.error(throwable.getMessage(), throwable);
-            String exceptionMessage = annotation.exceptionMessage();
             String message = throwable.getMessage();
-            String error = BaseUtil.containChinese(message) ? exceptionMessage + "，" + message : exceptionMessage;
-            throw new MyException(error);
+            throw new MyException(message);
         }
     }
 

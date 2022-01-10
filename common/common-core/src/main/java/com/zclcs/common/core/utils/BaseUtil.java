@@ -2,14 +2,15 @@ package com.zclcs.common.core.utils;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zclcs.common.core.constant.PageConstant;
 import com.zclcs.common.core.constant.RegexpConstant;
 import com.zclcs.common.core.constant.StringConstant;
+import com.zclcs.common.core.constant.ValidConstant;
 import com.zclcs.common.core.entity.CurrentUser;
-import com.zclcs.common.core.entity.FebsAuthUser;
+import com.zclcs.common.core.entity.MyAuthUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.env.Environment;
@@ -37,7 +38,7 @@ import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
 /**
- * FEBS工具类
+ * 工具类
  *
  * @author zclcs
  */
@@ -45,6 +46,8 @@ import java.util.stream.IntStream;
 public abstract class BaseUtil {
 
     private static final String UNKNOW = "unknown";
+
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
      * 驼峰转下划线
@@ -113,6 +116,22 @@ public abstract class BaseUtil {
     }
 
     /**
+     * 根据行政区划代码返回 省 市 县
+     *
+     * @param areaCode 行政区划代码
+     * @return 省 0 市 1 县 2
+     */
+    public static String getNameByAreaCode(String areaCode) {
+        if (StrUtil.endWith(areaCode, ValidConstant.PROVINCE_CODE_END)) {
+            return ValidConstant.PROVINCE;
+        }
+        if (StrUtil.endWith(areaCode, ValidConstant.CITY_CODE_END)) {
+            return ValidConstant.CITY;
+        }
+        return ValidConstant.COUNTY;
+    }
+
+    /**
      * 设置响应
      *
      * @param response    HttpServletResponse
@@ -125,7 +144,7 @@ public abstract class BaseUtil {
                                     int status, Object value) throws IOException {
         response.setContentType(contentType);
         response.setStatus(status);
-        response.getOutputStream().write(JSONObject.toJSONString(value).getBytes());
+        response.getOutputStream().write(objectMapper.writeValueAsString(value).getBytes());
     }
 
     /**
@@ -175,7 +194,7 @@ public abstract class BaseUtil {
                                                  HttpStatus status, Object value) {
         response.setStatusCode(status);
         response.getHeaders().add(HttpHeaders.CONTENT_TYPE, contentType);
-        DataBuffer dataBuffer = response.bufferFactory().wrap(JSONObject.toJSONString(value).getBytes());
+        DataBuffer dataBuffer = response.bufferFactory().wrap(JSONUtil.toJsonStr(value).getBytes());
         return response.writeWith(Mono.just(dataBuffer));
     }
 
@@ -294,8 +313,8 @@ public abstract class BaseUtil {
      */
     public static String getCurrentUsername() {
         Object principal = getOauth2Authentication().getPrincipal();
-        if (principal instanceof FebsAuthUser) {
-            return ((FebsAuthUser) principal).getUsername();
+        if (principal instanceof MyAuthUser) {
+            return ((MyAuthUser) principal).getUsername();
         }
         return (String) getOauth2Authentication().getPrincipal();
     }

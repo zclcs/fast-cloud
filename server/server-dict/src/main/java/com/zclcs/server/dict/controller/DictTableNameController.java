@@ -1,6 +1,5 @@
 package com.zclcs.server.dict.controller;
 
-import com.zclcs.common.core.annotation.ControllerEndpoint;
 import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
 import com.zclcs.common.core.base.BaseRsp;
@@ -42,6 +41,7 @@ public class DictTableNameController {
 
     @GetMapping
     @ApiOperation(value = "字典名表查询（分页）")
+    @PreAuthorize("hasAuthority('tableName:view')")
     public BaseRsp<BasePage<DictTableNameVo>> findDictTableNamePage(@Valid BasePageAo basePageAo, DictTableNameVo dictTableNameVo) {
         BasePage<DictTableNameVo> page = this.dictTableNameService.findDictTableNamePage(basePageAo, dictTableNameVo);
         return BaseRspUtil.data(page);
@@ -49,6 +49,7 @@ public class DictTableNameController {
 
     @GetMapping("list")
     @ApiOperation(value = "字典名表查询（集合）")
+    @PreAuthorize("hasAuthority('tableName:view')")
     public BaseRsp<List<DictTableNameVo>> findDictTableNameList(DictTableNameVo dictTableNameVo) {
         List<DictTableNameVo> list = this.dictTableNameService.findDictTableNameList(dictTableNameVo);
         return BaseRspUtil.data(list);
@@ -56,6 +57,7 @@ public class DictTableNameController {
 
     @GetMapping("one")
     @ApiOperation(value = "字典名表查询（单个）")
+    @PreAuthorize("hasAuthority('tableName:view')")
     public BaseRsp<DictTableNameVo> findDictTableName(DictTableNameVo dictTableNameVo) {
         DictTableNameVo dictTableName = this.dictTableNameService.findDictTableName(dictTableNameVo);
         return BaseRspUtil.data(dictTableName);
@@ -63,7 +65,6 @@ public class DictTableNameController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('tableName:add')")
-    @ControllerEndpoint(operation = "新增字典名表", exceptionMessage = "新增字典名表失败")
     @ApiOperation(value = "新增字典名表")
     public void addDictTableName(@RequestBody @Validated DictTableNameAo dictTableNameAo) {
         this.dictTableNameService.createDictTableName(dictTableNameAo);
@@ -71,7 +72,6 @@ public class DictTableNameController {
 
     @DeleteMapping("/{tableNameIds}")
     @PreAuthorize("hasAuthority('tableName:delete')")
-    @ControllerEndpoint(operation = "删除字典名表", exceptionMessage = "删除字典名表失败")
     @ApiOperation(value = "删除字典名表")
     public void deleteDictTableName(@ApiParam(value = "字典名表id集合(,分隔)", required = true) @NotBlank(message = "{required}") @PathVariable String tableNameIds) {
         List<Long> ids = Arrays.stream(tableNameIds.split(StringConstant.COMMA)).map(Long::valueOf).collect(Collectors.toList());
@@ -80,7 +80,6 @@ public class DictTableNameController {
 
     @PutMapping
     @PreAuthorize("hasAuthority('tableName:update')")
-    @ControllerEndpoint(operation = "修改字典名表", exceptionMessage = "修改字典名表失败")
     @ApiOperation(value = "修改字典名表")
     public void updateDictTableName(@RequestBody @Validated DictTableNameAo dictTableNameAo) {
         this.dictTableNameService.updateDictTableName(dictTableNameAo);

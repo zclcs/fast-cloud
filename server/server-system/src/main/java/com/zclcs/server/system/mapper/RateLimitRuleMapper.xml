@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zclcs.server.system.mapper.RateLimitRuleMapper">
+
+    <sql id="baseSql">
+        select srlr.rate_limit_rule_id,
+               srlr.request_uri,
+               srlr.request_method,
+               srlr.limit_from,
+               srlr.limit_to,
+               srlr.rate_limit_count,
+               srlr.interval_sec,
+               srlr.rule_status,
+               srlr.create_time,
+               srlr.modify_time
+        from system_rate_limit_rule srlr
+            ${ew.customSqlSegment}
+    </sql>
+    <sql id="baseCountSql">
+        select count(*)
+        from system_rate_limit_rule srlr
+            ${ew.customSqlSegment}
+    </sql>
+    <select id="findPageVo" resultType="com.zclcs.common.core.entity.system.vo.RateLimitRuleVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="findListVo" resultType="com.zclcs.common.core.entity.system.vo.RateLimitRuleVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="findOneVo" resultType="com.zclcs.common.core.entity.system.vo.RateLimitRuleVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="countVo" resultType="java.lang.Integer">
+        <include refid="baseCountSql"/>
+    </select>
+</mapper>

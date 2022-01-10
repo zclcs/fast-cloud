@@ -4,7 +4,9 @@ import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
 import com.zclcs.common.core.entity.generator.Column;
 import com.zclcs.common.core.entity.generator.Table;
+import com.zclcs.common.core.entity.generator.ao.GenerateAo;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -41,4 +43,10 @@ public interface GeneratorService {
      */
     List<Column> getColumns(String databaseType, String schemaName, String tableName);
 
+    /**
+     * 代码生成
+     * @param generateAo 参数
+     * @param response 返回
+     */
+    void generate(GenerateAo generateAo, HttpServletResponse response);
 }

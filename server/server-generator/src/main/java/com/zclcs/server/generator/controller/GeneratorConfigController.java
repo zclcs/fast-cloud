@@ -1,6 +1,5 @@
 package com.zclcs.server.generator.controller;
 
-import com.zclcs.common.core.annotation.ControllerEndpoint;
 import com.zclcs.common.core.base.BaseRsp;
 import com.zclcs.common.core.entity.generator.ao.GeneratorConfigAo;
 import com.zclcs.common.core.entity.generator.vo.GeneratorConfigVo;
@@ -38,7 +37,6 @@ public class GeneratorConfigController {
     @PutMapping
     @PreAuthorize("hasAuthority('gen:config:update')")
     @ApiOperation(value = "修改代码生成配置")
-    @ControllerEndpoint(operation = "修改代码生成配置", exceptionMessage = "修改代码生成配置失败")
     public void updateGeneratorConfig(@RequestBody @Validated(UpdateStrategy.class) GeneratorConfigAo generatorConfig) throws MyException {
         if (generatorConfig.getId() == null) {
             throw new MyException("配置id不能为空");

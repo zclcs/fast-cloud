@@ -1,0 +1,60 @@
+version: '3'
+# docker network create -d bridge cloud_net 部署前 创建网络群组
+services:
+  mysql:
+    image: mysql:5.7.35
+    container_name: mysql-cloud
+    network_mode: host
+    environment:
+      # 设置密码
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      # 设置时区
+      TZ: Asia/Shanghai
+    volumes:
+      #挂载 MySQL数据
+      - ./mysql/data:/var/lib/mysql
+      #挂载 MySQL配置文件
+      - ./mysql/conf:/etc/mysql/mysql.conf.d
+  redis:
+    image: redis:6.2.5
+    container_name: redis-cloud
+    network_mode: host
+    environment:
+      # 设置时区
+      TZ: Asia/Shanghai
+    command: redis-server /usr/local/etc/redis/redis.conf --appendonly yes
+    volumes:
+      - ./redis/data:/data #挂载 Redis数据
+      - ./redis/conf/redis.conf:/usr/local/etc/redis/redis.conf #挂载 Redis配置
+  nacos:
+    image: nacos/nacos-server:2.0.3
+    container_name: nacos-standalone-mysql
+    network_mode: host
+    environment:
+      # 设置时区
+      TZ: Asia/Shanghai
+    volumes:
+      - ./nacos/standalone-logs/:/home/nacos/logs
+      - ./nacos/init.d/custom.properties:/home/nacos/init.d/custom.properties
+    env_file: .env
+    depends_on:
+      - mysql
+  minio:
+    image: minio/minio:RELEASE.2021-10-06T23-36-31Z
+    container_name: minio
+    network_mode: host
+    environment:
+      # 设置时区
+      TZ: Asia/Shanghai
+      #管理后台用户名
+      MINIO_ROOT_USER: ${ROOT_USER}
+      #管理后台密码，最小8个字符
+      MINIO_ROOT_PASSWORD: ${ROOT_PASSWORD}
+    env_file: .env
+    volumes:
+      #映射当前目录下的data目录至容器内/data目录
+      - ./minio/data:/data
+      #映射配置目录
+      - ./minio/config:/root/.minio/
+    command: server --console-address ':9001' /data  #指定容器中的目录 /data
+    privileged: true

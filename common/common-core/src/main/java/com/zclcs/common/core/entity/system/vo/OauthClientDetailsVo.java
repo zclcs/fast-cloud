@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -44,6 +45,9 @@ public class OauthClientDetailsVo implements Serializable {
 
     @ApiModelProperty(value = "拥有的系统权限")
     private String authorities;
+
+    @ApiModelProperty(value = "系统菜单")
+    private List<Long> menuIds;
 
     @ApiModelProperty(value = "token过期时间")
     private Integer accessTokenValidity;

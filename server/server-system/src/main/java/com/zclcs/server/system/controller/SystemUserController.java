@@ -98,7 +98,7 @@ public class SystemUserController {
     @PostMapping
     @PreAuthorize("hasAuthority('user:add')")
     @ApiOperation(value = "新增用户")
-    @ControllerEndpoint(operation = "新增用户", exceptionMessage = "新增用户失败")
+    @ControllerEndpoint(operation = "新增用户")
     public void addUser(@RequestBody @Validated SystemUserAo user) {
         this.userService.createUser(user);
     }
@@ -106,7 +106,7 @@ public class SystemUserController {
     @PutMapping
     @PreAuthorize("hasAuthority('user:update')")
     @ApiOperation(value = "修改用户")
-    @ControllerEndpoint(operation = "修改用户", exceptionMessage = "修改用户失败")
+    @ControllerEndpoint(operation = "修改用户")
     public void updateUser(@RequestBody @Validated(UpdateStrategy.class) SystemUserAo user) {
         this.userService.updateUser(user);
     }
@@ -114,7 +114,7 @@ public class SystemUserController {
     @DeleteMapping("/{userIds}")
     @PreAuthorize("hasAuthority('user:delete')")
     @ApiOperation(value = "删除用户")
-    @ControllerEndpoint(operation = "删除用户", exceptionMessage = "删除用户失败")
+    @ControllerEndpoint(operation = "删除用户")
     public void deleteUsers(@ApiParam(value = "用户id集合(,分隔)", required = true) @NotBlank(message = "{required}") @PathVariable String userIds) {
         List<Long> ids = Arrays.stream(userIds.split(StringConstant.COMMA)).map(Long::valueOf).collect(Collectors.toList());
         this.userService.deleteUsers(ids);
@@ -149,7 +149,7 @@ public class SystemUserController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "password", value = "密码", required = true, paramType = SwaggerParamTypeConstant.QUERY)
     })
-    @ControllerEndpoint(operation = "修改当前用户密码", exceptionMessage = "修改当前用户密码失败")
+    @ControllerEndpoint(operation = "修改当前用户密码")
     public void updateMyPassword(@NotBlank(message = "{required}") String password) {
         userService.updatePassword(null, password);
     }
@@ -160,7 +160,7 @@ public class SystemUserController {
             @ApiImplicitParam(name = "username", value = "用户名", required = true, paramType = SwaggerParamTypeConstant.QUERY),
             @ApiImplicitParam(name = "password", value = "密码", required = true, paramType = SwaggerParamTypeConstant.QUERY)
     })
-    @ControllerEndpoint(operation = "修改密码", exceptionMessage = "修改密码失败")
+    @ControllerEndpoint(operation = "修改密码")
     public void updatePassword(@NotBlank(message = "{required}") String username,
                                @NotBlank(message = "{required}") String password) {
         userService.updatePassword(username, password);
@@ -171,7 +171,7 @@ public class SystemUserController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "username", value = "用户名", required = true, paramType = SwaggerParamTypeConstant.QUERY)
     })
-    @ControllerEndpoint(operation = "禁用账号", exceptionMessage = "禁用账号失败")
+    @ControllerEndpoint(operation = "禁用账号")
     public void updateStatus(@NotBlank(message = "{required}") String username) {
         userService.updateStatus(username, null);
     }
@@ -182,7 +182,7 @@ public class SystemUserController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "usernames", value = "用户名集合(,分隔)", required = true, paramType = SwaggerParamTypeConstant.QUERY)
     })
-    @ControllerEndpoint(operation = "重置用户密码", exceptionMessage = "重置用户密码失败")
+    @ControllerEndpoint(operation = "重置用户密码")
     public void resetPassword(@NotBlank(message = "{required}") String usernames) {
         List<String> usernameList = Arrays.stream(usernames.split(StringConstant.COMMA)).collect(Collectors.toList());
         this.userService.resetPassword(usernameList);

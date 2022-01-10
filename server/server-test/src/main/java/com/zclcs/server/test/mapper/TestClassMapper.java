@@ -14,7 +14,7 @@ import java.util.List;
  * 班级 Mapper
  *
  * @author zclcs
- * @date 2021-10-15 09:48:59.045
+ * @date 2022-01-10 14:54:16.690
  */
 public interface TestClassMapper extends BaseMapper<TestClass> {
 
@@ -42,5 +42,13 @@ public interface TestClassMapper extends BaseMapper<TestClass> {
      * @return 对象
      */
     TestClassVo findOneVo(@Param(Constants.WRAPPER) Wrapper<TestClassVo> ew);
+
+    /**
+     * 统计
+     *
+     * @param ew 查询条件
+     * @return 对象
+     */
+    Integer countVo(@Param(Constants.WRAPPER) Wrapper<TestClassVo> ew);
 
 }

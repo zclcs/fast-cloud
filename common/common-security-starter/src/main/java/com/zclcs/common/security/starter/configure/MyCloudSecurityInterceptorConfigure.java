@@ -21,7 +21,7 @@ public class MyCloudSecurityInterceptorConfigure implements WebMvcConfigurer {
     }
 
     @Bean
-    public HandlerInterceptor febsServerProtectInterceptor() {
+    public HandlerInterceptor myServerProtectInterceptor() {
         MyServerProtectInterceptor myServerProtectInterceptor = new MyServerProtectInterceptor();
         myServerProtectInterceptor.setProperties(properties);
         return myServerProtectInterceptor;
@@ -30,6 +30,6 @@ public class MyCloudSecurityInterceptorConfigure implements WebMvcConfigurer {
     @Override
     @SuppressWarnings("all")
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(febsServerProtectInterceptor());
+        registry.addInterceptor(myServerProtectInterceptor());
     }
 }

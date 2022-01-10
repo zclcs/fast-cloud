@@ -1,11 +1,13 @@
 package com.zclcs.auth.manager;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zclcs.auth.mapper.SystemMenuMapper;
 import com.zclcs.auth.mapper.SystemUserMapper;
 import com.zclcs.auth.mapper.SystemUserRoleMapper;
 import com.zclcs.common.core.constant.MyConstant;
+import com.zclcs.common.core.constant.StringConstant;
 import com.zclcs.common.core.entity.system.SystemUser;
 import com.zclcs.common.core.entity.system.SystemUserRole;
 import com.zclcs.common.core.entity.system.vo.SystemMenuVo;
@@ -17,8 +19,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -62,6 +66,29 @@ public class UserManager {
     public List<String> findUserPermissions(String username) {
         List<SystemMenuVo> userPermissions = menuMapper.findUserPermissions(username);
         return userPermissions.stream().map(SystemMenuVo::getPerms).collect(Collectors.toList());
+    }
+
+    /**
+     * 通过菜单id集合查询权限串
+     *
+     * @param menuIds 菜单id集合
+     * @return 权限
+     */
+    public String findPermissions(List<Long> menuIds) {
+        List<SystemMenuVo> listVo = menuMapper.findListVo(new QueryWrapper<SystemMenuVo>().in("sm.menu_id", menuIds));
+        return listVo.stream().map(SystemMenuVo::getPerms).filter(StrUtil::isNotBlank).collect(Collectors.joining());
+    }
+
+    /**
+     * 通过权限串查询菜单id集合
+     *
+     * @param permissions 权限串
+     * @return 菜单id集合
+     */
+    public List<Long> findMenuIdsByPermissions(String permissions) {
+        List<String> permList = Arrays.stream(permissions.split(StringConstant.COMMA)).collect(Collectors.toList());
+        List<SystemMenuVo> listVo = menuMapper.findListVo(new QueryWrapper<SystemMenuVo>().in("sm.perms", permList));
+        return listVo.stream().map(SystemMenuVo::getMenuId).filter(Objects::nonNull).collect(Collectors.toList());
     }
 
     /**

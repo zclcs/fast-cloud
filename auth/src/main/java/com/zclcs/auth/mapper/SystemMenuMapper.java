@@ -1,8 +1,11 @@
 package com.zclcs.auth.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.zclcs.common.core.entity.system.SystemMenu;
 import com.zclcs.common.core.entity.system.vo.SystemMenuVo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -23,5 +26,13 @@ public interface SystemMenuMapper extends BaseMapper<SystemMenu> {
      * @return 权限集合
      */
     List<SystemMenuVo> findUserPermissions(String username);
+
+    /**
+     * 查找集合
+     *
+     * @param ew 查询条件
+     * @return 分页对象
+     */
+    List<SystemMenuVo> findListVo(@Param(Constants.WRAPPER) Wrapper<SystemMenuVo> ew);
 
 }

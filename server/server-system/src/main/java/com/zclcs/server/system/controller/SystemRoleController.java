@@ -72,7 +72,7 @@ public class SystemRoleController {
     @PostMapping
     @PreAuthorize("hasAuthority('role:add')")
     @ApiOperation(value = "新增角色")
-    @ControllerEndpoint(operation = "新增角色", exceptionMessage = "新增角色失败")
+    @ControllerEndpoint(operation = "新增角色")
     public void addRole(@RequestBody @Validated SystemRoleAo role) {
         this.roleService.createSystemRole(role);
     }
@@ -80,7 +80,7 @@ public class SystemRoleController {
     @DeleteMapping("/{roleIds}")
     @PreAuthorize("hasAuthority('role:delete')")
     @ApiOperation(value = "删除角色")
-    @ControllerEndpoint(operation = "删除角色", exceptionMessage = "删除角色失败")
+    @ControllerEndpoint(operation = "删除角色")
     public void deleteRoles(@ApiParam(value = "角色id集合(,分隔)", required = true) @NotBlank(message = "{required}") @PathVariable String roleIds) {
         List<Long> ids = Arrays.stream(roleIds.split(StringConstant.COMMA)).map(Long::valueOf).collect(Collectors.toList());
         this.roleService.deleteSystemRoles(ids);
@@ -89,7 +89,7 @@ public class SystemRoleController {
     @PutMapping
     @PreAuthorize("hasAuthority('role:update')")
     @ApiOperation(value = "修改角色")
-    @ControllerEndpoint(operation = "修改角色", exceptionMessage = "修改角色失败")
+    @ControllerEndpoint(operation = "修改角色")
     public void updateRole(@RequestBody @Validated(UpdateStrategy.class) SystemRoleAo role) {
         this.roleService.updateSystemRole(role);
     }

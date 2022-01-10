@@ -21,6 +21,10 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-security</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
@@ -49,10 +53,9 @@
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
-                <!-- 单独打包 mvn -DsendCredentialsOverHttp=true clean package -pl ../knife4j -am -->
                 <configuration>
                     <container>
-                        <mainClass>com.zclcs.knife4j.Knife4jApplication</mainClass>
+                        <mainClass>com.zclcs.Knife4jApplication</mainClass>
                     </container>
                 </configuration>
             </plugin>

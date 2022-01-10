@@ -5,10 +5,11 @@ import com.zclcs.auth.manager.UserManager;
 import com.zclcs.common.core.constant.ParamsConstant;
 import com.zclcs.common.core.constant.SocialConstant;
 import com.zclcs.common.core.constant.StringConstant;
-import com.zclcs.common.core.entity.FebsAuthUser;
+import com.zclcs.common.core.entity.MyAuthUser;
 import com.zclcs.common.core.entity.system.vo.SystemUserVo;
 import com.zclcs.common.core.utils.BaseUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.GrantedAuthority;
@@ -27,6 +28,7 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MyUserDetailServiceImpl implements UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;
@@ -49,7 +51,7 @@ public class MyUserDetailServiceImpl implements UserDetailsService {
             if (CollectionUtil.isNotEmpty(permissions)) {
                 grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList(String.join(StringConstant.COMMA, permissions));
             }
-            FebsAuthUser authUser = new FebsAuthUser(systemUser.getUsername(), password, true, true, true, notLocked,
+            MyAuthUser authUser = new MyAuthUser(systemUser.getUsername(), password, true, true, true, notLocked,
                     grantedAuthorities);
 
             BeanUtils.copyProperties(systemUser, authUser);

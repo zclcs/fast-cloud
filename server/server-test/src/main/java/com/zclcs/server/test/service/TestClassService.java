@@ -13,7 +13,7 @@ import java.util.List;
  * 班级 Service接口
  *
  * @author zclcs
- * @date 2021-10-15 09:48:59.045
+ * @date 2022-01-10 14:54:16.690
  */
 public interface TestClassService extends IService<TestClass> {
 
@@ -43,18 +43,28 @@ public interface TestClassService extends IService<TestClass> {
     TestClassVo findTestClass(TestClassVo testClassVo);
 
     /**
+     * 统计
+     *
+     * @param testClassVo testClassVo
+     * @return TestClassVo
+     */
+    Integer countTestClass(TestClassVo testClassVo);
+
+    /**
      * 新增
      *
      * @param testClassAo testClassAo
+     * @return TestClass
      */
-    void createTestClass(TestClassAo testClassAo);
+     TestClass createTestClass(TestClassAo testClassAo);
 
     /**
      * 修改
      *
      * @param testClassAo testClassAo
+     * @return TestClass
      */
-    void updateTestClass(TestClassAo testClassAo);
+     TestClass updateTestClass(TestClassAo testClassAo);
 
     /**
      * 删除

@@ -71,16 +71,16 @@ public class SystemDeptController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('dept:add')")
-    @ControllerEndpoint(operation = "新增部门", exceptionMessage = "新增部门失败")
     @ApiOperation(value = "新增部门")
+    @ControllerEndpoint(operation = "新增部门")
     public void addDept(@RequestBody @Validated SystemDeptAo dept) {
         this.deptService.createDept(dept);
     }
 
     @DeleteMapping("/{deptIds}")
     @PreAuthorize("hasAuthority('dept:delete')")
-    @ControllerEndpoint(operation = "删除部门", exceptionMessage = "删除部门失败")
     @ApiOperation(value = "删除部门")
+    @ControllerEndpoint(operation = "删除部门")
     public void deleteDepts(@ApiParam(value = "部门id集合(,分隔)", required = true) @NotBlank(message = "{required}") @PathVariable String deptIds) {
         List<Long> ids = Arrays.stream(deptIds.split(StringConstant.COMMA)).map(Long::valueOf).collect(Collectors.toList());
         this.deptService.deleteDept(ids);
@@ -88,8 +88,8 @@ public class SystemDeptController {
 
     @PutMapping
     @PreAuthorize("hasAuthority('dept:update')")
-    @ControllerEndpoint(operation = "修改部门", exceptionMessage = "修改部门失败")
     @ApiOperation(value = "修改部门")
+    @ControllerEndpoint(operation = "修改部门")
     public void updateDept(@RequestBody @Validated(UpdateStrategy.class) SystemDeptAo dept) {
         this.deptService.updateDept(dept);
     }

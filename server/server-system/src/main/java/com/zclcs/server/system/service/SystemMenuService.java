@@ -63,8 +63,9 @@ public interface SystemMenuService extends IService<SystemMenu> {
      * 创建菜单
      *
      * @param menu menu
+     * @return 菜单id
      */
-    void createSystemMenu(SystemMenuAo menu);
+    Long createSystemMenu(SystemMenuAo menu);
 
     /**
      * 更新菜单

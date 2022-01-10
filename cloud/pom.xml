@@ -84,7 +84,7 @@
         <docker.jib.auth.username>admin</docker.jib.auth.username>
         <docker.jib.auth.password>Harbor12345</docker.jib.auth.password>
         <docker.jib.to.image>192.168.33.10:3000/cloud</docker.jib.to.image>
-        <image.version>1.1-SNAPSHOT</image.version>
+        <image.version>1.2-SNAPSHOT</image.version>
     </properties>
 
     <dependencyManagement>
@@ -170,6 +170,8 @@
                                 <SW_AGENT_NAME>${project.artifactId}</SW_AGENT_NAME>
                                 <TZ>Asia/Shanghai</TZ>
                             </environment>
+                            <!--entrypoint的值等于INHERIT表示jib插件不构建启动命令了，此时要使用者自己控制，可以在启动时输入，或者写在基础镜像中-->
+                            <entrypoint>INHERIT</entrypoint>
                             <format>OCI</format>
                             <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
                         </container>
@@ -178,6 +180,16 @@
                         <!--将jib与mvn构建的生命周期绑定 mvn package自动构造镜像-->
                         <!--打包及推送命令 mvn clean package -DsendCredentialsOverHttp=true -->
                         <!--只打包jar命令 mvn clean package -Djib.skip -->
+                        <!-- 各服务单独打包命令 -->
+                        <!-- 单独打包网关 mvn -DsendCredentialsOverHttp=true clean package -pl ../gateway -am -->
+                        <!-- 单独打包鉴权服务 mvn -DsendCredentialsOverHttp=true clean package -pl ../auth -am -->
+                        <!-- 单独打包文档聚合服务 mvn -DsendCredentialsOverHttp=true clean package -pl ../knife4j -am -->
+                        <!-- 单独打包分布式事务服务TM mvn -DsendCredentialsOverHttp=true clean package -pl ../tx-manager -am -->
+                        <!-- 单独打包字典服务 mvn -DsendCredentialsOverHttp=true clean package -pl ../server/server-dict -am -->
+                        <!-- 单独打包代码生成服务 mvn -DsendCredentialsOverHttp=true clean package -pl ../server/server-generator -am -->
+                        <!-- 单独打包文件服务 mvn -DsendCredentialsOverHttp=true clean package -pl ../server/server-minio -am -->
+                        <!-- 单独打包系统服务 mvn -DsendCredentialsOverHttp=true clean package -pl ../server/server-system -am -->
+                        <!-- 单独打包测试服务 mvn -DsendCredentialsOverHttp=true clean package -pl ../server/server-test -am -->
                         <execution>
                             <phase>package</phase>
                             <goals>

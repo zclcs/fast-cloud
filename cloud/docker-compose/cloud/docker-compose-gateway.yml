@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  gateway:
+    image: ${CLOUD_DEPOSITORY_URL}/gateway:${CLOUD_DEPOSITORY_TAG}
+    container_name: gateway
+    network_mode: host
+    command: sh -c "/wait && java ${GATEWAY_JAVA_OPS} -cp /app/resources:/app/classes:/app/libs/* ${GATEWAY_MAIN_CLASS}"
+    environment:
+      WAIT_HOSTS: ${NACOS_HOST}:${PORT_SERVER_SYSTEM}
+      WAIT_SLEEP_INTERVAL: ${DOCKER_WAIT_SLEEP_INTERVAL}
+      WAIT_HOST_CONNECT_TIMEOUT: ${DOCKER_WAIT_HOST_CONNECT_TIMEOUT}
+      WAIT_TIMEOUT: ${DOCKER_WAIT_TIMEOUT}
+    volumes:
+      - ./log/gateway:/log/gateway
+      - ./log/gateway/skywalking:/agent/logs
+      - ${CLOUD_AGENT_CONFIG}
+    env_file: .env

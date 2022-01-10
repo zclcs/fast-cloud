@@ -99,9 +99,11 @@ public class DictTableServiceImpl extends ServiceImpl<DictTableMapper, DictTable
     @Transactional(rollbackFor = Exception.class)
     public void deleteDictTableName(List<Long> ids) {
         List<DictTableVo> dictTableList = this.findDictTableList(DictTableVo.builder().dictNameIds(ids).build());
-        List<Long> tableId = dictTableList.stream().map(DictTableVo::getId).collect(Collectors.toList());
-        this.removeByIds(tableId);
-        deleteDictValue(dictTableList);
+        List<Long> tableIds = dictTableList.stream().map(DictTableVo::getId).collect(Collectors.toList());
+        if (CollectionUtil.isNotEmpty(tableIds)) {
+            this.removeByIds(tableIds);
+            deleteDictValue(dictTableList);
+        }
     }
 
     private void refreshDictValue(Long id) {

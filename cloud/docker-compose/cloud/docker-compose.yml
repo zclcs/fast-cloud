@@ -1,0 +1,145 @@
+version: '3'
+
+services:
+  gateway:
+    image: ${CLOUD_DEPOSITORY_URL}/gateway:${CLOUD_DEPOSITORY_TAG}
+    container_name: gateway
+    network_mode: host
+    command: sh -c "/wait && java ${GATEWAY_JAVA_OPS} -cp /app/resources:/app/classes:/app/libs/* ${GATEWAY_MAIN_CLASS}"
+    environment:
+      WAIT_HOSTS: ${NACOS_HOST}:${PORT_SERVER_SYSTEM}
+      WAIT_SLEEP_INTERVAL: ${DOCKER_WAIT_SLEEP_INTERVAL}
+      WAIT_HOST_CONNECT_TIMEOUT: ${DOCKER_WAIT_HOST_CONNECT_TIMEOUT}
+      WAIT_TIMEOUT: ${DOCKER_WAIT_TIMEOUT}
+    volumes:
+      - ./log/gateway:/log/gateway
+      - ./log/gateway/skywalking:/agent/logs
+      - ${CLOUD_AGENT_CONFIG}
+    env_file: .env
+  auth:
+    image: ${CLOUD_DEPOSITORY_URL}/auth:${CLOUD_DEPOSITORY_TAG}
+    container_name: auth
+    network_mode: host
+    command: sh -c "java ${AUTH_JAVA_OPS} -cp /app/resources:/app/classes:/app/libs/* ${AUTH_MAIN_CLASS}"
+    volumes:
+      - ./log/auth:/log/auth
+      - ./log/auth/skywalking:/agent/logs
+      - ${CLOUD_AGENT_CONFIG}
+    env_file: .env
+  knife4j:
+    image: ${CLOUD_DEPOSITORY_URL}/knife4j:${CLOUD_DEPOSITORY_TAG}
+    container_name: knife4j
+    network_mode: host
+    command: sh -c "/wait && java ${SERVER_KNIFE4J_JAVA_OPS} -cp /app/resources:/app/classes:/app/libs/* ${KNIFE4J_MAIN_CLASS}"
+    environment:
+      WAIT_HOSTS: ${NACOS_HOST}:${PORT_GATEWAY}, ${NACOS_HOST}:${PORT_AUTH}, ${NACOS_HOST}:${PORT_SERVER_SYSTEM}, ${NACOS_HOST}:${PORT_SERVER_DICT}, ${NACOS_HOST}:${PORT_SERVER_MINIO}, ${NACOS_HOST}:${PORT_SERVER_TEST}
+      WAIT_SLEEP_INTERVAL: ${DOCKER_WAIT_SLEEP_INTERVAL}
+      WAIT_HOST_CONNECT_TIMEOUT: ${DOCKER_WAIT_HOST_CONNECT_TIMEOUT}
+      WAIT_TIMEOUT: ${DOCKER_WAIT_TIMEOUT}
+    volumes:
+      - ./log/knife4j:/log/knife4j
+    env_file: .env
+  tx-manager:
+    image: ${CLOUD_DEPOSITORY_URL}/tx-manager:${CLOUD_DEPOSITORY_TAG}
+    container_name: tx-manager
+    network_mode: host
+    command: sh -c "java ${TX_MANAGER_JAVA_OPS} -cp /app/resources:/app/classes:/app/libs/* ${TXMANAGER_MAIN_CLASS}"
+    volumes:
+      - ./log/tx-manager:/log/tx-manager
+      - ./log/tx-manager/skywalking:/agent/logs
+      - ${CLOUD_AGENT_CONFIG}
+    env_file: .env
+  server-system:
+    image: ${CLOUD_DEPOSITORY_URL}/server-system:${CLOUD_DEPOSITORY_TAG}
+    container_name: server-system
+    network_mode: host
+    command: sh -c "/wait && java ${SERVER_SYSTEM_JAVA_OPS} -cp /app/resources:/app/classes:/app/libs/* ${SERVER_SYSTEM_MAIN_CLASS}"
+    environment:
+      WAIT_HOSTS: ${NACOS_HOST}:${PORT_TX_MANAGER}
+      WAIT_SLEEP_INTERVAL: ${DOCKER_WAIT_SLEEP_INTERVAL}
+      WAIT_HOST_CONNECT_TIMEOUT: ${DOCKER_WAIT_HOST_CONNECT_TIMEOUT}
+      WAIT_TIMEOUT: ${DOCKER_WAIT_TIMEOUT}
+    volumes:
+      - ./log/server-system:/log/server-system
+      - ./.txlcn:/.txlcn
+      - ./log/server-system/skywalking:/agent/logs
+      - ${CLOUD_AGENT_CONFIG}
+    env_file: .env
+  # 生产可以不用部署
+  server-generator:
+    image: ${CLOUD_DEPOSITORY_URL}/server-generator:${CLOUD_DEPOSITORY_TAG}
+    container_name: server-generator
+    network_mode: host
+    command: sh -c "/wait && java ${SERVER_GENERATOR_JAVA_OPS} -cp /app/resources:/app/classes:/app/libs/* ${SERVER_GENERATOR_MAIN_CLASS}"
+    environment:
+      WAIT_HOSTS: ${NACOS_HOST}:${PORT_TX_MANAGER}, ${NACOS_HOST}:${PORT_SERVER_SYSTEM}
+      WAIT_SLEEP_INTERVAL: ${DOCKER_WAIT_SLEEP_INTERVAL}
+      WAIT_HOST_CONNECT_TIMEOUT: ${DOCKER_WAIT_HOST_CONNECT_TIMEOUT}
+      WAIT_TIMEOUT: ${DOCKER_WAIT_TIMEOUT}
+    volumes:
+      - ./log/server-generator:/log/server-generator
+      - ./.txlcn:/.txlcn
+      - ./log/server-generator/skywalking:/agent/logs
+      - ${CLOUD_AGENT_CONFIG}
+    env_file: .env
+  server-dict:
+    image: ${CLOUD_DEPOSITORY_URL}/server-dict:${CLOUD_DEPOSITORY_TAG}
+    container_name: server-dict
+    network_mode: host
+    command: sh -c "/wait && java ${SERVER_DICT_JAVA_OPS} -cp /app/resources:/app/classes:/app/libs/* ${SERVER_DICT_MAIN_CLASS}"
+    environment:
+      WAIT_HOSTS: ${NACOS_HOST}:${PORT_TX_MANAGER}
+      WAIT_SLEEP_INTERVAL: ${DOCKER_WAIT_SLEEP_INTERVAL}
+      WAIT_HOST_CONNECT_TIMEOUT: ${DOCKER_WAIT_HOST_CONNECT_TIMEOUT}
+      WAIT_TIMEOUT: ${DOCKER_WAIT_TIMEOUT}
+    volumes:
+      - ./log/server-dict:/log/server-dict
+      - ./.txlcn:/.txlcn
+      - ./log/server-dict/skywalking:/agent/logs
+      - ${CLOUD_AGENT_CONFIG}
+    env_file: .env
+  server-minio:
+    image: ${CLOUD_DEPOSITORY_URL}/server-minio:${CLOUD_DEPOSITORY_TAG}
+    container_name: server-minio
+    network_mode: host
+    command: sh -c "/wait && java ${SERVER_MINIO_JAVA_OPS} -cp /app/resources:/app/classes:/app/libs/* ${SERVER_MINIO_MAIN_CLASS}"
+    environment:
+      WAIT_HOSTS: ${NACOS_HOST}:${PORT_TX_MANAGER}
+      WAIT_SLEEP_INTERVAL: ${DOCKER_WAIT_SLEEP_INTERVAL}
+      WAIT_HOST_CONNECT_TIMEOUT: ${DOCKER_WAIT_HOST_CONNECT_TIMEOUT}
+      WAIT_TIMEOUT: ${DOCKER_WAIT_TIMEOUT}
+    volumes:
+      - ./log/server-minio:/log/server-minio
+      - ./.txlcn:/.txlcn
+      - ./log/server-minio/skywalking:/agent/logs
+      - ${CLOUD_AGENT_CONFIG}
+    env_file: .env
+  # 生产可以不用部署
+  server-test:
+    image: ${CLOUD_DEPOSITORY_URL}/server-test:${CLOUD_DEPOSITORY_TAG}
+    container_name: server-test
+    network_mode: host
+    command: sh -c "/wait && java ${SERVER_TEST_JAVA_OPS} -cp /app/resources:/app/classes:/app/libs/* ${SERVER_TEST_MAIN_CLASS}"
+    environment:
+      WAIT_HOSTS: ${NACOS_HOST}:${PORT_TX_MANAGER}
+      WAIT_SLEEP_INTERVAL: ${DOCKER_WAIT_SLEEP_INTERVAL}
+      WAIT_HOST_CONNECT_TIMEOUT: ${DOCKER_WAIT_HOST_CONNECT_TIMEOUT}
+      WAIT_TIMEOUT: ${DOCKER_WAIT_TIMEOUT}
+    volumes:
+      - ./log/server-test:/log/server-test
+      - ./.txlcn:/.txlcn
+      - ./log/server-test/skywalking:/agent/logs
+      - ${CLOUD_AGENT_CONFIG}
+    env_file: .env
+  nginx:
+    image: nginx:1.21.3
+    container_name: nginx-cloud
+    network_mode: host
+    environment:
+      # 设置时区
+      TZ: "Asia/Shanghai"
+    privileged: true
+    user: root
+    volumes:
+      - ./web:/var/cloud/web
+      - ./nginx/:/etc/nginx/

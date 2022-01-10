@@ -2,6 +2,25 @@ server:
   port: ${PORT_GATEWAY:8301}
 
 spring:
+
+  datasource:
+    dynamic:
+      p6spy: ${DATASOURCE_LOGGER_SQL_ENABLED:true}
+      hikari:
+        connection-timeout: 30000
+        max-lifetime: 1800000
+        max-pool-size: 15
+        min-idle: 5
+        connection-test-query: select 1
+        pool-name: MyHikariCP
+      primary: primary
+      datasource:
+        primary:
+          driver-class-name: ${DATASOURCE_DRIVER:com.mysql.cj.jdbc.Driver}
+          url: jdbc:${DATASOURCE_DB_TYPE:mysql}://${DATASOURCE_HOST:127.0.0.1}:${DATASOURCE_PORT:3306}/${DB_NAME_SYSTEM:cloud_system}?${DATASOURCE_PARAM:useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai}
+          username: ${DATASOURCE_USERNAME:root}
+          password: ${DATASOURCE_PASSWORD:root}
+
   cloud:
     gateway:
       globalcors:
@@ -71,38 +90,16 @@ spring:
       default-filters:
         - StripPrefix=1
 
-  autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.mongo.MongoReactiveAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoReactiveRepositoriesAutoConfiguration,org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration
-
-  # 网关增强配置
-  # data:
-  #   mongodb:
-  #     host: ${mongo.url}
-  #     port: 27017
-  #     database: cloud_route
-
-  redis:
-    database: ${REDIS_GATEWAY_DATABASE:3}
-    host: ${REDIS_HOST:127.0.0.1}
-    port: ${REDIS_PORT:6379}
-    lettuce:
-      pool:
-        min-idle: 8
-        max-idle: 500
-        max-active: 2000
-        max-wait: 10000
-    timeout: 5000
-
-# 网关增强配置
-my:
-  gateway:
-    enhance: false
-    jwt:
-      secret: 123456
-      expiration: 36000
+mybatis-plus:
+  type-aliases-package: com.zclcs.common.core.entity.system
+  mapper-locations: classpath:com/zclcs/gateway/mapper/*.xml
+  configuration:
+    jdbc-type-for-null: null
+  global-config:
+    banner: false
 
   log:
-    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}
+    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS_GATEWAY:false}
 
 hystrix:
   command:

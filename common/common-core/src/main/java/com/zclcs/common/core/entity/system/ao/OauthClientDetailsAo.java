@@ -1,5 +1,7 @@
 package com.zclcs.common.core.entity.system.ao;
 
+import com.zclcs.common.core.validate.strategy.AddStrategy;
+import com.zclcs.common.core.validate.strategy.UpdateStrategy;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -10,6 +12,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -28,7 +31,7 @@ public class OauthClientDetailsAo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "客户端ID")
-    @NotBlank(message = "{required}")
+    @NotBlank(message = "{required}", groups = UpdateStrategy.class)
     @Size(max = 255, message = "{noMoreThan}")
     private String clientId;
 
@@ -37,7 +40,7 @@ public class OauthClientDetailsAo implements Serializable {
     private String resourceIds;
 
     @ApiModelProperty(value = "客户端密钥")
-    @NotBlank(message = "{required}")
+    @NotBlank(message = "{required}", groups = AddStrategy.class)
     @Size(max = 255, message = "{noMoreThan}")
     private String clientSecret;
 
@@ -56,15 +59,17 @@ public class OauthClientDetailsAo implements Serializable {
     private String webServerRedirectUri;
 
     @ApiModelProperty(value = "拥有的系统权限")
-    @Size(max = 255, message = "{noMoreThan}")
+    @Size(max = 1000, message = "{noMoreThan}")
     private String authorities;
+
+    @ApiModelProperty(value = "系统菜单")
+    private List<Long> menuIds;
 
     @ApiModelProperty(value = "token过期时间")
     @NotNull(message = "{required}")
     private Integer accessTokenValidity;
 
     @ApiModelProperty(value = "token刷新时间")
-    @NotNull(message = "{required}")
     private Integer refreshTokenValidity;
 
     @ApiModelProperty(value = "额外信息")

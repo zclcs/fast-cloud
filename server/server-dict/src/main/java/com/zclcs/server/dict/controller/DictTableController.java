@@ -1,6 +1,5 @@
 package com.zclcs.server.dict.controller;
 
-import com.zclcs.common.core.annotation.ControllerEndpoint;
 import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
 import com.zclcs.common.core.base.BaseRsp;
@@ -42,6 +41,7 @@ public class DictTableController {
 
     @GetMapping
     @ApiOperation(value = "字典查询（分页）")
+    @PreAuthorize("hasAuthority('table:view')")
     public BaseRsp<BasePage<DictTableVo>> findDictTablePage(@Valid BasePageAo basePageAo, DictTableVo dictTableVo) {
         BasePage<DictTableVo> page = this.dictTableService.findDictTablePage(basePageAo, dictTableVo);
         return BaseRspUtil.data(page);
@@ -49,6 +49,7 @@ public class DictTableController {
 
     @GetMapping("list")
     @ApiOperation(value = "字典查询（集合）")
+    @PreAuthorize("hasAuthority('table:view')")
     public BaseRsp<List<DictTableVo>> findDictTableList(DictTableVo dictTableVo) {
         List<DictTableVo> list = this.dictTableService.findDictTableList(dictTableVo);
         return BaseRspUtil.data(list);
@@ -56,6 +57,7 @@ public class DictTableController {
 
     @GetMapping("one")
     @ApiOperation(value = "字典查询（单个）")
+    @PreAuthorize("hasAuthority('table:view')")
     public BaseRsp<DictTableVo> findDictTable(DictTableVo dictTableVo) {
         DictTableVo dictTable = this.dictTableService.findDictTable(dictTableVo);
         return BaseRspUtil.data(dictTable);
@@ -63,7 +65,6 @@ public class DictTableController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('table:add')")
-    @ControllerEndpoint(operation = "新增字典", exceptionMessage = "新增字典失败")
     @ApiOperation(value = "新增字典")
     public void addDictTable(@RequestBody @Validated DictTableAo dictTableAo) {
         this.dictTableService.createDictTable(dictTableAo);
@@ -71,7 +72,6 @@ public class DictTableController {
 
     @DeleteMapping("/{tableIds}")
     @PreAuthorize("hasAuthority('table:delete')")
-    @ControllerEndpoint(operation = "删除字典", exceptionMessage = "删除字典失败")
     @ApiOperation(value = "删除字典")
     public void deleteDictTable(@ApiParam(value = "字典id集合(,分隔)", required = true) @NotBlank(message = "{required}") @PathVariable String tableIds) {
         List<Long> ids = Arrays.stream(tableIds.split(StringConstant.COMMA)).map(Long::valueOf).collect(Collectors.toList());
@@ -80,7 +80,6 @@ public class DictTableController {
 
     @PutMapping
     @PreAuthorize("hasAuthority('table:update')")
-    @ControllerEndpoint(operation = "修改字典", exceptionMessage = "修改字典失败")
     @ApiOperation(value = "修改字典")
     public void updateDictTable(@RequestBody @Validated DictTableAo dictTableAo) {
         this.dictTableService.updateDictTable(dictTableAo);

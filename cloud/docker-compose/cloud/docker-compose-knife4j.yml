@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  knife4j:
+    image: ${CLOUD_DEPOSITORY_URL}/knife4j:${CLOUD_DEPOSITORY_TAG}
+    container_name: knife4j
+    network_mode: host
+    command: sh -c "/wait && java ${SERVER_KNIFE4J_JAVA_OPS} -cp /app/resources:/app/classes:/app/libs/* ${KNIFE4J_MAIN_CLASS}"
+    environment:
+      WAIT_HOSTS: ${NACOS_HOST}:${PORT_GATEWAY}, ${NACOS_HOST}:${PORT_AUTH}, ${NACOS_HOST}:${PORT_SERVER_SYSTEM}, ${NACOS_HOST}:${PORT_SERVER_DICT}, ${NACOS_HOST}:${PORT_SERVER_MINIO}, ${NACOS_HOST}:${PORT_SERVER_TEST}
+      WAIT_SLEEP_INTERVAL: ${DOCKER_WAIT_SLEEP_INTERVAL}
+      WAIT_HOST_CONNECT_TIMEOUT: ${DOCKER_WAIT_HOST_CONNECT_TIMEOUT}
+      WAIT_TIMEOUT: ${DOCKER_WAIT_TIMEOUT}
+    volumes:
+      - ./log/knife4j:/log/knife4j
+    env_file: .env

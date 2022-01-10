@@ -21,6 +21,27 @@
     <sql id="Base_Column_List">
         menu_id, parent_id, menu_name, path, component, perms, icon, type, order_num, create_time, modify_time
     </sql>
+    <sql id="baseSql">
+        select sm.menu_id,
+               sm.parent_id,
+               sm.menu_name,
+               sm.path,
+               sm.component,
+               sm.redirect,
+               sm.perms,
+               sm.icon,
+               sm.type,
+               sm.hide_menu,
+               sm.ignore_keep_alive,
+               sm.hide_breadcrumb,
+               sm.hide_children_in_menu,
+               sm.current_active_menu,
+               sm.order_num,
+               sm.create_time,
+               sm.modify_time
+        from system_menu sm
+            ${ew.customSqlSegment}
+    </sql>
     <select id="findUserPermissions" resultType="com.zclcs.common.core.entity.system.vo.SystemMenuVo">
         select distinct m.perms
         from system_role r
@@ -31,6 +52,9 @@
         where u.username = #{userName}
           and m.perms is not null
           and m.perms &lt;&gt; ''
+    </select>
+    <select id="findListVo" resultType="com.zclcs.common.core.entity.system.vo.SystemMenuVo">
+        <include refid="baseSql"/>
     </select>
 
 </mapper>

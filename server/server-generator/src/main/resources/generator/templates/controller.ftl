@@ -5,6 +5,7 @@ import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
 import com.zclcs.common.core.base.BaseRsp;
 import com.zclcs.common.core.constant.StringConstant;
+import ${basePackage}.${entityPackage}.${className};
 import ${basePackage}.${aoPackage}.${className}Ao;
 import ${basePackage}.${voPackage}.${className}Vo;
 import com.zclcs.common.core.utils.BaseRspUtil;
@@ -19,7 +20,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.util.Arrays;
 import java.util.List;
@@ -32,9 +32,8 @@ import java.util.stream.Collectors;
  * @date ${date}
  */
 @Slf4j
-@Validated
 @RestController
-@RequestMapping("${objectName?uncap_first}")
+@RequestMapping("${className?uncap_first}")
 @RequiredArgsConstructor
 @Api(tags = "${tableComment}")
 public class ${className}Controller {
@@ -43,50 +42,51 @@ public class ${className}Controller {
 
     @GetMapping
     @ApiOperation(value = "${tableComment}查询（分页）")
-    @PreAuthorize("hasAuthority('${objectName?uncap_first}:view')")
-    public BaseRsp<BasePage<${className}Vo>> find${className}Page(@Valid BasePageAo basePageAo, ${className}Vo ${className?uncap_first}Vo) {
+    @PreAuthorize("hasAuthority('${className?uncap_first}:view')")
+    public BaseRsp<BasePage<${className}Vo>> find${className}Page(@Validated BasePageAo basePageAo, @Validated ${className}Vo ${className?uncap_first}Vo) {
         BasePage<${className}Vo> page = this.${className?uncap_first}Service.find${className}Page(basePageAo, ${className?uncap_first}Vo);
         return BaseRspUtil.data(page);
     }
 
     @GetMapping("list")
     @ApiOperation(value = "${tableComment}查询（集合）")
-    @PreAuthorize("hasAuthority('${objectName?uncap_first}:view')")
-    public BaseRsp<List<${className}Vo>> find${className}List(${className}Vo ${className?uncap_first}Vo) {
+    @PreAuthorize("hasAuthority('${className?uncap_first}:view')")
+    public BaseRsp<List<${className}Vo>> find${className}List(@Validated ${className}Vo ${className?uncap_first}Vo) {
         List<${className}Vo> list = this.${className?uncap_first}Service.find${className}List(${className?uncap_first}Vo);
         return BaseRspUtil.data(list);
     }
 
     @GetMapping("one")
     @ApiOperation(value = "${tableComment}查询（单个）")
-    @PreAuthorize("hasAuthority('${objectName?uncap_first}:view')")
-    public BaseRsp<${className}Vo> find${className}(${className}Vo ${className?uncap_first}Vo) {
+    @PreAuthorize("hasAuthority('${className?uncap_first}:view')")
+    public BaseRsp<${className}Vo> find${className}(@Validated ${className}Vo ${className?uncap_first}Vo) {
         ${className}Vo ${className?uncap_first} = this.${className?uncap_first}Service.find${className}(${className?uncap_first}Vo);
         return BaseRspUtil.data(${className?uncap_first});
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('${objectName?uncap_first}:add')")
-    @ControllerEndpoint(operation = "新增${tableComment}", exceptionMessage = "新增${tableComment}失败")
+    @PreAuthorize("hasAuthority('${className?uncap_first}:add')")
+    @ControllerEndpoint(operation = "新增${tableComment}")
     @ApiOperation(value = "新增${tableComment}")
-    public void add${className}(@RequestBody @Validated ${className}Ao ${className?uncap_first}Ao) {
-        this.${className?uncap_first}Service.create${className}(${className?uncap_first}Ao);
+    public BaseRsp<${className}> add${className}(@RequestBody @Validated ${className}Ao ${className?uncap_first}Ao) {
+        return BaseRspUtil.data(this.${className?uncap_first}Service.create${className}(${className?uncap_first}Ao));
     }
 
-    @DeleteMapping("/{${objectName?uncap_first}Ids}")
-    @PreAuthorize("hasAuthority('${objectName?uncap_first}:delete')")
-    @ControllerEndpoint(operation = "删除${tableComment}", exceptionMessage = "删除${tableComment}失败")
+    @DeleteMapping("/{${className?uncap_first}Ids}")
+    @PreAuthorize("hasAuthority('${className?uncap_first}:delete')")
+    @ControllerEndpoint(operation = "删除${tableComment}")
     @ApiOperation(value = "删除${tableComment}")
-    public void delete${className}(@ApiParam(value = "${tableComment}id集合(,分隔)", required = true) @NotBlank(message = "{required}") @PathVariable String ${objectName?uncap_first}Ids) {
-        List<Long> ids = Arrays.stream(${objectName?uncap_first}Ids.split(StringConstant.COMMA)).map(Long::valueOf).collect(Collectors.toList());
+    public BaseRsp<String> delete${className}(@ApiParam(value = "${tableComment}id集合(,分隔)", required = true) @NotBlank(message = "{required}") @PathVariable String ${className?uncap_first}Ids) {
+        List<Long> ids = Arrays.stream(${className?uncap_first}Ids.split(StringConstant.COMMA)).map(Long::valueOf).collect(Collectors.toList());
         this.${className?uncap_first}Service.delete${className}(ids);
+        return BaseRspUtil.message("删除成功");
     }
 
     @PutMapping
-    @PreAuthorize("hasAuthority('${objectName?uncap_first}:update')")
-    @ControllerEndpoint(operation = "修改${tableComment}", exceptionMessage = "修改${tableComment}失败")
+    @PreAuthorize("hasAuthority('${className?uncap_first}:update')")
+    @ControllerEndpoint(operation = "修改${tableComment}")
     @ApiOperation(value = "修改${tableComment}")
-    public void update${className}(@RequestBody @Validated(UpdateStrategy.class) ${className}Ao ${className?uncap_first}Ao) {
-        this.${className?uncap_first}Service.update${className}(${className?uncap_first}Ao);
+    public BaseRsp<${className}> update${className}(@RequestBody @Validated(UpdateStrategy.class) ${className}Ao ${className?uncap_first}Ao) {
+        return BaseRspUtil.data(this.${className?uncap_first}Service.update${className}(${className?uncap_first}Ao));
     }
 }

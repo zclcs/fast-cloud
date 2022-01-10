@@ -1,5 +1,6 @@
 package com.zclcs.server.minio.controller;
 
+import com.zclcs.common.core.annotation.ControllerEndpoint;
 import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
 import com.zclcs.common.core.base.BaseRsp;
@@ -66,6 +67,7 @@ public class MinioBucketController {
     @PostMapping
     @PreAuthorize("hasAuthority('bucket:add')")
     @ApiOperation(value = "新增桶")
+    @ControllerEndpoint(operation = "新增桶")
     public void addMinioBucket(@RequestBody @Validated MinioBucketAo minioBucketAo) {
         this.minioBucketService.createMinioBucket(minioBucketAo);
     }
@@ -73,6 +75,7 @@ public class MinioBucketController {
     @DeleteMapping("/{bucketIds}")
     @PreAuthorize("hasAuthority('bucket:delete')")
     @ApiOperation(value = "删除桶")
+    @ControllerEndpoint(operation = "删除桶")
     public void deleteMinioBucket(@ApiParam(value = "桶id集合(,分隔)", required = true) @NotBlank(message = "{required}") @PathVariable String bucketIds) {
         List<Long> ids = Arrays.stream(bucketIds.split(StringConstant.COMMA)).map(Long::valueOf).collect(Collectors.toList());
         this.minioBucketService.deleteMinioBucket(ids);

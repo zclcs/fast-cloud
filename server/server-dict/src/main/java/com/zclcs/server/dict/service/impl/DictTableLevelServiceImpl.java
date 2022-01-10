@@ -127,8 +127,10 @@ public class DictTableLevelServiceImpl extends ServiceImpl<DictTableLevelMapper,
     public void deleteDictTableNameLevel(List<Long> ids) {
         List<DictTableLevelVo> dictTableList = this.findDictTableLevelList(DictTableLevelVo.builder().dictNameIds(ids).build());
         List<Long> tableLevelIds = dictTableList.stream().map(DictTableLevelVo::getId).collect(Collectors.toList());
-        this.removeByIds(tableLevelIds);
-        deleteDictValue(dictTableList);
+        if (CollectionUtil.isNotEmpty(tableLevelIds)) {
+            this.removeByIds(tableLevelIds);
+            deleteDictValue(dictTableList);
+        }
     }
 
     private List<Long> getAllChildrenId(List<Long> tableLevelIds) {
