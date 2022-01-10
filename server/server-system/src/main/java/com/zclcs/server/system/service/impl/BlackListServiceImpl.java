@@ -40,28 +40,24 @@ public class BlackListServiceImpl extends ServiceImpl<BlackListMapper, BlackList
     public BasePage<BlackListVo> findBlackListPage(BasePageAo basePageAo, BlackListVo blackListVo) {
         BasePage<BlackListVo> basePage = new BasePage<>(basePageAo.getPageNum(), basePageAo.getPageSize());
         QueryWrapper<BlackListVo> queryWrapper = getQueryWrapper(blackListVo);
-        // TODO 设置分页查询条件
         return this.baseMapper.findPageVo(basePage, queryWrapper);
     }
 
     @Override
     public List<BlackListVo> findBlackListList(BlackListVo blackListVo) {
         QueryWrapper<BlackListVo> queryWrapper = getQueryWrapper(blackListVo);
-        // TODO 设置集合查询条件
         return this.baseMapper.findListVo(queryWrapper);
     }
 
     @Override
     public BlackListVo findBlackList(BlackListVo blackListVo) {
         QueryWrapper<BlackListVo> queryWrapper = getQueryWrapper(blackListVo);
-        // TODO 设置单个查询条件
         return this.baseMapper.findOneVo(queryWrapper);
     }
 
     @Override
     public Integer countBlackList(BlackListVo blackListVo) {
         QueryWrapper<BlackListVo> queryWrapper = getQueryWrapper(blackListVo);
-        // TODO 设置统计查询条件
         return this.baseMapper.countVo(queryWrapper);
     }
 

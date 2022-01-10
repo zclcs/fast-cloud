@@ -36,28 +36,24 @@ public class RateLimitLogServiceImpl extends ServiceImpl<RateLimitLogMapper, Rat
     public BasePage<RateLimitLogVo> findRateLimitLogPage(BasePageAo basePageAo, RateLimitLogVo rateLimitLogVo) {
         BasePage<RateLimitLogVo> basePage = new BasePage<>(basePageAo.getPageNum(), basePageAo.getPageSize());
         QueryWrapper<RateLimitLogVo> queryWrapper = getQueryWrapper(rateLimitLogVo);
-        // TODO 设置分页查询条件
         return this.baseMapper.findPageVo(basePage, queryWrapper);
     }
 
     @Override
     public List<RateLimitLogVo> findRateLimitLogList(RateLimitLogVo rateLimitLogVo) {
         QueryWrapper<RateLimitLogVo> queryWrapper = getQueryWrapper(rateLimitLogVo);
-        // TODO 设置集合查询条件
         return this.baseMapper.findListVo(queryWrapper);
     }
 
     @Override
     public RateLimitLogVo findRateLimitLog(RateLimitLogVo rateLimitLogVo) {
         QueryWrapper<RateLimitLogVo> queryWrapper = getQueryWrapper(rateLimitLogVo);
-        // TODO 设置单个查询条件
         return this.baseMapper.findOneVo(queryWrapper);
     }
 
     @Override
     public Integer countRateLimitLog(RateLimitLogVo rateLimitLogVo) {
         QueryWrapper<RateLimitLogVo> queryWrapper = getQueryWrapper(rateLimitLogVo);
-        // TODO 设置统计查询条件
         return this.baseMapper.countVo(queryWrapper);
     }
 

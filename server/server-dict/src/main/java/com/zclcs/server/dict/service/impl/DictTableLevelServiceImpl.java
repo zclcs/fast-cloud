@@ -101,7 +101,6 @@ public class DictTableLevelServiceImpl extends ServiceImpl<DictTableLevelMapper,
         DictTableLevel dictTableLevel = new DictTableLevel();
         BeanUtil.copyProperties(dictTableLevelAo, dictTableLevel);
         this.save(dictTableLevel);
-        // TODO: 刷新只会刷新 ·dict:v· 的值 应该连带 ·dict:t· 一起刷新
         refreshDictValue(dictTableLevel.getId());
     }
 

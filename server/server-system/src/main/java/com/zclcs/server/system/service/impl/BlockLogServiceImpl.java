@@ -36,28 +36,24 @@ public class BlockLogServiceImpl extends ServiceImpl<BlockLogMapper, BlockLog> i
     public BasePage<BlockLogVo> findBlockLogPage(BasePageAo basePageAo, BlockLogVo blockLogVo) {
         BasePage<BlockLogVo> basePage = new BasePage<>(basePageAo.getPageNum(), basePageAo.getPageSize());
         QueryWrapper<BlockLogVo> queryWrapper = getQueryWrapper(blockLogVo);
-        // TODO 设置分页查询条件
         return this.baseMapper.findPageVo(basePage, queryWrapper);
     }
 
     @Override
     public List<BlockLogVo> findBlockLogList(BlockLogVo blockLogVo) {
         QueryWrapper<BlockLogVo> queryWrapper = getQueryWrapper(blockLogVo);
-        // TODO 设置集合查询条件
         return this.baseMapper.findListVo(queryWrapper);
     }
 
     @Override
     public BlockLogVo findBlockLog(BlockLogVo blockLogVo) {
         QueryWrapper<BlockLogVo> queryWrapper = getQueryWrapper(blockLogVo);
-        // TODO 设置单个查询条件
         return this.baseMapper.findOneVo(queryWrapper);
     }
 
     @Override
     public Integer countBlockLog(BlockLogVo blockLogVo) {
         QueryWrapper<BlockLogVo> queryWrapper = getQueryWrapper(blockLogVo);
-        // TODO 设置统计查询条件
         return this.baseMapper.countVo(queryWrapper);
     }
 

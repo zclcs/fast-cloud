@@ -36,28 +36,24 @@ public class RouteLogServiceImpl extends ServiceImpl<RouteLogMapper, RouteLog> i
     public BasePage<RouteLogVo> findRouteLogPage(BasePageAo basePageAo, RouteLogVo routeLogVo) {
         BasePage<RouteLogVo> basePage = new BasePage<>(basePageAo.getPageNum(), basePageAo.getPageSize());
         QueryWrapper<RouteLogVo> queryWrapper = getQueryWrapper(routeLogVo);
-        // TODO 设置分页查询条件
         return this.baseMapper.findPageVo(basePage, queryWrapper);
     }
 
     @Override
     public List<RouteLogVo> findRouteLogList(RouteLogVo routeLogVo) {
         QueryWrapper<RouteLogVo> queryWrapper = getQueryWrapper(routeLogVo);
-        // TODO 设置集合查询条件
         return this.baseMapper.findListVo(queryWrapper);
     }
 
     @Override
     public RouteLogVo findRouteLog(RouteLogVo routeLogVo) {
         QueryWrapper<RouteLogVo> queryWrapper = getQueryWrapper(routeLogVo);
-        // TODO 设置单个查询条件
         return this.baseMapper.findOneVo(queryWrapper);
     }
 
     @Override
     public Integer countRouteLog(RouteLogVo routeLogVo) {
         QueryWrapper<RouteLogVo> queryWrapper = getQueryWrapper(routeLogVo);
-        // TODO 设置统计查询条件
         return this.baseMapper.countVo(queryWrapper);
     }
 

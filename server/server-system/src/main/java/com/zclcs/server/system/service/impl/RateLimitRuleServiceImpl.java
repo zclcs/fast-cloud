@@ -39,28 +39,24 @@ public class RateLimitRuleServiceImpl extends ServiceImpl<RateLimitRuleMapper, R
     public BasePage<RateLimitRuleVo> findRateLimitRulePage(BasePageAo basePageAo, RateLimitRuleVo rateLimitRuleVo) {
         BasePage<RateLimitRuleVo> basePage = new BasePage<>(basePageAo.getPageNum(), basePageAo.getPageSize());
         QueryWrapper<RateLimitRuleVo> queryWrapper = getQueryWrapper(rateLimitRuleVo);
-        // TODO 设置分页查询条件
         return this.baseMapper.findPageVo(basePage, queryWrapper);
     }
 
     @Override
     public List<RateLimitRuleVo> findRateLimitRuleList(RateLimitRuleVo rateLimitRuleVo) {
         QueryWrapper<RateLimitRuleVo> queryWrapper = getQueryWrapper(rateLimitRuleVo);
-        // TODO 设置集合查询条件
         return this.baseMapper.findListVo(queryWrapper);
     }
 
     @Override
     public RateLimitRuleVo findRateLimitRule(RateLimitRuleVo rateLimitRuleVo) {
         QueryWrapper<RateLimitRuleVo> queryWrapper = getQueryWrapper(rateLimitRuleVo);
-        // TODO 设置单个查询条件
         return this.baseMapper.findOneVo(queryWrapper);
     }
 
     @Override
     public Integer countRateLimitRule(RateLimitRuleVo rateLimitRuleVo) {
         QueryWrapper<RateLimitRuleVo> queryWrapper = getQueryWrapper(rateLimitRuleVo);
-        // TODO 设置统计查询条件
         return this.baseMapper.countVo(queryWrapper);
     }
 
