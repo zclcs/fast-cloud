@@ -48,27 +48,33 @@ VALUES (7, NULL, '/actuator/**', 'ALL', '00:00:00', '23:59:59', NULL, '1', '2022
         '2022-01-05 10:23:50');
 
 -- ----------------------------
--- Table structure for system_rate_limit_log
+-- Table structure for system_rate_limit_rule
 -- ----------------------------
-DROP TABLE IF EXISTS `system_rate_limit_log`;
-CREATE TABLE `system_rate_limit_log`
+DROP TABLE IF EXISTS `system_rate_limit_rule`;
+CREATE TABLE `system_rate_limit_rule`
 (
-    `rate_limit_log_id` bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT '限流日志id',
-    `rate_limit_log_ip` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '被拦截请求IP',
-    `request_uri`       varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '被拦截请求URI',
-    `request_method`    varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '被拦截请求方法',
-    `location`          varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'IP对应地址',
-    `create_time`       datetime                                                      NOT NULL COMMENT '创建时间',
-    `modify_time`       datetime                                                      NULL DEFAULT NULL COMMENT '修改时间',
-    PRIMARY KEY (`rate_limit_log_id`) USING BTREE
-) ENGINE = MyISAM
-  AUTO_INCREMENT = 18
+    `rate_limit_rule_id` bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT '限流规则id',
+    `request_uri`        varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '请求uri（不支持通配符）',
+    `request_method`     varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '请求方法，如果为ALL则表示对所有方法生效',
+    `limit_from`         varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL DEFAULT NULL COMMENT '限制时间起',
+    `limit_to`           varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL DEFAULT NULL COMMENT '限制时间止',
+    `rate_limit_count`   smallint(4)                                                   NOT NULL COMMENT '限制次数',
+    `interval_sec`       varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '时间周期（单位秒）',
+    `rule_status`        varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL DEFAULT '1' COMMENT '规则状态 默认 1 @@enable_disable',
+    `create_time`        datetime                                                      NOT NULL COMMENT '创建时间',
+    `modify_time`        datetime                                                      NULL DEFAULT NULL COMMENT '修改时间',
+    PRIMARY KEY (`rate_limit_rule_id`) USING BTREE
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 6
   CHARACTER SET = utf8mb4
-  COLLATE = utf8mb4_unicode_ci COMMENT = '限流拦截日志表'
+  COLLATE = utf8mb4_general_ci COMMENT = '限流规则表'
   ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of system_rate_limit_log
+-- Records of system_rate_limit_rule
 -- ----------------------------
+INSERT INTO `system_rate_limit_rule`
+VALUES (5, '/auth/captcha', 'GET', '00:00:00', '23:59:59', 5, '60', '1', '2022-01-05 09:38:53', '2022-01-05 09:38:53');
+
 
 SET FOREIGN_KEY_CHECKS = 1;
