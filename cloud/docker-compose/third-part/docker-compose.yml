@@ -15,6 +15,11 @@ services:
       - ./mysql/data:/var/lib/mysql
       #挂载 MySQL配置文件
       - ./mysql/conf:/etc/mysql/mysql.conf.d
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      interval: ${DOCKER_HEALTHCHECK_INTERVAL}
+      timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
+      retries: ${DOCKER_HEALTHCHECK_RETRIES}
   redis:
     image: redis:6.2.5
     container_name: redis-cloud
@@ -26,6 +31,11 @@ services:
     volumes:
       - ./redis/data:/data #挂载 Redis数据
       - ./redis/conf/redis.conf:/usr/local/etc/redis/redis.conf #挂载 Redis配置
+    healthcheck:
+      test: [ "CMD", "redis-cli","ping" ]
+      interval: ${DOCKER_HEALTHCHECK_INTERVAL}
+      timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
+      retries: ${DOCKER_HEALTHCHECK_RETRIES}
   nacos:
     image: nacos/nacos-server:2.0.3
     container_name: nacos-standalone-mysql
@@ -36,6 +46,11 @@ services:
     volumes:
       - ./nacos/standalone-logs/:/home/nacos/logs
       - ./nacos/init.d/custom.properties:/home/nacos/init.d/custom.properties
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -sS 'http://localhost:${NACOS_SERVER_PORT}/nacos' || exit 1" ]
+      interval: ${DOCKER_HEALTHCHECK_INTERVAL}
+      timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
+      retries: ${DOCKER_HEALTHCHECK_RETRIES}
     env_file: .env
     depends_on:
       - mysql
@@ -56,5 +71,10 @@ services:
       - ./minio/data:/data
       #映射配置目录
       - ./minio/config:/root/.minio/
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -sS '${ENDPOINT}/minio/index.html' || exit 1" ]
+      interval: ${DOCKER_HEALTHCHECK_INTERVAL}
+      timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
+      retries: ${DOCKER_HEALTHCHECK_RETRIES}
     command: server --console-address ':9001' /data  #指定容器中的目录 /data
     privileged: true

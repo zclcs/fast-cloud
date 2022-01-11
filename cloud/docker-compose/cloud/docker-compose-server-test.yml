@@ -21,5 +21,4 @@ services:
       test: [ "CMD-SHELL", "curl -sS 'http://${NACOS_HOST}:${PORT_SERVER_TEST}' || exit 1" ]
       interval: ${DOCKER_HEALTHCHECK_INTERVAL}
       timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
-      retries: ${PORT_SERVER_MINIO}
-    env_file: .env
+      retries: ${DOCKER_HEALTHCHECK_RETRIES}

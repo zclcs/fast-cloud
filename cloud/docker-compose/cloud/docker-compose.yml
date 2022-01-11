@@ -152,7 +152,7 @@ services:
       test: [ "CMD-SHELL", "curl -sS 'http://${NACOS_HOST}:${PORT_SERVER_MINIO}' || exit 1" ]
       interval: ${DOCKER_HEALTHCHECK_INTERVAL}
       timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
-      retries: ${PORT_SERVER_MINIO}
+      retries: ${DOCKER_HEALTHCHECK_RETRIES}
     env_file: .env
   # 生产可以不用部署
   server-test:
@@ -174,7 +174,7 @@ services:
       test: [ "CMD-SHELL", "curl -sS 'http://${NACOS_HOST}:${PORT_SERVER_TEST}' || exit 1" ]
       interval: ${DOCKER_HEALTHCHECK_INTERVAL}
       timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
-      retries: ${PORT_SERVER_MINIO}
+      retries: ${DOCKER_HEALTHCHECK_RETRIES}
     env_file: .env
   nginx:
     image: nginx:1.21.3
@@ -188,3 +188,9 @@ services:
     volumes:
       - ./web:/var/cloud/web
       - ./nginx/:/etc/nginx/
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -sS 'http://localhost/' || exit 1" ]
+      interval: ${DOCKER_HEALTHCHECK_INTERVAL}
+      timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
+      retries: ${DOCKER_HEALTHCHECK_RETRIES}
+    env_file: .env
