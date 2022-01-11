@@ -17,4 +17,9 @@ services:
       - ./.txlcn:/.txlcn
       - ./log/server-generator/skywalking:/agent/logs
       - ${CLOUD_AGENT_CONFIG}
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -sS 'http://${NACOS_HOST}:${PORT_SERVER_GENERATOR}' || exit 1" ]
+      interval: ${DOCKER_HEALTHCHECK_INTERVAL}
+      timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
+      retries: ${DOCKER_HEALTHCHECK_RETRIES}
     env_file: .env

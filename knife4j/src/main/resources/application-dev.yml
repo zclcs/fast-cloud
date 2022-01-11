@@ -1,5 +1,5 @@
 server:
-  port: ${PORT_TX_KNIFE4J:8401}
+  port: ${PORT_KNIFE4J:8401}
 
 spring:
   security:

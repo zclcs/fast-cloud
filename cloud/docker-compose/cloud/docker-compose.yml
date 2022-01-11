@@ -15,6 +15,11 @@ services:
       - ./log/gateway:/log/gateway
       - ./log/gateway/skywalking:/agent/logs
       - ${CLOUD_AGENT_CONFIG}
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -sS 'http://${NACOS_HOST}:${PORT_GATEWAY}' || exit 1" ]
+      interval: ${DOCKER_HEALTHCHECK_INTERVAL}
+      timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
+      retries: ${DOCKER_HEALTHCHECK_RETRIES}
     env_file: .env
   auth:
     image: ${CLOUD_DEPOSITORY_URL}/auth:${CLOUD_DEPOSITORY_TAG}
@@ -25,6 +30,11 @@ services:
       - ./log/auth:/log/auth
       - ./log/auth/skywalking:/agent/logs
       - ${CLOUD_AGENT_CONFIG}
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -sS 'http://${NACOS_HOST}:${PORT_AUTH}' || exit 1" ]
+      interval: ${DOCKER_HEALTHCHECK_INTERVAL}
+      timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
+      retries: ${DOCKER_HEALTHCHECK_RETRIES}
     env_file: .env
   knife4j:
     image: ${CLOUD_DEPOSITORY_URL}/knife4j:${CLOUD_DEPOSITORY_TAG}
@@ -38,6 +48,11 @@ services:
       WAIT_TIMEOUT: ${DOCKER_WAIT_TIMEOUT}
     volumes:
       - ./log/knife4j:/log/knife4j
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -sS 'http://${NACOS_HOST}:${PORT_KNIFE4J}' || exit 1" ]
+      interval: ${DOCKER_HEALTHCHECK_INTERVAL}
+      timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
+      retries: ${DOCKER_HEALTHCHECK_RETRIES}
     env_file: .env
   tx-manager:
     image: ${CLOUD_DEPOSITORY_URL}/tx-manager:${CLOUD_DEPOSITORY_TAG}
@@ -48,6 +63,11 @@ services:
       - ./log/tx-manager:/log/tx-manager
       - ./log/tx-manager/skywalking:/agent/logs
       - ${CLOUD_AGENT_CONFIG}
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -sS 'http://${NACOS_HOST}:${PORT_TX_MANAGER}' || exit 1" ]
+      interval: ${DOCKER_HEALTHCHECK_INTERVAL}
+      timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
+      retries: ${DOCKER_HEALTHCHECK_RETRIES}
     env_file: .env
   server-system:
     image: ${CLOUD_DEPOSITORY_URL}/server-system:${CLOUD_DEPOSITORY_TAG}
@@ -64,6 +84,11 @@ services:
       - ./.txlcn:/.txlcn
       - ./log/server-system/skywalking:/agent/logs
       - ${CLOUD_AGENT_CONFIG}
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -sS 'http://${NACOS_HOST}:${PORT_SERVER_SYSTEM}' || exit 1" ]
+      interval: ${DOCKER_HEALTHCHECK_INTERVAL}
+      timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
+      retries: ${DOCKER_HEALTHCHECK_RETRIES}
     env_file: .env
   # 生产可以不用部署
   server-generator:
@@ -81,6 +106,11 @@ services:
       - ./.txlcn:/.txlcn
       - ./log/server-generator/skywalking:/agent/logs
       - ${CLOUD_AGENT_CONFIG}
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -sS 'http://${NACOS_HOST}:${PORT_SERVER_GENERATOR}' || exit 1" ]
+      interval: ${DOCKER_HEALTHCHECK_INTERVAL}
+      timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
+      retries: ${DOCKER_HEALTHCHECK_RETRIES}
     env_file: .env
   server-dict:
     image: ${CLOUD_DEPOSITORY_URL}/server-dict:${CLOUD_DEPOSITORY_TAG}
@@ -97,6 +127,11 @@ services:
       - ./.txlcn:/.txlcn
       - ./log/server-dict/skywalking:/agent/logs
       - ${CLOUD_AGENT_CONFIG}
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -sS 'http://${NACOS_HOST}:${PORT_SERVER_DICT}' || exit 1" ]
+      interval: ${DOCKER_HEALTHCHECK_INTERVAL}
+      timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
+      retries: ${DOCKER_HEALTHCHECK_RETRIES}
     env_file: .env
   server-minio:
     image: ${CLOUD_DEPOSITORY_URL}/server-minio:${CLOUD_DEPOSITORY_TAG}
@@ -113,6 +148,11 @@ services:
       - ./.txlcn:/.txlcn
       - ./log/server-minio/skywalking:/agent/logs
       - ${CLOUD_AGENT_CONFIG}
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -sS 'http://${NACOS_HOST}:${PORT_SERVER_MINIO}' || exit 1" ]
+      interval: ${DOCKER_HEALTHCHECK_INTERVAL}
+      timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
+      retries: ${PORT_SERVER_MINIO}
     env_file: .env
   # 生产可以不用部署
   server-test:
@@ -130,6 +170,11 @@ services:
       - ./.txlcn:/.txlcn
       - ./log/server-test/skywalking:/agent/logs
       - ${CLOUD_AGENT_CONFIG}
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -sS 'http://${NACOS_HOST}:${PORT_SERVER_TEST}' || exit 1" ]
+      interval: ${DOCKER_HEALTHCHECK_INTERVAL}
+      timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
+      retries: ${PORT_SERVER_MINIO}
     env_file: .env
   nginx:
     image: nginx:1.21.3
