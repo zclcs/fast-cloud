@@ -11,7 +11,7 @@
  Target Server Version : 50735
  File Encoding         : 65001
 
- Date: 10/01/2022 15:21:44
+ Date: 17/01/2022 16:43:36
 */
 
 SET NAMES utf8mb4;
@@ -23,26 +23,26 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `config_info`;
 CREATE TABLE `config_info`
 (
-    `id`           bigint(20)                                       NOT NULL AUTO_INCREMENT COMMENT 'id',
-    `data_id`      varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'data_id',
-    `group_id`     varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL     DEFAULT NULL,
-    `content`      longtext CHARACTER SET utf8 COLLATE utf8_bin     NOT NULL COMMENT 'content',
-    `md5`          varchar(32) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT NULL COMMENT 'md5',
-    `gmt_create`   datetime                                         NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `gmt_modified` datetime                                         NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
-    `src_user`     text CHARACTER SET utf8 COLLATE utf8_bin         NULL COMMENT 'source user',
-    `src_ip`       varchar(50) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT NULL COMMENT 'source ip',
-    `app_name`     varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL     DEFAULT NULL,
-    `tenant_id`    varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL     DEFAULT '' COMMENT '租户字段',
-    `c_desc`       varchar(256) CHARACTER SET utf8 COLLATE utf8_bin NULL     DEFAULT NULL,
-    `c_use`        varchar(64) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT NULL,
-    `effect`       varchar(64) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT NULL,
-    `type`         varchar(64) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT NULL,
-    `c_schema`     text CHARACTER SET utf8 COLLATE utf8_bin         NULL,
+    `id`           bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `data_id`      varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'data_id',
+    `group_id`     varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL     DEFAULT NULL,
+    `content`      longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci     NOT NULL COMMENT 'content',
+    `md5`          varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL     DEFAULT NULL COMMENT 'md5',
+    `gmt_create`   datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `gmt_modified` datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+    `src_user`     text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci         NULL COMMENT 'source user',
+    `src_ip`       varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL     DEFAULT NULL COMMENT 'source ip',
+    `app_name`     varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL     DEFAULT NULL,
+    `tenant_id`    varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL     DEFAULT '' COMMENT '租户字段',
+    `c_desc`       varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL     DEFAULT NULL,
+    `c_use`        varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL     DEFAULT NULL,
+    `effect`       varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL     DEFAULT NULL,
+    `type`         varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL     DEFAULT NULL,
+    `c_schema`     text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci         NULL,
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `uk_configinfo_datagrouptenant` (`data_id`, `group_id`, `tenant_id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 154
+  AUTO_INCREMENT = 142
   CHARACTER SET = utf8
   COLLATE = utf8_bin COMMENT = 'config_info'
   ROW_FORMAT = DYNAMIC;
@@ -87,7 +87,7 @@ VALUES (125, 'server-minio.yaml', 'DEFAULT_GROUP',
         'dev', '', '', '', 'yaml', '');
 INSERT INTO `config_info`
 VALUES (128, 'knife4j.yaml', 'DEFAULT_GROUP',
-        'server:\n  port: ${PORT_KNIFE4J:8401}\n\nspring:\n  security:\n    user:\n      name: ${KNIFE4j_USERNAME:zclcs}\n      password: ${KNIFE4j_PASSWORD:123456}\n\nknife4j:\n  # 开启聚合组件\n  enableAggregation: ${DOC_ENABLE_AGGREGATION:true}\n  cloud:\n    enable: true\n    routes:\n      - name: ${SERVICE_NAME_AUTH:auth}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_AUTH:/auth}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_SYSTEM:server-system}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_SYSTEM:/system}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_GENERATOR:server-generator}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_GENERATOR:/generator}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_TEST:server-test}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_TEST:/test}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_MINIO:server-minio}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_MINIO:/minio}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_DICT:server-dict}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_DICT:/dict}/v2/api-docs?group=default\n        swaggerVersion: 2.0',
+        'server:\n  port: ${PORT_TX_KNIFE4J:8401}\n\nspring:\n  security:\n    user:\n      name: ${KNIFE4j_USERNAME:zclcs}\n      password: ${KNIFE4j_PASSWORD:123456}\n\nknife4j:\n  # 开启聚合组件\n  enableAggregation: ${DOC_ENABLE_AGGREGATION:true}\n  cloud:\n    enable: true\n    routes:\n      - name: ${SERVICE_NAME_AUTH:auth}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_AUTH:/auth}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_SYSTEM:server-system}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_SYSTEM:/system}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_GENERATOR:server-generator}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_GENERATOR:/generator}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_TEST:server-test}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_TEST:/test}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_MINIO:server-minio}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_MINIO:/minio}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_DICT:server-dict}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_DICT:/dict}/v2/api-docs?group=default\n        swaggerVersion: 2.0',
         '98af42e70b7444d079159aa057859ee4', '2021-10-27 22:04:53', '2021-12-30 20:12:02', 'nacos', '192.168.33.1', '',
         'dev', '', '', '', 'yaml', '');
 INSERT INTO `config_info`
@@ -97,8 +97,8 @@ VALUES (130, 'server-dict.yaml', 'DEFAULT_GROUP',
         'dev', '', '', '', 'yaml', '');
 INSERT INTO `config_info`
 VALUES (131, 'dict.yaml', 'DEFAULT_GROUP',
-        'system:\n  dict:\n    mq-type: none\n    text-value-default-null: true\n    on-boot-refresh-dict: false\n    cache:\n      enabled: true\n      maximum-size: 500\n      initial-capacity: 50\n      duration: 30s\n      miss-num: 50\n    controller:\n      enabled: false',
-        '0bad0e76df0199d8434fd9848b844901', '2021-10-28 22:33:58', '2021-11-02 01:37:15', 'nacos', '192.168.33.1', '',
+        'system:\n  dict:\n    mq-type: none\n    raw-value: true\n    text-value-default-null: false\n    on-boot-refresh-dict: false\n    cache:\n      enabled: true\n      maximum-size: 500\n      initial-capacity: 50\n      duration: 30s\n      miss-num: 50\n    controller:\n      enabled: false',
+        '3782112068e128f6e5535bb4b32e8b49', '2021-10-28 22:33:58', '2022-01-16 19:26:47', 'nacos', '192.168.33.1', '',
         'dev', '', '', '', 'yaml', '');
 INSERT INTO `config_info`
 VALUES (132, 'dict-redis.yaml', 'DEFAULT_GROUP',
@@ -132,14 +132,14 @@ VALUES (140, 'server.yaml', 'DEFAULT_GROUP',
 DROP TABLE IF EXISTS `config_info_aggr`;
 CREATE TABLE `config_info_aggr`
 (
-    `id`           bigint(20)                                       NOT NULL AUTO_INCREMENT COMMENT 'id',
-    `data_id`      varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'data_id',
-    `group_id`     varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'group_id',
-    `datum_id`     varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'datum_id',
-    `content`      longtext CHARACTER SET utf8 COLLATE utf8_bin     NOT NULL COMMENT '内容',
-    `gmt_modified` datetime                                         NOT NULL COMMENT '修改时间',
-    `app_name`     varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
-    `tenant_id`    varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT '' COMMENT '租户字段',
+    `id`           bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `data_id`      varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'data_id',
+    `group_id`     varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'group_id',
+    `datum_id`     varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'datum_id',
+    `content`      longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci     NOT NULL COMMENT '内容',
+    `gmt_modified` datetime                                                      NOT NULL COMMENT '修改时间',
+    `app_name`     varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+    `tenant_id`    varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '租户字段',
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `uk_configinfoaggr_datagrouptenantdatum` (`data_id`, `group_id`, `tenant_id`, `datum_id`) USING BTREE
 ) ENGINE = InnoDB
@@ -158,18 +158,18 @@ CREATE TABLE `config_info_aggr`
 DROP TABLE IF EXISTS `config_info_beta`;
 CREATE TABLE `config_info_beta`
 (
-    `id`           bigint(20)                                        NOT NULL AUTO_INCREMENT COMMENT 'id',
-    `data_id`      varchar(255) CHARACTER SET utf8 COLLATE utf8_bin  NOT NULL COMMENT 'data_id',
-    `group_id`     varchar(128) CHARACTER SET utf8 COLLATE utf8_bin  NOT NULL COMMENT 'group_id',
-    `app_name`     varchar(128) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT NULL COMMENT 'app_name',
-    `content`      longtext CHARACTER SET utf8 COLLATE utf8_bin      NOT NULL COMMENT 'content',
-    `beta_ips`     varchar(1024) CHARACTER SET utf8 COLLATE utf8_bin NULL     DEFAULT NULL COMMENT 'betaIps',
-    `md5`          varchar(32) CHARACTER SET utf8 COLLATE utf8_bin   NULL     DEFAULT NULL COMMENT 'md5',
-    `gmt_create`   datetime                                          NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `gmt_modified` datetime                                          NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
-    `src_user`     text CHARACTER SET utf8 COLLATE utf8_bin          NULL COMMENT 'source user',
-    `src_ip`       varchar(50) CHARACTER SET utf8 COLLATE utf8_bin   NULL     DEFAULT NULL COMMENT 'source ip',
-    `tenant_id`    varchar(128) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT '' COMMENT '租户字段',
+    `id`           bigint(20)                                                     NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `data_id`      varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT 'data_id',
+    `group_id`     varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT 'group_id',
+    `app_name`     varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL     DEFAULT NULL COMMENT 'app_name',
+    `content`      longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci      NOT NULL COMMENT 'content',
+    `beta_ips`     varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL     DEFAULT NULL COMMENT 'betaIps',
+    `md5`          varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci   NULL     DEFAULT NULL COMMENT 'md5',
+    `gmt_create`   datetime                                                       NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `gmt_modified` datetime                                                       NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+    `src_user`     text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci          NULL COMMENT 'source user',
+    `src_ip`       varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci   NULL     DEFAULT NULL COMMENT 'source ip',
+    `tenant_id`    varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL     DEFAULT '' COMMENT '租户字段',
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `uk_configinfobeta_datagrouptenant` (`data_id`, `group_id`, `tenant_id`) USING BTREE
 ) ENGINE = InnoDB
@@ -188,18 +188,18 @@ CREATE TABLE `config_info_beta`
 DROP TABLE IF EXISTS `config_info_tag`;
 CREATE TABLE `config_info_tag`
 (
-    `id`           bigint(20)                                       NOT NULL AUTO_INCREMENT COMMENT 'id',
-    `data_id`      varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'data_id',
-    `group_id`     varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'group_id',
-    `tenant_id`    varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL     DEFAULT '' COMMENT 'tenant_id',
-    `tag_id`       varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'tag_id',
-    `app_name`     varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL     DEFAULT NULL COMMENT 'app_name',
-    `content`      longtext CHARACTER SET utf8 COLLATE utf8_bin     NOT NULL COMMENT 'content',
-    `md5`          varchar(32) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT NULL COMMENT 'md5',
-    `gmt_create`   datetime                                         NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `gmt_modified` datetime                                         NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
-    `src_user`     text CHARACTER SET utf8 COLLATE utf8_bin         NULL COMMENT 'source user',
-    `src_ip`       varchar(50) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT NULL COMMENT 'source ip',
+    `id`           bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `data_id`      varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'data_id',
+    `group_id`     varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'group_id',
+    `tenant_id`    varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL     DEFAULT '' COMMENT 'tenant_id',
+    `tag_id`       varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'tag_id',
+    `app_name`     varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL     DEFAULT NULL COMMENT 'app_name',
+    `content`      longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci     NOT NULL COMMENT 'content',
+    `md5`          varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL     DEFAULT NULL COMMENT 'md5',
+    `gmt_create`   datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `gmt_modified` datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+    `src_user`     text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci         NULL COMMENT 'source user',
+    `src_ip`       varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL     DEFAULT NULL COMMENT 'source ip',
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `uk_configinfotag_datagrouptenanttag` (`data_id`, `group_id`, `tenant_id`, `tag_id`) USING BTREE
 ) ENGINE = InnoDB
@@ -218,13 +218,13 @@ CREATE TABLE `config_info_tag`
 DROP TABLE IF EXISTS `config_tags_relation`;
 CREATE TABLE `config_tags_relation`
 (
-    `id`        bigint(20)                                       NOT NULL COMMENT 'id',
-    `tag_name`  varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'tag_name',
-    `tag_type`  varchar(64) CHARACTER SET utf8 COLLATE utf8_bin  NULL DEFAULT NULL COMMENT 'tag_type',
-    `data_id`   varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'data_id',
-    `group_id`  varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'group_id',
-    `tenant_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT '' COMMENT 'tenant_id',
-    `nid`       bigint(20)                                       NOT NULL AUTO_INCREMENT,
+    `id`        bigint(20)                                                    NOT NULL COMMENT 'id',
+    `tag_name`  varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'tag_name',
+    `tag_type`  varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL DEFAULT NULL COMMENT 'tag_type',
+    `data_id`   varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'data_id',
+    `group_id`  varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'group_id',
+    `tenant_id` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT 'tenant_id',
+    `nid`       bigint(20)                                                    NOT NULL AUTO_INCREMENT,
     PRIMARY KEY (`nid`) USING BTREE,
     UNIQUE INDEX `uk_configtagrelation_configidtag` (`id`, `tag_name`, `tag_type`) USING BTREE,
     INDEX `idx_tenant_id` (`tenant_id`) USING BTREE
@@ -244,16 +244,16 @@ CREATE TABLE `config_tags_relation`
 DROP TABLE IF EXISTS `group_capacity`;
 CREATE TABLE `group_capacity`
 (
-    `id`                bigint(20) UNSIGNED                              NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-    `group_id`          varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT 'Group ID，空字符表示整个集群',
-    `quota`             int(10) UNSIGNED                                 NOT NULL DEFAULT 0 COMMENT '配额，0表示使用默认值',
-    `usage`             int(10) UNSIGNED                                 NOT NULL DEFAULT 0 COMMENT '使用量',
-    `max_size`          int(10) UNSIGNED                                 NOT NULL DEFAULT 0 COMMENT '单个配置大小上限，单位为字节，0表示使用默认值',
-    `max_aggr_count`    int(10) UNSIGNED                                 NOT NULL DEFAULT 0 COMMENT '聚合子配置最大个数，，0表示使用默认值',
-    `max_aggr_size`     int(10) UNSIGNED                                 NOT NULL DEFAULT 0 COMMENT '单个聚合数据的子配置大小上限，单位为字节，0表示使用默认值',
-    `max_history_count` int(10) UNSIGNED                                 NOT NULL DEFAULT 0 COMMENT '最大变更历史数量',
-    `gmt_create`        datetime                                         NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `gmt_modified`      datetime                                         NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+    `id`                bigint(20) UNSIGNED                                           NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+    `group_id`          varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'Group ID，空字符表示整个集群',
+    `quota`             int(10) UNSIGNED                                              NOT NULL DEFAULT 0 COMMENT '配额，0表示使用默认值',
+    `usage`             int(10) UNSIGNED                                              NOT NULL DEFAULT 0 COMMENT '使用量',
+    `max_size`          int(10) UNSIGNED                                              NOT NULL DEFAULT 0 COMMENT '单个配置大小上限，单位为字节，0表示使用默认值',
+    `max_aggr_count`    int(10) UNSIGNED                                              NOT NULL DEFAULT 0 COMMENT '聚合子配置最大个数，，0表示使用默认值',
+    `max_aggr_size`     int(10) UNSIGNED                                              NOT NULL DEFAULT 0 COMMENT '单个聚合数据的子配置大小上限，单位为字节，0表示使用默认值',
+    `max_history_count` int(10) UNSIGNED                                              NOT NULL DEFAULT 0 COMMENT '最大变更历史数量',
+    `gmt_create`        datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `gmt_modified`      datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `uk_group_id` (`group_id`) USING BTREE
 ) ENGINE = InnoDB
@@ -272,25 +272,25 @@ CREATE TABLE `group_capacity`
 DROP TABLE IF EXISTS `his_config_info`;
 CREATE TABLE `his_config_info`
 (
-    `id`           bigint(64) UNSIGNED                              NOT NULL,
-    `nid`          bigint(20) UNSIGNED                              NOT NULL AUTO_INCREMENT,
-    `data_id`      varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-    `group_id`     varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-    `app_name`     varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL     DEFAULT NULL COMMENT 'app_name',
-    `content`      longtext CHARACTER SET utf8 COLLATE utf8_bin     NOT NULL,
-    `md5`          varchar(32) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT NULL,
-    `gmt_create`   datetime                                         NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `gmt_modified` datetime                                         NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `src_user`     text CHARACTER SET utf8 COLLATE utf8_bin         NULL,
-    `src_ip`       varchar(50) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT NULL,
-    `op_type`      char(10) CHARACTER SET utf8 COLLATE utf8_bin     NULL     DEFAULT NULL,
-    `tenant_id`    varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL     DEFAULT '' COMMENT '租户字段',
+    `id`           bigint(64) UNSIGNED                                           NOT NULL,
+    `nid`          bigint(20) UNSIGNED                                           NOT NULL AUTO_INCREMENT,
+    `data_id`      varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+    `group_id`     varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+    `app_name`     varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL     DEFAULT NULL COMMENT 'app_name',
+    `content`      longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci     NOT NULL,
+    `md5`          varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL     DEFAULT NULL,
+    `gmt_create`   datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `gmt_modified` datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `src_user`     text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci         NULL,
+    `src_ip`       varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL     DEFAULT NULL,
+    `op_type`      char(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci     NULL     DEFAULT NULL,
+    `tenant_id`    varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL     DEFAULT '' COMMENT '租户字段',
     PRIMARY KEY (`nid`) USING BTREE,
     INDEX `idx_gmt_create` (`gmt_create`) USING BTREE,
     INDEX `idx_gmt_modified` (`gmt_modified`) USING BTREE,
     INDEX `idx_did` (`data_id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 68
+  AUTO_INCREMENT = 69
   CHARACTER SET = utf8
   COLLATE = utf8_bin COMMENT = '多租户改造'
   ROW_FORMAT = DYNAMIC;
@@ -315,7 +315,7 @@ VALUES (115, 32, 'gateway.yaml', 'DEFAULT_GROUP', '',
         'dev');
 INSERT INTO `his_config_info`
 VALUES (128, 33, 'knife4j.yaml', 'DEFAULT_GROUP', '',
-        'server:\n  port: ${PORT_KNIFE4J:8401}\n\nknife4j:\n  # 开启聚合组件\n  enableAggregation: ${DOC_ENABLE_AGGREGATION:true}\n  cloud:\n    enable: true\n    routes:\n      - name: ${SERVICE_NAME_AUTH:auth}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_AUTH:/auth}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_SYSTEM:server-system}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_SYSTEM:/system}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_GENERATOR:server-generator}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_GENERATOR:/generator}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_TEST:server-test}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_TEST:/test}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_MINIO:server-minio}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_MINIO:/minio}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_DICT:server-dict}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_DICT:/dict}/v2/api-docs?group=default\n        swaggerVersion: 2.0',
+        'server:\n  port: ${PORT_TX_KNIFE4J:8401}\n\nknife4j:\n  # 开启聚合组件\n  enableAggregation: ${DOC_ENABLE_AGGREGATION:true}\n  cloud:\n    enable: true\n    routes:\n      - name: ${SERVICE_NAME_AUTH:auth}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_AUTH:/auth}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_SYSTEM:server-system}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_SYSTEM:/system}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_GENERATOR:server-generator}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_GENERATOR:/generator}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_TEST:server-test}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_TEST:/test}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_MINIO:server-minio}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_MINIO:/minio}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_DICT:server-dict}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_DICT:/dict}/v2/api-docs?group=default\n        swaggerVersion: 2.0',
         '7460560f59df03d517e46926dff97247', '2021-12-31 10:12:01', '2021-12-30 20:12:02', 'nacos', '192.168.33.1', 'U',
         'dev');
 INSERT INTO `his_config_info`
@@ -488,6 +488,11 @@ VALUES (140, 67, 'server.yaml', 'DEFAULT_GROUP', '',
         'spring:\n  aop:\n    proxy-target-class: true\n\n  jackson:\n    date-format: yyyy-MM-dd HH:mm:ss\n    time-zone: GMT+8\n\n  freemarker:\n    check-template-location: false\n\n  datasource:\n    dynamic:\n      p6spy: ${DATASOURCE_LOGGER_SQL_ENABLED:true}\n      hikari:\n        connection-timeout: 30000\n        max-lifetime: 1800000\n        max-pool-size: 15\n        min-idle: 5\n        connection-test-query: select 1\n        pool-name: MyHikariCP\n\nsecurity:\n  oauth2:\n    resource:\n      id: ${spring.application.name}\n      user-info-uri: http://${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}/auth/user\n\nmybatis-plus:\n  configuration:\n    jdbc-type-for-null: null\n  global-config:\n    banner: false\n\nmy:\n  doc:\n    enable: true\n    title: ${spring.application.name}文档\n    description: ${my.doc.title}\n    name: zclcs\n    email: 2371219112@qq.com\n    url: https://github.com/zclcs\n    version: 2.2-RELEASE\n  log:\n    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}',
         '2873429fac39c168efeed7a025148b49', '2022-01-10 14:24:34', '2022-01-10 00:24:34', 'nacos', '192.168.33.1', 'U',
         'dev');
+INSERT INTO `his_config_info`
+VALUES (131, 68, 'dict.yaml', 'DEFAULT_GROUP', '',
+        'system:\n  dict:\n    mq-type: none\n    text-value-default-null: true\n    on-boot-refresh-dict: false\n    cache:\n      enabled: true\n      maximum-size: 500\n      initial-capacity: 50\n      duration: 30s\n      miss-num: 50\n    controller:\n      enabled: false',
+        '0bad0e76df0199d8434fd9848b844901', '2022-01-17 09:26:47', '2022-01-16 19:26:47', 'nacos', '192.168.33.1', 'U',
+        'dev');
 
 -- ----------------------------
 -- Table structure for permissions
@@ -534,16 +539,16 @@ VALUES ('nacos', 'ROLE_ADMIN');
 DROP TABLE IF EXISTS `tenant_capacity`;
 CREATE TABLE `tenant_capacity`
 (
-    `id`                bigint(20) UNSIGNED                              NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-    `tenant_id`         varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT 'Tenant ID',
-    `quota`             int(10) UNSIGNED                                 NOT NULL DEFAULT 0 COMMENT '配额，0表示使用默认值',
-    `usage`             int(10) UNSIGNED                                 NOT NULL DEFAULT 0 COMMENT '使用量',
-    `max_size`          int(10) UNSIGNED                                 NOT NULL DEFAULT 0 COMMENT '单个配置大小上限，单位为字节，0表示使用默认值',
-    `max_aggr_count`    int(10) UNSIGNED                                 NOT NULL DEFAULT 0 COMMENT '聚合子配置最大个数',
-    `max_aggr_size`     int(10) UNSIGNED                                 NOT NULL DEFAULT 0 COMMENT '单个聚合数据的子配置大小上限，单位为字节，0表示使用默认值',
-    `max_history_count` int(10) UNSIGNED                                 NOT NULL DEFAULT 0 COMMENT '最大变更历史数量',
-    `gmt_create`        datetime                                         NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `gmt_modified`      datetime                                         NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+    `id`                bigint(20) UNSIGNED                                           NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+    `tenant_id`         varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'Tenant ID',
+    `quota`             int(10) UNSIGNED                                              NOT NULL DEFAULT 0 COMMENT '配额，0表示使用默认值',
+    `usage`             int(10) UNSIGNED                                              NOT NULL DEFAULT 0 COMMENT '使用量',
+    `max_size`          int(10) UNSIGNED                                              NOT NULL DEFAULT 0 COMMENT '单个配置大小上限，单位为字节，0表示使用默认值',
+    `max_aggr_count`    int(10) UNSIGNED                                              NOT NULL DEFAULT 0 COMMENT '聚合子配置最大个数',
+    `max_aggr_size`     int(10) UNSIGNED                                              NOT NULL DEFAULT 0 COMMENT '单个聚合数据的子配置大小上限，单位为字节，0表示使用默认值',
+    `max_history_count` int(10) UNSIGNED                                              NOT NULL DEFAULT 0 COMMENT '最大变更历史数量',
+    `gmt_create`        datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `gmt_modified`      datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `uk_tenant_id` (`tenant_id`) USING BTREE
 ) ENGINE = InnoDB
@@ -562,14 +567,14 @@ CREATE TABLE `tenant_capacity`
 DROP TABLE IF EXISTS `tenant_info`;
 CREATE TABLE `tenant_info`
 (
-    `id`            bigint(20)                                       NOT NULL AUTO_INCREMENT COMMENT 'id',
-    `kp`            varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'kp',
-    `tenant_id`     varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT '' COMMENT 'tenant_id',
-    `tenant_name`   varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT '' COMMENT 'tenant_name',
-    `tenant_desc`   varchar(256) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'tenant_desc',
-    `create_source` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin  NULL DEFAULT NULL COMMENT 'create_source',
-    `gmt_create`    bigint(20)                                       NOT NULL COMMENT '创建时间',
-    `gmt_modified`  bigint(20)                                       NOT NULL COMMENT '修改时间',
+    `id`            bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `kp`            varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'kp',
+    `tenant_id`     varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT 'tenant_id',
+    `tenant_name`   varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT 'tenant_name',
+    `tenant_desc`   varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'tenant_desc',
+    `create_source` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL DEFAULT NULL COMMENT 'create_source',
+    `gmt_create`    bigint(20)                                                    NOT NULL COMMENT '创建时间',
+    `gmt_modified`  bigint(20)                                                    NOT NULL COMMENT '修改时间',
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `uk_tenant_info_kptenantid` (`kp`, `tenant_id`) USING BTREE,
     INDEX `idx_tenant_id` (`tenant_id`) USING BTREE
