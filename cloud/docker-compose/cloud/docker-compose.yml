@@ -176,21 +176,3 @@ services:
       timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
       retries: ${DOCKER_HEALTHCHECK_RETRIES}
     env_file: .env
-  nginx:
-    image: nginx:1.21.3
-    container_name: nginx-cloud
-    network_mode: host
-    environment:
-      # 设置时区
-      TZ: "Asia/Shanghai"
-    privileged: true
-    user: root
-    volumes:
-      - ./web:/var/cloud/web
-      - ./nginx/:/etc/nginx/
-    healthcheck:
-      test: [ "CMD-SHELL", "curl -sS 'http://localhost/' || exit 1" ]
-      interval: ${DOCKER_HEALTHCHECK_INTERVAL}
-      timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
-      retries: ${DOCKER_HEALTHCHECK_RETRIES}
-    env_file: .env

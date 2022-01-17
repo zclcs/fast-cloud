@@ -17,6 +17,11 @@
     <description>系统核心模块</description>
 
     <dependencies>
+        <!-- validation -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
         <!-- webflux 响应式编程 -->
         <dependency>
             <groupId>io.projectreactor</groupId>
@@ -80,12 +85,12 @@
         <!-- 配置文件管理 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-alibaba-nacos-config</artifactId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
         <!-- 服务发现 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-alibaba-nacos-discovery</artifactId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
         <!-- feign rpc调用 -->
         <dependency>
@@ -111,9 +116,19 @@
         </dependency>
         <!-- 接口文档依赖 -->
         <dependency>
-            <groupId>com.zclcs</groupId>
-            <artifactId>common-doc</artifactId>
-            <version>${project.version}</version>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-micro-spring-boot-starter</artifactId>
+            <version>${knife4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <version>${knife4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-models</artifactId>
+            <version>${swagger.version}</version>
         </dependency>
         <!-- 字典 -->
         <dependency>

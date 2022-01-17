@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : docker_192.168.30.10
+ Source Server         : docker_mysql_192.168.30.10
  Source Server Type    : MySQL
  Source Server Version : 50735
  Source Host           : 192.168.33.10:3306
@@ -11,7 +11,7 @@
  Target Server Version : 50735
  File Encoding         : 65001
 
- Date: 08/11/2021 10:38:49
+ Date: 13/01/2022 09:14:37
 */
 
 SET NAMES utf8mb4;
@@ -31,10 +31,10 @@ CREATE TABLE `dict_table`
     PRIMARY KEY (`id`) USING BTREE,
     INDEX `ix_dict_table_table_name` (`dict_name_id`) USING BTREE COMMENT '字典表名索引'
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 33
+  AUTO_INCREMENT = 22
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_unicode_ci COMMENT = '字典'
-  ROW_FORMAT = Dynamic;
+  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of dict_table
@@ -76,7 +76,9 @@ CREATE TABLE `dict_table_level`
 (
     `id`           bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT '字典表名id',
     `parent_id`    bigint(20)                                                    NOT NULL DEFAULT 0 COMMENT '父项id-默认为0',
+    `parent_code`  char(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci     NOT NULL DEFAULT '0' COMMENT '父级code-默认为0',
     `dict_name_id` bigint(20)                                                    NOT NULL COMMENT '表名id',
+    `level`        smallint(2)                                                   NOT NULL DEFAULT 1 COMMENT '层级',
     `code`         char(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci     NOT NULL COMMENT '字典code',
     `title`        varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '字典中文',
     `remark`       varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL     DEFAULT NULL COMMENT '备注',
@@ -84,20 +86,14 @@ CREATE TABLE `dict_table_level`
     INDEX `ix_dict_table_level` (`dict_name_id`) USING BTREE COMMENT '层级字典表名索引',
     INDEX `ix_dict_table_parent_id` (`parent_id`) USING BTREE COMMENT '层级字典父项索引'
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 7
+  AUTO_INCREMENT = 1
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_unicode_ci COMMENT = '层级字典'
-  ROW_FORMAT = Dynamic;
+  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of dict_table_level
 -- ----------------------------
-INSERT INTO `dict_table_level`
-VALUES (1, 0, 6, '110000', '北京市', NULL);
-INSERT INTO `dict_table_level`
-VALUES (2, 1, 6, '110101', '西城区', NULL);
-INSERT INTO `dict_table_level`
-VALUES (3, 1, 6, '110102', '朝阳区', NULL);
 
 -- ----------------------------
 -- Table structure for dict_table_name
@@ -113,10 +109,10 @@ CREATE TABLE `dict_table_name`
     `remark`     varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL     DEFAULT NULL COMMENT '备注',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 14
+  AUTO_INCREMENT = 11
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_unicode_ci COMMENT = '字典名表'
-  ROW_FORMAT = Dynamic;
+  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of dict_table_name
@@ -127,8 +123,6 @@ INSERT INTO `dict_table_name`
 VALUES (2, 'user_gender', '用户性别', NULL, '0', NULL);
 INSERT INTO `dict_table_name`
 VALUES (4, 'dict_type', '字典类型', NULL, '0', NULL);
-INSERT INTO `dict_table_name`
-VALUES (6, 'area_code', '行政区划', NULL, '1', NULL);
 INSERT INTO `dict_table_name`
 VALUES (8, 'yes_no', '是否字典表', NULL, '0', NULL);
 INSERT INTO `dict_table_name`

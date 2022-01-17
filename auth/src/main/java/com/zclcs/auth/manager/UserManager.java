@@ -108,13 +108,13 @@ public class UserManager {
         systemUser.setGender(SystemUserVo.SEX_UNKNOWN);
         systemUser.setAvatar(SystemUserVo.DEFAULT_AVATAR);
         systemUser.setDescription("注册用户");
-        systemUser.insert();
+        userMapper.insert(systemUser);
 
         SystemUserRole userRole = new SystemUserRole();
         userRole.setUserId(systemUser.getUserId());
         // 注册用户角色 ID
         userRole.setRoleId(MyConstant.REGISTER_ROLE_ID);
-        userRole.insert();
+        userRoleMapper.insert(userRole);
         SystemUserVo systemUserVo = new SystemUserVo();
         BeanUtil.copyProperties(systemUserVo, systemUser);
         return systemUserVo;

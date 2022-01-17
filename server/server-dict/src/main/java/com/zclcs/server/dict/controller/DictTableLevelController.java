@@ -1,6 +1,8 @@
 package com.zclcs.server.dict.controller;
 
+import cn.hutool.core.util.StrUtil;
 import com.zclcs.common.core.base.BaseRsp;
+import com.zclcs.common.core.constant.MyConstant;
 import com.zclcs.common.core.constant.StringConstant;
 import com.zclcs.common.core.entity.dict.ao.DictTableLevelAo;
 import com.zclcs.common.core.entity.dict.vo.DictTableLevelTreeVo;
@@ -51,6 +53,16 @@ public class DictTableLevelController {
     public BaseRsp<List<DictTableLevelTreeVo>> findDictTableLevelOption(DictTableLevelVo dictTableLevelVo) {
         List<DictTableLevelTreeVo> dictTableLevelTreeVo = this.dictTableLevelService.findDictTableLevelTreeVo(dictTableLevelVo);
         return BaseRspUtil.data(dictTableLevelTreeVo);
+    }
+
+    @GetMapping("lazy/option")
+    @ApiOperation(value = "层级字典查询（懒加载）", notes = "不传parentId 默认查顶级 不传 dictName 默认 area_code")
+    public BaseRsp<List<DictTableLevelVo>> findDictTableLevelOptionLazy(DictTableLevelVo dictTableLevelVo) {
+        if (StrUtil.isBlank(dictTableLevelVo.getDictName())) {
+            dictTableLevelVo.setDictName(MyConstant.AREA_CODE);
+        }
+        List<DictTableLevelVo> dictTableLevelList = this.dictTableLevelService.findDictTableLevelOptionLazy(dictTableLevelVo);
+        return BaseRspUtil.data(dictTableLevelList);
     }
 
     @GetMapping("list")

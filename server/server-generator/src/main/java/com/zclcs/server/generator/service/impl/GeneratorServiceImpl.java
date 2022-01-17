@@ -25,8 +25,6 @@ import com.zclcs.server.generator.service.GeneratorConfigService;
 import com.zclcs.server.generator.service.GeneratorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.RegExUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 
@@ -77,7 +75,7 @@ public class GeneratorServiceImpl implements GeneratorService {
         }
         String className = name;
         if (GeneratorConfigVo.TRIM_YES.equals(generatorConfigVo.getIsTrim())) {
-            className = RegExUtils.replaceFirst(name, generatorConfigVo.getTrimValue(), StringUtils.EMPTY);
+            className = StrUtil.removePrefix(name, generatorConfigVo.getTrimValue());
         }
         String underscoreToCamel = BaseUtil.underscoreToCamel(className);
         generatorConfigVo.setTableName(name);
@@ -163,12 +161,12 @@ public class GeneratorServiceImpl implements GeneratorService {
     }
 
     private void setMenu(SystemMenuAo menu, GenerateAo generateAo, String className, Long parentId) {
-        menu.setMenuName(Optional.ofNullable(generateAo.getMenuName()).filter(StrUtil::isBlank).orElse(generateAo.getRemark()));
+        menu.setMenuName(Optional.ofNullable(generateAo.getMenuName()).filter(StrUtil::isNotBlank).orElse(generateAo.getRemark()));
         menu.setParentId(parentId);
         menu.setPerms(className + StrUtil.COLON + ParamsConstant.AUTH_VIEW);
         menu.setType(DictConstant.MENU_TYPE_0);
         menu.setIcon(ParamsConstant.DEFAULT_MENU_ICON);
-        menu.setPath(Optional.ofNullable(generateAo.getMenuPath()).filter(StrUtil::isBlank).orElse(className));
+        menu.setPath(Optional.ofNullable(generateAo.getMenuPath()).filter(StrUtil::isNotBlank).orElse(className));
         menu.setComponent(generateAo.getMenuComponent());
         menu.setIgnoreKeepAlive(DictConstant.YES_NO_0);
         menu.setHideMenu(DictConstant.YES_NO_0);

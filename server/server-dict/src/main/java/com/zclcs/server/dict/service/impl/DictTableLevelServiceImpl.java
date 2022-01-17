@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -64,6 +65,12 @@ public class DictTableLevelServiceImpl extends ServiceImpl<DictTableLevelMapper,
     }
 
     @Override
+    public List<DictTableLevelVo> findDictTableLevelOptionLazy(DictTableLevelVo dictTableLevelVo) {
+        QueryWrapper<DictTableLevelVo> queryWrapper = getQueryWrapper(dictTableLevelVo);
+        return this.baseMapper.findLevelListVo(queryWrapper);
+    }
+
+    @Override
     public DictTableLevelVo findDictTableLevel(DictTableLevelVo dictTableLevelVo) {
         QueryWrapper<DictTableLevelVo> queryWrapper = getQueryWrapper(dictTableLevelVo);
         return this.baseMapper.findOneVo(queryWrapper);
@@ -75,6 +82,7 @@ public class DictTableLevelServiceImpl extends ServiceImpl<DictTableLevelMapper,
         queryWrapper.eq(dictTableLevelVo.getDictNameId() != null, "dtl.dict_name_id", dictTableLevelVo.getDictNameId());
         queryWrapper.eq(StrUtil.isNotBlank(dictTableLevelVo.getCode()), "dtl.code", dictTableLevelVo.getCode());
         queryWrapper.like(StrUtil.isNotBlank(dictTableLevelVo.getTitle()), "dtl.title", dictTableLevelVo.getTitle());
+        queryWrapper.eq(dictTableLevelVo.getParentCode() != null, "dtl.parent_code", dictTableLevelVo.getParentCode());
         queryWrapper.eq(dictTableLevelVo.getId() != null, "dtl.id", dictTableLevelVo.getId());
         return queryWrapper;
     }
@@ -98,8 +106,7 @@ public class DictTableLevelServiceImpl extends ServiceImpl<DictTableLevelMapper,
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void createDictTableLevel(DictTableLevelAo dictTableLevelAo) {
-        DictTableLevel dictTableLevel = new DictTableLevel();
-        BeanUtil.copyProperties(dictTableLevelAo, dictTableLevel);
+        DictTableLevel dictTableLevel = getDictTableLevel(dictTableLevelAo);
         this.save(dictTableLevel);
         refreshDictValue(dictTableLevel.getId());
     }
@@ -107,10 +114,21 @@ public class DictTableLevelServiceImpl extends ServiceImpl<DictTableLevelMapper,
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateDictTableLevel(DictTableLevelAo dictTableLevelAo) {
-        DictTableLevel dictTableLevel = new DictTableLevel();
-        BeanUtil.copyProperties(dictTableLevelAo, dictTableLevel);
+        DictTableLevel dictTableLevel = getDictTableLevel(dictTableLevelAo);
         this.updateById(dictTableLevel);
         refreshDictValue(dictTableLevel.getId());
+    }
+
+    private DictTableLevel getDictTableLevel(DictTableLevelAo dictTableLevelAo) {
+        Long parentId = Optional.ofNullable(dictTableLevelAo.getParentId()).orElse(0L);
+        DictTableLevel dictTableLevel = new DictTableLevel();
+        BeanUtil.copyProperties(dictTableLevelAo, dictTableLevel);
+        if (!MyConstant.TOP_PARENT_ID.equals(parentId)) {
+            dictTableLevel.setParentCode(this.lambdaQuery().eq(DictTableLevel::getId, dictTableLevelAo.getParentId()).one().getCode());
+        } else {
+            dictTableLevel.setParentCode(MyConstant.TOP_PARENT_CODE);
+        }
+        return dictTableLevel;
     }
 
     @Override

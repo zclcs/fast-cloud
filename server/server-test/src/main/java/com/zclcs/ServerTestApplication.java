@@ -1,6 +1,7 @@
 package com.zclcs;
 
 import com.codingapi.txlcn.tc.config.EnableDistributedTransaction;
+import com.houkunlin.system.dict.starter.SystemDictScan;
 import com.zclcs.common.security.starter.annotation.EnableMyCloudResourceServer;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @MapperScan("com.zclcs.server.test.mapper")
 @EnableFeignClients
 @EnableDiscoveryClient
+@SystemDictScan
 public class ServerTestApplication {
 
     public static void main(String[] args) {

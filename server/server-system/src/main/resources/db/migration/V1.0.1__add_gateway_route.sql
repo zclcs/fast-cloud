@@ -67,7 +67,7 @@ CREATE TABLE `system_rate_limit_rule`
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 6
   CHARACTER SET = utf8mb4
-  COLLATE = utf8mb4_general_ci COMMENT = '限流规则表'
+  COLLATE = utf8mb4_unicode_ci COMMENT = '限流规则表'
   ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------

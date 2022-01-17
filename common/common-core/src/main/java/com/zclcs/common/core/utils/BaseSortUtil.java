@@ -1,11 +1,11 @@
 package com.zclcs.common.core.utils;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
 import com.zclcs.common.core.constant.MyConstant;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * 处理排序工具类
@@ -30,18 +30,18 @@ public abstract class BaseSortUtil {
             sortField = BaseUtil.camelToUnderscore(sortField);
             defaultSort = BaseUtil.camelToUnderscore(defaultSort);
         }
-        if (StringUtils.isNotBlank(basePageAo.getField())
-                && StringUtils.isNotBlank(basePageAo.getOrder())
-                && !StringUtils.equalsIgnoreCase(basePageAo.getField(), "null")
-                && !StringUtils.equalsIgnoreCase(basePageAo.getOrder(), "null")) {
-            if (StringUtils.equals(basePageAo.getOrder(), MyConstant.ORDER_DESC)) {
+        if (StrUtil.isNotBlank(basePageAo.getField())
+                && StrUtil.isNotBlank(basePageAo.getOrder())
+                && !StrUtil.equalsIgnoreCase(basePageAo.getField(), "null")
+                && !StrUtil.equalsIgnoreCase(basePageAo.getOrder(), "null")) {
+            if (StrUtil.equals(basePageAo.getOrder(), MyConstant.ORDER_DESC)) {
                 page.addOrder(OrderItem.desc(sortField));
             } else {
                 page.addOrder(OrderItem.asc(sortField));
             }
         } else {
-            if (StringUtils.isNotBlank(defaultSort)) {
-                if (StringUtils.equals(defaultOrder, MyConstant.ORDER_DESC)) {
+            if (StrUtil.isNotBlank(defaultSort)) {
+                if (StrUtil.equals(defaultOrder, MyConstant.ORDER_DESC)) {
                     page.addOrder(OrderItem.desc(defaultSort));
                 } else {
                     page.addOrder(OrderItem.asc(defaultSort));
@@ -86,18 +86,18 @@ public abstract class BaseSortUtil {
             sortField = BaseUtil.camelToUnderscore(sortField);
             defaultSort = BaseUtil.camelToUnderscore(defaultSort);
         }
-        if (StringUtils.isNotBlank(basePageAo.getField())
-                && StringUtils.isNotBlank(basePageAo.getOrder())
-                && !StringUtils.equalsIgnoreCase(basePageAo.getField(), "null")
-                && !StringUtils.equalsIgnoreCase(basePageAo.getOrder(), "null")) {
-            if (StringUtils.equals(basePageAo.getOrder(), MyConstant.ORDER_DESC)) {
+        if (StrUtil.isNotBlank(basePageAo.getField())
+                && StrUtil.isNotBlank(basePageAo.getOrder())
+                && !StrUtil.equalsIgnoreCase(basePageAo.getField(), "null")
+                && !StrUtil.equalsIgnoreCase(basePageAo.getOrder(), "null")) {
+            if (StrUtil.equals(basePageAo.getOrder(), MyConstant.ORDER_DESC)) {
                 wrapper.orderByDesc(sortField);
             } else {
                 wrapper.orderByAsc(sortField);
             }
         } else {
-            if (StringUtils.isNotBlank(defaultSort)) {
-                if (StringUtils.equals(defaultOrder, MyConstant.ORDER_DESC)) {
+            if (StrUtil.isNotBlank(defaultSort)) {
+                if (StrUtil.equals(defaultOrder, MyConstant.ORDER_DESC)) {
                     wrapper.orderByDesc(defaultSort);
                 } else {
                     wrapper.orderByAsc(defaultSort);

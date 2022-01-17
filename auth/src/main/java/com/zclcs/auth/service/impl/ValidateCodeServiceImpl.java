@@ -13,7 +13,7 @@ import com.zclcs.common.core.constant.ParamsConstant;
 import com.zclcs.common.core.exception.ValidateCodeException;
 import com.zclcs.common.redis.starter.service.RedisService;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;

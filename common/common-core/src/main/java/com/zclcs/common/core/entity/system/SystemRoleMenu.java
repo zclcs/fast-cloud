@@ -1,13 +1,10 @@
 package com.zclcs.common.core.entity.system;
 
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import java.io.Serializable;
 
 /**
  * <p>
@@ -21,7 +18,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "SystemRoleMenu对象", description = "角色菜单关联表")
-public class SystemRoleMenu extends Model<SystemRoleMenu> {
+public class SystemRoleMenu {
 
     private static final long serialVersionUID = 1L;
 
@@ -30,11 +27,5 @@ public class SystemRoleMenu extends Model<SystemRoleMenu> {
 
     @ApiModelProperty(value = "菜单编号")
     private Long menuId;
-
-
-    @Override
-    protected Serializable pkVal() {
-        return this.roleId;
-    }
 
 }

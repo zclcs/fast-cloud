@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zclcs.server.test.mapper.ProjectMapper">
+
+    <sql id="baseSql">
+        // TODO 设置分页、集合、单个查询sql
+    </sql>
+    <sql id="baseCountSql">
+        // TODO 设置统计查询sql
+    </sql>
+    <select id="findPageVo" resultType="com.zclcs.common.core.entity.test.vo.ProjectVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="findListVo" resultType="com.zclcs.common.core.entity.test.vo.ProjectVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="findOneVo" resultType="com.zclcs.common.core.entity.test.vo.ProjectVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="countVo" resultType="java.lang.Integer">
+        <include refid="baseCountSql"/>
+    </select>
+</mapper>

@@ -4,7 +4,7 @@ import com.zclcs.common.core.constant.MyConstant;
 import com.zclcs.common.core.utils.BaseRspUtil;
 import com.zclcs.common.core.utils.BaseUtil;
 import com.zclcs.common.security.starter.properties.MyCloudSecurityProperties;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.servlet.HandlerInterceptor;

@@ -338,21 +338,6 @@ VALUES (85, 72, '删除', NULL, NULL, NULL, 'blackList:delete', NULL, '1', '0', 
 INSERT INTO `system_menu`
 VALUES (87, 73, '删除', NULL, NULL, NULL, 'blockLog:delete', NULL, '1', '0', '0', '0', '0', NULL, NULL,
         '2022-01-04 10:59:23', NULL);
-INSERT INTO `system_menu`
-VALUES (102, 0, '测试', '/test', 'Layout', NULL, NULL, 'ant-design:appstore-add-outlined', '2', '0', '0', '0', '0', NULL,
-        NULL, '2022-01-10 14:26:47', NULL);
-INSERT INTO `system_menu`
-VALUES (103, 102, '班级', 'testClass', NULL, NULL, 'testClass:view', 'ant-design:appstore-add-outlined', '0', '0', '0',
-        '0', '0', NULL, NULL, '2022-01-10 14:26:48', NULL);
-INSERT INTO `system_menu`
-VALUES (104, 103, '新增', NULL, NULL, NULL, 'testClass:add', NULL, '1', '0', '0', '0', '0', NULL, NULL,
-        '2022-01-10 14:26:48', NULL);
-INSERT INTO `system_menu`
-VALUES (105, 103, '删除', NULL, NULL, NULL, 'testClass:delete', NULL, '1', '0', '0', '0', '0', NULL, NULL,
-        '2022-01-10 14:26:48', NULL);
-INSERT INTO `system_menu`
-VALUES (106, 103, '修改', NULL, NULL, NULL, 'testClass:update', NULL, '1', '0', '0', '0', '0', NULL, NULL,
-        '2022-01-10 14:26:48', NULL);
 
 -- ----------------------------
 -- Table structure for system_role

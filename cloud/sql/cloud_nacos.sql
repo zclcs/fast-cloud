@@ -495,13 +495,13 @@ VALUES (140, 67, 'server.yaml', 'DEFAULT_GROUP', '',
 DROP TABLE IF EXISTS `permissions`;
 CREATE TABLE `permissions`
 (
-    `role`     varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL,
-    `resource` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-    `action`   varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NOT NULL,
+    `role`     varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL,
+    `resource` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+    `action`   varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci   NOT NULL,
     UNIQUE INDEX `uk_role_permission` (`role`, `resource`, `action`) USING BTREE
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
-  COLLATE = utf8mb4_general_ci
+  COLLATE = utf8mb4_unicode_ci
   ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -514,12 +514,12 @@ CREATE TABLE `permissions`
 DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles`
 (
-    `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-    `role`     varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+    `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+    `role`     varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
     UNIQUE INDEX `idx_user_role` (`username`, `role`) USING BTREE
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
-  COLLATE = utf8mb4_general_ci
+  COLLATE = utf8mb4_unicode_ci
   ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -591,13 +591,13 @@ VALUES (1, '1', 'dev', 'dev', '开发环境', 'nacos', 1631933668820, 1631933668
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users`
 (
-    `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL,
-    `password` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+    `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL,
+    `password` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
     `enabled`  tinyint(1)                                                    NOT NULL,
     PRIMARY KEY (`username`) USING BTREE
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
-  COLLATE = utf8mb4_general_ci
+  COLLATE = utf8mb4_unicode_ci
   ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------

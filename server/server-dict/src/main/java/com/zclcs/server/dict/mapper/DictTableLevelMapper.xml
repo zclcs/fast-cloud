@@ -15,6 +15,26 @@
                  inner join dict_table_name dtn on dtl.dict_name_id = dtn.id
             ${ew.customSqlSegment}
     </sql>
+    <sql id="levelSql">
+        select dtl.id,
+               dtl.parent_id,
+               dtl.dict_name_id,
+               dtl.code,
+               dtl.title,
+               dtl.remark,
+               dtn.dict_name,
+               dtn.dict_title,
+               case
+                   when (select count(0)
+                         from dict_table_level dtlTmp
+                         where dtlTmp.parent_id =
+                               dtl.id
+                           and dtlTmp.dict_name_id = dtl.dict_name_id) > 0 then 'true'
+                   else 'false' end hasChildren
+        from dict_table_level dtl
+                 inner join dict_table_name dtn on dtl.dict_name_id = dtn.id
+            ${ew.customSqlSegment}
+    </sql>
     <select id="findPageVo" resultType="com.zclcs.common.core.entity.dict.vo.DictTableLevelVo">
         <include refid="baseSql"/>
     </select>
@@ -23,5 +43,8 @@
     </select>
     <select id="findOneVo" resultType="com.zclcs.common.core.entity.dict.vo.DictTableLevelVo">
         <include refid="baseSql"/>
+    </select>
+    <select id="findLevelListVo" resultType="com.zclcs.common.core.entity.dict.vo.DictTableLevelVo">
+        <include refid="levelSql"/>
     </select>
 </mapper>

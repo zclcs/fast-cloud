@@ -4,13 +4,11 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -24,7 +22,7 @@ import java.util.Date;
 @Accessors(chain = true)
 @TableName("minio_file")
 @ApiModel(value = "MinioFile对象", description = "文件")
-public class MinioFile extends Model<MinioFile> {
+public class MinioFile {
 
     /**
      * 文件id
@@ -68,8 +66,4 @@ public class MinioFile extends Model<MinioFile> {
     @TableField("modify_time")
     private Date modifyTime;
 
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
 }

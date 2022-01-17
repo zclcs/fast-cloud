@@ -1,8 +1,8 @@
 package com.zclcs.auth.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.SerializationUtils;
+import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.SerializationUtils;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -32,21 +32,18 @@ public class RedisAuthenticationCodeService extends RandomValueAuthorizationCode
 
     @Override
     protected OAuth2Authentication remove(String code) {
-        RedisConnection conn = getConnection();
-        try {
+        try (RedisConnection conn = getConnection()) {
             byte[] bytes = conn.hGet(AUTH_CODE_KEY.getBytes(StandardCharsets.UTF_8), code.getBytes(StandardCharsets.UTF_8));
             if (bytes == null || ArrayUtils.isEmpty(bytes)) {
                 return null;
             }
-            OAuth2Authentication authentication = SerializationUtils.deserialize(bytes);
+            OAuth2Authentication authentication = (OAuth2Authentication) SerializationUtils.deserialize(bytes);
             if (null != authentication) {
                 conn.hDel(AUTH_CODE_KEY.getBytes(StandardCharsets.UTF_8), code.getBytes(StandardCharsets.UTF_8));
             }
             return authentication;
         } catch (Exception e) {
             return null;
-        } finally {
-            conn.close();
         }
     }
 

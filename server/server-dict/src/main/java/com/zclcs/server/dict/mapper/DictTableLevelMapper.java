@@ -36,6 +36,14 @@ public interface DictTableLevelMapper extends BaseMapper<DictTableLevel> {
     List<DictTableLevelVo> findListVo(@Param(Constants.WRAPPER) Wrapper<DictTableLevelVo> ew);
 
     /**
+     * 查找集合
+     *
+     * @param ew 查询条件
+     * @return 集合对象
+     */
+    List<DictTableLevelVo> findLevelListVo(@Param(Constants.WRAPPER) Wrapper<DictTableLevelVo> ew);
+
+    /**
      * 查找单个
      *
      * @param ew 查询条件

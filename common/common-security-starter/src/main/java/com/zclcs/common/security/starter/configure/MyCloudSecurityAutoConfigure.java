@@ -6,7 +6,7 @@ import com.zclcs.common.security.starter.handler.MyAccessDeniedHandler;
 import com.zclcs.common.security.starter.handler.MyAuthExceptionEntryPoint;
 import com.zclcs.common.security.starter.properties.MyCloudSecurityProperties;
 import feign.RequestInterceptor;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;

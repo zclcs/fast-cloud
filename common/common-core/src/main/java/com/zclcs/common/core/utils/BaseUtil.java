@@ -12,7 +12,7 @@ import com.zclcs.common.core.constant.ValidConstant;
 import com.zclcs.common.core.entity.CurrentUser;
 import com.zclcs.common.core.entity.MyAuthUser;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;

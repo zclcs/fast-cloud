@@ -1,6 +1,7 @@
 package com.zclcs.server.generator.helper;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.StrUtil;
 import com.google.common.io.Files;
 import com.zclcs.common.core.annotation.Helper;
 import com.zclcs.common.core.constant.GeneratorConstant;
@@ -14,7 +15,7 @@ import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -70,10 +71,10 @@ public class GeneratorHelper {
         map.put("hasBigDecimal", false);
         columns.forEach(c -> {
             c.setField(BaseUtil.underscoreToCamel(StringUtils.lowerCase(c.getName())));
-            if (StringUtils.containsAny(c.getType(), FieldType.DATE, FieldType.DATETIME, FieldType.TIMESTAMP)) {
+            if (StrUtil.containsAny(c.getType(), FieldType.DATE, FieldType.DATETIME, FieldType.TIMESTAMP)) {
                 map.put("hasDate", true);
             }
-            if (StringUtils.containsAny(c.getType(), FieldType.DECIMAL, FieldType.NUMERIC)) {
+            if (StrUtil.containsAny(c.getType(), FieldType.DECIMAL, FieldType.NUMERIC)) {
                 map.put("hasBigDecimal", true);
             }
         });

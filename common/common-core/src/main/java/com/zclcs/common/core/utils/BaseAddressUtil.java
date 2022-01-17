@@ -1,9 +1,9 @@
 package com.zclcs.common.core.utils;
 
+import cn.hutool.core.util.StrUtil;
 import com.zclcs.common.core.constant.MyConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.lionsoul.ip2region.DataBlock;
 import org.lionsoul.ip2region.DbConfig;
 import org.lionsoul.ip2region.DbSearcher;
@@ -42,7 +42,7 @@ public abstract class BaseAddressUtil {
             return dataBlock.getRegion();
         } catch (Exception e) {
             log.warn("获取地址信息异常,{}", e.getMessage());
-            return StringUtils.EMPTY;
+            return StrUtil.EMPTY;
         } finally {
             if (searcher != null) {
                 try {

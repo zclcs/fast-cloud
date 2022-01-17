@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zclcs.server.test.mapper.CompanyMapper">
+
+    <sql id="baseSql">
+        select tc.company_id,
+               tc.company_code,
+               tc.company_attachment,
+               tc.company_name,
+               tc.company_type,
+               tc.license_num,
+               tc.area_code,
+               tc.address,
+               tc.zip_code,
+               tc.legal_man,
+               tc.legal_man_phone,
+               tc.legal_man_duty,
+               tc.legal_man_pro_title,
+               tc.legal_man_id_card_type,
+               tc.legal_man_id_card_number,
+               tc.reg_capital,
+               tc.fact_reg_capital,
+               tc.capital_currency_type,
+               tc.register_date,
+               tc.establish_date,
+               tc.office_phone,
+               tc.fax_number,
+               tc.link_man,
+               tc.link_duty,
+               tc.link_phone,
+               tc.email,
+               tc.web_site,
+               tc.remark,
+               tc.create_time,
+               tc.modify_time
+        from test_company tc
+            ${ew.customSqlSegment}
+    </sql>
+    <sql id="baseCountSql">
+        select count(*)
+        from test_company tc
+            ${ew.customSqlSegment}
+    </sql>
+    <select id="findPageVo" resultType="com.zclcs.common.core.entity.test.vo.CompanyVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="findListVo" resultType="com.zclcs.common.core.entity.test.vo.CompanyVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="findOneVo" resultType="com.zclcs.common.core.entity.test.vo.CompanyVo">
+        <include refid="baseSql"/>
+    </select>
+    <select id="countVo" resultType="java.lang.Integer">
+        <include refid="baseCountSql"/>
+    </select>
+</mapper>

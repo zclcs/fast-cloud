@@ -4,13 +4,10 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import java.io.Serializable;
 
 /**
  * 字典名表 Entity
@@ -23,7 +20,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @TableName("dict_table_name")
 @ApiModel(value = "DictTableName对象", description = "字典名表")
-public class DictTableName extends Model<DictTableName> {
+public class DictTableName {
 
     /**
      * 字典名表主键
@@ -61,8 +58,4 @@ public class DictTableName extends Model<DictTableName> {
     @TableField("remark")
     private String remark;
 
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
 }

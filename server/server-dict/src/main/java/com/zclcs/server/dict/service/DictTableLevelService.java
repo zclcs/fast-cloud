@@ -34,6 +34,14 @@ public interface DictTableLevelService extends IService<DictTableLevel> {
     List<DictTableLevelVo> findDictTableLevelList(DictTableLevelVo dictTableLevelVo);
 
     /**
+     * 查询（所有）
+     *
+     * @param dictTableLevelVo dictTableLevelVo
+     * @return List<DictTableLevelVo>
+     */
+    List<DictTableLevelVo> findDictTableLevelOptionLazy(DictTableLevelVo dictTableLevelVo);
+
+    /**
      * 查询（单个）
      *
      * @param dictTableLevelVo dictTableLevelVo

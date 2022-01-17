@@ -2,14 +2,12 @@ package com.zclcs.common.core.entity.system;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -24,7 +22,7 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "SystemLoginLog对象", description = "登录日志表")
-public class SystemLoginLog extends Model<SystemLoginLog> {
+public class SystemLoginLog {
 
     private static final long serialVersionUID = 1L;
 
@@ -49,11 +47,5 @@ public class SystemLoginLog extends Model<SystemLoginLog> {
 
     @ApiModelProperty(value = "浏览器")
     private String browser;
-
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
 
 }

@@ -97,21 +97,22 @@
 
     <appender name="file_service" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${log.path}/service.log</file>
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>${pattern}</pattern>
-        </encoder>
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>DEBUG</level>
-        </filter>
+        <!-- 如果是 true，日志被追加到文件结尾，如果是 false，清空现存文件，默认是true。 -->
+        <append>true</append>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- 日志文件输出文件名 -->
-            <FileNamePattern>${log.path}/service/service.%d{yyyy-MM-dd}%i.log</FileNamePattern>
+            <fileNamePattern>${log.path}/service/service.%d{yyyy-MM-dd}%i.log</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>${log.maxFileSize}</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
             <!-- 日志文件保留天数 -->
             <MaxHistory>1</MaxHistory>
         </rollingPolicy>
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+        </filter>
     </appender>
 
     <!--屏蔽 nacos包下的warn级别以上的日志 -->

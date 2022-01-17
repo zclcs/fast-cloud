@@ -1,13 +1,10 @@
 package com.zclcs.common.core.entity.system;
 
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import java.io.Serializable;
 
 /**
  * <p>
@@ -21,7 +18,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "SystemUserRole对象", description = "用户角色关联表")
-public class SystemUserRole extends Model<SystemUserRole> {
+public class SystemUserRole {
 
     private static final long serialVersionUID = 1L;
 
@@ -30,11 +27,5 @@ public class SystemUserRole extends Model<SystemUserRole> {
 
     @ApiModelProperty(value = "角色id")
     private Long roleId;
-
-
-    @Override
-    protected Serializable pkVal() {
-        return this.userId;
-    }
 
 }

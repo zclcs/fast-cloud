@@ -76,6 +76,11 @@ public interface MyConstant {
     Long TOP_PARENT_ID = 0L;
 
     /**
+     * 根节点code
+     */
+    String TOP_PARENT_CODE = "0";
+
+    /**
      * 注释中的字典信息
      */
     String DICT_REMARK = "@@";
@@ -84,5 +89,10 @@ public interface MyConstant {
      * 字典是否是array
      */
     String DICT_ARRAY = "array";
+
+    /**
+     * 行政区划表名
+     */
+    String AREA_CODE = "area_code";
 
 }

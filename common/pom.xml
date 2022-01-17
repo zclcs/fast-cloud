@@ -12,7 +12,6 @@
 
     <modules>
         <module>common-core</module>
-        <module>common-doc</module>
         <module>common-doc-starter</module>
         <module>common-logging-starter</module>
         <module>common-redis-starter</module>

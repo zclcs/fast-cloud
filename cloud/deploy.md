@@ -128,7 +128,7 @@ ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 > - push 镜像到harbor仓库`docker push 192.168.33.10:3000/library/openjdk8-skywalking:1.0.0`
 > - 进入本项目目录执行maven命令(如果harbor账号密码不是默认记得改，地址及端口也是一样)：`mvn -DsendCredentialsOverHttp=true clean package`
 
-## 部署第三方依赖：mysql、redis、nacos
+## 部署第三方依赖：mysql、redis、nacos、nginx
 
 > - 创建`third-part`目录, 复制项目 /cloud/third-part下的内容，上传至服务器
 > - 复制`third-part`目录下的文件, 上传服务器

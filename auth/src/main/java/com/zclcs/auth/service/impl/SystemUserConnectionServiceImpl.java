@@ -47,7 +47,7 @@ public class SystemUserConnectionServiceImpl extends ServiceImpl<SystemUserConne
     public void createSystemUserConnection(SystemUserConnectionAo systemUserConnectionAo) {
         SystemUserConnection systemUserConnection = new SystemUserConnection();
         BeanUtil.copyProperties(systemUserConnectionAo, systemUserConnection);
-        systemUserConnection.insert();
+        this.save(systemUserConnection);
     }
 
     @Override

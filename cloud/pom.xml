@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.1.RELEASE</version>
+        <version>2.3.12.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -38,11 +38,11 @@
         <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
         <java.version>1.8</java.version>
         <!-- spring boot 依赖 -->
-        <spring-boot.version>2.2.1.RELEASE</spring-boot.version>
+        <spring-boot.version>2.3.12.RELEASE</spring-boot.version>
         <!-- spring cloud 微服务依赖 -->
-        <spring-cloud.version>Hoxton.RELEASE</spring-cloud.version>
+        <spring-cloud.version>Hoxton.SR12</spring-cloud.version>
         <!-- alibaba cloud 微服务依赖 -->
-        <com-alibaba-cloud.version>2.1.1.RELEASE</com-alibaba-cloud.version>
+        <com-alibaba-cloud.version>2.2.7.RELEASE</com-alibaba-cloud.version>
         <!-- 分布式事务依赖 -->
         <codingapi.txlcn.version>5.0.2.RELEASE</codingapi.txlcn.version>
         <!-- 解析xml -->
@@ -76,7 +76,7 @@
         <!--上传日志到 skywalking-->
         <apm-toolkit-logback-1.x.version>8.7.0</apm-toolkit-logback-1.x.version>
         <!--系统字典-->
-        <system-dict-starter.version>1.4.5</system-dict-starter.version>
+        <system-dict-starter.version>1.4.6</system-dict-starter.version>
         <!--okhttp-->
         <okhttp.version>4.9.0</okhttp.version>
         <!--docker 镜像配置-->

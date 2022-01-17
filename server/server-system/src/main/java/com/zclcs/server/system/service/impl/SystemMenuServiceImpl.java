@@ -21,7 +21,7 @@ import com.zclcs.common.core.utils.BaseUtil;
 import com.zclcs.server.system.mapper.SystemMenuMapper;
 import com.zclcs.server.system.service.SystemMenuService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;

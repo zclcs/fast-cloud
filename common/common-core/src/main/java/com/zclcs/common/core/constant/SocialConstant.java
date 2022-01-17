@@ -1,6 +1,6 @@
 package com.zclcs.common.core.constant;
 
-import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang.RandomStringUtils;
 
 /**
  * @author zclcs

@@ -8,7 +8,7 @@ import com.zclcs.common.core.exception.ValidateCodeException;
 import com.zclcs.common.core.utils.BaseRspUtil;
 import com.zclcs.common.core.utils.BaseUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;

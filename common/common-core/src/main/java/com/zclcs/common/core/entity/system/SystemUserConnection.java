@@ -1,13 +1,10 @@
 package com.zclcs.common.core.entity.system;
 
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import java.io.Serializable;
 
 /**
  * <p>
@@ -21,7 +18,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "SystemUserConnection对象", description = "系统用户社交账户关联表")
-public class SystemUserConnection extends Model<SystemUserConnection> {
+public class SystemUserConnection {
 
     private static final long serialVersionUID = 1L;
 
@@ -48,11 +45,5 @@ public class SystemUserConnection extends Model<SystemUserConnection> {
 
     @ApiModelProperty(value = "备注")
     private String remark;
-
-
-    @Override
-    protected Serializable pkVal() {
-        return this.userName;
-    }
 
 }

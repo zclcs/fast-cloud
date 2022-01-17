@@ -78,3 +78,21 @@ services:
       retries: ${DOCKER_HEALTHCHECK_RETRIES}
     command: server --console-address ':9001' /data  #指定容器中的目录 /data
     privileged: true
+  nginx:
+    image: nginx:1.21.3
+    container_name: nginx-cloud
+    network_mode: host
+    environment:
+      # 设置时区
+      TZ: "Asia/Shanghai"
+    privileged: true
+    user: root
+    volumes:
+      - ../cloud/web:/var/cloud/web
+      - ./nginx/:/etc/nginx/
+    healthcheck:
+      test: [ "CMD", "service", "nginx", "status" ]
+      interval: ${DOCKER_HEALTHCHECK_INTERVAL}
+      timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
+      retries: ${DOCKER_HEALTHCHECK_RETRIES}
+    env_file: .env
