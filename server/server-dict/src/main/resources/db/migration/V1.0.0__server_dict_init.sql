@@ -67,6 +67,10 @@ INSERT INTO `dict_table`
 VALUES (20, 10, '0', '关闭', NULL);
 INSERT INTO `dict_table`
 VALUES (21, 10, '1', '开启', NULL);
+INSERT INTO `dict_table`
+VALUES (1311, 111, '1', '开启', NULL);
+INSERT INTO `dict_table`
+VALUES (1312, 111, '0', '关闭', NULL);
 
 -- ----------------------------
 -- Table structure for dict_table_level
@@ -129,5 +133,7 @@ INSERT INTO `dict_table_name`
 VALUES (9, 'menu_type', '菜单类型', NULL, '0', NULL);
 INSERT INTO `dict_table_name`
 VALUES (10, 'user_is_tab', '是否开启tab', NULL, '0', NULL);
+INSERT INTO `dict_table_name`
+VALUES (111, 'enable_disable', '开启或关闭', NULL, '0', NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
