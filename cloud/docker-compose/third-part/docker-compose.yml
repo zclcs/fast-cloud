@@ -78,6 +78,24 @@ services:
       retries: ${DOCKER_HEALTHCHECK_RETRIES}
     command: server --console-address ':9001' /data  #指定容器中的目录 /data
     privileged: true
+  rabbitmq:
+    image: rabbitmq:3.7.7-management
+    container_name: rabbitmq
+    network_mode: host
+    environment:
+      # 设置时区
+      TZ: Asia/Shanghai
+      RABBITMQ_DEFAULT_USER: root
+      RABBITMQ_DEFAULT_PASS: 123456
+    volumes:
+      - ./rabbitmq/data:/var/lib/rabbitmq
+      - ./rabbitmq/conf:/etc/rabbitmq
+    healthcheck:
+      test: [ "CMD", "rabbitmqctl", "status" ]
+      interval: ${DOCKER_HEALTHCHECK_INTERVAL}
+      timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
+      retries: ${DOCKER_HEALTHCHECK_RETRIES}
+    env_file: .env
   nginx:
     image: nginx:1.21.3
     container_name: nginx-cloud

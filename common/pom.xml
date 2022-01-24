@@ -17,6 +17,7 @@
         <module>common-redis-starter</module>
         <module>common-security-starter</module>
         <module>common-datasource-starter</module>
+        <module>common-rabbitmq-starter</module>
     </modules>
 
     <artifactId>common</artifactId>
