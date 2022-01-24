@@ -2,27 +2,20 @@
 
 ## 启动延迟队列插件
 
-进入容器：`docker exec -it rabbit-3.7.7 /bin/bash`
+进入容器：`docker exec -it rabbitmq /bin/bash`
 
-1. 给容器安装 下载工具 wget：`apt-get install -y wget`
+1. 复制配置到docker-compose文件同级目录
 
-2. 下载插件包，因为我们的 `RabbitMQ` 版本为 `3.7.7` 所以我们安装 `3.7.x` 版本的延迟队列插件
+2. 给容器安装 下载工具 wget：`apt-get install -y wget` 报错执行： `apt-get update`
 
-   ```bash
-   root@f72ac937f2be:/plugins# wget https://dl.bintray.com/rabbitmq/community-plugins/3.7.x/rabbitmq_delayed_message_exchange/rabbitmq_delayed_message_exchange-20171201-3.7.x.zip
-   ```
-
-3. 给容器安装 解压工具 unzip：`apt-get install -y unzip`
-
-4. 解压插件包
+3. 下载插件包，因为我们的 `RabbitMQ` 版本为 `3.9.0` 所以我们安装 `3.9.0` 版本的延迟队列插件
 
    ```bash
-   root@f72ac937f2be:/plugins# unzip rabbitmq_delayed_message_exchange-20171201-3.7.x.zip
-   Archive:  rabbitmq_delayed_message_exchange-20171201-3.7.x.zip
-     inflating: rabbitmq_delayed_message_exchange-20171201-3.7.x.ez
+   cd /plugins
+   root@f72ac937f2be:/plugins# wget https://github.com/rabbitmq/rabbitmq-delayed-message-exchange/releases/download/3.9.0/rabbitmq_delayed_message_exchange-3.9.0.ez
    ```
 
-5. 启动延迟队列插件
+6. 启动延迟队列插件
 
    ```yaml
    root@f72ac937f2be:/plugins# rabbitmq-plugins enable rabbitmq_delayed_message_exchange
@@ -38,4 +31,4 @@
    started 1 plugins.
    ```
 
-6. 退出容器：`exit`
+7. 退出容器：`exit`

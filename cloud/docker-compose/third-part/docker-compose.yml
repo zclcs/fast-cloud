@@ -79,14 +79,14 @@ services:
     command: server --console-address ':9001' /data  #指定容器中的目录 /data
     privileged: true
   rabbitmq:
-    image: rabbitmq:3.7.7-management
+    image: rabbitmq:3.9.13-management
     container_name: rabbitmq
     network_mode: host
     environment:
       # 设置时区
       TZ: Asia/Shanghai
-      RABBITMQ_DEFAULT_USER: root
-      RABBITMQ_DEFAULT_PASS: 123456
+      RABBITMQ_DEFAULT_USER: ${RABBIT_MQ_USERNAME}
+      RABBITMQ_DEFAULT_PASS: ${RABBIT_MQ_PASSWORD}
     volumes:
       - ./rabbitmq/data:/var/lib/rabbitmq
       - ./rabbitmq/conf:/etc/rabbitmq
