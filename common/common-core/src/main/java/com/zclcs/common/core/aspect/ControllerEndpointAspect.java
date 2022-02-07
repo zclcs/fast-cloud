@@ -1,24 +1,28 @@
 package com.zclcs.common.core.aspect;
 
+import cn.hutool.json.JSONUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zclcs.common.core.annotation.ControllerEndpoint;
+import com.zclcs.common.core.constant.RabbitConstant;
+import com.zclcs.common.core.entity.MessageStruct;
+import com.zclcs.common.core.entity.system.ao.SystemLogAo;
 import com.zclcs.common.core.exception.MyException;
-import com.zclcs.common.core.service.SystemService;
+import com.zclcs.common.core.utils.BaseUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author zclcs
@@ -28,13 +32,13 @@ import java.util.Set;
 @Component
 public class ControllerEndpointAspect extends BaseAspectSupport {
 
-    private SystemService systemService;
-
     private ObjectMapper objectMapper;
 
-    @Autowired(required = false)
-    public void setSystemLogService(SystemService systemService) {
-        this.systemService = systemService;
+    private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    public void setRabbitTemplate(RabbitTemplate rabbitTemplate) {
+        this.rabbitTemplate = rabbitTemplate;
     }
 
     @Autowired
@@ -55,31 +59,30 @@ public class ControllerEndpointAspect extends BaseAspectSupport {
         long start = System.currentTimeMillis();
         try {
             result = point.proceed();
-            // TODO: 需要改成MQ形式
-//            if (StringUtils.isNotBlank(operation)) {
-//                String username = BaseUtil.getCurrentUsername();
-//                String ip = BaseUtil.getHttpServletRequestIpAddress();
-//
-//                String className = point.getTarget().getClass().getName();
-//                String methodName = targetMethod.getName();
-//
-//                Object[] args = point.getArgs();
-//                LocalVariableTableParameterNameDiscoverer u = new LocalVariableTableParameterNameDiscoverer();
-//                String[] paramNames = u.getParameterNames(targetMethod);
-//                StringBuilder params = new StringBuilder();
-//                if (args != null && paramNames != null) {
-//                    params = handleParams(params, args, Arrays.asList(paramNames));
-//                }
-//                SystemLogAo systemLogAo = new SystemLogAo();
-//                systemLogAo.setClassName(className);
-//                systemLogAo.setMethodName(methodName);
-//                systemLogAo.setParams(params.toString());
-//                systemLogAo.setIp(ip);
-//                systemLogAo.setOperation(operation);
-//                systemLogAo.setUsername(username);
-//                systemLogAo.setStart(start);
-//                systemService.saveLog(systemLogAo);
-//            }
+            if (StringUtils.isNotBlank(operation)) {
+                String username = BaseUtil.getCurrentUsername();
+                String ip = BaseUtil.getHttpServletRequestIpAddress();
+
+                String className = point.getTarget().getClass().getName();
+                String methodName = targetMethod.getName();
+
+                Object[] args = point.getArgs();
+                LocalVariableTableParameterNameDiscoverer u = new LocalVariableTableParameterNameDiscoverer();
+                String[] paramNames = u.getParameterNames(targetMethod);
+                StringBuilder params = new StringBuilder();
+                if (args != null && paramNames != null) {
+                    params = handleParams(params, args, Arrays.asList(paramNames));
+                }
+                SystemLogAo systemLogAo = new SystemLogAo();
+                systemLogAo.setClassName(className);
+                systemLogAo.setMethodName(methodName);
+                systemLogAo.setParams(params.toString());
+                systemLogAo.setIp(ip);
+                systemLogAo.setOperation(operation);
+                systemLogAo.setUsername(username);
+                systemLogAo.setStart(start);
+                rabbitTemplate.convertAndSend(RabbitConstant.DIRECT_MODE_QUEUE_ONE, new MessageStruct(JSONUtil.toJsonStr(systemLogAo)));
+            }
             return result;
         } catch (Throwable throwable) {
             String message = throwable.getMessage();

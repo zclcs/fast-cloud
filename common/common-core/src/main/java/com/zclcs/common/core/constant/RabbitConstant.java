@@ -1,14 +1,14 @@
-package com.zclcs.constants;
+package com.zclcs.common.core.constant;
 
 /**
  * <p>
  * RabbitMQ常量池
  * </p>
  *
- * @author yangkai.shen
- * @date Created in 2018-12-29 17:08
+ * @author zclcs
  */
 public interface RabbitConstant {
+
     /**
      * 直接模式1
      */

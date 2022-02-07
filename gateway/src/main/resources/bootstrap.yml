@@ -16,7 +16,7 @@ spring:
         group: DEFAULT_GROUP
         prefix: ${SERVICE_NAME_GATEWAY:gateway}
         file-extension: yaml
-        ext-config:
+        extension-configs:
           - data-id: logging.yaml
             group: DEFAULT_GROUP
             refresh: true

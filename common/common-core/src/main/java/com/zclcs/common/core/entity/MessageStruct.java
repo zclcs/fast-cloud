@@ -1,4 +1,4 @@
-package com.zclcs.message;
+package com.zclcs.common.core.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,8 +12,7 @@ import java.io.Serializable;
  * 测试消息体
  * </p>
  *
- * @author yangkai.shen
- * @date Created in 2018-12-29 16:22
+ * @author zclcs
  */
 @Data
 @Builder

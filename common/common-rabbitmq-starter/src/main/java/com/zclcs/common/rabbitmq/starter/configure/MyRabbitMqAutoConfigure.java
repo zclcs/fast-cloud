@@ -1,8 +1,8 @@
 package com.zclcs.common.rabbitmq.starter.configure;
 
 import com.google.common.collect.Maps;
+import com.zclcs.common.core.constant.RabbitConstant;
 import com.zclcs.common.rabbitmq.starter.properties.MyRabbitMqProperties;
-import com.zclcs.constants.RabbitConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
@@ -39,7 +39,7 @@ public class MyRabbitMqAutoConfigure {
     }
 
     /**
-     * 直接模式队列1
+     * 直接模式队列1 - 记录系统日志
      */
     @Bean
     public Queue directOneQueue() {

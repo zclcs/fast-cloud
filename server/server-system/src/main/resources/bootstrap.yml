@@ -13,7 +13,7 @@ spring:
         group: DEFAULT_GROUP
         prefix: ${SERVICE_NAME_SERVER_SYSTEM:server-system}
         file-extension: yaml
-        ext-config:
+        extension-configs:
           - data-id: dict.yaml
             group: DEFAULT_GROUP
             refresh: true
@@ -27,6 +27,9 @@ spring:
             group: DEFAULT_GROUP
             refresh: true
           - data-id: server.yaml
+            group: DEFAULT_GROUP
+            refresh: true
+          - data-id: rabbit-mq.yaml
             group: DEFAULT_GROUP
             refresh: true
       discovery:
