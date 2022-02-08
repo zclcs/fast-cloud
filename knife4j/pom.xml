@@ -17,6 +17,11 @@
     <dependencies>
         <dependency>
             <groupId>com.zclcs</groupId>
+            <artifactId>common-resources</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zclcs</groupId>
             <artifactId>common-logging-starter</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -58,6 +63,10 @@
                         <mainClass>com.zclcs.Knife4jApplication</mainClass>
                     </container>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-remote-resources-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

@@ -2,12 +2,13 @@ package com.zclcs.common.core.base;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
-import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 
-import java.util.*;
-import java.util.function.Predicate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author zhouchenglong
@@ -32,9 +33,9 @@ public class BasePage<T> implements IPage<T> {
 
     protected boolean optimizeCountSql;
 
-    protected boolean isSearchCount;
+    protected boolean searchCount;
 
-    protected boolean hitCount;
+    protected boolean optimizeJoinOfCountSql;
 
     protected String countId;
 
@@ -47,8 +48,8 @@ public class BasePage<T> implements IPage<T> {
         this.pageNum = 1L;
         this.orders = new ArrayList<>();
         this.optimizeCountSql = true;
-        this.isSearchCount = true;
-        this.hitCount = false;
+        this.searchCount = true;
+        this.optimizeJoinOfCountSql = true;
     }
 
     public BasePage(long pageNum, long pageSize) {
@@ -59,32 +60,43 @@ public class BasePage<T> implements IPage<T> {
         this(pageNum, pageSize, total, true);
     }
 
-    public BasePage(long pageNum, long pageSize, boolean isSearchCount) {
-        this(pageNum, pageSize, 0L, isSearchCount);
+    public BasePage(long pageNum, long pageSize, boolean searchCount) {
+        this(pageNum, pageSize, 0L, searchCount);
     }
 
-    public BasePage(long pageNum, long pageSize, long total, boolean isSearchCount) {
+    public BasePage(long pageNum, long pageSize, long total, boolean searchCount) {
         this.list = Collections.emptyList();
-        this.total = 0L;
-        this.pageSize = 10L;
-        this.pageNum = 1L;
         this.orders = new ArrayList<>();
         this.optimizeCountSql = true;
-        this.hitCount = false;
-        if (pageNum > 1L) {
-            this.pageNum = pageNum;
-        }
-        this.pageSize = pageSize;
+        this.optimizeJoinOfCountSql = true;
+        this.pageSize = Math.max(pageSize, 1L);
+        this.pageNum = pageNum;
         this.total = total;
-        this.isSearchCount = isSearchCount;
+        this.searchCount = searchCount;
+    }
+
+    public static <T> BasePage<T> of(long pageNum, long pageSize, long total, boolean searchCount) {
+        return new BasePage<>(pageNum, pageSize, total, searchCount);
+    }
+
+    public static <T> BasePage<T> of(long pageNum, long pageSize) {
+        return of(pageNum, pageSize, 0L);
+    }
+
+    public static <T> BasePage<T> of(long pageNum, long pageSize, long total) {
+        return of(pageNum, pageSize, total, true);
+    }
+
+    public static <T> BasePage<T> of(long pageNum, long pageSize, boolean searchCount) {
+        return of(pageNum, pageSize, 0L, searchCount);
     }
 
     public boolean hasPrevious() {
-        return this.pageNum > 1L;
+        return this.pageSize > 1L;
     }
 
     public boolean hasNext() {
-        return this.pageNum < this.getPages();
+        return this.pageSize < this.getPages();
     }
 
     @Override
@@ -134,93 +146,24 @@ public class BasePage<T> implements IPage<T> {
         return this;
     }
 
-    private String[] mapOrderToArray(Predicate<OrderItem> filter) {
-        List<String> columns = new ArrayList(this.orders.size());
-        this.orders.forEach((i) -> {
-            if (filter.test(i)) {
-                columns.add(i.getColumn());
-            }
-
-        });
-        return columns.toArray(new String[0]);
+    @Override
+    public String countId() {
+        return this.countId;
     }
 
-    private void removeOrder(Predicate<OrderItem> filter) {
-        for (int i = this.orders.size() - 1; i >= 0; --i) {
-            if (filter.test(this.orders.get(i))) {
-                this.orders.remove(i);
-            }
-        }
-
+    @Override
+    public Long maxLimit() {
+        return this.maxLimit;
     }
 
-    public BasePage<T> addOrder(OrderItem... items) {
+
+    public void addOrder(OrderItem... items) {
         this.orders.addAll(Arrays.asList(items));
-        return this;
-    }
-
-    public BasePage<T> addOrder(List<OrderItem> items) {
-        this.orders.addAll(items);
-        return this;
-    }
-
-    /**
-     * @deprecated
-     */
-    @Deprecated
-    public BasePage<T> setAscs(List<String> ascs) {
-        return CollectionUtils.isNotEmpty(ascs) ? this.setAsc((String[]) ascs.toArray(new String[0])) : this;
-    }
-
-    /**
-     * @deprecated
-     */
-    @Deprecated
-    public BasePage<T> setAsc(String... ascs) {
-        this.removeOrder(OrderItem::isAsc);
-        String[] var2 = ascs;
-        int var3 = ascs.length;
-
-        for (int var4 = 0; var4 < var3; ++var4) {
-            String s = var2[var4];
-            this.addOrder(OrderItem.asc(s));
-        }
-
-        return this;
-    }
-
-    /**
-     * @deprecated
-     */
-    @Deprecated
-    public BasePage<T> setDescs(List<String> descs) {
-        if (CollectionUtils.isNotEmpty(descs)) {
-            this.removeOrder((item) -> {
-                return !item.isAsc();
-            });
-            Iterator var2 = descs.iterator();
-
-            while (var2.hasNext()) {
-                String s = (String) var2.next();
-                this.addOrder(OrderItem.desc(s));
-            }
-        }
-
-        return this;
-    }
-
-    /**
-     * @deprecated
-     */
-    @Deprecated
-    public BasePage<T> setDesc(String... descs) {
-        this.setDescs(Arrays.asList(descs));
-        return this;
     }
 
     @Override
     public List<OrderItem> orders() {
-        return this.getOrders();
+        return this.orders;
     }
 
     @Override
@@ -228,24 +171,20 @@ public class BasePage<T> implements IPage<T> {
         return this.optimizeCountSql;
     }
 
-    public boolean isOptimizeCountSql() {
-        return this.optimizeCountSql();
+    @Override
+    public boolean optimizeJoinOfCountSql() {
+        return optimizeJoinOfCountSql;
+    }
+
+    @JsonIgnore
+    public BasePage<T> setSearchCount(boolean searchCount) {
+        this.searchCount = searchCount;
+        return this;
     }
 
     @JsonIgnore
     public BasePage<T> setOptimizeCountSql(boolean optimizeCountSql) {
         this.optimizeCountSql = optimizeCountSql;
-        return this;
-    }
-
-    @Override
-    public boolean isSearchCount() {
-        return this.total >= 0L && this.isSearchCount;
-    }
-
-    @JsonIgnore
-    public BasePage<T> setSearchCount(boolean isSearchCount) {
-        this.isSearchCount = isSearchCount;
         return this;
     }
 
@@ -261,9 +200,9 @@ public class BasePage<T> implements IPage<T> {
         return null;
     }
 
-    @JsonIgnore
-    public void setHitCount(boolean hit) {
-        this.hitCount = hit;
+    @Override
+    public long getPages() {
+        return IPage.super.getPages();
     }
 
     public List<OrderItem> getOrders() {
@@ -315,5 +254,10 @@ public class BasePage<T> implements IPage<T> {
 
     public void setPageNum(long pageNum) {
         this.pageNum = pageNum;
+    }
+
+    @JsonIgnore
+    public void setOptimizeJoinOfCountSql(final boolean optimizeJoinOfCountSql) {
+        this.optimizeJoinOfCountSql = optimizeJoinOfCountSql;
     }
 }

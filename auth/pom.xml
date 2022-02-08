@@ -17,6 +17,11 @@
     <dependencies>
         <dependency>
             <groupId>com.zclcs</groupId>
+            <artifactId>common-resources</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zclcs</groupId>
             <artifactId>common-redis-starter</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -35,6 +40,12 @@
             <groupId>com.zclcs</groupId>
             <artifactId>common-doc-starter</artifactId>
             <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>javassist</artifactId>
+                    <groupId>org.javassist</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.zclcs</groupId>
@@ -88,6 +99,10 @@
                         <mainClass>com.zclcs.AuthApplication</mainClass>
                     </container>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-remote-resources-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

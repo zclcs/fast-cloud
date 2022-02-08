@@ -9,6 +9,7 @@
                srl.target_uri,
                srl.request_method,
                srl.target_server,
+               srl.location,
                srl.create_time,
                srl.modify_time
         from system_route_log srl

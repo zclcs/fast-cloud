@@ -55,6 +55,12 @@
             <groupId>com.wuwenze</groupId>
             <artifactId>ExcelKit</artifactId>
             <version>${excelkit.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>xml-apis</artifactId>
+                    <groupId>xml-apis</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- web 依赖 -->
         <dependency>
@@ -76,16 +82,34 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-security</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>bcpkix-jdk15on</artifactId>
+                    <groupId>org.bouncycastle</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- hystrix 调用熔断 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>jsr305</artifactId>
+                    <groupId>com.google.code.findbugs</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- 配置文件管理 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>javassist</artifactId>
+                    <groupId>org.javassist</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- 服务发现 -->
         <dependency>
@@ -107,6 +131,16 @@
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>simpleclient</artifactId>
+                    <groupId>io.prometheus</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>HdrHistogram</artifactId>
+                    <groupId>org.hdrhistogram</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!--hu tool 工具类-->
         <dependency>
@@ -119,6 +153,16 @@
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-micro-spring-boot-starter</artifactId>
             <version>${knife4j.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>swagger-models</artifactId>
+                    <groupId>io.swagger</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>javassist</artifactId>
+                    <groupId>org.javassist</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
@@ -135,6 +179,20 @@
             <groupId>com.houkunlin</groupId>
             <artifactId>system-dict-starter</artifactId>
             <version>${system-dict-starter.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>swagger-annotations</artifactId>
+                    <groupId>io.swagger</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>error_prone_annotations</artifactId>
+                    <groupId>com.google.errorprone</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>checker-qual</artifactId>
+                    <groupId>org.checkerframework</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- flyway 管理数据库脚本 -->
         <dependency>

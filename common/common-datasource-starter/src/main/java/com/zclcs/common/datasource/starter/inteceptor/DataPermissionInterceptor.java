@@ -1,7 +1,7 @@
 package com.zclcs.common.datasource.starter.inteceptor;
 
 import com.baomidou.mybatisplus.core.toolkit.PluginUtils;
-import com.baomidou.mybatisplus.extension.handlers.AbstractSqlParserHandler;
+import com.baomidou.mybatisplus.extension.plugins.inner.InnerInterceptor;
 import com.zclcs.common.core.entity.CurrentUser;
 import com.zclcs.common.core.utils.BaseUtil;
 import com.zclcs.common.datasource.starter.annotation.DataPermission;
@@ -13,59 +13,37 @@ import net.sf.jsqlparser.schema.Table;
 import net.sf.jsqlparser.statement.select.PlainSelect;
 import net.sf.jsqlparser.statement.select.Select;
 import org.apache.commons.lang.StringUtils;
-import org.apache.ibatis.executor.statement.StatementHandler;
+import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlCommandType;
-import org.apache.ibatis.plugin.*;
-import org.apache.ibatis.reflection.MetaObject;
-import org.apache.ibatis.reflection.SystemMetaObject;
+import org.apache.ibatis.session.ResultHandler;
+import org.apache.ibatis.session.RowBounds;
 
 import java.io.StringReader;
-import java.sql.Connection;
-import java.util.Properties;
 
 /**
  * @author zclcs
  */
 @Slf4j
-@Intercepts({@Signature(type = StatementHandler.class, method = "prepare", args = {Connection.class, Integer.class})})
-public class DataPermissionInterceptor extends AbstractSqlParserHandler implements Interceptor {
+public class DataPermissionInterceptor implements InnerInterceptor {
 
     @Override
-    public Object intercept(Invocation invocation) throws Throwable {
-        StatementHandler statementHandler = PluginUtils.realTarget(invocation.getTarget());
-        MetaObject metaObject = SystemMetaObject.forObject(statementHandler);
-        this.sqlParser(metaObject);
-        MappedStatement mappedStatement = (MappedStatement) metaObject.getValue("delegate.mappedStatement");
-
-        BoundSql boundSql = (BoundSql) metaObject.getValue("delegate.boundSql");
-        Object paramObj = boundSql.getParameterObject();
+    public void beforeQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds,
+                            ResultHandler resultHandler, BoundSql boundSql) {
+        PluginUtils.MPBoundSql mpBs = PluginUtils.mpBoundSql(boundSql);
         // 数据权限只针对查询语句
-        if (SqlCommandType.SELECT == mappedStatement.getSqlCommandType()) {
-            DataPermission dataPermission = getDataPermission(mappedStatement);
-            if (shouldFilter(mappedStatement, dataPermission)) {
-                String id = mappedStatement.getId();
+        if (SqlCommandType.SELECT == ms.getSqlCommandType()) {
+            DataPermission dataPermission = getDataPermission(ms);
+            if (shouldFilter(ms, dataPermission)) {
+                String id = ms.getId();
                 log.info("\n 数据权限过滤 method -> {}", id);
                 String originSql = boundSql.getSql();
                 String dataPermissionSql = dataPermissionSql(originSql, dataPermission);
-                metaObject.setValue("delegate.boundSql.sql", dataPermissionSql);
+                mpBs.sql(dataPermissionSql);
                 log.info("\n originSql -> {} \n dataPermissionSql: {}", originSql, dataPermissionSql);
             }
         }
-        return invocation.proceed();
-    }
-
-    @Override
-    public Object plugin(Object target) {
-        if (target instanceof StatementHandler) {
-            return Plugin.wrap(target, this);
-        }
-        return target;
-    }
-
-    @Override
-    public void setProperties(Properties properties) {
     }
 
     private String dataPermissionSql(String originSql, DataPermission dataPermission) {

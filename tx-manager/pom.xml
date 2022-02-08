@@ -17,6 +17,11 @@
     <dependencies>
         <dependency>
             <groupId>com.zclcs</groupId>
+            <artifactId>common-resources</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zclcs</groupId>
             <artifactId>common-logging-starter</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -44,10 +49,22 @@
         <dependency>
             <groupId>com.codingapi.txlcn</groupId>
             <artifactId>txlcn-tm</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>javassist</artifactId>
+                    <groupId>org.javassist</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>simpleclient</artifactId>
+                    <groupId>io.prometheus</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- flyway 管理数据库脚本 -->
         <dependency>
@@ -70,6 +87,10 @@
                         <mainClass>com.zclcs.TxManagerApplication</mainClass>
                     </container>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-remote-resources-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

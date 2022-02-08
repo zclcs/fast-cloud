@@ -65,8 +65,8 @@ public class MinioBucketServiceImpl extends ServiceImpl<MinioBucketMapper, Minio
     @Transactional(rollbackFor = Exception.class)
     public Long createMinioBucket(MinioBucketAo minioBucketAo) {
         String policy = Optional.ofNullable(minioBucketAo.getBucketPolicy()).filter(StrUtil::isBlank).orElse(MinioConstant.NONE);
-        int count = this.count(new QueryWrapper<MinioBucket>().lambda().eq(MinioBucket::getBucketName, minioBucketAo.getBucketName()));
-        if (count == 0) {
+        long count = this.count(new QueryWrapper<MinioBucket>().lambda().eq(MinioBucket::getBucketName, minioBucketAo.getBucketName()));
+        if (count == 0L) {
             MinioBucket minioBucket = new MinioBucket();
             BeanUtil.copyProperties(minioBucketAo, minioBucket);
             minioBucket.setBucketPolicy(policy);

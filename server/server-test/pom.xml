@@ -18,8 +18,19 @@
     <dependencies>
         <dependency>
             <groupId>com.zclcs</groupId>
+            <artifactId>common-resources</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zclcs</groupId>
             <artifactId>common-rabbitmq-starter</artifactId>
             <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>HdrHistogram</artifactId>
+                    <groupId>org.hdrhistogram</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.zclcs</groupId>
@@ -40,6 +51,12 @@
             <groupId>com.zclcs</groupId>
             <artifactId>common-doc-starter</artifactId>
             <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>javassist</artifactId>
+                    <groupId>org.javassist</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.zclcs</groupId>
@@ -75,6 +92,10 @@
                         <mainClass>com.zclcs.ServerTestApplication</mainClass>
                     </container>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-remote-resources-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

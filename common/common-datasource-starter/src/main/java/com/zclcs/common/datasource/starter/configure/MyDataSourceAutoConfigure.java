@@ -1,15 +1,11 @@
 package com.zclcs.common.datasource.starter.configure;
 
-import com.baomidou.mybatisplus.core.parser.ISqlParser;
-import com.baomidou.mybatisplus.extension.parsers.BlockAttackSqlParser;
-import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.zclcs.common.datasource.starter.inteceptor.DataPermissionInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author zclcs
@@ -17,25 +13,32 @@ import java.util.List;
 @Configuration
 public class MyDataSourceAutoConfigure {
 
+    @Bean
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        // 数据权限
+        interceptor.addInnerInterceptor(dataPermissionInterceptor());
+        // 分页插件
+        interceptor.addInnerInterceptor(paginationInnerInterceptor());
+        return interceptor;
+    }
+
     /**
      * 注册数据权限
      */
-    @Bean
-    @Order(-1)
     public DataPermissionInterceptor dataPermissionInterceptor() {
         return new DataPermissionInterceptor();
     }
 
     /**
-     * 注册分页插件
+     * 分页插件，自动识别数据库类型
      */
-    @Bean
-    @Order(-2)
-    public PaginationInterceptor paginationInterceptor() {
-        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
-        List<ISqlParser> sqlParserList = new ArrayList<>();
-        sqlParserList.add(new BlockAttackSqlParser());
-        paginationInterceptor.setSqlParserList(sqlParserList);
-        return paginationInterceptor;
+    public PaginationInnerInterceptor paginationInnerInterceptor() {
+        PaginationInnerInterceptor paginationInnerInterceptor = new PaginationInnerInterceptor();
+        // 设置数据库类型为mysql
+        paginationInnerInterceptor.setDbType(DbType.MYSQL);
+        // 设置最大单页限制数量，默认 500 条，-1 不受限制
+        paginationInnerInterceptor.setMaxLimit(-1L);
+        return paginationInnerInterceptor;
     }
 }

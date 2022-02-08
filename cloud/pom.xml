@@ -48,17 +48,17 @@
         <!-- 解析xml -->
         <xml-api.version>1.4.01</xml-api.version>
         <!-- ip地址定位 -->
-        <ip2region.version>1.7</ip2region.version>
+        <ip2region.version>1.7.2</ip2region.version>
         <!-- google工具类 -->
-        <guava.version>27.0-jre</guava.version>
+        <guava.version>30.0-jre</guava.version>
         <!-- excel 导出 -->
-        <excelkit.version>2.0.71</excelkit.version>
+        <excelkit.version>2.0.72</excelkit.version>
         <!-- mybatis-plus 半自动orm框架 -->
-        <mybatis-plus.version>3.2.0</mybatis-plus.version>
+        <mybatis-plus.version>3.5.1</mybatis-plus.version>
         <!-- dynamic-datasource 多数据源依赖 -->
-        <dynamic-datasource.version>2.5.7</dynamic-datasource.version>
+        <dynamic-datasource.version>3.5.0</dynamic-datasource.version>
         <!-- p6spy 打印数据库日志 -->
-        <p6spy.version>3.8.5</p6spy.version>
+        <p6spy.version>3.9.1</p6spy.version>
         <!-- 生成验证码 -->
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <!-- 整合第三方登录 -->
@@ -68,17 +68,19 @@
         <!-- knife4j 接口文档 -->
         <knife4j.version>2.0.9</knife4j.version>
         <!-- swagger 文档 -->
-        <swagger.version>1.5.21</swagger.version>
+        <swagger.version>1.6.4</swagger.version>
         <!--hu tool 工具类-->
-        <hutool-all.version>5.7.6</hutool-all.version>
+        <hutool-all.version>5.7.20</hutool-all.version>
         <!--minio 依赖-->
         <minio.version>8.3.1</minio.version>
         <!--上传日志到 skywalking-->
         <apm-toolkit-logback-1.x.version>8.7.0</apm-toolkit-logback-1.x.version>
         <!--系统字典-->
-        <system-dict-starter.version>1.4.6</system-dict-starter.version>
+        <system-dict-starter.version>1.4.6.3</system-dict-starter.version>
         <!--okhttp-->
-        <okhttp.version>4.9.0</okhttp.version>
+        <okhttp.version>4.9.3</okhttp.version>
+        <!--maven-remote-resources-plugin-->
+        <remote.resources.plugin.version>1.7.0</remote.resources.plugin.version>
         <!--docker 镜像配置-->
         <docker.jib.from.image>192.168.33.10:3000/library/openjdk8-skywalking:1.0.0</docker.jib.from.image>
         <docker.jib.auth.username>admin</docker.jib.auth.username>
@@ -107,6 +109,12 @@
                 <groupId>com.codingapi.txlcn</groupId>
                 <artifactId>txlcn-tc</artifactId>
                 <version>${codingapi.txlcn.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.github.jsqlparser</groupId>
+                        <artifactId>jsqlparser</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>com.codingapi.txlcn</groupId>
@@ -194,6 +202,23 @@
                             <phase>package</phase>
                             <goals>
                                 <goal>build</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-remote-resources-plugin</artifactId>
+                    <version>${remote.resources.plugin.version}</version>
+                    <configuration>
+                        <resourceBundles>
+                            <resourceBundle>com.zclcs:common-resources:${project.version}</resourceBundle>
+                        </resourceBundles>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>process</goal>
                             </goals>
                         </execution>
                     </executions>
