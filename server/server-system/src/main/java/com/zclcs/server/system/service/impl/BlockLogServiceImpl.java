@@ -63,6 +63,7 @@ public class BlockLogServiceImpl extends ServiceImpl<BlockLogMapper, BlockLog> i
         BaseQueryWrapperUtil.likeNotBlank(queryWrapper, "sbl.request_uri", blockLogVo.getRequestUri());
         BaseQueryWrapperUtil.likeNotBlank(queryWrapper, "sbl.request_method", blockLogVo.getRequestMethod());
         BaseQueryWrapperUtil.betweenDateAddTimeNotBlank(queryWrapper, "sbl.create_time", blockLogVo.getCreateTimeFrom(), blockLogVo.getCreateTimeTo());
+        queryWrapper.orderByDesc("sbl.create_time");
         return queryWrapper;
     }
 

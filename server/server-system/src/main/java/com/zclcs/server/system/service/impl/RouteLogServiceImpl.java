@@ -63,6 +63,7 @@ public class RouteLogServiceImpl extends ServiceImpl<RouteLogMapper, RouteLog> i
         BaseQueryWrapperUtil.likeNotBlank(queryWrapper, "srl.target_server", routeLogVo.getTargetServer());
         BaseQueryWrapperUtil.likeNotBlank(queryWrapper, "srl.request_method", routeLogVo.getRequestMethod());
         BaseQueryWrapperUtil.betweenDateAddTimeNotBlank(queryWrapper, "srl.create_time", routeLogVo.getCreateTimeFrom(), routeLogVo.getCreateTimeTo());
+        queryWrapper.orderByDesc("srl.create_time");
         return queryWrapper;
     }
 

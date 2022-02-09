@@ -63,6 +63,7 @@ public class RateLimitLogServiceImpl extends ServiceImpl<RateLimitLogMapper, Rat
         BaseQueryWrapperUtil.likeNotBlank(queryWrapper, "srll.request_uri", rateLimitLogVo.getRequestUri());
         BaseQueryWrapperUtil.likeNotBlank(queryWrapper, "srll.request_method", rateLimitLogVo.getRequestMethod());
         BaseQueryWrapperUtil.betweenDateAddTimeNotBlank(queryWrapper, "srll.create_time", rateLimitLogVo.getCreateTimeFrom(), rateLimitLogVo.getCreateTimeTo());
+        queryWrapper.orderByDesc("srll.create_time");
         return queryWrapper;
     }
 
