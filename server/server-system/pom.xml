@@ -13,7 +13,7 @@
     <artifactId>server-system</artifactId>
 
     <name>server-system</name>
-    <description>server-system</description>
+    <description>系统服务</description>
 
     <dependencies>
         <dependency>

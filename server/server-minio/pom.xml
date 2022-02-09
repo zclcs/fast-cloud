@@ -13,7 +13,7 @@
     <artifactId>server-minio</artifactId>
 
     <name>server-minio</name>
-    <description>server-minio</description>
+    <description>文件服务</description>
 
     <dependencies>
         <dependency>

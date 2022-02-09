@@ -13,7 +13,7 @@
     <artifactId>server-generator</artifactId>
 
     <name>server-generator</name>
-    <description>server-generator</description>
+    <description>代码生成服务</description>
 
     <dependencies>
         <dependency>

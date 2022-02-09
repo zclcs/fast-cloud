@@ -13,7 +13,7 @@
     <artifactId>server-test</artifactId>
 
     <name>server-test</name>
-    <description>server-test</description>
+    <description>测试服务</description>
 
     <dependencies>
         <dependency>
