@@ -11,7 +11,7 @@
  Target Server Version : 50735
  File Encoding         : 65001
 
- Date: 07/02/2022 16:54:48
+ Date: 10/02/2022 09:51:08
 */
 
 SET NAMES utf8mb4;
@@ -23,26 +23,26 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `config_info`;
 CREATE TABLE `config_info`
 (
-    `id`           bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT 'id',
-    `data_id`      varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'data_id',
-    `group_id`     varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL     DEFAULT NULL,
-    `content`      longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci     NOT NULL COMMENT 'content',
-    `md5`          varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL     DEFAULT NULL COMMENT 'md5',
-    `gmt_create`   datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `gmt_modified` datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
-    `src_user`     text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci         NULL COMMENT 'source user',
-    `src_ip`       varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL     DEFAULT NULL COMMENT 'source ip',
-    `app_name`     varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL     DEFAULT NULL,
-    `tenant_id`    varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL     DEFAULT '' COMMENT '租户字段',
-    `c_desc`       varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL     DEFAULT NULL,
-    `c_use`        varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL     DEFAULT NULL,
-    `effect`       varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL     DEFAULT NULL,
-    `type`         varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL     DEFAULT NULL,
-    `c_schema`     text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci         NULL,
+    `id`           bigint(20)                                       NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `data_id`      varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'data_id',
+    `group_id`     varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL     DEFAULT NULL,
+    `content`      longtext CHARACTER SET utf8 COLLATE utf8_bin     NOT NULL COMMENT 'content',
+    `md5`          varchar(32) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT NULL COMMENT 'md5',
+    `gmt_create`   datetime                                         NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `gmt_modified` datetime                                         NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+    `src_user`     text CHARACTER SET utf8 COLLATE utf8_bin         NULL COMMENT 'source user',
+    `src_ip`       varchar(50) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT NULL COMMENT 'source ip',
+    `app_name`     varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL     DEFAULT NULL,
+    `tenant_id`    varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL     DEFAULT '' COMMENT '租户字段',
+    `c_desc`       varchar(256) CHARACTER SET utf8 COLLATE utf8_bin NULL     DEFAULT NULL,
+    `c_use`        varchar(64) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT NULL,
+    `effect`       varchar(64) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT NULL,
+    `type`         varchar(64) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT NULL,
+    `c_schema`     text CHARACTER SET utf8 COLLATE utf8_bin         NULL,
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `uk_configinfo_datagrouptenant` (`data_id`, `group_id`, `tenant_id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 142
+  AUTO_INCREMENT = 144
   CHARACTER SET = utf8
   COLLATE = utf8_bin COMMENT = 'config_info'
   ROW_FORMAT = DYNAMIC;
@@ -87,8 +87,8 @@ VALUES (125, 'server-minio.yaml', 'DEFAULT_GROUP',
         'dev', '', '', '', 'yaml', '');
 INSERT INTO `config_info`
 VALUES (128, 'knife4j.yaml', 'DEFAULT_GROUP',
-        'server:\n  port: ${PORT_TX_KNIFE4J:8401}\n\nspring:\n  security:\n    user:\n      name: ${KNIFE4j_USERNAME:zclcs}\n      password: ${KNIFE4j_PASSWORD:123456}\n\nknife4j:\n  # 开启聚合组件\n  enableAggregation: ${DOC_ENABLE_AGGREGATION:true}\n  cloud:\n    enable: true\n    routes:\n      - name: ${SERVICE_NAME_AUTH:auth}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_AUTH:/auth}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_SYSTEM:server-system}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_SYSTEM:/system}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_GENERATOR:server-generator}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_GENERATOR:/generator}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_TEST:server-test}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_TEST:/test}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_MINIO:server-minio}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_MINIO:/minio}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_DICT:server-dict}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_DICT:/dict}/v2/api-docs?group=default\n        swaggerVersion: 2.0',
-        '98af42e70b7444d079159aa057859ee4', '2021-10-27 22:04:53', '2021-12-30 20:12:02', 'nacos', '192.168.33.1', '',
+        'server:\n  port: ${PORT_KNIFE4J:8401}\n\nspring:\n  security:\n    user:\n      name: ${KNIFE4J_USERNAME:zclcs}\n      password: ${KNIFE4J_PASSWORD:123456}\n\nknife4j:\n  # 开启聚合组件\n  enableAggregation: ${DOC_ENABLE_AGGREGATION:true}\n  cloud:\n    enable: true\n    routes:\n      - name: ${SERVICE_NAME_AUTH:auth}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_AUTH:/auth}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_SYSTEM:server-system}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_SYSTEM:/system}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_GENERATOR:server-generator}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_GENERATOR:/generator}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_TEST:server-test}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_TEST:/test}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_MINIO:server-minio}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_MINIO:/minio}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_DICT:server-dict}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_DICT:/dict}/v2/api-docs?group=default\n        swaggerVersion: 2.0',
+        '7a8a3eab88a7406620fa27ae8e0b81db', '2021-10-27 22:04:53', '2022-02-09 19:38:43', 'nacos', '192.168.33.1', '',
         'dev', '', '', '', 'yaml', '');
 INSERT INTO `config_info`
 VALUES (130, 'server-dict.yaml', 'DEFAULT_GROUP',
@@ -112,8 +112,8 @@ VALUES (133, 'flyway.yaml', 'DEFAULT_GROUP',
         'dev', '数据库版本管理配置', NULL, NULL, 'yaml', NULL);
 INSERT INTO `config_info`
 VALUES (134, 'logging.yaml', 'DEFAULT_GROUP',
-        'logging:\n  level:\n    org:\n      springframework:\n        data:\n          convert:\n            CustomConversions: error\n    com:\n      alibaba:\n        cloud:\n          nacos:\n            client:\n              NacosPropertySourceBuilder: error\n      codingapi: debug',
-        '3df7de121fe51fc85486b4eb58e9aa78', '2021-11-29 18:41:52', '2022-01-07 02:10:29', 'nacos', '192.168.33.1', '',
+        'logging:\n  level:\n    org:\n      springframework:\n        data:\n          convert:\n            CustomConversions: error\n    com:\n      alibaba:\n        cloud:\n          nacos:\n            client:\n              NacosPropertySourceBuilder: error\n      codingapi: info',
+        '4888be6105874d1ef4a2630eb6960dab', '2021-11-29 18:41:52', '2022-02-09 19:36:17', 'nacos', '192.168.33.1', '',
         'dev', '', '', '', 'yaml', '');
 INSERT INTO `config_info`
 VALUES (138, 'tx-client.yaml', 'DEFAULT_GROUP',
@@ -137,14 +137,14 @@ VALUES (141, 'rabbit-mq.yaml', 'DEFAULT_GROUP',
 DROP TABLE IF EXISTS `config_info_aggr`;
 CREATE TABLE `config_info_aggr`
 (
-    `id`           bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT 'id',
-    `data_id`      varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'data_id',
-    `group_id`     varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'group_id',
-    `datum_id`     varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'datum_id',
-    `content`      longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci     NOT NULL COMMENT '内容',
-    `gmt_modified` datetime                                                      NOT NULL COMMENT '修改时间',
-    `app_name`     varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-    `tenant_id`    varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '租户字段',
+    `id`           bigint(20)                                       NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `data_id`      varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'data_id',
+    `group_id`     varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'group_id',
+    `datum_id`     varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'datum_id',
+    `content`      longtext CHARACTER SET utf8 COLLATE utf8_bin     NOT NULL COMMENT '内容',
+    `gmt_modified` datetime                                         NOT NULL COMMENT '修改时间',
+    `app_name`     varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
+    `tenant_id`    varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT '' COMMENT '租户字段',
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `uk_configinfoaggr_datagrouptenantdatum` (`data_id`, `group_id`, `tenant_id`, `datum_id`) USING BTREE
 ) ENGINE = InnoDB
@@ -163,18 +163,18 @@ CREATE TABLE `config_info_aggr`
 DROP TABLE IF EXISTS `config_info_beta`;
 CREATE TABLE `config_info_beta`
 (
-    `id`           bigint(20)                                                     NOT NULL AUTO_INCREMENT COMMENT 'id',
-    `data_id`      varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT 'data_id',
-    `group_id`     varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT 'group_id',
-    `app_name`     varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL     DEFAULT NULL COMMENT 'app_name',
-    `content`      longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci      NOT NULL COMMENT 'content',
-    `beta_ips`     varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL     DEFAULT NULL COMMENT 'betaIps',
-    `md5`          varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci   NULL     DEFAULT NULL COMMENT 'md5',
-    `gmt_create`   datetime                                                       NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `gmt_modified` datetime                                                       NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
-    `src_user`     text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci          NULL COMMENT 'source user',
-    `src_ip`       varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci   NULL     DEFAULT NULL COMMENT 'source ip',
-    `tenant_id`    varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL     DEFAULT '' COMMENT '租户字段',
+    `id`           bigint(20)                                        NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `data_id`      varchar(255) CHARACTER SET utf8 COLLATE utf8_bin  NOT NULL COMMENT 'data_id',
+    `group_id`     varchar(128) CHARACTER SET utf8 COLLATE utf8_bin  NOT NULL COMMENT 'group_id',
+    `app_name`     varchar(128) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT NULL COMMENT 'app_name',
+    `content`      longtext CHARACTER SET utf8 COLLATE utf8_bin      NOT NULL COMMENT 'content',
+    `beta_ips`     varchar(1024) CHARACTER SET utf8 COLLATE utf8_bin NULL     DEFAULT NULL COMMENT 'betaIps',
+    `md5`          varchar(32) CHARACTER SET utf8 COLLATE utf8_bin   NULL     DEFAULT NULL COMMENT 'md5',
+    `gmt_create`   datetime                                          NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `gmt_modified` datetime                                          NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+    `src_user`     text CHARACTER SET utf8 COLLATE utf8_bin          NULL COMMENT 'source user',
+    `src_ip`       varchar(50) CHARACTER SET utf8 COLLATE utf8_bin   NULL     DEFAULT NULL COMMENT 'source ip',
+    `tenant_id`    varchar(128) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT '' COMMENT '租户字段',
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `uk_configinfobeta_datagrouptenant` (`data_id`, `group_id`, `tenant_id`) USING BTREE
 ) ENGINE = InnoDB
@@ -193,18 +193,18 @@ CREATE TABLE `config_info_beta`
 DROP TABLE IF EXISTS `config_info_tag`;
 CREATE TABLE `config_info_tag`
 (
-    `id`           bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT 'id',
-    `data_id`      varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'data_id',
-    `group_id`     varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'group_id',
-    `tenant_id`    varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL     DEFAULT '' COMMENT 'tenant_id',
-    `tag_id`       varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'tag_id',
-    `app_name`     varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL     DEFAULT NULL COMMENT 'app_name',
-    `content`      longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci     NOT NULL COMMENT 'content',
-    `md5`          varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL     DEFAULT NULL COMMENT 'md5',
-    `gmt_create`   datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `gmt_modified` datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
-    `src_user`     text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci         NULL COMMENT 'source user',
-    `src_ip`       varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL     DEFAULT NULL COMMENT 'source ip',
+    `id`           bigint(20)                                       NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `data_id`      varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'data_id',
+    `group_id`     varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'group_id',
+    `tenant_id`    varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL     DEFAULT '' COMMENT 'tenant_id',
+    `tag_id`       varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'tag_id',
+    `app_name`     varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL     DEFAULT NULL COMMENT 'app_name',
+    `content`      longtext CHARACTER SET utf8 COLLATE utf8_bin     NOT NULL COMMENT 'content',
+    `md5`          varchar(32) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT NULL COMMENT 'md5',
+    `gmt_create`   datetime                                         NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `gmt_modified` datetime                                         NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+    `src_user`     text CHARACTER SET utf8 COLLATE utf8_bin         NULL COMMENT 'source user',
+    `src_ip`       varchar(50) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT NULL COMMENT 'source ip',
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `uk_configinfotag_datagrouptenanttag` (`data_id`, `group_id`, `tenant_id`, `tag_id`) USING BTREE
 ) ENGINE = InnoDB
@@ -223,13 +223,13 @@ CREATE TABLE `config_info_tag`
 DROP TABLE IF EXISTS `config_tags_relation`;
 CREATE TABLE `config_tags_relation`
 (
-    `id`        bigint(20)                                                    NOT NULL COMMENT 'id',
-    `tag_name`  varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'tag_name',
-    `tag_type`  varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL DEFAULT NULL COMMENT 'tag_type',
-    `data_id`   varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'data_id',
-    `group_id`  varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'group_id',
-    `tenant_id` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT 'tenant_id',
-    `nid`       bigint(20)                                                    NOT NULL AUTO_INCREMENT,
+    `id`        bigint(20)                                       NOT NULL COMMENT 'id',
+    `tag_name`  varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'tag_name',
+    `tag_type`  varchar(64) CHARACTER SET utf8 COLLATE utf8_bin  NULL DEFAULT NULL COMMENT 'tag_type',
+    `data_id`   varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'data_id',
+    `group_id`  varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'group_id',
+    `tenant_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT '' COMMENT 'tenant_id',
+    `nid`       bigint(20)                                       NOT NULL AUTO_INCREMENT,
     PRIMARY KEY (`nid`) USING BTREE,
     UNIQUE INDEX `uk_configtagrelation_configidtag` (`id`, `tag_name`, `tag_type`) USING BTREE,
     INDEX `idx_tenant_id` (`tenant_id`) USING BTREE
@@ -249,16 +249,16 @@ CREATE TABLE `config_tags_relation`
 DROP TABLE IF EXISTS `group_capacity`;
 CREATE TABLE `group_capacity`
 (
-    `id`                bigint(20) UNSIGNED                                           NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-    `group_id`          varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'Group ID，空字符表示整个集群',
-    `quota`             int(10) UNSIGNED                                              NOT NULL DEFAULT 0 COMMENT '配额，0表示使用默认值',
-    `usage`             int(10) UNSIGNED                                              NOT NULL DEFAULT 0 COMMENT '使用量',
-    `max_size`          int(10) UNSIGNED                                              NOT NULL DEFAULT 0 COMMENT '单个配置大小上限，单位为字节，0表示使用默认值',
-    `max_aggr_count`    int(10) UNSIGNED                                              NOT NULL DEFAULT 0 COMMENT '聚合子配置最大个数，，0表示使用默认值',
-    `max_aggr_size`     int(10) UNSIGNED                                              NOT NULL DEFAULT 0 COMMENT '单个聚合数据的子配置大小上限，单位为字节，0表示使用默认值',
-    `max_history_count` int(10) UNSIGNED                                              NOT NULL DEFAULT 0 COMMENT '最大变更历史数量',
-    `gmt_create`        datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `gmt_modified`      datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+    `id`                bigint(20) UNSIGNED                              NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+    `group_id`          varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT 'Group ID，空字符表示整个集群',
+    `quota`             int(10) UNSIGNED                                 NOT NULL DEFAULT 0 COMMENT '配额，0表示使用默认值',
+    `usage`             int(10) UNSIGNED                                 NOT NULL DEFAULT 0 COMMENT '使用量',
+    `max_size`          int(10) UNSIGNED                                 NOT NULL DEFAULT 0 COMMENT '单个配置大小上限，单位为字节，0表示使用默认值',
+    `max_aggr_count`    int(10) UNSIGNED                                 NOT NULL DEFAULT 0 COMMENT '聚合子配置最大个数，，0表示使用默认值',
+    `max_aggr_size`     int(10) UNSIGNED                                 NOT NULL DEFAULT 0 COMMENT '单个聚合数据的子配置大小上限，单位为字节，0表示使用默认值',
+    `max_history_count` int(10) UNSIGNED                                 NOT NULL DEFAULT 0 COMMENT '最大变更历史数量',
+    `gmt_create`        datetime                                         NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `gmt_modified`      datetime                                         NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `uk_group_id` (`group_id`) USING BTREE
 ) ENGINE = InnoDB
@@ -277,25 +277,25 @@ CREATE TABLE `group_capacity`
 DROP TABLE IF EXISTS `his_config_info`;
 CREATE TABLE `his_config_info`
 (
-    `id`           bigint(64) UNSIGNED                                           NOT NULL,
-    `nid`          bigint(20) UNSIGNED                                           NOT NULL AUTO_INCREMENT,
-    `data_id`      varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-    `group_id`     varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-    `app_name`     varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL     DEFAULT NULL COMMENT 'app_name',
-    `content`      longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci     NOT NULL,
-    `md5`          varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL     DEFAULT NULL,
-    `gmt_create`   datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `gmt_modified` datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `src_user`     text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci         NULL,
-    `src_ip`       varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL     DEFAULT NULL,
-    `op_type`      char(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci     NULL     DEFAULT NULL,
-    `tenant_id`    varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL     DEFAULT '' COMMENT '租户字段',
+    `id`           bigint(64) UNSIGNED                              NOT NULL,
+    `nid`          bigint(20) UNSIGNED                              NOT NULL AUTO_INCREMENT,
+    `data_id`      varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+    `group_id`     varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+    `app_name`     varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL     DEFAULT NULL COMMENT 'app_name',
+    `content`      longtext CHARACTER SET utf8 COLLATE utf8_bin     NOT NULL,
+    `md5`          varchar(32) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT NULL,
+    `gmt_create`   datetime                                         NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `gmt_modified` datetime                                         NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `src_user`     text CHARACTER SET utf8 COLLATE utf8_bin         NULL,
+    `src_ip`       varchar(50) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT NULL,
+    `op_type`      char(10) CHARACTER SET utf8 COLLATE utf8_bin     NULL     DEFAULT NULL,
+    `tenant_id`    varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL     DEFAULT '' COMMENT '租户字段',
     PRIMARY KEY (`nid`) USING BTREE,
     INDEX `idx_gmt_create` (`gmt_create`) USING BTREE,
     INDEX `idx_gmt_modified` (`gmt_modified`) USING BTREE,
     INDEX `idx_did` (`data_id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 70
+  AUTO_INCREMENT = 72
   CHARACTER SET = utf8
   COLLATE = utf8_bin COMMENT = '多租户改造'
   ROW_FORMAT = DYNAMIC;
@@ -303,91 +303,6 @@ CREATE TABLE `his_config_info`
 -- ----------------------------
 -- Records of his_config_info
 -- ----------------------------
-INSERT INTO `his_config_info`
-VALUES (130, 51, 'server-dict.yaml', 'DEFAULT_GROUP', '',
-        'server:\n  port: ${PORT_SERVER_DICT:8205}\n\nspring:\n  aop:\n    proxy-target-class: true\n\n  jackson:\n    date-format: yyyy-MM-dd HH:mm:ss\n    time-zone: GMT+8\n\n  freemarker:\n    check-template-location: false\n\n  datasource:\n    dynamic:\n      p6spy: ${DATASOURCE_LOGGER_SQL_ENABLED:true}\n      hikari:\n        connection-timeout: 30000\n        max-lifetime: 1800000\n        max-pool-size: 15\n        min-idle: 5\n        connection-test-query: select 1\n        pool-name: MyHikariCP\n      primary: primary\n      datasource:\n        primary:\n          driver-class-name: ${DATASOURCE_DRIVER:com.mysql.cj.jdbc.Driver}\n          url: jdbc:${DATASOURCE_DB_TYPE:mysql}://${DATASOURCE_HOST:127.0.0.1}:${DATASOURCE_PORT:3306}/${DB_NAME_DICT:cloud_dict}?${DATASOURCE_PARAM:useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai}\n          username: ${DATASOURCE_USERNAME:root}\n          password: ${DATASOURCE_PASSWORD:root}\n\n  redis:\n    database: ${REDIS_DICT_DATABASE:1}\n    host: ${REDIS_HOST:127.0.0.1}\n    port: ${REDIS_PORT:6379}\n    lettuce:\n      pool:\n        min-idle: 8\n        max-idle: 500\n        max-active: 2000\n        max-wait: 10000\n    timeout: 5000\n\nsystem:\n  dict:\n    mq-type: none\n    text-value-default-null: true\n    on-boot-refresh-dict: false\n    cache:\n      enabled: true\n      maximum-size: 500\n      initial-capacity: 50\n      duration: 30s\n      miss-num: 50\n    controller:\n      enabled: true\n      prefix: /cache\n\nmybatis-plus:\n  type-aliases-package: com.zclcs.common.core.entity.dict\n  mapper-locations: classpath:com/zclcs/server/dict/mapper/*.xml\n  configuration:\n    jdbc-type-for-null: null\n  global-config:\n    banner: false\n\nsecurity:\n  oauth2:\n    resource:\n      id: ${spring.application.name}\n      user-info-uri: http://${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}/auth/user\n\nmy:\n  doc:\n    enable: true\n    title: ${spring.application.name}文档\n    description: ${my.doc.title}\n    name: zclcs\n    email: 2371219112@qq.com\n    url: https://github.com/zclcs\n    version: 2.2-RELEASE\n\n  cloud:\n    security:\n      enable: true\n      anon-uris: /v2/api-docs,/v2/api-docs-ext\n      only-fetch-by-gateway: false\n\n  log:\n    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}\n',
-        'c7631ff131f08fea9f1b867015d70284', '2022-01-10 11:24:48', '2022-01-09 21:24:48', 'nacos', '192.168.33.1', 'U',
-        'dev');
-INSERT INTO `his_config_info`
-VALUES (0, 52, 'server.yaml', 'DEFAULT_GROUP', '',
-        'spring:\r\n  aop:\r\n    proxy-target-class: true\r\n\r\n  jackson:\r\n    date-format: yyyy-MM-dd HH:mm:ss\r\n    time-zone: GMT+8\r\n\r\n  freemarker:\r\n    check-template-location: false\r\n\r\n  datasource:\r\n    dynamic:\r\n      p6spy: ${DATASOURCE_LOGGER_SQL_ENABLED:true}\r\n      hikari:\r\n        connection-timeout: 30000\r\n        max-lifetime: 1800000\r\n        max-pool-size: 15\r\n        min-idle: 5\r\n        connection-test-query: select 1\r\n        pool-name: MyHikariCP\r\n\r\nsecurity:\r\n  oauth2:\r\n    resource:\r\n      id: ${spring.application.name}\r\n      user-info-uri: http://${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}/auth/user\r\n\r\nmy:\r\n  doc:\r\n    enable: true\r\n    title: ${spring.application.name}文档\r\n    description: ${my.doc.title}\r\n    name: zclcs\r\n    email: 2371219112@qq.com\r\n    url: https://github.com/zclcs\r\n    version: 2.2-RELEASE\r\n  log:\r\n    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}',
-        '42bafad44c04f4e34f4ec18659c0c837', '2022-01-10 11:26:45', '2022-01-09 21:26:46', NULL, '192.168.33.1', 'I',
-        'dev');
-INSERT INTO `his_config_info`
-VALUES (0, 53, 'server-ext.yaml', 'DEFAULT_GROUP', '',
-        'spring:\r\n  aop:\r\n    proxy-target-class: true\r\n\r\n  jackson:\r\n    date-format: yyyy-MM-dd HH:mm:ss\r\n    time-zone: GMT+8\r\n\r\n  freemarker:\r\n    check-template-location: false\r\n\r\n  datasource:\r\n    dynamic:\r\n      p6spy: ${DATASOURCE_LOGGER_SQL_ENABLED:true}\r\n      hikari:\r\n        connection-timeout: 30000\r\n        max-lifetime: 1800000\r\n        max-pool-size: 15\r\n        min-idle: 5\r\n        connection-test-query: select 1\r\n        pool-name: MyHikariCP\r\n\r\nsecurity:\r\n  oauth2:\r\n    resource:\r\n      id: ${spring.application.name}\r\n      user-info-uri: http://${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}/auth/user\r\n\r\nmy:\r\n  doc:\r\n    enable: true\r\n    title: ${spring.application.name}文档\r\n    description: ${my.doc.title}\r\n    name: zclcs\r\n    email: 2371219112@qq.com\r\n    url: https://github.com/zclcs\r\n    version: 2.2-RELEASE\r\n  log:\r\n    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}',
-        '42bafad44c04f4e34f4ec18659c0c837', '2022-01-10 11:28:15', '2022-01-09 21:28:15', NULL, '192.168.33.1', 'I',
-        'dev');
-INSERT INTO `his_config_info`
-VALUES (120, 54, 'server-generator.yaml', 'DEFAULT_GROUP', '',
-        'server:\n  port: ${PORT_SERVER_GENERATOR:8202}\n\nspring:\n  aop:\n    proxy-target-class: true\n\n  jackson:\n    date-format: yyyy-MM-dd HH:mm:ss\n    time-zone: GMT+8\n\n  freemarker:\n    check-template-location: false\n\n  datasource:\n    dynamic:\n      p6spy: ${DATASOURCE_LOGGER_SQL_ENABLED:true}\n      hikari:\n        connection-timeout: 30000\n        max-lifetime: 1800000\n        max-pool-size: 15\n        min-idle: 5\n        connection-test-query: select 1\n        pool-name: MyHikariCP\n      primary: primary\n      datasource:\n        primary:\n          driver-class-name: ${DATASOURCE_DRIVER:com.mysql.cj.jdbc.Driver}\n          url: jdbc:${DATASOURCE_DB_TYPE:mysql}://${DATASOURCE_HOST:127.0.0.1}:${DATASOURCE_PORT:3306}/${DB_NAME_GENERATOR:cloud_generator}?${DATASOURCE_PARAM:useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai}\n          username: ${DATASOURCE_USERNAME:root}\n          password: ${DATASOURCE_PASSWORD:root}\n\nmybatis-plus:\n  type-aliases-package: com.zclcs.common.core.entity.generator\n  mapper-locations: classpath:com/zclcs/server/generator/mapper/*.xml\n  configuration:\n    jdbc-type-for-null: null\n  global-config:\n    banner: false\n\nsecurity:\n  oauth2:\n    resource:\n      id: ${spring.application.name}\n      user-info-uri: http://${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}/auth/user\n\nmy:\n  doc:\n    enable: true\n    title: ${spring.application.name}文档\n    description: ${my.doc.title}\n    name: zclcs\n    email: 2371219112@qq.com\n    url: https://github.com/zclcs\n    version: 2.2-RELEASE\n\n  cloud:\n    security:\n      enable: true\n      anon-uris: /v2/api-docs,/v2/api-docs-ext\n\n  log:\n    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}',
-        '7ac333f13ce33edebc0023afdf80389b', '2022-01-10 11:28:52', '2022-01-09 21:28:52', 'nacos', '192.168.33.1', 'U',
-        'dev');
-INSERT INTO `his_config_info`
-VALUES (140, 55, 'server.yaml', 'DEFAULT_GROUP', '',
-        'spring:\r\n  aop:\r\n    proxy-target-class: true\r\n\r\n  jackson:\r\n    date-format: yyyy-MM-dd HH:mm:ss\r\n    time-zone: GMT+8\r\n\r\n  freemarker:\r\n    check-template-location: false\r\n\r\n  datasource:\r\n    dynamic:\r\n      p6spy: ${DATASOURCE_LOGGER_SQL_ENABLED:true}\r\n      hikari:\r\n        connection-timeout: 30000\r\n        max-lifetime: 1800000\r\n        max-pool-size: 15\r\n        min-idle: 5\r\n        connection-test-query: select 1\r\n        pool-name: MyHikariCP\r\n\r\nsecurity:\r\n  oauth2:\r\n    resource:\r\n      id: ${spring.application.name}\r\n      user-info-uri: http://${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}/auth/user\r\n\r\nmy:\r\n  doc:\r\n    enable: true\r\n    title: ${spring.application.name}文档\r\n    description: ${my.doc.title}\r\n    name: zclcs\r\n    email: 2371219112@qq.com\r\n    url: https://github.com/zclcs\r\n    version: 2.2-RELEASE\r\n  log:\r\n    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}',
-        '42bafad44c04f4e34f4ec18659c0c837', '2022-01-10 11:29:14', '2022-01-09 21:29:15', 'nacos', '192.168.33.1', 'U',
-        'dev');
-INSERT INTO `his_config_info`
-VALUES (141, 56, 'server-ext.yaml', 'DEFAULT_GROUP', '',
-        'spring:\r\n  aop:\r\n    proxy-target-class: true\r\n\r\n  jackson:\r\n    date-format: yyyy-MM-dd HH:mm:ss\r\n    time-zone: GMT+8\r\n\r\n  freemarker:\r\n    check-template-location: false\r\n\r\n  datasource:\r\n    dynamic:\r\n      p6spy: ${DATASOURCE_LOGGER_SQL_ENABLED:true}\r\n      hikari:\r\n        connection-timeout: 30000\r\n        max-lifetime: 1800000\r\n        max-pool-size: 15\r\n        min-idle: 5\r\n        connection-test-query: select 1\r\n        pool-name: MyHikariCP\r\n\r\nsecurity:\r\n  oauth2:\r\n    resource:\r\n      id: ${spring.application.name}\r\n      user-info-uri: http://${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}/auth/user\r\n\r\nmy:\r\n  doc:\r\n    enable: true\r\n    title: ${spring.application.name}文档\r\n    description: ${my.doc.title}\r\n    name: zclcs\r\n    email: 2371219112@qq.com\r\n    url: https://github.com/zclcs\r\n    version: 2.2-RELEASE\r\n  log:\r\n    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}',
-        '42bafad44c04f4e34f4ec18659c0c837', '2022-01-10 11:29:21', '2022-01-09 21:29:22', NULL, '192.168.33.1', 'D',
-        'dev');
-INSERT INTO `his_config_info`
-VALUES (140, 57, 'server.yaml', 'DEFAULT_GROUP', '',
-        'spring:\n  aop:\n    proxy-target-class: true\n\n  jackson:\n    date-format: yyyy-MM-dd HH:mm:ss\n    time-zone: GMT+8\n\n  freemarker:\n    check-template-location: false\n\n  datasource:\n    dynamic:\n      p6spy: ${DATASOURCE_LOGGER_SQL_ENABLED:true}\n      hikari:\n        connection-timeout: 30000\n        max-lifetime: 1800000\n        max-pool-size: 15\n        min-idle: 5\n        connection-test-query: select 1\n        pool-name: MyHikariCP\n\nsecurity:\n  oauth2:\n    resource:\n      id: ${spring.application.name}\n      user-info-uri: http://${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}/auth/user\n\nmy:\n  doc:\n    enable: true\n    title: ${spring.application.name}文档\n    description: ${my.doc.title}\n    name: zclcs\n    email: 2371219112@qq.com\n    url: https://github.com/zclcs\n    version: 2.2-RELEASE\n  log:\n    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}',
-        '44eef7b9cd58d03487e165c760ba70ad', '2022-01-10 11:30:01', '2022-01-09 21:30:02', 'nacos', '192.168.33.1', 'U',
-        'dev');
-INSERT INTO `his_config_info`
-VALUES (140, 58, 'server.yaml', 'DEFAULT_GROUP', '',
-        'spring:\n  aop:\n    proxy-target-class: true\n\n  jackson:\n    date-format: yyyy-MM-dd HH:mm:ss\n    time-zone: GMT+8\n\n  freemarker:\n    check-template-location: false\n\n  datasource:\n    dynamic:\n      p6spy: ${DATASOURCE_LOGGER_SQL_ENABLED:true}\n      hikari:\n        connection-timeout: 30000\n        max-lifetime: 1800000\n        max-pool-size: 15\n        min-idle: 5\n        connection-test-query: select 1\n        pool-name: MyHikariCP\n\nsecurity:\n  oauth2:\n    resource:\n      id: ${spring.application.name}\n      user-info-uri: http://${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}/auth/user\n\nmybatis-plus:\n  configuration:\n    jdbc-type-for-null: null\n  global-config:\n    banner: false\n\nmy:\n  doc:\n    enable: true\n    title: ${spring.application.name}文档\n    description: ${my.doc.title}\n    name: zclcs\n    email: 2371219112@qq.com\n    url: https://github.com/zclcs\n    version: 2.2-RELEASE\n  log:\n    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}',
-        '2873429fac39c168efeed7a025148b49', '2022-01-10 11:30:20', '2022-01-09 21:30:20', 'nacos', '192.168.33.1', 'U',
-        'dev');
-INSERT INTO `his_config_info`
-VALUES (130, 59, 'server-dict.yaml', 'DEFAULT_GROUP', '',
-        'server:\n  port: ${PORT_SERVER_DICT:8205}\n\nspring:\n  aop:\n    proxy-target-class: true\n\n  jackson:\n    date-format: yyyy-MM-dd HH:mm:ss\n    time-zone: GMT+8\n\n  freemarker:\n    check-template-location: false\n\n  datasource:\n    dynamic:\n      p6spy: ${DATASOURCE_LOGGER_SQL_ENABLED:true}\n      hikari:\n        connection-timeout: 30000\n        max-lifetime: 1800000\n        max-pool-size: 15\n        min-idle: 5\n        connection-test-query: select 1\n        pool-name: MyHikariCP\n      primary: primary\n      datasource:\n        primary:\n          driver-class-name: ${DATASOURCE_DRIVER:com.mysql.cj.jdbc.Driver}\n          url: jdbc:${DATASOURCE_DB_TYPE:mysql}://${DATASOURCE_HOST:127.0.0.1}:${DATASOURCE_PORT:3306}/${DB_NAME_DICT:cloud_dict}?${DATASOURCE_PARAM:useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai}\n          username: ${DATASOURCE_USERNAME:root}\n          password: ${DATASOURCE_PASSWORD:root}\n\nsystem:\n  dict:\n    mq-type: none\n    text-value-default-null: true\n    on-boot-refresh-dict: false\n    cache:\n      enabled: true\n      maximum-size: 500\n      initial-capacity: 50\n      duration: 30s\n      miss-num: 50\n    controller:\n      enabled: true\n      prefix: /cache\n\nmybatis-plus:\n  type-aliases-package: com.zclcs.common.core.entity.dict\n  mapper-locations: classpath:com/zclcs/server/dict/mapper/*.xml\n  configuration:\n    jdbc-type-for-null: null\n  global-config:\n    banner: false\n\nsecurity:\n  oauth2:\n    resource:\n      id: ${spring.application.name}\n      user-info-uri: http://${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}/auth/user\n\nmy:\n  doc:\n    enable: true\n    title: ${spring.application.name}文档\n    description: ${my.doc.title}\n    name: zclcs\n    email: 2371219112@qq.com\n    url: https://github.com/zclcs\n    version: 2.2-RELEASE\n\n  cloud:\n    security:\n      enable: true\n      anon-uris: /v2/api-docs,/v2/api-docs-ext\n      only-fetch-by-gateway: false\n\n  log:\n    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}\n',
-        'a19ed304daf10caabbd300fb060f86bd', '2022-01-10 11:34:20', '2022-01-09 21:34:20', 'nacos', '192.168.33.1', 'U',
-        'dev');
-INSERT INTO `his_config_info`
-VALUES (125, 60, 'server-minio.yaml', 'DEFAULT_GROUP', '',
-        'server:\n  port: ${PORT_SERVER_MINIO:8204}\n\nspring:\n  aop:\n    proxy-target-class: true\n\n  jackson:\n    date-format: yyyy-MM-dd HH:mm:ss\n    time-zone: GMT+8\n\n  freemarker:\n    check-template-location: false\n\n  datasource:\n    dynamic:\n      p6spy: ${DATASOURCE_LOGGER_SQL_ENABLED:true}\n      hikari:\n        connection-timeout: 30000\n        max-lifetime: 1800000\n        max-pool-size: 15\n        min-idle: 5\n        connection-test-query: select 1\n        pool-name: MyHikariCP\n      primary: primary\n      datasource:\n        primary:\n          driver-class-name: ${DATASOURCE_DRIVER:com.mysql.cj.jdbc.Driver}\n          url: jdbc:${DATASOURCE_DB_TYPE:mysql}://${DATASOURCE_HOST:127.0.0.1}:${DATASOURCE_PORT:3306}/${DB_NAME_MINIO:cloud_minio}?${DATASOURCE_PARAM:useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai}\n          username: ${DATASOURCE_USERNAME:root}\n          password: ${DATASOURCE_PASSWORD:root}\n\nmybatis-plus:\n  type-aliases-package: com.zclcs.common.core.entity.minio\n  mapper-locations: classpath:com/zclcs/server/minio/mapper/*.xml\n  configuration:\n    jdbc-type-for-null: null\n  global-config:\n    banner: false\n\nsecurity:\n  oauth2:\n    resource:\n      id: ${spring.application.name}\n      user-info-uri: http://${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}/auth/user\n\nminio:\n  endpoint: ${ENDPOINT:http://192.168.33.10:9000}\n  root-user: ${ROOT_USER:minio}\n  root-password: ${ROOT_PASSWORD:minio123}\n  domain-name: ${DOMAIN_NAME:}\n  host: ${HOST:192.168.33.10}\n  port: ${PORT:9000}\n\nmy:\n  doc:\n    enable: true\n    title: ${spring.application.name}文档\n    description: ${my.doc.title}\n    name: zclcs\n    email: 2371219112@qq.com\n    url: https://github.com/zclcs\n    version: 2.2-RELEASE\n\n  cloud:\n    security:\n      enable: true\n      anon-uris: /v2/api-docs,/v2/api-docs-ext\n      only-fetch-by-gateway: false\n\n  log:\n    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}',
-        'e8c469bb92e8cd3d47f95a89a9b910e1', '2022-01-10 11:35:48', '2022-01-09 21:35:48', 'nacos', '192.168.33.1', 'U',
-        'dev');
-INSERT INTO `his_config_info`
-VALUES (118, 61, 'server-system.yaml', 'DEFAULT_GROUP', '',
-        'server:\n  port: ${PORT_SERVER_SYSTEM:8201}\n\nspring:\n  aop:\n    proxy-target-class: true\n\n  jackson:\n    date-format: yyyy-MM-dd HH:mm:ss\n    time-zone: GMT+8\n\n  freemarker:\n    check-template-location: false\n\n  datasource:\n    dynamic:\n      p6spy: ${DATASOURCE_LOGGER_SQL_ENABLED:true}\n      hikari:\n        connection-timeout: 30000\n        max-lifetime: 1800000\n        max-pool-size: 15\n        min-idle: 5\n        connection-test-query: select 1\n        pool-name: MyHikariCP\n      primary: primary\n      datasource:\n        primary:\n          driver-class-name: ${DATASOURCE_DRIVER:com.mysql.cj.jdbc.Driver}\n          url: jdbc:${DATASOURCE_DB_TYPE:mysql}://${DATASOURCE_HOST:127.0.0.1}:${DATASOURCE_PORT:3306}/${DB_NAME_SYSTEM:cloud_system}?${DATASOURCE_PARAM:useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai}\n          username: ${DATASOURCE_USERNAME:root}\n          password: ${DATASOURCE_PASSWORD:root}\n\nmybatis-plus:\n  type-aliases-package: com.zclcs.common.core.entity.system\n  mapper-locations: classpath:com/zclcs/server/system/mapper/*.xml\n  configuration:\n    jdbc-type-for-null: null\n  global-config:\n    banner: false\n\nsecurity:\n  oauth2:\n    resource:\n      id: ${spring.application.name}\n      user-info-uri: http://${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}/auth/user\n\nmy:\n  doc:\n    enable: true\n    title: ${spring.application.name}文档\n    description: ${my.doc.title}\n    name: zclcs\n    email: 2371219112@qq.com\n    url: https://github.com/zclcs\n    version: 2.2-RELEASE\n\n  cloud:\n    security:\n      enable: true\n      anon-uris: /v2/api-docs,/v2/api-docs-ext\n\n  log:\n    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}\n',
-        'f44eea5723be57f243e8978a8c70c147', '2022-01-10 11:37:25', '2022-01-09 21:37:25', 'nacos', '192.168.33.1', 'U',
-        'dev');
-INSERT INTO `his_config_info`
-VALUES (140, 62, 'server.yaml', 'DEFAULT_GROUP', '',
-        'server:\n  port: ${PORT_SERVER_GENERATOR:8202}\n\nspring:\n  datasource:\n    dynamic:\n      primary: primary\n      datasource:\n        primary:\n          driver-class-name: ${DATASOURCE_DRIVER:com.mysql.cj.jdbc.Driver}\n          url: jdbc:${DATASOURCE_DB_TYPE:mysql}://${DATASOURCE_HOST:127.0.0.1}:${DATASOURCE_PORT:3306}/${DB_NAME_GENERATOR:cloud_generator}?${DATASOURCE_PARAM:useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai}\n          username: ${DATASOURCE_USERNAME:root}\n          password: ${DATASOURCE_PASSWORD:root}\n\nmybatis-plus:\n  type-aliases-package: com.zclcs.common.core.entity.generator\n  mapper-locations: classpath:com/zclcs/server/generator/mapper/*.xml\n\nmy:\n  cloud:\n    security:\n      enable: true\n      anon-uris: /v2/api-docs,/v2/api-docs-ext',
-        '684833201e0155cdbc2bba7ae2782918', '2022-01-10 11:38:03', '2022-01-09 21:38:04', NULL, '192.168.33.1', 'U',
-        'dev');
-INSERT INTO `his_config_info`
-VALUES (120, 63, 'server-generator.yaml', 'DEFAULT_GROUP', '',
-        'server:\n  port: ${PORT_SERVER_GENERATOR:8202}\n\nspring:\n  datasource:\n    dynamic:\n      primary: primary\n      datasource:\n        primary:\n          driver-class-name: ${DATASOURCE_DRIVER:com.mysql.cj.jdbc.Driver}\n          url: jdbc:${DATASOURCE_DB_TYPE:mysql}://${DATASOURCE_HOST:127.0.0.1}:${DATASOURCE_PORT:3306}/${DB_NAME_GENERATOR:cloud_generator}?${DATASOURCE_PARAM:useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai}\n          username: ${DATASOURCE_USERNAME:root}\n          password: ${DATASOURCE_PASSWORD:root}\n\nmybatis-plus:\n  type-aliases-package: com.zclcs.common.core.entity.generator\n  mapper-locations: classpath:com/zclcs/server/generator/mapper/*.xml\n  configuration:\n    jdbc-type-for-null: null\n  global-config:\n    banner: false\n\nmy:\n  cloud:\n    security:\n      enable: true\n      anon-uris: /v2/api-docs,/v2/api-docs-ext',
-        'f4397c8d2e18558f05b32fd22c1e68e4', '2022-01-10 11:39:00', '2022-01-09 21:39:01', 'nacos', '192.168.33.1', 'U',
-        'dev');
-INSERT INTO `his_config_info`
-VALUES (121, 64, 'server-test.yaml', 'DEFAULT_GROUP', '',
-        'server:\n  port: ${PORT_SERVER_TEST:8203}\n\nspring:\n  aop:\n    proxy-target-class: true\n\n  jackson:\n    date-format: yyyy-MM-dd HH:mm:ss\n    time-zone: GMT+8\n\n  freemarker:\n    check-template-location: false\n\n  datasource:\n    dynamic:\n      p6spy: ${DATASOURCE_LOGGER_SQL_ENABLED:true}\n      hikari:\n        connection-timeout: 30000\n        max-lifetime: 1800000\n        max-pool-size: 15\n        min-idle: 5\n        connection-test-query: select 1\n        pool-name: MyHikariCP\n      primary: primary\n      datasource:\n        primary:\n          driver-class-name: ${DATASOURCE_DRIVER:com.mysql.cj.jdbc.Driver}\n          url: jdbc:${DATASOURCE_DB_TYPE:mysql}://${DATASOURCE_HOST:127.0.0.1}:${DATASOURCE_PORT:3306}/${DB_NAME_TEST:cloud_test}?${DATASOURCE_PARAM:useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai}\n          username: ${DATASOURCE_USERNAME:root}\n          password: ${DATASOURCE_PASSWORD:root}\n\nmybatis-plus:\n  type-aliases-package: com.zclcs.common.core.entity.test\n  mapper-locations: classpath:com/zclcs/server/test/mapper/*.xml\n  configuration:\n    jdbc-type-for-null: null\n  global-config:\n    banner: false\n\nsecurity:\n  oauth2:\n    resource:\n      id: ${spring.application.name}\n      user-info-uri: http://${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}/auth/user\n\nmy:\n  doc:\n    enable: true\n    title: ${spring.application.name}文档\n    description: ${my.doc.title}\n    name: zclcs\n    email: 2371219112@qq.com\n    url: https://github.com/zclcs\n    version: 2.2-RELEASE\n\n  cloud:\n    security:\n      enable: true\n      anon-uris: /v2/api-docs,/v2/api-docs-ext\n\n  log:\n    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}\n',
-        '05bbcf7df6221f2878377926861091fe', '2022-01-10 11:40:42', '2022-01-09 21:40:42', 'nacos', '192.168.33.1', 'U',
-        'dev');
-INSERT INTO `his_config_info`
-VALUES (0, 65, 'fegin.yaml', 'DEFAULT_GROUP', '',
-        '#hystrix的超时时间\r\nhystrix:\r\n    command:\r\n        default:\r\n            execution:\r\n              timeout:\r\n                enabled: true\r\n              isolation:\r\n                    thread:\r\n                        timeoutInMilliseconds: 30000\r\n#ribbon的超时时间\r\nribbon:\r\n  ReadTimeout: 30000\r\n  ConnectTimeout: 30000\r\n',
-        '98523ff550e8dbc6e0e85c4c6610a60b', '2022-01-10 14:23:46', '2022-01-10 00:23:46', NULL, '192.168.33.1', 'I',
-        'dev');
-INSERT INTO `his_config_info`
-VALUES (152, 66, 'fegin.yaml', 'DEFAULT_GROUP', '',
-        '#hystrix的超时时间\r\nhystrix:\r\n    command:\r\n        default:\r\n            execution:\r\n              timeout:\r\n                enabled: true\r\n              isolation:\r\n                    thread:\r\n                        timeoutInMilliseconds: 30000\r\n#ribbon的超时时间\r\nribbon:\r\n  ReadTimeout: 30000\r\n  ConnectTimeout: 30000\r\n',
-        '98523ff550e8dbc6e0e85c4c6610a60b', '2022-01-10 14:24:15', '2022-01-10 00:24:15', NULL, '192.168.33.1', 'D',
-        'dev');
-INSERT INTO `his_config_info`
-VALUES (140, 67, 'server.yaml', 'DEFAULT_GROUP', '',
-        'spring:\n  aop:\n    proxy-target-class: true\n\n  jackson:\n    date-format: yyyy-MM-dd HH:mm:ss\n    time-zone: GMT+8\n\n  freemarker:\n    check-template-location: false\n\n  datasource:\n    dynamic:\n      p6spy: ${DATASOURCE_LOGGER_SQL_ENABLED:true}\n      hikari:\n        connection-timeout: 30000\n        max-lifetime: 1800000\n        max-pool-size: 15\n        min-idle: 5\n        connection-test-query: select 1\n        pool-name: MyHikariCP\n\nsecurity:\n  oauth2:\n    resource:\n      id: ${spring.application.name}\n      user-info-uri: http://${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}/auth/user\n\nmybatis-plus:\n  configuration:\n    jdbc-type-for-null: null\n  global-config:\n    banner: false\n\nmy:\n  doc:\n    enable: true\n    title: ${spring.application.name}文档\n    description: ${my.doc.title}\n    name: zclcs\n    email: 2371219112@qq.com\n    url: https://github.com/zclcs\n    version: 2.2-RELEASE\n  log:\n    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}',
-        '2873429fac39c168efeed7a025148b49', '2022-01-10 14:24:34', '2022-01-10 00:24:34', 'nacos', '192.168.33.1', 'U',
-        'dev');
 INSERT INTO `his_config_info`
 VALUES (131, 68, 'dict.yaml', 'DEFAULT_GROUP', '',
         'system:\n  dict:\n    mq-type: none\n    text-value-default-null: true\n    on-boot-refresh-dict: false\n    cache:\n      enabled: true\n      maximum-size: 500\n      initial-capacity: 50\n      duration: 30s\n      miss-num: 50\n    controller:\n      enabled: false',
@@ -398,6 +313,16 @@ VALUES (0, 69, 'rabbit-mq.yaml', 'DEFAULT_GROUP', '',
         'spring:\r\n  rabbitmq:\r\n    host: ${RABBIT_MQ_HOST:127.0.0.1}\r\n    port: ${RABBIT_MQ_PORT:5672}\r\n    username: ${RABBIT_MQ_USERNAME:root}\r\n    password: ${RABBIT_MQ_PASSWORD:123456}\r\n    virtual-host: /\r\n    # 手动提交消息\r\n    listener:\r\n      simple:\r\n        acknowledge-mode: manual\r\n      direct:\r\n        acknowledge-mode: manual',
         '22d79d245812abf7391b11a198e2d08a', '2022-02-07 11:37:27', '2022-02-06 21:37:27', NULL, '192.168.33.1', 'I',
         'dev');
+INSERT INTO `his_config_info`
+VALUES (134, 70, 'logging.yaml', 'DEFAULT_GROUP', '',
+        'logging:\n  level:\n    org:\n      springframework:\n        data:\n          convert:\n            CustomConversions: error\n    com:\n      alibaba:\n        cloud:\n          nacos:\n            client:\n              NacosPropertySourceBuilder: error\n      codingapi: debug',
+        '3df7de121fe51fc85486b4eb58e9aa78', '2022-02-10 09:36:17', '2022-02-09 19:36:17', 'nacos', '192.168.33.1', 'U',
+        'dev');
+INSERT INTO `his_config_info`
+VALUES (128, 71, 'knife4j.yaml', 'DEFAULT_GROUP', '',
+        'server:\n  port: ${PORT_TX_KNIFE4J:8401}\n\nspring:\n  security:\n    user:\n      name: ${KNIFE4j_USERNAME:zclcs}\n      password: ${KNIFE4j_PASSWORD:123456}\n\nknife4j:\n  # 开启聚合组件\n  enableAggregation: ${DOC_ENABLE_AGGREGATION:true}\n  cloud:\n    enable: true\n    routes:\n      - name: ${SERVICE_NAME_AUTH:auth}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_AUTH:/auth}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_SYSTEM:server-system}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_SYSTEM:/system}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_GENERATOR:server-generator}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_GENERATOR:/generator}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_TEST:server-test}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_TEST:/test}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_MINIO:server-minio}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_MINIO:/minio}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_DICT:server-dict}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_DICT:/dict}/v2/api-docs?group=default\n        swaggerVersion: 2.0',
+        '98af42e70b7444d079159aa057859ee4', '2022-02-10 09:38:42', '2022-02-09 19:38:43', 'nacos', '192.168.33.1', 'U',
+        'dev');
 
 -- ----------------------------
 -- Table structure for permissions
@@ -405,13 +330,13 @@ VALUES (0, 69, 'rabbit-mq.yaml', 'DEFAULT_GROUP', '',
 DROP TABLE IF EXISTS `permissions`;
 CREATE TABLE `permissions`
 (
-    `role`     varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL,
-    `resource` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-    `action`   varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci   NOT NULL,
+    `role`     varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL,
+    `resource` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+    `action`   varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NOT NULL,
     UNIQUE INDEX `uk_role_permission` (`role`, `resource`, `action`) USING BTREE
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
-  COLLATE = utf8mb4_unicode_ci
+  COLLATE = utf8mb4_general_ci
   ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -424,12 +349,12 @@ CREATE TABLE `permissions`
 DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles`
 (
-    `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-    `role`     varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+    `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+    `role`     varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     UNIQUE INDEX `idx_user_role` (`username`, `role`) USING BTREE
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
-  COLLATE = utf8mb4_unicode_ci
+  COLLATE = utf8mb4_general_ci
   ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -444,16 +369,16 @@ VALUES ('nacos', 'ROLE_ADMIN');
 DROP TABLE IF EXISTS `tenant_capacity`;
 CREATE TABLE `tenant_capacity`
 (
-    `id`                bigint(20) UNSIGNED                                           NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-    `tenant_id`         varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'Tenant ID',
-    `quota`             int(10) UNSIGNED                                              NOT NULL DEFAULT 0 COMMENT '配额，0表示使用默认值',
-    `usage`             int(10) UNSIGNED                                              NOT NULL DEFAULT 0 COMMENT '使用量',
-    `max_size`          int(10) UNSIGNED                                              NOT NULL DEFAULT 0 COMMENT '单个配置大小上限，单位为字节，0表示使用默认值',
-    `max_aggr_count`    int(10) UNSIGNED                                              NOT NULL DEFAULT 0 COMMENT '聚合子配置最大个数',
-    `max_aggr_size`     int(10) UNSIGNED                                              NOT NULL DEFAULT 0 COMMENT '单个聚合数据的子配置大小上限，单位为字节，0表示使用默认值',
-    `max_history_count` int(10) UNSIGNED                                              NOT NULL DEFAULT 0 COMMENT '最大变更历史数量',
-    `gmt_create`        datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `gmt_modified`      datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+    `id`                bigint(20) UNSIGNED                              NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+    `tenant_id`         varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT 'Tenant ID',
+    `quota`             int(10) UNSIGNED                                 NOT NULL DEFAULT 0 COMMENT '配额，0表示使用默认值',
+    `usage`             int(10) UNSIGNED                                 NOT NULL DEFAULT 0 COMMENT '使用量',
+    `max_size`          int(10) UNSIGNED                                 NOT NULL DEFAULT 0 COMMENT '单个配置大小上限，单位为字节，0表示使用默认值',
+    `max_aggr_count`    int(10) UNSIGNED                                 NOT NULL DEFAULT 0 COMMENT '聚合子配置最大个数',
+    `max_aggr_size`     int(10) UNSIGNED                                 NOT NULL DEFAULT 0 COMMENT '单个聚合数据的子配置大小上限，单位为字节，0表示使用默认值',
+    `max_history_count` int(10) UNSIGNED                                 NOT NULL DEFAULT 0 COMMENT '最大变更历史数量',
+    `gmt_create`        datetime                                         NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `gmt_modified`      datetime                                         NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `uk_tenant_id` (`tenant_id`) USING BTREE
 ) ENGINE = InnoDB
@@ -472,14 +397,14 @@ CREATE TABLE `tenant_capacity`
 DROP TABLE IF EXISTS `tenant_info`;
 CREATE TABLE `tenant_info`
 (
-    `id`            bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT 'id',
-    `kp`            varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'kp',
-    `tenant_id`     varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT 'tenant_id',
-    `tenant_name`   varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT 'tenant_name',
-    `tenant_desc`   varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'tenant_desc',
-    `create_source` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL DEFAULT NULL COMMENT 'create_source',
-    `gmt_create`    bigint(20)                                                    NOT NULL COMMENT '创建时间',
-    `gmt_modified`  bigint(20)                                                    NOT NULL COMMENT '修改时间',
+    `id`            bigint(20)                                       NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `kp`            varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'kp',
+    `tenant_id`     varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT '' COMMENT 'tenant_id',
+    `tenant_name`   varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT '' COMMENT 'tenant_name',
+    `tenant_desc`   varchar(256) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'tenant_desc',
+    `create_source` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin  NULL DEFAULT NULL COMMENT 'create_source',
+    `gmt_create`    bigint(20)                                       NOT NULL COMMENT '创建时间',
+    `gmt_modified`  bigint(20)                                       NOT NULL COMMENT '修改时间',
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `uk_tenant_info_kptenantid` (`kp`, `tenant_id`) USING BTREE,
     INDEX `idx_tenant_id` (`tenant_id`) USING BTREE
@@ -501,13 +426,13 @@ VALUES (1, '1', 'dev', 'dev', '开发环境', 'nacos', 1631933668820, 1631933668
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users`
 (
-    `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL,
-    `password` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+    `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL,
+    `password` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `enabled`  tinyint(1)                                                    NOT NULL,
     PRIMARY KEY (`username`) USING BTREE
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
-  COLLATE = utf8mb4_unicode_ci
+  COLLATE = utf8mb4_general_ci
   ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------

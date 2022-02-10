@@ -4,8 +4,8 @@ server:
 spring:
   security:
     user:
-      name: ${KNIFE4j_USERNAME:zclcs}
-      password: ${KNIFE4j_PASSWORD:123456}
+      name: ${KNIFE4J_USERNAME:zclcs}
+      password: ${KNIFE4J_PASSWORD:123456}
 
 knife4j:
   # 开启聚合组件
