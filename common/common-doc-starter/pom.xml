@@ -21,12 +21,6 @@
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-micro-spring-boot-starter</artifactId>
             <version>${knife4j.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>swagger-models</artifactId>
-                    <groupId>io.swagger</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.github.xiaoymin</groupId>

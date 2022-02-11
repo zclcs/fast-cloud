@@ -40,12 +40,6 @@
             <groupId>com.zclcs</groupId>
             <artifactId>common-doc-starter</artifactId>
             <version>${project.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>javassist</artifactId>
-                    <groupId>org.javassist</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.zclcs</groupId>

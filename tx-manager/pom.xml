@@ -49,22 +49,10 @@
         <dependency>
             <groupId>com.codingapi.txlcn</groupId>
             <artifactId>txlcn-tm</artifactId>
-            <exclusions>
-                <exclusion>
-                    <artifactId>javassist</artifactId>
-                    <groupId>org.javassist</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
-            <exclusions>
-                <exclusion>
-                    <artifactId>simpleclient</artifactId>
-                    <groupId>io.prometheus</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <!-- flyway 管理数据库脚本 -->
         <dependency>

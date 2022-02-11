@@ -43,13 +43,11 @@ public class MyProvider implements DictProvider {
         for (DictTableName dictTableName : dictTableNames) {
             DictTypeVo.DictTypeBuilder dictTypeBuilder = DictTypeVo.newBuilder(dictTableName.getDictName(), dictTableName.getDictTitle());
             if (DictConstant.DICT_TYPE_0.equals(dictTableName.getType())) {
-                dictTables.stream().filter(dictTable -> dictTable.getDictNameId().equals(dictTableName.getId())).forEach(dictTable -> {
-                    dictTypeBuilder.add(dictTable.getCode(), dictTable.getTitle());
-                });
+                dictTables.stream().filter(dictTable -> dictTable.getDictNameId().equals(dictTableName.getId()))
+                        .forEach(dictTable -> dictTypeBuilder.add(dictTable.getCode(), dictTable.getTitle()));
             } else {
-                dictTableLevels.stream().filter(dictTableLevel -> dictTableLevel.getDictNameId().equals(dictTableName.getId())).forEach(dictTableLevel -> {
-                    dictTypeBuilder.add(dictTableLevel.getCode(), dictTableLevel.getTitle());
-                });
+                dictTableLevels.stream().filter(dictTableLevel -> dictTableLevel.getDictNameId().equals(dictTableName.getId()))
+                        .forEach(dictTableLevel -> dictTypeBuilder.add(dictTableLevel.getCode(), dictTableLevel.getTitle()));
             }
             dictTypeVos.add(dictTypeBuilder.build());
         }

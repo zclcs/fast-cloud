@@ -25,16 +25,6 @@
             <groupId>com.zclcs</groupId>
             <artifactId>common-rabbitmq-starter</artifactId>
             <version>${project.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>bcprov-jdk15on</artifactId>
-                    <groupId>org.bouncycastle</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>HdrHistogram</artifactId>
-                    <groupId>org.hdrhistogram</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.zclcs</groupId>
@@ -55,12 +45,6 @@
             <groupId>com.zclcs</groupId>
             <artifactId>common-doc-starter</artifactId>
             <version>${project.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>javassist</artifactId>
-                    <groupId>org.javassist</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.zclcs</groupId>
@@ -84,12 +68,6 @@
             <groupId>io.minio</groupId>
             <artifactId>minio</artifactId>
             <version>${minio.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>okhttp</artifactId>
-                    <groupId>com.squareup.okhttp3</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
