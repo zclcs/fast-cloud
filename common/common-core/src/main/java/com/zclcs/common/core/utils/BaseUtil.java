@@ -351,7 +351,6 @@ public abstract class BaseUtil {
         System.out.println(banner);
     }
 
-
     private static OAuth2Authentication getOauth2Authentication() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return (OAuth2Authentication) authentication;
@@ -360,5 +359,9 @@ public abstract class BaseUtil {
     @SuppressWarnings("all")
     private static LinkedHashMap<String, Object> getAuthenticationDetails() {
         return (LinkedHashMap<String, Object>) getOauth2Authentication().getUserAuthentication().getDetails();
+    }
+
+    public static void logServiceError(Throwable throwable, String serviceName) {
+        log.error("调用{}服务出错", serviceName, throwable);
     }
 }

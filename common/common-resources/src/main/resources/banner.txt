@@ -7,6 +7,6 @@
 |   ██   ░██   ██ ░██░██   ██ ░░░░░██  |
 |  ██████░░█████  ███░░█████  ██████   |
 | ░░░░░░  ░░░░░  ░░░  ░░░░░  ░░░░░░    |
-|    ${spring.application.name}                              |
-|    Spring-Boot: ${spring-boot.version}        |
+|    ${spring.application.name}                       |
+|    Spring-Boot: ${spring-boot.version}       |
 |--------------------------------------|

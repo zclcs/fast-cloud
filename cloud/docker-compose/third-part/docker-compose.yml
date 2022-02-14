@@ -79,7 +79,7 @@ services:
     command: server --console-address ':9001' /data  #指定容器中的目录 /data
     privileged: true
   rabbitmq:
-    image: rabbitmq:3.9.13-management
+    image: 192.168.33.10:3000/library/rabbitmq:3.9.13-management
     container_name: rabbitmq
     network_mode: host
     environment:
