@@ -10,7 +10,7 @@ public interface ValidConstant {
     /**
      * 统计个数 0
      */
-    Integer COUNT_0 = 0;
+    Long COUNT_0 = 0L;
 
     /**
      * 9位统一社会信用代码

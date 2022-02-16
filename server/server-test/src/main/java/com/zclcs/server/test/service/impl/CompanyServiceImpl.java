@@ -92,6 +92,7 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
         BeanUtil.copyProperties(companyAo, company);
         company.setModifyTime(DateUtil.date());
         validUpdate(company);
+        this.updateById(company);
         return company;
     }
 
@@ -120,7 +121,7 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
     }
 
     private void validCompanyName(Company company) {
-        if (!this.lambdaQuery().eq(Company::getCompanyName, company.getCompanyName()).count().equals(ValidConstant.COUNT_0)) {
+        if (!this.lambdaQuery().eq(Company::getCompanyCode, company.getCompanyName()).count().equals(ValidConstant.COUNT_0)) {
             throw new MyException("企业名称重复");
         }
     }
