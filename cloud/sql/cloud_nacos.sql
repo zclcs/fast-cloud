@@ -11,7 +11,7 @@
  Target Server Version : 50735
  File Encoding         : 65001
 
- Date: 10/02/2022 09:51:08
+ Date: 16/02/2022 17:02:27
 */
 
 SET NAMES utf8mb4;
@@ -42,7 +42,7 @@ CREATE TABLE `config_info`
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `uk_configinfo_datagrouptenant` (`data_id`, `group_id`, `tenant_id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 144
+  AUTO_INCREMENT = 143
   CHARACTER SET = utf8
   COLLATE = utf8_bin COMMENT = 'config_info'
   ROW_FORMAT = DYNAMIC;
@@ -58,7 +58,7 @@ VALUES (115, 'gateway.yaml', 'DEFAULT_GROUP',
 INSERT INTO `config_info`
 VALUES (116, 'tx-manager.yaml', 'DEFAULT_GROUP',
         'server:\n  port: ${PORT_TX_MANAGER:8501}\n\nspring:\n  datasource:\n    driver-class-name: ${DATASOURCE_DRIVER:com.mysql.cj.jdbc.Driver}\n    url: jdbc:${DATASOURCE_DB_TYPE:mysql}://${DATASOURCE_HOST:127.0.0.1}:${DATASOURCE_PORT:3306}/${DB_NAME_TX_MANAGER:cloud_tx_manager}?${DATASOURCE_PARAM:useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai}\n    username: ${DATASOURCE_USERNAME:root}\n    password: ${DATASOURCE_PASSWORD:root}\n\n  redis:\n    database: ${REDIS_TX_MANAGER_DATABASE:2}\n    host: ${REDIS_HOST:127.0.0.1}\n    port: ${REDIS_PORT:6379}\n    lettuce:\n      pool:\n        min-idle: 8\n        max-idle: 500\n        max-active: 2000\n        max-wait: 10000\n    timeout: 5000\n\nmy:\n  log:\n    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}\n\ntx-lcn:\n  manager:\n    host: ${TX_MANAGER_PORT:0.0.0.0}\n    # TM监听Socket端口.\n    port: ${TX_CLIENT_MANAGER_PORT:8888}\n    # TM控制台密码\n    admin-key: ${TX_MANAGER_ADMIN_KEY:123456}\n  logger:\n    # 开启日志记录\n    enabled: ${TX_LOGGER_ENABLED:true}\n    driver-class-name: ${spring.datasource.driver-class-name}\n    jdbc-url: ${spring.datasource.url}\n    username: ${spring.datasource.username}\n    password: ${spring.datasource.password}',
-        'bfa5497805bff26acda7206460f66f7c', '2021-09-18 02:54:58', '2022-01-07 03:29:09', 'nacos', '192.168.33.1', '',
+        'bfa5497805bff26acda7206460f66f7c', '2021-09-18 02:54:58', '2022-02-10 19:48:40', 'nacos', '192.168.33.1', '',
         'dev', '', '', '', 'yaml', '');
 INSERT INTO `config_info`
 VALUES (118, 'server-system.yaml', 'DEFAULT_GROUP',
@@ -113,7 +113,7 @@ VALUES (133, 'flyway.yaml', 'DEFAULT_GROUP',
 INSERT INTO `config_info`
 VALUES (134, 'logging.yaml', 'DEFAULT_GROUP',
         'logging:\n  level:\n    org:\n      springframework:\n        data:\n          convert:\n            CustomConversions: error\n    com:\n      alibaba:\n        cloud:\n          nacos:\n            client:\n              NacosPropertySourceBuilder: error\n      codingapi: info',
-        '4888be6105874d1ef4a2630eb6960dab', '2021-11-29 18:41:52', '2022-02-09 19:36:17', 'nacos', '192.168.33.1', '',
+        '4888be6105874d1ef4a2630eb6960dab', '2021-11-29 18:41:52', '2022-02-16 01:00:30', 'nacos', '192.168.33.1', '',
         'dev', '', '', '', 'yaml', '');
 INSERT INTO `config_info`
 VALUES (138, 'tx-client.yaml', 'DEFAULT_GROUP',
@@ -295,7 +295,7 @@ CREATE TABLE `his_config_info`
     INDEX `idx_gmt_modified` (`gmt_modified`) USING BTREE,
     INDEX `idx_did` (`data_id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 72
+  AUTO_INCREMENT = 75
   CHARACTER SET = utf8
   COLLATE = utf8_bin COMMENT = '多租户改造'
   ROW_FORMAT = DYNAMIC;
@@ -303,11 +303,6 @@ CREATE TABLE `his_config_info`
 -- ----------------------------
 -- Records of his_config_info
 -- ----------------------------
-INSERT INTO `his_config_info`
-VALUES (131, 68, 'dict.yaml', 'DEFAULT_GROUP', '',
-        'system:\n  dict:\n    mq-type: none\n    text-value-default-null: true\n    on-boot-refresh-dict: false\n    cache:\n      enabled: true\n      maximum-size: 500\n      initial-capacity: 50\n      duration: 30s\n      miss-num: 50\n    controller:\n      enabled: false',
-        '0bad0e76df0199d8434fd9848b844901', '2022-01-17 09:26:47', '2022-01-16 19:26:47', 'nacos', '192.168.33.1', 'U',
-        'dev');
 INSERT INTO `his_config_info`
 VALUES (0, 69, 'rabbit-mq.yaml', 'DEFAULT_GROUP', '',
         'spring:\r\n  rabbitmq:\r\n    host: ${RABBIT_MQ_HOST:127.0.0.1}\r\n    port: ${RABBIT_MQ_PORT:5672}\r\n    username: ${RABBIT_MQ_USERNAME:root}\r\n    password: ${RABBIT_MQ_PASSWORD:123456}\r\n    virtual-host: /\r\n    # 手动提交消息\r\n    listener:\r\n      simple:\r\n        acknowledge-mode: manual\r\n      direct:\r\n        acknowledge-mode: manual',
@@ -322,6 +317,21 @@ INSERT INTO `his_config_info`
 VALUES (128, 71, 'knife4j.yaml', 'DEFAULT_GROUP', '',
         'server:\n  port: ${PORT_TX_KNIFE4J:8401}\n\nspring:\n  security:\n    user:\n      name: ${KNIFE4j_USERNAME:zclcs}\n      password: ${KNIFE4j_PASSWORD:123456}\n\nknife4j:\n  # 开启聚合组件\n  enableAggregation: ${DOC_ENABLE_AGGREGATION:true}\n  cloud:\n    enable: true\n    routes:\n      - name: ${SERVICE_NAME_AUTH:auth}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_AUTH:/auth}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_SYSTEM:server-system}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_SYSTEM:/system}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_GENERATOR:server-generator}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_GENERATOR:/generator}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_TEST:server-test}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_TEST:/test}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_MINIO:server-minio}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_MINIO:/minio}/v2/api-docs?group=default\n        swaggerVersion: 2.0\n      - name: ${SERVICE_NAME_SERVER_DICT:server-dict}\n        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n        location: ${SERVICE_PATH_SERVER_DICT:/dict}/v2/api-docs?group=default\n        swaggerVersion: 2.0',
         '98af42e70b7444d079159aa057859ee4', '2022-02-10 09:38:42', '2022-02-09 19:38:43', 'nacos', '192.168.33.1', 'U',
+        'dev');
+INSERT INTO `his_config_info`
+VALUES (116, 72, 'tx-manager.yaml', 'DEFAULT_GROUP', '',
+        'server:\n  port: ${PORT_TX_MANAGER:8501}\n\nspring:\n  datasource:\n    driver-class-name: ${DATASOURCE_DRIVER:com.mysql.cj.jdbc.Driver}\n    url: jdbc:${DATASOURCE_DB_TYPE:mysql}://${DATASOURCE_HOST:127.0.0.1}:${DATASOURCE_PORT:3306}/${DB_NAME_TX_MANAGER:cloud_tx_manager}?${DATASOURCE_PARAM:useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai}\n    username: ${DATASOURCE_USERNAME:root}\n    password: ${DATASOURCE_PASSWORD:root}\n\n  redis:\n    database: ${REDIS_TX_MANAGER_DATABASE:2}\n    host: ${REDIS_HOST:127.0.0.1}\n    port: ${REDIS_PORT:6379}\n    lettuce:\n      pool:\n        min-idle: 8\n        max-idle: 500\n        max-active: 2000\n        max-wait: 10000\n    timeout: 5000\n\nmy:\n  log:\n    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}\n\ntx-lcn:\n  manager:\n    host: ${TX_MANAGER_PORT:0.0.0.0}\n    # TM监听Socket端口.\n    port: ${TX_CLIENT_MANAGER_PORT:8888}\n    # TM控制台密码\n    admin-key: ${TX_MANAGER_ADMIN_KEY:123456}\n  logger:\n    # 开启日志记录\n    enabled: ${TX_LOGGER_ENABLED:true}\n    driver-class-name: ${spring.datasource.driver-class-name}\n    jdbc-url: ${spring.datasource.url}\n    username: ${spring.datasource.username}\n    password: ${spring.datasource.password}',
+        'bfa5497805bff26acda7206460f66f7c', '2022-02-11 09:48:40', '2022-02-10 19:48:40', 'nacos', '192.168.33.1', 'U',
+        'dev');
+INSERT INTO `his_config_info`
+VALUES (134, 73, 'logging.yaml', 'DEFAULT_GROUP', '',
+        'logging:\n  level:\n    org:\n      springframework:\n        data:\n          convert:\n            CustomConversions: error\n    com:\n      alibaba:\n        cloud:\n          nacos:\n            client:\n              NacosPropertySourceBuilder: error\n      codingapi: info',
+        '4888be6105874d1ef4a2630eb6960dab', '2022-02-11 14:21:00', '2022-02-11 00:21:00', 'nacos', '192.168.33.1', 'U',
+        'dev');
+INSERT INTO `his_config_info`
+VALUES (134, 74, 'logging.yaml', 'DEFAULT_GROUP', '',
+        'logging:\n  level:\n    org:\n      springframework:\n        data:\n          convert:\n            CustomConversions: error\n    com:\n      alibaba:\n        cloud:\n          nacos:\n            client:\n              NacosPropertySourceBuilder: error\n      codingapi: debug',
+        '3df7de121fe51fc85486b4eb58e9aa78', '2022-02-16 15:00:30', '2022-02-16 01:00:30', 'nacos', '192.168.33.1', 'U',
         'dev');
 
 -- ----------------------------
