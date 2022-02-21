@@ -102,7 +102,7 @@ ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 ### 安装harbor
 
 > - github下载harbor最新[离线安装包](https://github.com/goharbor/harbor/releases)
-> - 上传到服务器解压`tar -xzvf harbor-offline-installer-v2.3.2.tgz`
+> - 上传到服务器解压`tar -xzvf harbor-offline-installer-v2.4.1.tgz`
 > - 复制harbor配置`harbor.yml`到/harbor目录
 > - 进入harbor目录执行`./install.sh`
 > - 使用配置文件中的admin账号和密码登录harbor,创建仓库`cloud`, 权限公开
@@ -132,12 +132,12 @@ ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
 # 若无rabbitmq基础镜像先创建基础镜像
 
-> - 复制项目 /cloud/third-part/rabbitmq下的内容，上传至服务器
+> - 复制项目 /cloud/third-part/rabbitmq 下的内容，上传至服务器
 > - 执行docker build -t 192.168.33.10:3000/library/rabbitmq:3.9.13-management .
 > - push 镜像到harbor仓库`docker push 192.168.33.10:3000/library/rabbitmq:3.9.13-management`
 
 # 部署
-
+b n
 > - 创建`third-part`目录, 复制项目 /cloud/third-part下的内容，上传至服务器
 > - 复制`third-part`目录下的文件, 上传服务器
 > - 进入`third-part`目录, 执行`docker-compose up -d`
