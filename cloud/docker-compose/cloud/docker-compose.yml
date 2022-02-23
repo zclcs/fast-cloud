@@ -1,5 +1,7 @@
 version: '3'
 
+# 生产环境建议不要 host 模式
+
 services:
   gateway:
     image: ${CLOUD_DEPOSITORY_URL}/gateway:${CLOUD_DEPOSITORY_TAG}
