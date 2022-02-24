@@ -162,6 +162,7 @@ public class GeneratorServiceImpl implements GeneratorService {
 
     private void setMenu(SystemMenuAo menu, GenerateAo generateAo, String className, Long parentId) {
         menu.setMenuName(Optional.ofNullable(generateAo.getMenuName()).filter(StrUtil::isNotBlank).orElse(generateAo.getRemark()));
+        menu.setKeepAliveName(StrUtil.upperFirst(className));
         menu.setParentId(parentId);
         menu.setPerms(className + StrUtil.COLON + ParamsConstant.AUTH_VIEW);
         menu.setType(DictConstant.MENU_TYPE_0);

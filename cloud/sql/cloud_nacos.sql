@@ -11,7 +11,7 @@
  Target Server Version : 50735
  File Encoding         : 65001
 
- Date: 16/02/2022 17:02:27
+ Date: 24/02/2022 17:37:17
 */
 
 SET NAMES utf8mb4;
@@ -42,7 +42,7 @@ CREATE TABLE `config_info`
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `uk_configinfo_datagrouptenant` (`data_id`, `group_id`, `tenant_id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 143
+  AUTO_INCREMENT = 145
   CHARACTER SET = utf8
   COLLATE = utf8_bin COMMENT = 'config_info'
   ROW_FORMAT = DYNAMIC;
@@ -107,9 +107,9 @@ VALUES (132, 'dict-redis.yaml', 'DEFAULT_GROUP',
         'dev', '字典redis配置', NULL, NULL, 'yaml', NULL);
 INSERT INTO `config_info`
 VALUES (133, 'flyway.yaml', 'DEFAULT_GROUP',
-        'spring:\r\n  flyway:\r\n    enabled: true\r\n    # 迁移前校验 SQL 文件是否存在问题\r\n    validate-on-migrate: true\r\n    # 禁止清理数据库表 生产环境一定要启用\r\n    clean-disabled: true\r\n    # 文件编码\r\n    encoding: UTF-8\r\n    # 校验路径下是否存在 SQL 文件\r\n    check-location: false\r\n    # 最开始已经存在表结构，且不存在 flyway_schema_history 表时，需要设置为 true\r\n    baseline-on-migrate: true',
-        '009b47e8c9b2a86c2a8b5615f331a93f', '2021-11-10 18:54:07', '2021-11-10 18:54:07', NULL, '192.168.33.1', '',
-        'dev', '数据库版本管理配置', NULL, NULL, 'yaml', NULL);
+        'spring:\n  flyway:\n    # 是否开启\n    enabled: true\n    # 版本表表名\n    table: ${spring.application.name}_flyway_history\n    # 迁移前校验 SQL 文件是否存在问题\n    validate-on-migrate: true\n    # 禁止清理数据库表 生产环境一定要启用\n    clean-disabled: true\n    # 文件编码\n    encoding: UTF-8\n    # 校验路径下是否存在 SQL 文件\n    check-location: false\n    # 最开始已经存在表结构，且不存在 flyway_schema_history 表时，需要设置为 true\n    baseline-on-migrate: true',
+        '7e4ce9e20041e89fa5f6d8f04bf8a8e3', '2021-11-10 18:54:07', '2022-02-24 03:36:36', 'nacos', '192.168.33.1', '',
+        'dev', '数据库版本管理配置', '', '', 'yaml', '');
 INSERT INTO `config_info`
 VALUES (134, 'logging.yaml', 'DEFAULT_GROUP',
         'logging:\n  level:\n    org:\n      springframework:\n        data:\n          convert:\n            CustomConversions: error\n    com:\n      alibaba:\n        cloud:\n          nacos:\n            client:\n              NacosPropertySourceBuilder: error\n      codingapi: info',
@@ -295,7 +295,7 @@ CREATE TABLE `his_config_info`
     INDEX `idx_gmt_modified` (`gmt_modified`) USING BTREE,
     INDEX `idx_did` (`data_id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 75
+  AUTO_INCREMENT = 77
   CHARACTER SET = utf8
   COLLATE = utf8_bin COMMENT = '多租户改造'
   ROW_FORMAT = DYNAMIC;
@@ -332,6 +332,16 @@ INSERT INTO `his_config_info`
 VALUES (134, 74, 'logging.yaml', 'DEFAULT_GROUP', '',
         'logging:\n  level:\n    org:\n      springframework:\n        data:\n          convert:\n            CustomConversions: error\n    com:\n      alibaba:\n        cloud:\n          nacos:\n            client:\n              NacosPropertySourceBuilder: error\n      codingapi: debug',
         '3df7de121fe51fc85486b4eb58e9aa78', '2022-02-16 15:00:30', '2022-02-16 01:00:30', 'nacos', '192.168.33.1', 'U',
+        'dev');
+INSERT INTO `his_config_info`
+VALUES (133, 75, 'flyway.yaml', 'DEFAULT_GROUP', '',
+        'spring:\r\n  flyway:\r\n    enabled: true\r\n    # 迁移前校验 SQL 文件是否存在问题\r\n    validate-on-migrate: true\r\n    # 禁止清理数据库表 生产环境一定要启用\r\n    clean-disabled: true\r\n    # 文件编码\r\n    encoding: UTF-8\r\n    # 校验路径下是否存在 SQL 文件\r\n    check-location: false\r\n    # 最开始已经存在表结构，且不存在 flyway_schema_history 表时，需要设置为 true\r\n    baseline-on-migrate: true',
+        '009b47e8c9b2a86c2a8b5615f331a93f', '2022-02-24 17:35:51', '2022-02-24 03:35:52', 'nacos', '192.168.33.1', 'U',
+        'dev');
+INSERT INTO `his_config_info`
+VALUES (133, 76, 'flyway.yaml', 'DEFAULT_GROUP', '',
+        'spring:\n  flyway:\n    # 是否开启\n    enabled: true\n    # 版本表表名\n    table: \n    # 迁移前校验 SQL 文件是否存在问题\n    validate-on-migrate: true\n    # 禁止清理数据库表 生产环境一定要启用\n    clean-disabled: true\n    # 文件编码\n    encoding: UTF-8\n    # 校验路径下是否存在 SQL 文件\n    check-location: false\n    # 最开始已经存在表结构，且不存在 flyway_schema_history 表时，需要设置为 true\n    baseline-on-migrate: true',
+        'cc13f1744bffc6d46a12801df80a86f1', '2022-02-24 17:36:35', '2022-02-24 03:36:36', 'nacos', '192.168.33.1', 'U',
         'dev');
 
 -- ----------------------------

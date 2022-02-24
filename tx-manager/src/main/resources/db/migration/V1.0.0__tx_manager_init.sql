@@ -20,7 +20,6 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 -- Table structure for t_logger
 -- ----------------------------
-DROP TABLE IF EXISTS `t_logger`;
 CREATE TABLE `t_logger`
 (
     `id`          bigint(20)                                                     NOT NULL AUTO_INCREMENT,
@@ -40,7 +39,6 @@ CREATE TABLE `t_logger`
 -- ----------------------------
 -- Table structure for t_tx_exception
 -- ----------------------------
-DROP TABLE IF EXISTS `t_tx_exception`;
 CREATE TABLE `t_tx_exception`
 (
     `id`                bigint(20)                                                      NOT NULL AUTO_INCREMENT,

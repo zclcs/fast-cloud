@@ -20,7 +20,6 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 -- Table structure for system_block_log
 -- ----------------------------
-DROP TABLE IF EXISTS `system_block_log`;
 CREATE TABLE `system_block_log`
 (
     `block_id`       bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT '拦截日志id',
@@ -40,7 +39,6 @@ CREATE TABLE `system_block_log`
 -- ----------------------------
 -- Table structure for system_log
 -- ----------------------------
-DROP TABLE IF EXISTS `system_log`;
 CREATE TABLE `system_log`
 (
     `id`          bigint(20)                                                   NOT NULL AUTO_INCREMENT COMMENT '日志id',
@@ -64,7 +62,6 @@ CREATE TABLE `system_log`
 -- ----------------------------
 -- Table structure for system_login_log
 -- ----------------------------
-DROP TABLE IF EXISTS `system_login_log`;
 CREATE TABLE `system_login_log`
 (
     `id`         bigint(11)                                                   NOT NULL AUTO_INCREMENT COMMENT 'id',
@@ -85,7 +82,6 @@ CREATE TABLE `system_login_log`
 -- ----------------------------
 -- Table structure for system_rate_limit_log
 -- ----------------------------
-DROP TABLE IF EXISTS `system_rate_limit_log`;
 CREATE TABLE `system_rate_limit_log`
 (
     `rate_limit_log_id` bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT '限流日志id',
@@ -105,7 +101,6 @@ CREATE TABLE `system_rate_limit_log`
 -- ----------------------------
 -- Table structure for system_route_log
 -- ----------------------------
-DROP TABLE IF EXISTS `system_route_log`;
 CREATE TABLE `system_route_log`
 (
     `route_id`       bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT '网关转发日志id',

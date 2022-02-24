@@ -20,7 +20,6 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 -- Table structure for dict_table
 -- ----------------------------
-DROP TABLE IF EXISTS `dict_table`;
 CREATE TABLE `dict_table`
 (
     `id`           bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT '字典表名id',
@@ -75,7 +74,6 @@ VALUES (1312, 111, '0', '关闭', NULL);
 -- ----------------------------
 -- Table structure for dict_table_level
 -- ----------------------------
-DROP TABLE IF EXISTS `dict_table_level`;
 CREATE TABLE `dict_table_level`
 (
     `id`           bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT '字典表名id',
@@ -102,7 +100,6 @@ CREATE TABLE `dict_table_level`
 -- ----------------------------
 -- Table structure for dict_table_name
 -- ----------------------------
-DROP TABLE IF EXISTS `dict_table_name`;
 CREATE TABLE `dict_table_name`
 (
     `id`         bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT '字典名表主键',

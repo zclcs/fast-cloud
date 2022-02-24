@@ -20,7 +20,6 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 -- Table structure for minio_bucket
 -- ----------------------------
-DROP TABLE IF EXISTS `minio_bucket`;
 CREATE TABLE `minio_bucket`
 (
     `id`            bigint(20)                                                   NOT NULL AUTO_INCREMENT COMMENT '桶id',
@@ -38,7 +37,6 @@ CREATE TABLE `minio_bucket`
 -- ----------------------------
 -- Table structure for minio_file
 -- ----------------------------
-DROP TABLE IF EXISTS `minio_file`;
 CREATE TABLE `minio_file`
 (
     `id`                 varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci   NOT NULL COMMENT '文件id',

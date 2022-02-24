@@ -19,6 +19,9 @@ public class MenuTree extends Tree<SystemMenuVo> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty(value = "页面缓存名称")
+    private String keepAliveName;
+
     @ApiModelProperty(value = "对应路由path")
     private String path;
 

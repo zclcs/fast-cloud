@@ -20,7 +20,6 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 -- Table structure for generator_config
 -- ----------------------------
-DROP TABLE IF EXISTS `generator_config`;
 CREATE TABLE `generator_config`
 (
     `id`                   bigint(20)                                                   NOT NULL AUTO_INCREMENT COMMENT '主键',

@@ -20,7 +20,6 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 -- Table structure for system_black_list
 -- ----------------------------
-DROP TABLE IF EXISTS `system_black_list`;
 CREATE TABLE `system_black_list`
 (
     `black_id`       bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT '黑名单id',
@@ -50,7 +49,6 @@ VALUES (7, NULL, '/actuator/**', 'ALL', '00:00:00', '23:59:59', NULL, '1', '2022
 -- ----------------------------
 -- Table structure for system_rate_limit_rule
 -- ----------------------------
-DROP TABLE IF EXISTS `system_rate_limit_rule`;
 CREATE TABLE `system_rate_limit_rule`
 (
     `rate_limit_rule_id` bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT '限流规则id',

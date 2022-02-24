@@ -83,7 +83,7 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
             route.setId(menu.getMenuId());
             route.setParentId(menu.getParentId());
             route.setPath(menu.getPath());
-            route.setName(menu.getMenuName());
+            route.setName(StrUtil.isNotBlank(menu.getKeepAliveName()) ? menu.getKeepAliveName() : menu.getMenuName());
             route.setComponent(menu.getComponent());
             route.setRedirect(menu.getRedirect());
             route.setMeta(new RouterMeta(
@@ -146,6 +146,7 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
             tree.setId(menu.getMenuId());
             tree.setParentId(menu.getParentId());
             tree.setLabel(menu.getMenuName());
+            tree.setKeepAliveName(menu.getKeepAliveName());
             tree.setPath(menu.getPath());
             tree.setComponent(menu.getComponent());
             tree.setRedirect(menu.getRedirect());

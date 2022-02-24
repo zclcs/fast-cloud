@@ -40,6 +40,10 @@ public class SystemMenuAo implements Serializable {
     @Size(max = 30, message = "{noMoreThan}")
     private String menuName;
 
+    @ApiModelProperty(value = "页面缓存名称")
+    @Size(max = 50, message = "{noMoreThan}")
+    private String keepAliveName;
+
     @ApiModelProperty(value = "对应路由path")
     @Size(max = 100, message = "{noMoreThan}")
     private String path;

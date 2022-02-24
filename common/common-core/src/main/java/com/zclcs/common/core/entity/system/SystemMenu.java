@@ -36,6 +36,9 @@ public class SystemMenu {
     @ApiModelProperty(value = "菜单/按钮名称")
     private String menuName;
 
+    @ApiModelProperty(value = "页面缓存名称")
+    private String keepAliveName;
+
     @ApiModelProperty(value = "对应路由path")
     private String path;
 

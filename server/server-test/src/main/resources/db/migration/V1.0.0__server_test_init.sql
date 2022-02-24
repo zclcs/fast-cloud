@@ -20,7 +20,6 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 -- Table structure for test_child_project
 -- ----------------------------
-DROP TABLE IF EXISTS `test_child_project`;
 CREATE TABLE `test_child_project`
 (
     `child_project_id`     bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT '工程id',
@@ -68,7 +67,6 @@ CREATE TABLE `test_child_project`
 -- ----------------------------
 -- Table structure for test_company
 -- ----------------------------
-DROP TABLE IF EXISTS `test_company`;
 CREATE TABLE `test_company`
 (
     `company_id`               bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT '企业id',
@@ -115,7 +113,6 @@ CREATE TABLE `test_company`
 -- ----------------------------
 -- Table structure for test_project
 -- ----------------------------
-DROP TABLE IF EXISTS `test_project`;
 CREATE TABLE `test_project`
 (
     `project_id`             bigint(20)                                                     NOT NULL AUTO_INCREMENT COMMENT '项目id',
@@ -165,7 +162,6 @@ CREATE TABLE `test_project`
 -- ----------------------------
 -- Table structure for test_project_company
 -- ----------------------------
-DROP TABLE IF EXISTS `test_project_company`;
 CREATE TABLE `test_project_company`
 (
     `project_company_id`     bigint(20)                                                   NOT NULL AUTO_INCREMENT COMMENT '参建单位id',
