@@ -1,6 +1,5 @@
 package com.zclcs;
 
-import com.codingapi.txlcn.tc.config.EnableDistributedTransaction;
 import com.zclcs.common.security.starter.annotation.EnableMyCloudResourceServer;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -15,7 +14,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @EnableMyCloudResourceServer
 @EnableTransactionManagement
-@EnableDistributedTransaction
 @MapperScan("com.zclcs.server.generator.mapper")
 @EnableFeignClients
 @EnableDiscoveryClient

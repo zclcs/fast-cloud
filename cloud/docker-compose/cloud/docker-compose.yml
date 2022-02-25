@@ -56,34 +56,18 @@ services:
       timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
       retries: ${DOCKER_HEALTHCHECK_RETRIES}
     env_file: .env
-  tx-manager:
-    image: ${CLOUD_DEPOSITORY_URL}/tx-manager:${CLOUD_DEPOSITORY_TAG}
-    container_name: tx-manager
-    network_mode: host
-    command: sh -c "java ${TX_MANAGER_JAVA_OPS} -cp /app/resources:/app/classes:/app/libs/* ${TXMANAGER_MAIN_CLASS}"
-    volumes:
-      - ./log/tx-manager:/log/tx-manager
-      - ./log/tx-manager/skywalking:/agent/logs
-      - ${CLOUD_AGENT_CONFIG}
-    healthcheck:
-      test: [ "CMD-SHELL", "curl -sS 'http://${NACOS_HOST}:${PORT_TX_MANAGER}' || exit 1" ]
-      interval: ${DOCKER_HEALTHCHECK_INTERVAL}
-      timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
-      retries: ${DOCKER_HEALTHCHECK_RETRIES}
-    env_file: .env
   server-system:
     image: ${CLOUD_DEPOSITORY_URL}/server-system:${CLOUD_DEPOSITORY_TAG}
     container_name: server-system
     network_mode: host
     command: sh -c "/wait && java ${SERVER_SYSTEM_JAVA_OPS} -cp /app/resources:/app/classes:/app/libs/* ${SERVER_SYSTEM_MAIN_CLASS}"
     environment:
-      WAIT_HOSTS: ${NACOS_HOST}:${PORT_TX_MANAGER}
+      WAIT_HOSTS: ${NACOS_HOST}:${SEATA_PORT}
       WAIT_SLEEP_INTERVAL: ${DOCKER_WAIT_SLEEP_INTERVAL}
       WAIT_HOST_CONNECT_TIMEOUT: ${DOCKER_WAIT_HOST_CONNECT_TIMEOUT}
       WAIT_TIMEOUT: ${DOCKER_WAIT_TIMEOUT}
     volumes:
       - ./log/server-system:/log/server-system
-      - ./.txlcn:/.txlcn
       - ./log/server-system/skywalking:/agent/logs
       - ${CLOUD_AGENT_CONFIG}
     healthcheck:
@@ -99,13 +83,12 @@ services:
     network_mode: host
     command: sh -c "/wait && java ${SERVER_GENERATOR_JAVA_OPS} -cp /app/resources:/app/classes:/app/libs/* ${SERVER_GENERATOR_MAIN_CLASS}"
     environment:
-      WAIT_HOSTS: ${NACOS_HOST}:${PORT_TX_MANAGER}, ${NACOS_HOST}:${PORT_SERVER_SYSTEM}
+      WAIT_HOSTS: ${NACOS_HOST}:${SEATA_PORT}, ${NACOS_HOST}:${PORT_SERVER_SYSTEM}
       WAIT_SLEEP_INTERVAL: ${DOCKER_WAIT_SLEEP_INTERVAL}
       WAIT_HOST_CONNECT_TIMEOUT: ${DOCKER_WAIT_HOST_CONNECT_TIMEOUT}
       WAIT_TIMEOUT: ${DOCKER_WAIT_TIMEOUT}
     volumes:
       - ./log/server-generator:/log/server-generator
-      - ./.txlcn:/.txlcn
       - ./log/server-generator/skywalking:/agent/logs
       - ${CLOUD_AGENT_CONFIG}
     healthcheck:
@@ -120,13 +103,12 @@ services:
     network_mode: host
     command: sh -c "/wait && java ${SERVER_DICT_JAVA_OPS} -cp /app/resources:/app/classes:/app/libs/* ${SERVER_DICT_MAIN_CLASS}"
     environment:
-      WAIT_HOSTS: ${NACOS_HOST}:${PORT_TX_MANAGER}
+      WAIT_HOSTS: ${NACOS_HOST}:${SEATA_PORT}
       WAIT_SLEEP_INTERVAL: ${DOCKER_WAIT_SLEEP_INTERVAL}
       WAIT_HOST_CONNECT_TIMEOUT: ${DOCKER_WAIT_HOST_CONNECT_TIMEOUT}
       WAIT_TIMEOUT: ${DOCKER_WAIT_TIMEOUT}
     volumes:
       - ./log/server-dict:/log/server-dict
-      - ./.txlcn:/.txlcn
       - ./log/server-dict/skywalking:/agent/logs
       - ${CLOUD_AGENT_CONFIG}
     healthcheck:
@@ -141,13 +123,12 @@ services:
     network_mode: host
     command: sh -c "/wait && java ${SERVER_MINIO_JAVA_OPS} -cp /app/resources:/app/classes:/app/libs/* ${SERVER_MINIO_MAIN_CLASS}"
     environment:
-      WAIT_HOSTS: ${NACOS_HOST}:${PORT_TX_MANAGER}
+      WAIT_HOSTS: ${NACOS_HOST}:${SEATA_PORT}
       WAIT_SLEEP_INTERVAL: ${DOCKER_WAIT_SLEEP_INTERVAL}
       WAIT_HOST_CONNECT_TIMEOUT: ${DOCKER_WAIT_HOST_CONNECT_TIMEOUT}
       WAIT_TIMEOUT: ${DOCKER_WAIT_TIMEOUT}
     volumes:
       - ./log/server-minio:/log/server-minio
-      - ./.txlcn:/.txlcn
       - ./log/server-minio/skywalking:/agent/logs
       - ${CLOUD_AGENT_CONFIG}
     healthcheck:
@@ -163,17 +144,36 @@ services:
     network_mode: host
     command: sh -c "/wait && java ${SERVER_TEST_JAVA_OPS} -cp /app/resources:/app/classes:/app/libs/* ${SERVER_TEST_MAIN_CLASS}"
     environment:
-      WAIT_HOSTS: ${NACOS_HOST}:${PORT_TX_MANAGER}
+      WAIT_HOSTS: ${NACOS_HOST}:${SEATA_PORT}
       WAIT_SLEEP_INTERVAL: ${DOCKER_WAIT_SLEEP_INTERVAL}
       WAIT_HOST_CONNECT_TIMEOUT: ${DOCKER_WAIT_HOST_CONNECT_TIMEOUT}
       WAIT_TIMEOUT: ${DOCKER_WAIT_TIMEOUT}
     volumes:
       - ./log/server-test:/log/server-test
-      - ./.txlcn:/.txlcn
       - ./log/server-test/skywalking:/agent/logs
       - ${CLOUD_AGENT_CONFIG}
     healthcheck:
       test: [ "CMD-SHELL", "curl -sS 'http://${NACOS_HOST}:${PORT_SERVER_TEST}' || exit 1" ]
+      interval: ${DOCKER_HEALTHCHECK_INTERVAL}
+      timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
+      retries: ${DOCKER_HEALTHCHECK_RETRIES}
+    env_file: .env
+  seata:
+    image: 192.168.33.10:3000/library/seata:1.4.2
+    container_name: seata
+    network_mode: host
+    environment:
+      # 指定seata服务启动端口
+      - SEATA_PORT=${SEATA_PORT}
+      # 注册到nacos上的ip。客户端将通过该ip访问seata服务。
+      # 注意公网ip和内网ip的差异。
+      - SEATA_IP=${NACOS_DISCOVERY_IP}
+      - SEATA_CONFIG_NAME=file:/root/seata-config/registry
+    volumes:
+      # 因为registry.conf中是nacos配置中心，只需要把registry.conf放到./seata-server/config文件夹中
+      - ./seata/config:/root/seata-config
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -sS 'http://${NACOS_HOST}:${SEATA_PORT}' || exit 1" ]
       interval: ${DOCKER_HEALTHCHECK_INTERVAL}
       timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
       retries: ${DOCKER_HEALTHCHECK_RETRIES}

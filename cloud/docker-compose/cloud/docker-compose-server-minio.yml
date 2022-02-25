@@ -13,7 +13,6 @@ services:
       WAIT_TIMEOUT: ${DOCKER_WAIT_TIMEOUT}
     volumes:
       - ./log/server-minio:/log/server-minio
-      - ./.txlcn:/.txlcn
       - ./log/server-minio/skywalking:/agent/logs
       - ${CLOUD_AGENT_CONFIG}
     healthcheck:

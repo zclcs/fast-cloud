@@ -15,7 +15,6 @@
         <module>../auth</module>
         <module>../gateway</module>
         <module>../server</module>
-        <module>../tx-manager</module>
         <module>../knife4j</module>
     </modules>
 
@@ -44,7 +43,7 @@
         <!-- alibaba cloud 微服务依赖 -->
         <com-alibaba-cloud.version>2.2.7.RELEASE</com-alibaba-cloud.version>
         <!-- 分布式事务依赖 -->
-        <codingapi.txlcn.version>5.0.2.RELEASE</codingapi.txlcn.version>
+        <seata.version>1.4.2</seata.version>
         <!-- 解析xml -->
         <xml-api.version>1.4.01</xml-api.version>
         <!-- ip地址定位 -->
@@ -106,27 +105,6 @@
                 <version>${com-alibaba-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.codingapi.txlcn</groupId>
-                <artifactId>txlcn-tc</artifactId>
-                <version>${codingapi.txlcn.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>com.github.jsqlparser</groupId>
-                        <artifactId>jsqlparser</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>com.codingapi.txlcn</groupId>
-                <artifactId>txlcn-tm</artifactId>
-                <version>${codingapi.txlcn.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.codingapi.txlcn</groupId>
-                <artifactId>txlcn-txmsg-netty</artifactId>
-                <version>${codingapi.txlcn.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

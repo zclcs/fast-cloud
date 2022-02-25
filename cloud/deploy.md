@@ -136,7 +136,14 @@ ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 > - 执行docker build -t 192.168.33.10:3000/library/rabbitmq:3.9.13-management .
 > - push 镜像到harbor仓库`docker push 192.168.33.10:3000/library/rabbitmq:3.9.13-management`
 
+# 若无seata基础镜像先创建基础镜像
+
+> - 复制项目 cloud/docker-compose/cloud/seata 下的内容，上传至服务器
+> - 执行docker build -t 192.168.33.10:3000/library/seata:1.4.2 .
+> - push 镜像到harbor仓库`docker push 192.168.33.10:3000/library/seata:1.4.2`
+
 # 部署
+
 b n
 > - 创建`third-part`目录, 复制项目 /cloud/third-part下的内容，上传至服务器
 > - 复制`third-part`目录下的文件, 上传服务器

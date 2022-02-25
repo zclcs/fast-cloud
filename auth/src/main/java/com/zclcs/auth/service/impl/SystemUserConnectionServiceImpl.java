@@ -24,7 +24,7 @@ import java.util.List;
  * @since 2021-08-12
  */
 @Service
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
 public class SystemUserConnectionServiceImpl extends ServiceImpl<SystemUserConnectionMapper, SystemUserConnection> implements SystemUserConnectionService {
 
     @Override

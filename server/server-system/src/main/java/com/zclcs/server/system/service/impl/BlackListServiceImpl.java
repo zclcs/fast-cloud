@@ -31,7 +31,7 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
 public class BlackListServiceImpl extends ServiceImpl<BlackListMapper, BlackList> implements BlackListService {
 
     private final RouteEnhanceCacheService routeEnhanceCacheService;

@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  * @since 2021-08-16
  */
 @Service("userDataPermissionService")
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
 public class SystemUserDataPermissionServiceImpl extends ServiceImpl<SystemUserDataPermissionMapper, SystemUserDataPermission> implements SystemUserDataPermissionService {
 
     @Override

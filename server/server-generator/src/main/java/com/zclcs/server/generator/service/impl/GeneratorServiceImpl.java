@@ -1,7 +1,6 @@
 package com.zclcs.server.generator.service.impl;
 
 import cn.hutool.core.util.StrUtil;
-import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
 import com.zclcs.common.core.base.BaseRsp;
@@ -23,6 +22,7 @@ import com.zclcs.server.generator.helper.GeneratorHelper;
 import com.zclcs.server.generator.mapper.GeneratorMapper;
 import com.zclcs.server.generator.service.GeneratorConfigService;
 import com.zclcs.server.generator.service.GeneratorService;
+import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -65,7 +65,7 @@ public class GeneratorServiceImpl implements GeneratorService {
     }
 
     @Override
-    @LcnTransaction
+    @GlobalTransactional
     public void generate(GenerateAo generateAo, HttpServletResponse response) {
         String name = generateAo.getName();
         String remark = generateAo.getRemark();

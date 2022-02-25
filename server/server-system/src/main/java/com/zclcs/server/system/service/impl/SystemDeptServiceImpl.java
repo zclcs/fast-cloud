@@ -42,7 +42,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service("deptService")
 @RequiredArgsConstructor
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
 public class SystemDeptServiceImpl extends ServiceImpl<SystemDeptMapper, SystemDept> implements SystemDeptService {
 
     private final SystemUserDataPermissionService userDataPermissionService;

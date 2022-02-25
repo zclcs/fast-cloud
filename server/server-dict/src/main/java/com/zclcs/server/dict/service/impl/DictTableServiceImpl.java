@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
 @Slf4j
 public class DictTableServiceImpl extends ServiceImpl<DictTableMapper, DictTable> implements DictTableService {
 

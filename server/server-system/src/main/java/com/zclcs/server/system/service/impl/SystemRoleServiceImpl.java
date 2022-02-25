@@ -45,7 +45,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service("roleService")
 @RequiredArgsConstructor
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
 public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemRole> implements SystemRoleService {
 
     private final SystemRoleMenuService roleMenuService;

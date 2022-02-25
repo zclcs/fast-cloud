@@ -14,7 +14,6 @@ services:
       WAIT_TIMEOUT: ${DOCKER_WAIT_TIMEOUT}
     volumes:
       - ./log/server-test:/log/server-test
-      - ./.txlcn:/.txlcn
       - ./log/server-test/skywalking:/agent/logs
       - ${CLOUD_AGENT_CONFIG}
     healthcheck:

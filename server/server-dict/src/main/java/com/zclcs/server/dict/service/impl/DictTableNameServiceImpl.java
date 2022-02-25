@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
 public class DictTableNameServiceImpl extends ServiceImpl<DictTableNameMapper, DictTableName> implements DictTableNameService {
 
     private final DictTableService dictTableService;

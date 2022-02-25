@@ -6,7 +6,6 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import com.zclcs.common.core.constant.StringConstant;
 import com.zclcs.common.core.entity.MenuTree;
 import com.zclcs.common.core.entity.Tree;
@@ -42,7 +41,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service("menuService")
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
 public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemMenu> implements SystemMenuService {
 
     @Override
@@ -113,7 +112,6 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
     }
 
     @Override
-    @LcnTransaction
     @Transactional(rollbackFor = Exception.class)
     public Long createSystemMenu(SystemMenuAo menu) {
         SystemMenu systemMenu = new SystemMenu();
