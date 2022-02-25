@@ -12,6 +12,9 @@ spring:
           username: ${DATASOURCE_USERNAME:root}
           password: ${DATASOURCE_PASSWORD:root}
 
+  flyway:
+    table: ${spring.application.name}_flyway_history
+
 mybatis-plus:
   type-aliases-package: com.zclcs.common.core.entity.system
   mapper-locations: classpath:com/zclcs/server/system/mapper/*.xml
@@ -22,7 +25,4 @@ my:
       enable: true
       anon-uris: /v2/api-docs,/v2/api-docs-ext
 
-seata:
-  client:
-    undo:
-      logTable: ${TEST_SEATA_LOGTABLE:system_undo_log}
+
