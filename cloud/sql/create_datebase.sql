@@ -1,3 +1,10 @@
+DROP DATABASE `cloud_system`;
+DROP DATABASE `cloud_generator`;
+DROP DATABASE `cloud_test`;
+DROP DATABASE `cloud_minio`;
+DROP DATABASE `cloud_dict`;
+DROP DATABASE `cloud_nacos`;
+DROP DATABASE `cloud_seata`;
 CREATE DATABASE IF NOT EXISTS `cloud_system` CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci';
 CREATE DATABASE IF NOT EXISTS `cloud_generator` CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci';
 CREATE DATABASE IF NOT EXISTS `cloud_test` CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci';

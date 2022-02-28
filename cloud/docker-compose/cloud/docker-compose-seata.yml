@@ -2,7 +2,7 @@ version: '3'
 
 services:
   seata:
-    image: 192.168.33.10:3000/library/seata:1.4.2
+    image: ${CLOUD_DEPOSITORY_IP_PORT}/library/seata:1.4.2
     container_name: seata
     network_mode: host
     environment:
@@ -13,10 +13,10 @@ services:
       - SEATA_IP=${NACOS_DISCOVERY_IP}
       - SEATA_CONFIG_NAME=file:/root/seata-config/registry
     volumes:
-      # 因为registry.conf中是nacos配置中心，只需要把registry.conf放到./seata-server/config文件夹中
+      # 因为registry.conf中是nacos配置中心，只需要把registry.conf放到./seata/config文件夹中
       - ./seata/config:/root/seata-config
     healthcheck:
-      test: [ "CMD-SHELL", "curl -sS 'http://${NACOS_HOST}:${SEATA_PORT}' || exit 1" ]
+      test: [ "CMD-SHELL", "curl -sS ${NACOS_HOST}:${SEATA_PORT} || exit 1" ]
       interval: ${DOCKER_HEALTHCHECK_INTERVAL}
       timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
       retries: ${DOCKER_HEALTHCHECK_RETRIES}

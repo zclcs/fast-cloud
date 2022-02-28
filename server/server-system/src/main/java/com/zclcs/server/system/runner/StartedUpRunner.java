@@ -22,6 +22,7 @@ public class StartedUpRunner implements ApplicationRunner {
     public void run(ApplicationArguments args) {
         if (context.isActive()) {
             BaseUtil.printSystemUpBanner(environment);
+            System.out.println(environment.getProperty("seata.client.undo.log-table"));
         }
     }
 }

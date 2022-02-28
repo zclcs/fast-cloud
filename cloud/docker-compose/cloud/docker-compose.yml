@@ -4,7 +4,7 @@ version: '3'
 
 services:
   gateway:
-    image: ${CLOUD_DEPOSITORY_URL}/gateway:${CLOUD_DEPOSITORY_TAG}
+    image: ${CLOUD_DEPOSITORY_IP_PORT}${CLOUD_DEPOSITORY_URL}/gateway:${CLOUD_DEPOSITORY_TAG}
     container_name: gateway
     network_mode: host
     command: sh -c "/wait && java ${GATEWAY_JAVA_OPS} -cp /app/resources:/app/classes:/app/libs/* ${GATEWAY_MAIN_CLASS}"
@@ -24,7 +24,7 @@ services:
       retries: ${DOCKER_HEALTHCHECK_RETRIES}
     env_file: .env
   auth:
-    image: ${CLOUD_DEPOSITORY_URL}/auth:${CLOUD_DEPOSITORY_TAG}
+    image: ${CLOUD_DEPOSITORY_IP_PORT}${CLOUD_DEPOSITORY_URL}/auth:${CLOUD_DEPOSITORY_TAG}
     container_name: auth
     network_mode: host
     command: sh -c "java ${AUTH_JAVA_OPS} -cp /app/resources:/app/classes:/app/libs/* ${AUTH_MAIN_CLASS}"
@@ -39,7 +39,7 @@ services:
       retries: ${DOCKER_HEALTHCHECK_RETRIES}
     env_file: .env
   knife4j:
-    image: ${CLOUD_DEPOSITORY_URL}/knife4j:${CLOUD_DEPOSITORY_TAG}
+    image: ${CLOUD_DEPOSITORY_IP_PORT}${CLOUD_DEPOSITORY_URL}/knife4j:${CLOUD_DEPOSITORY_TAG}
     container_name: knife4j
     network_mode: host
     command: sh -c "/wait && java ${SERVER_KNIFE4J_JAVA_OPS} -cp /app/resources:/app/classes:/app/libs/* ${KNIFE4J_MAIN_CLASS}"
@@ -57,7 +57,7 @@ services:
       retries: ${DOCKER_HEALTHCHECK_RETRIES}
     env_file: .env
   server-system:
-    image: ${CLOUD_DEPOSITORY_URL}/server-system:${CLOUD_DEPOSITORY_TAG}
+    image: ${CLOUD_DEPOSITORY_IP_PORT}${CLOUD_DEPOSITORY_URL}/server-system:${CLOUD_DEPOSITORY_TAG}
     container_name: server-system
     network_mode: host
     command: sh -c "/wait && java ${SERVER_SYSTEM_JAVA_OPS} -cp /app/resources:/app/classes:/app/libs/* ${SERVER_SYSTEM_MAIN_CLASS}"
@@ -78,7 +78,7 @@ services:
     env_file: .env
   # 生产可以不用部署
   server-generator:
-    image: ${CLOUD_DEPOSITORY_URL}/server-generator:${CLOUD_DEPOSITORY_TAG}
+    image: ${CLOUD_DEPOSITORY_IP_PORT}${CLOUD_DEPOSITORY_URL}/server-generator:${CLOUD_DEPOSITORY_TAG}
     container_name: server-generator
     network_mode: host
     command: sh -c "/wait && java ${SERVER_GENERATOR_JAVA_OPS} -cp /app/resources:/app/classes:/app/libs/* ${SERVER_GENERATOR_MAIN_CLASS}"
@@ -98,7 +98,7 @@ services:
       retries: ${DOCKER_HEALTHCHECK_RETRIES}
     env_file: .env
   server-dict:
-    image: ${CLOUD_DEPOSITORY_URL}/server-dict:${CLOUD_DEPOSITORY_TAG}
+    image: ${CLOUD_DEPOSITORY_IP_PORT}${CLOUD_DEPOSITORY_URL}/server-dict:${CLOUD_DEPOSITORY_TAG}
     container_name: server-dict
     network_mode: host
     command: sh -c "/wait && java ${SERVER_DICT_JAVA_OPS} -cp /app/resources:/app/classes:/app/libs/* ${SERVER_DICT_MAIN_CLASS}"
@@ -118,7 +118,7 @@ services:
       retries: ${DOCKER_HEALTHCHECK_RETRIES}
     env_file: .env
   server-minio:
-    image: ${CLOUD_DEPOSITORY_URL}/server-minio:${CLOUD_DEPOSITORY_TAG}
+    image: ${CLOUD_DEPOSITORY_IP_PORT}${CLOUD_DEPOSITORY_URL}/server-minio:${CLOUD_DEPOSITORY_TAG}
     container_name: server-minio
     network_mode: host
     command: sh -c "/wait && java ${SERVER_MINIO_JAVA_OPS} -cp /app/resources:/app/classes:/app/libs/* ${SERVER_MINIO_MAIN_CLASS}"
@@ -139,7 +139,7 @@ services:
     env_file: .env
   # 生产可以不用部署
   server-test:
-    image: ${CLOUD_DEPOSITORY_URL}/server-test:${CLOUD_DEPOSITORY_TAG}
+    image: ${CLOUD_DEPOSITORY_IP_PORT}${CLOUD_DEPOSITORY_URL}/server-test:${CLOUD_DEPOSITORY_TAG}
     container_name: server-test
     network_mode: host
     command: sh -c "/wait && java ${SERVER_TEST_JAVA_OPS} -cp /app/resources:/app/classes:/app/libs/* ${SERVER_TEST_MAIN_CLASS}"
@@ -159,7 +159,7 @@ services:
       retries: ${DOCKER_HEALTHCHECK_RETRIES}
     env_file: .env
   seata:
-    image: 192.168.33.10:3000/library/seata:1.4.2
+    image: ${CLOUD_DEPOSITORY_IP_PORT}/library/seata:1.4.2
     container_name: seata
     network_mode: host
     environment:
@@ -170,10 +170,10 @@ services:
       - SEATA_IP=${NACOS_DISCOVERY_IP}
       - SEATA_CONFIG_NAME=file:/root/seata-config/registry
     volumes:
-      # 因为registry.conf中是nacos配置中心，只需要把registry.conf放到./seata-server/config文件夹中
+      # 因为registry.conf中是nacos配置中心，只需要把registry.conf放到./seata/config文件夹中
       - ./seata/config:/root/seata-config
     healthcheck:
-      test: [ "CMD-SHELL", "curl -sS 'http://${NACOS_HOST}:${SEATA_PORT}' || exit 1" ]
+      test: [ "CMD-SHELL", "curl -sS ${NACOS_HOST}:${SEATA_PORT} || exit 1" ]
       interval: ${DOCKER_HEALTHCHECK_INTERVAL}
       timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
       retries: ${DOCKER_HEALTHCHECK_RETRIES}
