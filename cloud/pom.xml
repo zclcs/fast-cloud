@@ -83,7 +83,7 @@
         <!--jib plugin-->
         <jib.version>3.2.0</jib.version>
         <!--docker 镜像配置-->
-        <docker.jib.from.image>192.168.33.10:3000/library/openjdk8-skywalking:1.0.0</docker.jib.from.image>
+        <docker.jib.from.image>192.168.33.10:3000/library/jdk8-skywalking:1.0.0</docker.jib.from.image>
         <docker.jib.auth.username>admin</docker.jib.auth.username>
         <docker.jib.auth.password>Harbor12345</docker.jib.auth.password>
         <docker.jib.to.image>192.168.33.10:3000/cloud</docker.jib.to.image>

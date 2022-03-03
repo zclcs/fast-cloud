@@ -124,8 +124,8 @@ ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 > - 解压`tar zxf apache-skywalking-apm-es7-8.7.0.tar.gz`
 > - 复制agent`cp -r ./apache-skywalking-apm-bin-es7/agent ./agent`
 > - 压缩agent`tar zcvf agent.tar.gz ./agent`
-> - 使用/agent Dockerfile 构建基础镜像`docker build -t 192.168.33.10:3000/library/openjdk8-skywalking:1.0.0 .`
-> - push 镜像到harbor仓库`docker push 192.168.33.10:3000/library/openjdk8-skywalking:1.0.0`
+> - 使用/agent Dockerfile 构建基础镜像`docker build -t 192.168.33.10:3000/library/jdk8-skywalking:1.0.0 .`
+> - push 镜像到harbor仓库`docker push 192.168.33.10:3000/library/jdk8-skywalking:1.0.0`
 > - 进入本项目目录执行maven命令(如果harbor账号密码不是默认记得改，地址及端口也是一样)：`mvn -DsendCredentialsOverHttp=true clean package`
 
 ## 部署第三方依赖：mysql、redis、nacos、nginx、rabbitmq

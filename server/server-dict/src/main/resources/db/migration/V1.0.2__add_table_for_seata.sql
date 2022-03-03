@@ -1,6 +1,6 @@
 -- for AT mode you must to init this sql for you business database. the seata server not need it.
 -- 这里的表名要和配置中的表名保持一致 默认 undo_log
-CREATE TABLE IF NOT EXISTS `server-dict_undo_log`
+CREATE TABLE IF NOT EXISTS `dict_undo_log`
 (
     `branch_id`     BIGINT       NOT NULL COMMENT 'branch transaction id',
     `xid`           VARCHAR(128) NOT NULL COMMENT 'global transaction id',

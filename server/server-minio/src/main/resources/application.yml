@@ -13,7 +13,7 @@ spring:
           password: ${DATASOURCE_PASSWORD:root}
 
   flyway:
-    table: ${spring.application.name}_flyway_history
+    table: minio_flyway_history
 
 mybatis-plus:
   type-aliases-package: com.zclcs.common.core.entity.minio
@@ -33,3 +33,8 @@ my:
       enable: true
       anon-uris: /v2/api-docs,/v2/api-docs-ext
       only-fetch-by-gateway: false
+
+seata:
+  config:
+    nacos:
+      data-id: server-minio-seata.properties

@@ -13,7 +13,7 @@ spring:
           password: ${DATASOURCE_PASSWORD:root}
 
   flyway:
-    table: ${spring.application.name}_flyway_history
+    table: dict_flyway_history
 
 system:
   dict:
@@ -40,3 +40,8 @@ my:
       enable: true
       anon-uris: /v2/api-docs,/v2/api-docs-ext
       only-fetch-by-gateway: false
+
+seata:
+  config:
+    nacos:
+      data-id: server-dict-seata.properties
