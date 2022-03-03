@@ -8,7 +8,7 @@ spring:
 
   datasource:
     dynamic:
-      p6spy: ${DATASOURCE_LOGGER_SQL_ENABLED:true}
+      p6spy: ${LOG_SQL_ENABLED:true}
       hikari:
         connection-timeout: 30000
         max-lifetime: 1800000

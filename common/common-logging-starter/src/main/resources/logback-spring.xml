@@ -115,6 +115,26 @@
         </filter>
     </appender>
 
+    <appender name="file_sql" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/sql.log</file>
+        <!-- 如果是 true，日志被追加到文件结尾，如果是 false，清空现存文件，默认是true。 -->
+        <append>true</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/sql/sql.%d{yyyy-MM-dd}%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${log.maxFileSize}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <!-- 日志文件保留天数 -->
+            <MaxHistory>1</MaxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+        </filter>
+    </appender>
+
     <!--屏蔽 nacos包下的warn级别以上的日志 -->
     <logger name="com.alibaba.nacos.client.naming" level="warn" additivity="false"/>
 
@@ -124,6 +144,10 @@
     <logger name="com.zclcs.common.core.service" level="DEBUG" additivity="false">
         <appender-ref ref="console"/>
         <appender-ref ref="file_service"/>
+    </logger>
+
+    <logger name="p6spy" level="DEBUG" additivity="false">
+        <appender-ref ref="file_sql"/>
     </logger>
 
     <root level="debug">
