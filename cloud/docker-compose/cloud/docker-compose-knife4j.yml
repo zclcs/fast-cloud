@@ -14,7 +14,7 @@ services:
     volumes:
       - ./log/knife4j:/log/knife4j
     healthcheck:
-      test: [ "CMD-SHELL", "curl -sS 'http://${NACOS_HOST}:${PORT_KNIFE4J}' || exit 1" ]
+      test: [ "CMD-SHELL", "curl -sS ${NACOS_HOST}:${PORT_KNIFE4J} || exit 1" ]
       interval: ${DOCKER_HEALTHCHECK_INTERVAL}
       timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
       retries: ${DOCKER_HEALTHCHECK_RETRIES}

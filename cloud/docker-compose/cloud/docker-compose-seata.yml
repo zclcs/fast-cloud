@@ -16,7 +16,7 @@ services:
       # 因为registry.conf中是nacos配置中心，只需要把registry.conf放到./seata/config文件夹中
       - ./seata/config:/root/seata-config
     healthcheck:
-      test: [ "CMD-SHELL", "curl -sS 'tcp://${SEATA_IP}:${SEATA_PORT}' || exit 1" ]
+      test: [ "CMD-SHELL", "curl -sS ${NACOS_HOST}:${SEATA_PORT} || exit 1" ]
       interval: ${DOCKER_HEALTHCHECK_INTERVAL}
       timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
       retries: ${DOCKER_HEALTHCHECK_RETRIES}

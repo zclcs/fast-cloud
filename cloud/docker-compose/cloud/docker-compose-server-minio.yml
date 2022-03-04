@@ -7,7 +7,7 @@ services:
     network_mode: host
     command: sh -c "/wait && java ${SERVER_MINIO_JAVA_OPS} -cp /app/resources:/app/classes:/app/libs/* ${SERVER_MINIO_MAIN_CLASS}"
     environment:
-      WAIT_HOSTS: ${NACOS_HOST}:${PORT_TX_MANAGER}
+      WAIT_HOSTS: ${NACOS_HOST}:${SEATA_PORT}
       WAIT_SLEEP_INTERVAL: ${DOCKER_WAIT_SLEEP_INTERVAL}
       WAIT_HOST_CONNECT_TIMEOUT: ${DOCKER_WAIT_HOST_CONNECT_TIMEOUT}
       WAIT_TIMEOUT: ${DOCKER_WAIT_TIMEOUT}
@@ -16,7 +16,7 @@ services:
       - ./log/server-minio/skywalking:/agent/logs
       - ${CLOUD_AGENT_CONFIG}
     healthcheck:
-      test: [ "CMD-SHELL", "curl -sS 'http://${NACOS_HOST}:${PORT_SERVER_MINIO}' || exit 1" ]
+      test: [ "CMD-SHELL", "curl -sS ${NACOS_HOST}:${PORT_SERVER_MINIO} || exit 1" ]
       interval: ${DOCKER_HEALTHCHECK_INTERVAL}
       timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
       retries: ${DOCKER_HEALTHCHECK_RETRIES}

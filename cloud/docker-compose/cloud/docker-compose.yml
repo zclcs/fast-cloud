@@ -18,7 +18,7 @@ services:
       - ./log/gateway/skywalking:/agent/logs
       - ${CLOUD_AGENT_CONFIG}
     healthcheck:
-      test: [ "CMD-SHELL", "curl -sS 'http://${NACOS_HOST}:${PORT_GATEWAY}' || exit 1" ]
+      test: [ "CMD-SHELL", "curl -sS ${NACOS_HOST}:${PORT_GATEWAY} || exit 1" ]
       interval: ${DOCKER_HEALTHCHECK_INTERVAL}
       timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
       retries: ${DOCKER_HEALTHCHECK_RETRIES}
@@ -33,7 +33,7 @@ services:
       - ./log/auth/skywalking:/agent/logs
       - ${CLOUD_AGENT_CONFIG}
     healthcheck:
-      test: [ "CMD-SHELL", "curl -sS 'http://${NACOS_HOST}:${PORT_AUTH}' || exit 1" ]
+      test: [ "CMD-SHELL", "curl -sS ${NACOS_HOST}:${PORT_AUTH} || exit 1" ]
       interval: ${DOCKER_HEALTHCHECK_INTERVAL}
       timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
       retries: ${DOCKER_HEALTHCHECK_RETRIES}
@@ -51,7 +51,7 @@ services:
     volumes:
       - ./log/knife4j:/log/knife4j
     healthcheck:
-      test: [ "CMD-SHELL", "curl -sS 'http://${NACOS_HOST}:${PORT_KNIFE4J}' || exit 1" ]
+      test: [ "CMD-SHELL", "curl -sS ${NACOS_HOST}:${PORT_KNIFE4J} || exit 1" ]
       interval: ${DOCKER_HEALTHCHECK_INTERVAL}
       timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
       retries: ${DOCKER_HEALTHCHECK_RETRIES}
@@ -71,7 +71,7 @@ services:
       - ./log/server-system/skywalking:/agent/logs
       - ${CLOUD_AGENT_CONFIG}
     healthcheck:
-      test: [ "CMD-SHELL", "curl -sS 'http://${NACOS_HOST}:${PORT_SERVER_SYSTEM}' || exit 1" ]
+      test: [ "CMD-SHELL", "curl -sS ${NACOS_HOST}:${PORT_SERVER_SYSTEM} || exit 1" ]
       interval: ${DOCKER_HEALTHCHECK_INTERVAL}
       timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
       retries: ${DOCKER_HEALTHCHECK_RETRIES}
@@ -92,7 +92,7 @@ services:
       - ./log/server-generator/skywalking:/agent/logs
       - ${CLOUD_AGENT_CONFIG}
     healthcheck:
-      test: [ "CMD-SHELL", "curl -sS 'http://${NACOS_HOST}:${PORT_SERVER_GENERATOR}' || exit 1" ]
+      test: [ "CMD-SHELL", "curl -sS ${NACOS_HOST}:${PORT_SERVER_GENERATOR} || exit 1" ]
       interval: ${DOCKER_HEALTHCHECK_INTERVAL}
       timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
       retries: ${DOCKER_HEALTHCHECK_RETRIES}
@@ -112,7 +112,7 @@ services:
       - ./log/server-dict/skywalking:/agent/logs
       - ${CLOUD_AGENT_CONFIG}
     healthcheck:
-      test: [ "CMD-SHELL", "curl -sS 'http://${NACOS_HOST}:${PORT_SERVER_DICT}' || exit 1" ]
+      test: [ "CMD-SHELL", "curl -sS ${NACOS_HOST}:${PORT_SERVER_DICT} || exit 1" ]
       interval: ${DOCKER_HEALTHCHECK_INTERVAL}
       timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
       retries: ${DOCKER_HEALTHCHECK_RETRIES}
@@ -132,7 +132,7 @@ services:
       - ./log/server-minio/skywalking:/agent/logs
       - ${CLOUD_AGENT_CONFIG}
     healthcheck:
-      test: [ "CMD-SHELL", "curl -sS 'http://${NACOS_HOST}:${PORT_SERVER_MINIO}' || exit 1" ]
+      test: [ "CMD-SHELL", "curl -sS ${NACOS_HOST}:${PORT_SERVER_MINIO} || exit 1" ]
       interval: ${DOCKER_HEALTHCHECK_INTERVAL}
       timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
       retries: ${DOCKER_HEALTHCHECK_RETRIES}
@@ -153,7 +153,7 @@ services:
       - ./log/server-test/skywalking:/agent/logs
       - ${CLOUD_AGENT_CONFIG}
     healthcheck:
-      test: [ "CMD-SHELL", "curl -sS 'http://${NACOS_HOST}:${PORT_SERVER_TEST}' || exit 1" ]
+      test: [ "CMD-SHELL", "curl -sS ${NACOS_HOST}:${PORT_SERVER_TEST} || exit 1" ]
       interval: ${DOCKER_HEALTHCHECK_INTERVAL}
       timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
       retries: ${DOCKER_HEALTHCHECK_RETRIES}
@@ -173,7 +173,7 @@ services:
       # 因为registry.conf中是nacos配置中心，只需要把registry.conf放到./seata/config文件夹中
       - ./seata/config:/root/seata-config
     healthcheck:
-      test: [ "CMD-SHELL", "curl -sS 'tcp://${SEATA_IP}:${SEATA_PORT}' || exit 1" ]
+      test: [ "CMD-SHELL", "curl -sS ${NACOS_HOST}:${SEATA_PORT} || exit 1" ]
       interval: ${DOCKER_HEALTHCHECK_INTERVAL}
       timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
       retries: ${DOCKER_HEALTHCHECK_RETRIES}
