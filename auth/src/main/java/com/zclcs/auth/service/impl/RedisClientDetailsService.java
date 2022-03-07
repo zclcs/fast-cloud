@@ -2,8 +2,8 @@ package com.zclcs.auth.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zclcs.common.core.constant.RedisCachePrefixConstant;
 import com.zclcs.common.redis.starter.service.RedisService;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -24,13 +24,8 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class RedisClientDetailsService extends JdbcClientDetailsService {
-    /**
-     * 缓存 client的 redis key，这里是 hash结构存储
-     */
-    private static final String CACHE_CLIENT_KEY = "client_details";
 
     private final RedisService redisService;
-
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public RedisClientDetailsService(DataSource dataSource, RedisService redisService) {
@@ -38,15 +33,18 @@ public class RedisClientDetailsService extends JdbcClientDetailsService {
         this.redisService = redisService;
     }
 
-    @SneakyThrows
     @Override
     public ClientDetails loadClientByClientId(String clientId) throws InvalidClientException {
         ClientDetails clientDetails = null;
-        String value = (String) redisService.hget(CACHE_CLIENT_KEY, clientId);
+        String value = (String) redisService.hget(RedisCachePrefixConstant.CLIENT_DETAILS_PREFIX, clientId);
         if (StringUtils.isBlank(value)) {
             clientDetails = cacheAndGetClient(clientId);
         } else {
-            clientDetails = objectMapper.readValue(value, BaseClientDetails.class);
+            try {
+                clientDetails = objectMapper.readValue(value, BaseClientDetails.class);
+            } catch (JsonProcessingException e) {
+                log.error(e.getMessage(), e);
+            }
         }
 
         return clientDetails;
@@ -57,7 +55,6 @@ public class RedisClientDetailsService extends JdbcClientDetailsService {
      *
      * @param clientId clientId
      */
-    @SneakyThrows
     public ClientDetails cacheAndGetClient(String clientId) {
         ClientDetails clientDetails = null;
         clientDetails = super.loadClientByClientId(clientId);
@@ -70,7 +67,11 @@ public class RedisClientDetailsService extends JdbcClientDetailsService {
                 );
             }
 
-            redisService.hset(CACHE_CLIENT_KEY, clientId, objectMapper.writeValueAsString(baseClientDetails));
+            try {
+                redisService.hset(RedisCachePrefixConstant.CLIENT_DETAILS_PREFIX, clientId, objectMapper.writeValueAsString(baseClientDetails));
+            } catch (JsonProcessingException e) {
+                log.error(e.getMessage(), e);
+            }
         }
         return clientDetails;
     }
@@ -81,14 +82,14 @@ public class RedisClientDetailsService extends JdbcClientDetailsService {
      * @param clientId clientId
      */
     public void removeRedisCache(String clientId) {
-        redisService.hdel(CACHE_CLIENT_KEY, clientId);
+        redisService.hdel(RedisCachePrefixConstant.CLIENT_DETAILS_PREFIX, clientId);
     }
 
     /**
      * 将 oauth_client_details全表刷入 redis
      */
     public void loadAllClientToCache() {
-        if (redisService.hasKey(CACHE_CLIENT_KEY)) {
+        if (redisService.hasKey(RedisCachePrefixConstant.CLIENT_DETAILS_PREFIX)) {
             return;
         }
         log.info("将oauth_client_details全表刷入redis");
@@ -100,7 +101,7 @@ public class RedisClientDetailsService extends JdbcClientDetailsService {
         }
         list.forEach(client -> {
             try {
-                redisService.hset(CACHE_CLIENT_KEY, client.getClientId(), objectMapper.writeValueAsString(client));
+                redisService.hset(RedisCachePrefixConstant.CLIENT_DETAILS_PREFIX, client.getClientId(), objectMapper.writeValueAsString(client));
             } catch (JsonProcessingException e) {
                 log.error(e.getMessage(), e);
             }

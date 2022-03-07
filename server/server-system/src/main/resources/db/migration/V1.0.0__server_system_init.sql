@@ -278,7 +278,7 @@ VALUES (71, 68, '限流日志', 'RateLimitLog', 'rate/log', '/cloud/route/rate/l
         'ant-design:ant-design-outlined', '0', '0', '0', '0', '0', NULL, 3, '2021-12-31 09:37:18',
         '2022-02-24 15:11:07');
 INSERT INTO `system_menu`
-VALUES (72, 68, '黑名单管理', 'BlackList', 'black', '/cloud/route/black/index', NULL, 'blackList:view',
+VALUES (72, 68, '黑名单管理', 'BlackListPage', 'black', '/cloud/route/black/index', NULL, 'blackList:view',
         'ant-design:eye-invisible-filled', '0', '0', '0', '0', '0', NULL, 4, '2021-12-31 09:39:25',
         '2022-02-24 15:15:15');
 INSERT INTO `system_menu`

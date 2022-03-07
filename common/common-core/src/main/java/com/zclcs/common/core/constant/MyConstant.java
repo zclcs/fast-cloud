@@ -31,11 +31,6 @@ public interface MyConstant {
     String[] VALID_FILE_TYPE = {"xlsx", "zip"};
 
     /**
-     * 验证码 key前缀
-     */
-    String CODE_PREFIX = "my.captcha.";
-
-    /**
      * 异步线程池名称
      */
     String ASYNC_POOL = "MyAsyncThreadPool";

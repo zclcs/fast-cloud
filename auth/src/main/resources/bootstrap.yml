@@ -1,6 +1,4 @@
 spring:
-  profiles:
-    active: ${PROFILES_ACTIVE:dev}
 
   application:
     name: ${SERVICE_NAME_AUTH:auth}
@@ -15,6 +13,9 @@ spring:
         file-extension: yaml
         extension-configs:
           - data-id: logging.yaml
+            group: DEFAULT_GROUP
+            refresh: true
+          - data-id: redis.yaml
             group: DEFAULT_GROUP
             refresh: true
       discovery:

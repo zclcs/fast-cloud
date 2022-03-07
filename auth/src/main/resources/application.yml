@@ -15,7 +15,6 @@ spring:
         max-pool-size: 15
         min-idle: 5
         connection-test-query: select 1
-        pool-name: MyHikariCP
       primary: primary
       datasource:
         primary:
@@ -23,18 +22,6 @@ spring:
           url: jdbc:${DATASOURCE_DB_TYPE:mysql}://${DATASOURCE_HOST:127.0.0.1}:${DATASOURCE_PORT:3306}/${DB_NAME_SYSTEM:cloud_system}?${DATASOURCE_PARAM:useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai}
           username: ${DATASOURCE_USERNAME:root}
           password: ${DATASOURCE_PASSWORD:root}
-
-  redis:
-    database: ${REDIS_AUTH_DATABASE:0}
-    host: ${REDIS_HOST:127.0.0.1}
-    port: ${REDIS_PORT:6379}
-    lettuce:
-      pool:
-        min-idle: 8
-        max-idle: 500
-        max-active: 2000
-        max-wait: 10000
-    timeout: 5000
 
 mybatis-plus:
   type-aliases-package: com.zclcs.common.core.entity.system

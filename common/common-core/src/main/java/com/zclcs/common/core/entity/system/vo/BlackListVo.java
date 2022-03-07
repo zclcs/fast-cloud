@@ -51,7 +51,7 @@ public class BlackListVo implements Serializable {
     @ApiModelProperty(value = "ip对应地址")
     private String location;
 
-    @ApiModelProperty(value = "黑名单状态 默认 1 @@yes_no")
+    @ApiModelProperty(value = "黑名单状态 默认 1 @@enable_disable")
     @DictText("enable_disable")
     private String blackStatus;
 

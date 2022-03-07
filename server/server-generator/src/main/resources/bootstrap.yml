@@ -17,7 +17,7 @@ spring:
           - data-id: dict.yaml
             group: DEFAULT_GROUP
             refresh: true
-          - data-id: dict-redis.yaml
+          - data-id: redis.yaml
             group: DEFAULT_GROUP
             refresh: true
           - data-id: flyway.yaml

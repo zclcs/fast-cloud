@@ -8,8 +8,8 @@ import com.zclcs.auth.properties.MyValidateCodeProperties;
 import com.zclcs.auth.service.ValidateCodeService;
 import com.zclcs.common.core.constant.HttpStatusConstant;
 import com.zclcs.common.core.constant.ImageTypeConstant;
-import com.zclcs.common.core.constant.MyConstant;
 import com.zclcs.common.core.constant.ParamsConstant;
+import com.zclcs.common.core.constant.RedisCachePrefixConstant;
 import com.zclcs.common.core.exception.ValidateCodeException;
 import com.zclcs.common.redis.starter.service.RedisService;
 import lombok.RequiredArgsConstructor;
@@ -44,13 +44,13 @@ public class ValidateCodeServiceImpl implements ValidateCodeService {
         setHeader(response, code.getType());
 
         Captcha captcha = createCaptcha(code);
-        redisService.set(MyConstant.CODE_PREFIX + key, StringUtils.lowerCase(captcha.text()), code.getTime());
+        redisService.set(RedisCachePrefixConstant.CODE_PREFIX + key, StringUtils.lowerCase(captcha.text()), code.getTime());
         captcha.out(response.getOutputStream());
     }
 
     @Override
     public void check(String key, String value) throws ValidateCodeException {
-        Object codeInRedis = redisService.get(MyConstant.CODE_PREFIX + key);
+        Object codeInRedis = redisService.get(RedisCachePrefixConstant.CODE_PREFIX + key);
         if (StringUtils.isBlank(value)) {
             throw new ValidateCodeException("请输入验证码");
         }

@@ -1,6 +1,4 @@
 spring:
-  profiles:
-    active: ${PROFILES_ACTIVE:dev}
 
   main:
     allow-bean-definition-overriding: true
@@ -20,7 +18,7 @@ spring:
           - data-id: logging.yaml
             group: DEFAULT_GROUP
             refresh: true
-          - data-id: dict-redis.yaml
+          - data-id: redis.yaml
             group: DEFAULT_GROUP
             refresh: true
       discovery:
