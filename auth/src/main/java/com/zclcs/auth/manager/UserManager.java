@@ -76,7 +76,16 @@ public class UserManager {
      */
     public String findPermissions(List<Long> menuIds) {
         List<SystemMenuVo> listVo = menuMapper.findListVo(new QueryWrapper<SystemMenuVo>().in("sm.menu_id", menuIds));
-        return listVo.stream().map(SystemMenuVo::getPerms).filter(StrUtil::isNotBlank).collect(Collectors.joining());
+        return listVo.stream().map(SystemMenuVo::getPerms).filter(StrUtil::isNotBlank).collect(Collectors.joining(StrUtil.COMMA));
+    }
+
+    /**
+     * 通过菜单id集合查询权限串
+     *
+     * @return 权限
+     */
+    public List<SystemMenuVo> findAllPermissions() {
+        return menuMapper.findListVo(new QueryWrapper<>());
     }
 
     /**

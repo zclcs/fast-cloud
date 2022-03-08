@@ -1,6 +1,7 @@
 package com.zclcs.auth.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -13,6 +14,7 @@ import com.zclcs.common.core.entity.system.OauthClientDetails;
 import com.zclcs.common.core.entity.system.ao.FindOauthClientDetailsPageAo;
 import com.zclcs.common.core.entity.system.ao.OauthClientDetailsAo;
 import com.zclcs.common.core.entity.system.vo.OauthClientDetailsVo;
+import com.zclcs.common.core.entity.system.vo.SystemMenuVo;
 import com.zclcs.common.core.exception.MyException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,8 +24,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -49,9 +54,10 @@ public class OauthClientDetailsServiceImpl extends ServiceImpl<OauthClientDetail
         queryWrapper.eq(StringUtils.isNotBlank(findOauthClientDetailsPageAo.getClientId()), "ocd.client_id", findOauthClientDetailsPageAo.getClientId());
         BasePage<OauthClientDetailsVo> page = new BasePage<>(findOauthClientDetailsPageAo.getPageNum(), findOauthClientDetailsPageAo.getPageSize());
         BasePage<OauthClientDetailsVo> result = this.baseMapper.findPageVo(page, queryWrapper);
+        List<SystemMenuVo> allPermissions = userManager.findAllPermissions();
         result.getList().forEach(oauthClientDetailsVo -> {
             Optional.ofNullable(oauthClientDetailsVo.getAuthorities()).filter(StrUtil::isNotBlank).ifPresent(s ->
-                    oauthClientDetailsVo.setMenuIds(userManager.findMenuIdsByPermissions(oauthClientDetailsVo.getAuthorities())));
+                    setMenuIds(s, allPermissions, oauthClientDetailsVo));
             oauthClientDetailsVo.setClientSecret(null);
             oauthClientDetailsVo.setOriginSecret(null);
         });
@@ -118,5 +124,15 @@ public class OauthClientDetailsServiceImpl extends ServiceImpl<OauthClientDetail
     private void setAuthorities(List<Long> menuIds, OauthClientDetails oauthClientDetails) {
         String permissions = userManager.findPermissions(menuIds);
         oauthClientDetails.setAuthorities(permissions);
+    }
+
+    private void setMenuIds(String authorities, List<SystemMenuVo> systemMenuVos, OauthClientDetailsVo oauthClientDetailsVo) {
+        List<String> collect = Arrays.stream(authorities.split(StrUtil.COMMA)).collect(Collectors.toList());
+        List<Long> menuIds = new ArrayList<>();
+        for (String a : collect) {
+            SystemMenuVo perms = CollectionUtil.findOneByField(systemMenuVos, "perms", a);
+            menuIds.add(perms.getMenuId());
+        }
+        oauthClientDetailsVo.setMenuIds(menuIds);
     }
 }
