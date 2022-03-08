@@ -11,7 +11,7 @@
  Target Server Version : 50735
  File Encoding         : 65001
 
- Date: 04/03/2022 15:51:32
+ Date: 08/03/2022 08:53:59
 */
 
 SET NAMES utf8mb4;
@@ -42,7 +42,7 @@ CREATE TABLE `config_info`
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `uk_configinfo_datagrouptenant` (`data_id`, `group_id`, `tenant_id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 385
+  AUTO_INCREMENT = 389
   CHARACTER SET = utf8
   COLLATE = utf8_bin COMMENT = 'config_info'
   ROW_FORMAT = DYNAMIC;
@@ -62,8 +62,8 @@ VALUES (118, 'server-system.yaml', 'DEFAULT_GROUP',
         'dev', '', '', '', 'yaml', '');
 INSERT INTO `config_info`
 VALUES (119, 'auth.yaml', 'DEFAULT_GROUP',
-        'server:\n  port: ${PORT_AUTH:8101}\n\nspring:\n  jackson:\n    date-format: yyyy-MM-dd HH:mm:ss\n    time-zone: GMT+8\n\n  datasource:\n    dynamic:\n      p6spy: ${DATASOURCE_LOGGER_SQL_ENABLED:true}\n      hikari:\n        connection-timeout: 30000\n        max-lifetime: 1800000\n        max-pool-size: 15\n        min-idle: 5\n        connection-test-query: select 1\n        pool-name: MyHikariCP\n      primary: primary\n      datasource:\n        primary:\n          driver-class-name: ${DATASOURCE_DRIVER:com.mysql.cj.jdbc.Driver}\n          url: jdbc:${DATASOURCE_DB_TYPE:mysql}://${DATASOURCE_HOST:127.0.0.1}:${DATASOURCE_PORT:3306}/${DB_NAME_SYSTEM:cloud_system}?${DATASOURCE_PARAM:useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai}\n          username: ${DATASOURCE_USERNAME:root}\n          password: ${DATASOURCE_PASSWORD:root}\n\n  redis:\n    database: ${REDIS_AUTH_DATABASE:0}\n    host: ${REDIS_HOST:127.0.0.1}\n    port: ${REDIS_PORT:6379}\n    lettuce:\n      pool:\n        min-idle: 8\n        max-idle: 500\n        max-active: 2000\n        max-wait: 10000\n    timeout: 5000\n\nmybatis-plus:\n  type-aliases-package: com.zclcs.common.core.entity.system\n  mapper-locations: classpath:com/zclcs/auth/mapper/*.xml\n  configuration:\n    jdbc-type-for-null: null\n  global-config:\n    banner: false\n\njustauth:\n  enabled: true\n  type:\n    github:\n      client-id:\n      client-secret:\n      redirect-uri:\n    gitee:\n      client-id:\n      client-secret:\n      redirect-uri:\n    tencent_cloud:\n      client-id:\n      client-secret:\n      redirect-uri:\n    dingtalk:\n      client-id:\n      client-secret:\n      redirect-uri:\n    qq:\n      client-id:\n      client-secret:\n      redirect-uri:\n    microsoft:\n      client-id:\n      client-secret:\n      redirect-uri:\n  cache:\n    type: redis\n    prefix: \'MY::CLOUD::SOCIAL::STATE::\'\n    timeout: 1h\n\nmy:\n  frontUrl: \'http://localhost:9527\'\n  doc:\n    enable: true\n    title: ${spring.application.name}文档\n    description: ${my.doc.title}\n    name: zclcs\n    email: 2371219112@qq.com\n    url: https://github.com/zclcs\n    version: 2.2-RELEASE\n\n  cloud:\n    security:\n      enable: true\n      only-fetch-by-gateway: false\n      anon-uris: /captcha,/social/**,/v2/api-docs,/v2/api-docs-ext,/login,/resource/**\n\n  log:\n    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}',
-        'ac4303744f96b61f961db1776bfbe6ef', '2021-09-18 02:54:58', '2021-11-02 01:34:12', 'nacos', '192.168.33.1', '',
+        'server:\n  port: ${PORT_AUTH:8101}\n\nspring:\n  jackson:\n    date-format: yyyy-MM-dd HH:mm:ss\n    time-zone: GMT+8\n\n  datasource:\n    dynamic:\n      p6spy: ${LOG_SQL_ENABLED:true}\n      hikari:\n        connection-timeout: 30000\n        max-lifetime: 1800000\n        max-pool-size: 15\n        min-idle: 5\n        connection-test-query: select 1\n      primary: primary\n      datasource:\n        primary:\n          driver-class-name: ${DATASOURCE_DRIVER:com.mysql.cj.jdbc.Driver}\n          url: jdbc:${DATASOURCE_DB_TYPE:mysql}://${DATASOURCE_HOST:127.0.0.1}:${DATASOURCE_PORT:3306}/${DB_NAME_SYSTEM:cloud_system}?${DATASOURCE_PARAM:useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai}\n          username: ${DATASOURCE_USERNAME:root}\n          password: ${DATASOURCE_PASSWORD:root}\n\nmybatis-plus:\n  type-aliases-package: com.zclcs.common.core.entity.system\n  mapper-locations: classpath:com/zclcs/auth/mapper/*.xml\n  configuration:\n    jdbc-type-for-null: null\n  global-config:\n    banner: false\n\njustauth:\n  enabled: true\n  type:\n    github:\n      client-id:\n      client-secret:\n      redirect-uri:\n    gitee:\n      client-id:\n      client-secret:\n      redirect-uri:\n    tencent_cloud:\n      client-id:\n      client-secret:\n      redirect-uri:\n    dingtalk:\n      client-id:\n      client-secret:\n      redirect-uri:\n    qq:\n      client-id:\n      client-secret:\n      redirect-uri:\n    microsoft:\n      client-id:\n      client-secret:\n      redirect-uri:\n  cache:\n    type: redis\n    prefix: \'MY::CLOUD::SOCIAL::STATE::\'\n    timeout: 1h\n\nmy:\n  frontUrl: \'http://localhost:9527\'\n  doc:\n    enable: true\n    title: ${spring.application.name}文档\n    description: ${my.doc.title}\n    name: zclcs\n    email: 2371219112@qq.com\n    url: https://github.com/zclcs\n    version: 2.2-RELEASE\n\n  cloud:\n    security:\n      enable: true\n      only-fetch-by-gateway: false\n      anon-uris: /captcha,/social/**,/v2/api-docs,/v2/api-docs-ext,/login,/resource/**\n\n  log:\n    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}',
+        'b1065a4934ff03945b6af0ec353d27af', '2021-09-18 02:54:58', '2022-03-07 01:28:15', 'nacos', '192.168.33.1', '',
         'dev', '', '', '', 'yaml', '');
 INSERT INTO `config_info`
 VALUES (120, 'server-generator.yaml', 'DEFAULT_GROUP',
@@ -88,18 +88,13 @@ VALUES (128, 'knife4j.yaml', 'DEFAULT_GROUP',
 INSERT INTO `config_info`
 VALUES (130, 'server-dict.yaml', 'DEFAULT_GROUP',
         'server:\n  port: ${PORT_SERVER_DICT:8205}\n\nspring:\n  datasource:\n    dynamic:\n      primary: primary\n      datasource:\n        primary:\n          driver-class-name: ${DATASOURCE_DRIVER:com.mysql.cj.jdbc.Driver}\n          url: jdbc:${DATASOURCE_DB_TYPE:mysql}://${DATASOURCE_HOST:127.0.0.1}:${DATASOURCE_PORT:3306}/${DB_NAME_DICT:cloud_dict}?${DATASOURCE_PARAM:useUnicode=true&characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true&serverTimezone=Asia/Shanghai}\n          username: ${DATASOURCE_USERNAME:root}\n          password: ${DATASOURCE_PASSWORD:root}\n\n  flyway:\n    table: dict_flyway_history\n\nsystem:\n  dict:\n    mq-type: none\n    text-value-default-null: true\n    on-boot-refresh-dict: false\n    cache:\n      enabled: true\n      maximum-size: 500\n      initial-capacity: 50\n      duration: 30s\n      miss-num: 50\n    controller:\n      enabled: true\n      prefix: /cache\n\nmybatis-plus:\n  type-aliases-package: com.zclcs.common.core.entity.dict\n  mapper-locations: classpath:com/zclcs/server/dict/mapper/*.xml\n\nmy:\n  cloud:\n    security:\n      enable: true\n      anon-uris: /v2/api-docs,/v2/api-docs-ext\n      only-fetch-by-gateway: false\n\nseata:\n  config:\n    nacos:\n      data-id: server-dict-seata.properties',
-        'f9b0ccb61e83a1bb7a06cb85fe08bd09', '2021-10-28 02:04:33', '2022-03-03 00:44:01', 'nacos', '192.168.33.1', '',
+        'f9b0ccb61e83a1bb7a06cb85fe08bd09', '2021-10-28 02:04:33', '2022-03-07 00:51:28', 'nacos', '192.168.33.1', '',
         'dev', '', '', '', 'yaml', '');
 INSERT INTO `config_info`
 VALUES (131, 'dict.yaml', 'DEFAULT_GROUP',
         'system:\n  dict:\n    mq-type: none\n    raw-value: true\n    text-value-default-null: false\n    on-boot-refresh-dict: false\n    cache:\n      enabled: true\n      maximum-size: 500\n      initial-capacity: 50\n      duration: 30s\n      miss-num: 50\n    controller:\n      enabled: false',
-        '3782112068e128f6e5535bb4b32e8b49', '2021-10-28 22:33:58', '2022-01-16 19:26:47', 'nacos', '192.168.33.1', '',
+        '3782112068e128f6e5535bb4b32e8b49', '2021-10-28 22:33:58', '2022-03-07 00:51:07', 'nacos', '192.168.33.1', '',
         'dev', '', '', '', 'yaml', '');
-INSERT INTO `config_info`
-VALUES (132, 'dict-redis.yaml', 'DEFAULT_GROUP',
-        'spring:\r\n  redis:\r\n    database: ${REDIS_DICT_DATABASE:1}\r\n    host: ${REDIS_HOST:127.0.0.1}\r\n    port: ${REDIS_PORT:6379}\r\n    lettuce:\r\n      pool:\r\n        min-idle: 8\r\n        max-idle: 500\r\n        max-active: 2000\r\n        max-wait: 10000\r\n    timeout: 5000',
-        '7d2edb1abbf480ce1ef354efa8270541', '2021-11-10 18:45:03', '2021-11-10 18:45:03', NULL, '192.168.33.1', '',
-        'dev', '字典redis配置', NULL, NULL, 'yaml', NULL);
 INSERT INTO `config_info`
 VALUES (133, 'flyway.yaml', 'DEFAULT_GROUP',
         'spring:\n  flyway:\n    # 是否开启\n    enabled: true\n    # 迁移前校验 SQL 文件是否存在问题\n    validate-on-migrate: true\n    # 禁止清理数据库表 生产环境一定要启用\n    clean-disabled: true\n    # 文件编码\n    encoding: UTF-8\n    # 校验路径下是否存在 SQL 文件\n    check-location: false\n    # 最开始已经存在表结构，且不存在 flyway_schema_history 表时，需要设置为 true\n    baseline-on-migrate: true',
@@ -155,6 +150,11 @@ VALUES (357, 'server-dict-seata.properties', 'DEFAULT_GROUP',
         '#Transaction routing rules configuration, only for the client\nservice.vgroupMapping.default_tx_group=default\n\n#Transaction rule configuration, only for the client\nclient.rm.asyncCommitBufferLimit=10000\nclient.rm.lock.retryInterval=10\nclient.rm.lock.retryTimes=30\nclient.rm.lock.retryPolicyBranchRollbackOnConflict=true\nclient.rm.reportRetryCount=5\nclient.rm.tableMetaCheckEnable=false\nclient.rm.tableMetaCheckerInterval=60000\nclient.rm.sqlParserType=druid\nclient.rm.reportSuccessEnable=false\nclient.rm.sagaBranchRegisterEnable=false\nclient.rm.sagaJsonParser=jackson\nclient.rm.tccActionInterceptorOrder=-2147482648\nclient.tm.commitRetryCount=5\nclient.tm.rollbackRetryCount=5\nclient.tm.defaultGlobalTransactionTimeout=60000\nclient.tm.degradeCheck=false\nclient.tm.degradeCheckAllowTimes=10\nclient.tm.degradeCheckPeriod=2000\nclient.tm.interceptorOrder=-2147482648\nclient.undo.dataValidation=true\nclient.undo.logSerialization=jackson\nclient.undo.onlyCareUpdateColumns=true\nserver.undo.logSaveDays=7\nserver.undo.logDeletePeriod=86400000\nclient.undo.logTable=dict_undo_log\nclient.undo.compress.enable=true\nclient.undo.compress.type=zip\nclient.undo.compress.threshold=64k\n\n#Log rule configuration, for client and server\nlog.exceptionRate=100\n',
         '186f7f9355a8355d5ebc157bfcc7b756', '2022-03-03 00:45:05', '2022-03-03 01:08:11', 'nacos', '192.168.33.1', '',
         'dev', '', '', '', 'properties', '');
+INSERT INTO `config_info`
+VALUES (388, 'redis.yaml', 'DEFAULT_GROUP',
+        'spring:\n  redis:\n    database: ${REDIS_DATABASE:0}\n    host: ${REDIS_HOST:127.0.0.1}\n    port: ${REDIS_PORT:6379}\n    lettuce:\n      pool:\n        min-idle: 8\n        max-idle: 500\n        max-active: 2000\n        max-wait: 10000\n    timeout: 5000\n',
+        'c02654dfe190e20033fb8791b250d4b6', '2022-03-06 21:08:47', '2022-03-07 00:50:32', 'nacos', '192.168.33.1', '',
+        'dev', '字典redis配置', '', '', 'yaml', '');
 
 -- ----------------------------
 -- Table structure for config_info_aggr
@@ -320,7 +320,7 @@ CREATE TABLE `his_config_info`
     INDEX `idx_gmt_modified` (`gmt_modified`) USING BTREE,
     INDEX `idx_did` (`data_id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 504
+  AUTO_INCREMENT = 515
   CHARACTER SET = utf8
   COLLATE = utf8_bin COMMENT = '多租户改造'
   ROW_FORMAT = DYNAMIC;
@@ -1967,6 +1967,61 @@ INSERT INTO `his_config_info`
 VALUES (128, 503, 'knife4j.yaml', 'DEFAULT_GROUP', '',
         'server:\n  port: ${PORT_KNIFE4J:8401}\n\nspring:\n  security:\n    user:\n      name: ${KNIFE4J_USERNAME:zclcs}\n      password: ${KNIFE4J_PASSWORD:123456}\n\n#knife4j:\n#  # 开启聚合组件\n#  enableAggregation: ${DOC_ENABLE_AGGREGATION:true}\n#  cloud:\n#    enable: true\n#    routes:\n#      - name: ${SERVICE_NAME_AUTH:auth}\n#        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n#        location: ${SERVICE_PATH_AUTH:/auth}/v2/api-docs?group=default\n#        swaggerVersion: 2.0\n#      - name: ${SERVICE_NAME_SERVER_SYSTEM:server-system}\n#        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n#        location: ${SERVICE_PATH_SERVER_SYSTEM:/system}/v2/api-docs?group=default\n#        swaggerVersion: 2.0\n#      - name: ${SERVICE_NAME_SERVER_GENERATOR:server-generator}\n#        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n#        location: ${SERVICE_PATH_SERVER_GENERATOR:/generator}/v2/api-docs?group=default\n#        swaggerVersion: 2.0\n#      - name: ${SERVICE_NAME_SERVER_TEST:server-test}\n#        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n#        location: ${SERVICE_PATH_SERVER_TEST:/test}/v2/api-docs?group=default\n#        swaggerVersion: 2.0\n#      - name: ${SERVICE_NAME_SERVER_MINIO:server-minio}\n#        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n#        location: ${SERVICE_PATH_SERVER_MINIO:/minio}/v2/api-docs?group=default\n#        swaggerVersion: 2.0\n#      - name: ${SERVICE_NAME_SERVER_DICT:server-dict}\n#        uri: ${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}\n#        location: ${SERVICE_PATH_SERVER_DICT:/dict}/v2/api-docs?group=default\n#        swaggerVersion: 2.0\n\nknife4j:\n  enableAggregation: ${DOC_ENABLE_AGGREGATION:true}\n  nacos:\n    enable: true\n    serviceUrl: http://${NACOS_HOST:127.0.0.1}:${NACOS_PORT:8848}/nacos/\n    routes:\n      - name: 系统服务\n        serviceName: server-system\n        location: /v2/api-docs?group=default\n        swaggerVersion: 2.0\n        servicePath: /system',
         'dfc32cca01cdbf3f3baadafcebe3d4da', '2022-03-04 15:18:10', '2022-03-04 01:18:11', 'nacos', '192.168.33.1', 'U',
+        'dev');
+INSERT INTO `his_config_info`
+VALUES (130, 504, 'server-dict.yaml', 'DEFAULT_GROUP', '',
+        'server:\n  port: ${PORT_SERVER_DICT:8205}\n\nspring:\n  datasource:\n    dynamic:\n      primary: primary\n      datasource:\n        primary:\n          driver-class-name: ${DATASOURCE_DRIVER:com.mysql.cj.jdbc.Driver}\n          url: jdbc:${DATASOURCE_DB_TYPE:mysql}://${DATASOURCE_HOST:127.0.0.1}:${DATASOURCE_PORT:3306}/${DB_NAME_DICT:cloud_dict}?${DATASOURCE_PARAM:useUnicode=true&characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true&serverTimezone=Asia/Shanghai}\n          username: ${DATASOURCE_USERNAME:root}\n          password: ${DATASOURCE_PASSWORD:root}\n\n  flyway:\n    table: dict_flyway_history\n\nsystem:\n  dict:\n    mq-type: none\n    text-value-default-null: true\n    on-boot-refresh-dict: false\n    cache:\n      enabled: true\n      maximum-size: 500\n      initial-capacity: 50\n      duration: 30s\n      miss-num: 50\n    controller:\n      enabled: true\n      prefix: /cache\n\nmybatis-plus:\n  type-aliases-package: com.zclcs.common.core.entity.dict\n  mapper-locations: classpath:com/zclcs/server/dict/mapper/*.xml\n\nmy:\n  cloud:\n    security:\n      enable: true\n      anon-uris: /v2/api-docs,/v2/api-docs-ext\n      only-fetch-by-gateway: false\n\nseata:\n  config:\n    nacos:\n      data-id: server-dict-seata.properties',
+        'f9b0ccb61e83a1bb7a06cb85fe08bd09', '2022-03-07 10:59:50', '2022-03-06 20:59:51', 'nacos', '192.168.33.1', 'U',
+        'dev');
+INSERT INTO `his_config_info`
+VALUES (131, 505, 'dict.yaml', 'DEFAULT_GROUP', '',
+        'system:\n  dict:\n    mq-type: none\n    raw-value: true\n    text-value-default-null: false\n    on-boot-refresh-dict: false\n    cache:\n      enabled: true\n      maximum-size: 500\n      initial-capacity: 50\n      duration: 30s\n      miss-num: 50\n    controller:\n      enabled: false',
+        '3782112068e128f6e5535bb4b32e8b49', '2022-03-07 11:01:36', '2022-03-06 21:01:36', 'nacos', '192.168.33.1', 'U',
+        'dev');
+INSERT INTO `his_config_info`
+VALUES (132, 506, 'dict-redis.yaml', 'DEFAULT_GROUP', '',
+        'spring:\r\n  redis:\r\n    database: ${REDIS_DICT_DATABASE:1}\r\n    host: ${REDIS_HOST:127.0.0.1}\r\n    port: ${REDIS_PORT:6379}\r\n    lettuce:\r\n      pool:\r\n        min-idle: 8\r\n        max-idle: 500\r\n        max-active: 2000\r\n        max-wait: 10000\r\n    timeout: 5000',
+        '7d2edb1abbf480ce1ef354efa8270541', '2022-03-07 11:08:32', '2022-03-06 21:08:33', 'nacos', '192.168.33.1', 'U',
+        'dev');
+INSERT INTO `his_config_info`
+VALUES (0, 507, 'redis.yaml', 'DEFAULT_GROUP', '',
+        'spring:\n  redis:\n    database: ${REDIS_DATABASE:0}\n    host: ${REDIS_HOST:127.0.0.1}\n    port: ${REDIS_PORT:6379}\n    lettuce:\n      pool:\n        min-idle: 8\n        max-idle: 500\n        max-active: 2000\n        max-wait: 10000\n    timeout: 5000',
+        '115c8b7aa5e6740cd8b3e2e47606965d', '2022-03-07 11:08:46', '2022-03-06 21:08:47', NULL, '192.168.33.1', 'I',
+        'dev');
+INSERT INTO `his_config_info`
+VALUES (132, 508, 'dict-redis.yaml', 'DEFAULT_GROUP', '',
+        'spring:\n  redis:\n    database: ${REDIS_DATABASE:0}\n    host: ${REDIS_HOST:127.0.0.1}\n    port: ${REDIS_PORT:6379}\n    lettuce:\n      pool:\n        min-idle: 8\n        max-idle: 500\n        max-active: 2000\n        max-wait: 10000\n    timeout: 5000',
+        '115c8b7aa5e6740cd8b3e2e47606965d', '2022-03-07 11:08:50', '2022-03-06 21:08:51', NULL, '192.168.33.1', 'D',
+        'dev');
+INSERT INTO `his_config_info`
+VALUES (388, 509, 'redis.yaml', 'DEFAULT_GROUP', '',
+        'spring:\n  redis:\n    database: ${REDIS_DATABASE:0}\n    host: ${REDIS_HOST:127.0.0.1}\n    port: ${REDIS_PORT:6379}\n    lettuce:\n      pool:\n        min-idle: 8\n        max-idle: 500\n        max-active: 2000\n        max-wait: 10000\n    timeout: 5000',
+        '115c8b7aa5e6740cd8b3e2e47606965d', '2022-03-07 11:46:16', '2022-03-06 21:46:17', 'nacos', '192.168.33.1', 'U',
+        'dev');
+INSERT INTO `his_config_info`
+VALUES (388, 510, 'redis.yaml', 'DEFAULT_GROUP', '',
+        'spring:\n  redis:\n    database: ${REDIS_DATABASE:0}\n    host: ${REDIS_HOST:127.0.0.1}\n    port: ${REDIS_PORT:6379}\n    lettuce:\n      pool:\n        min-idle: 8\n        max-idle: 500\n        max-active: 2000\n        max-wait: 10000\n    timeout: 5000\n  store-key:\n    # 缓存值的前缀\n    prefix: ${spring.cloud.nacos.config.namespace}',
+        '6dbbf348fb44b99981858ac2ab2cc9dd', '2022-03-07 14:50:31', '2022-03-07 00:50:32', 'nacos', '192.168.33.1', 'U',
+        'dev');
+INSERT INTO `his_config_info`
+VALUES (131, 511, 'dict.yaml', 'DEFAULT_GROUP', '',
+        'system:\n  dict:\n    mq-type: none\n    raw-value: true\n    text-value-default-null: false\n    on-boot-refresh-dict: false\n    cache:\n      enabled: true\n      maximum-size: 500\n      initial-capacity: 50\n      duration: 30s\n      miss-num: 50\n    controller:\n      enabled: false\n    store-key:\n      # 树结构父级值的前缀\n      parent-prefix: ${spring.cloud.nacos.config.namespace}\n      # 数据字典类型对象前缀\n      type-prefix: ${spring.cloud.nacos.config.namespace}\n      # 数据字典值文本前缀\n      value-prefix: ${spring.cloud.nacos.config.namespace}',
+        'ee4823dc723c5d410901cfda59090d57', '2022-03-07 14:51:07', '2022-03-07 00:51:07', 'nacos', '192.168.33.1', 'U',
+        'dev');
+INSERT INTO `his_config_info`
+VALUES (130, 512, 'server-dict.yaml', 'DEFAULT_GROUP', '',
+        'server:\n  port: ${PORT_SERVER_DICT:8205}\n\nspring:\n  datasource:\n    dynamic:\n      primary: primary\n      datasource:\n        primary:\n          driver-class-name: ${DATASOURCE_DRIVER:com.mysql.cj.jdbc.Driver}\n          url: jdbc:${DATASOURCE_DB_TYPE:mysql}://${DATASOURCE_HOST:127.0.0.1}:${DATASOURCE_PORT:3306}/${DB_NAME_DICT:cloud_dict}?${DATASOURCE_PARAM:useUnicode=true&characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true&serverTimezone=Asia/Shanghai}\n          username: ${DATASOURCE_USERNAME:root}\n          password: ${DATASOURCE_PASSWORD:root}\n\n  flyway:\n    table: dict_flyway_history\n\nsystem:\n  dict:\n    mq-type: none\n    text-value-default-null: true\n    on-boot-refresh-dict: false\n    cache:\n      enabled: true\n      maximum-size: 500\n      initial-capacity: 50\n      duration: 30s\n      miss-num: 50\n    controller:\n      enabled: true\n      prefix: /cache\n    store-key:\n      # 树结构父级值的前缀\n      parent-prefix: ${spring.cloud.nacos.config.namespace}\n      # 数据字典类型对象前缀\n      type-prefix: ${spring.cloud.nacos.config.namespace}\n      # 数据字典值文本前缀\n      value-prefix: ${spring.cloud.nacos.config.namespace}\n\nmybatis-plus:\n  type-aliases-package: com.zclcs.common.core.entity.dict\n  mapper-locations: classpath:com/zclcs/server/dict/mapper/*.xml\n\nmy:\n  cloud:\n    security:\n      enable: true\n      anon-uris: /v2/api-docs,/v2/api-docs-ext\n      only-fetch-by-gateway: false\n\nseata:\n  config:\n    nacos:\n      data-id: server-dict-seata.properties',
+        'a32adce52deeab75cdc6bf4127efb9ab', '2022-03-07 14:51:28', '2022-03-07 00:51:28', 'nacos', '192.168.33.1', 'U',
+        'dev');
+INSERT INTO `his_config_info`
+VALUES (119, 513, 'auth.yaml', 'DEFAULT_GROUP', '',
+        'server:\n  port: ${PORT_AUTH:8101}\n\nspring:\n  jackson:\n    date-format: yyyy-MM-dd HH:mm:ss\n    time-zone: GMT+8\n\n  datasource:\n    dynamic:\n      p6spy: ${DATASOURCE_LOGGER_SQL_ENABLED:true}\n      hikari:\n        connection-timeout: 30000\n        max-lifetime: 1800000\n        max-pool-size: 15\n        min-idle: 5\n        connection-test-query: select 1\n        pool-name: MyHikariCP\n      primary: primary\n      datasource:\n        primary:\n          driver-class-name: ${DATASOURCE_DRIVER:com.mysql.cj.jdbc.Driver}\n          url: jdbc:${DATASOURCE_DB_TYPE:mysql}://${DATASOURCE_HOST:127.0.0.1}:${DATASOURCE_PORT:3306}/${DB_NAME_SYSTEM:cloud_system}?${DATASOURCE_PARAM:useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai}\n          username: ${DATASOURCE_USERNAME:root}\n          password: ${DATASOURCE_PASSWORD:root}\n\n  redis:\n    database: ${REDIS_AUTH_DATABASE:0}\n    host: ${REDIS_HOST:127.0.0.1}\n    port: ${REDIS_PORT:6379}\n    lettuce:\n      pool:\n        min-idle: 8\n        max-idle: 500\n        max-active: 2000\n        max-wait: 10000\n    timeout: 5000\n\nmybatis-plus:\n  type-aliases-package: com.zclcs.common.core.entity.system\n  mapper-locations: classpath:com/zclcs/auth/mapper/*.xml\n  configuration:\n    jdbc-type-for-null: null\n  global-config:\n    banner: false\n\njustauth:\n  enabled: true\n  type:\n    github:\n      client-id:\n      client-secret:\n      redirect-uri:\n    gitee:\n      client-id:\n      client-secret:\n      redirect-uri:\n    tencent_cloud:\n      client-id:\n      client-secret:\n      redirect-uri:\n    dingtalk:\n      client-id:\n      client-secret:\n      redirect-uri:\n    qq:\n      client-id:\n      client-secret:\n      redirect-uri:\n    microsoft:\n      client-id:\n      client-secret:\n      redirect-uri:\n  cache:\n    type: redis\n    prefix: \'MY::CLOUD::SOCIAL::STATE::\'\n    timeout: 1h\n\nmy:\n  frontUrl: \'http://localhost:9527\'\n  doc:\n    enable: true\n    title: ${spring.application.name}文档\n    description: ${my.doc.title}\n    name: zclcs\n    email: 2371219112@qq.com\n    url: https://github.com/zclcs\n    version: 2.2-RELEASE\n\n  cloud:\n    security:\n      enable: true\n      only-fetch-by-gateway: false\n      anon-uris: /captcha,/social/**,/v2/api-docs,/v2/api-docs-ext,/login,/resource/**\n\n  log:\n    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}',
+        'ac4303744f96b61f961db1776bfbe6ef', '2022-03-07 15:02:35', '2022-03-07 01:02:35', 'nacos', '192.168.33.1', 'U',
+        'dev');
+INSERT INTO `his_config_info`
+VALUES (119, 514, 'auth.yaml', 'DEFAULT_GROUP', '',
+        'server:\n  port: ${PORT_AUTH:8101}\n\nspring:\n  jackson:\n    date-format: yyyy-MM-dd HH:mm:ss\n    time-zone: GMT+8\n\n  datasource:\n    dynamic:\n      p6spy: ${LOG_SQL_ENABLED:true}\n      hikari:\n        connection-timeout: 30000\n        max-lifetime: 1800000\n        max-pool-size: 15\n        min-idle: 5\n        connection-test-query: select 1\n      primary: primary\n      datasource:\n        primary:\n          driver-class-name: ${DATASOURCE_DRIVER:com.mysql.cj.jdbc.Driver}\n          url: jdbc:${DATASOURCE_DB_TYPE:mysql}://${DATASOURCE_HOST:127.0.0.1}:${DATASOURCE_PORT:3306}/${DB_NAME_SYSTEM:cloud_system}?${DATASOURCE_PARAM:useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai}\n          username: ${DATASOURCE_USERNAME:root}\n          password: ${DATASOURCE_PASSWORD:root}\n\nmybatis-plus:\n  type-aliases-package: com.zclcs.common.core.entity.system\n  mapper-locations: classpath:com/zclcs/auth/mapper/*.xml\n  configuration:\n    jdbc-type-for-null: null\n  global-config:\n    banner: false\n\njustauth:\n  enabled: true\n  type:\n    github:\n      client-id:\n      client-secret:\n      redirect-uri:\n    gitee:\n      client-id:\n      client-secret:\n      redirect-uri:\n    tencent_cloud:\n      client-id:\n      client-secret:\n      redirect-uri:\n    dingtalk:\n      client-id:\n      client-secret:\n      redirect-uri:\n    qq:\n      client-id:\n      client-secret:\n      redirect-uri:\n    microsoft:\n      client-id:\n      client-secret:\n      redirect-uri:\n  cache:\n    type: redis\n    prefix: \'MY::CLOUD::SOCIAL::STATE::\'\n    timeout: 1h\n\nmy:\n  doc:\n    enable: true\n    title: ${spring.application.name}文档\n    description: ${my.doc.title}\n    name: zclcs\n    email: 2371219112@qq.com\n    url: https://github.com/zclcs\n    version: 2.2-RELEASE\n\n  cloud:\n    security:\n      enable: true\n      only-fetch-by-gateway: false\n      anon-uris: /captcha,/social/**,/v2/api-docs,/v2/api-docs-ext,/login,/resource/**\n\n  log:\n    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}',
+        'c856a3fb62e228c4e35b7adf3bef3998', '2022-03-07 15:28:15', '2022-03-07 01:28:15', 'nacos', '192.168.33.1', 'U',
         'dev');
 
 -- ----------------------------
