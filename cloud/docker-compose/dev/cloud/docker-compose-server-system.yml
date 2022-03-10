@@ -5,7 +5,7 @@ services:
     image: ${CLOUD_DEPOSITORY_IP_PORT}${CLOUD_DEPOSITORY_URL}/server-system:${CLOUD_DEPOSITORY_TAG}
     container_name: server-system
     network_mode: host
-    command: sh -c "/wait && java ${SERVER_SYSTEM_JAVA_OPS} -cp /app/resources:/app/classes:/app/libs/* ${SERVER_SYSTEM_MAIN_CLASS}"
+    command: sh -c "/wait && java ${JAVA_OPS_PREFIX} ${SERVER_SYSTEM_JAVA_OPS} ${JAVA_OPS_SUFFIX} -cp /app/resources:/app/classes:/app/libs/* ${SERVER_SYSTEM_MAIN_CLASS}"
     environment:
       WAIT_HOSTS: ${NACOS_HOST}:${SEATA_PORT}
       WAIT_SLEEP_INTERVAL: ${DOCKER_WAIT_SLEEP_INTERVAL}
