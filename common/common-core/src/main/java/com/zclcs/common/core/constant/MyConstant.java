@@ -90,4 +90,9 @@ public interface MyConstant {
      */
     String AREA_CODE = "area_code";
 
+    /**
+     * 字典表缓存前缀
+     */
+    String DICT_CACHE_PREFIX = "dict";
+
 }

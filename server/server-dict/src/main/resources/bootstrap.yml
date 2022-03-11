@@ -12,6 +12,12 @@ spring:
         prefix: ${SERVICE_NAME_SERVER_DICT:server-dict}
         file-extension: yaml
         extension-configs:
+          - data-id: global-configuration.yaml
+            group: DEFAULT_GROUP
+            refresh: true
+          - data-id: server.yaml
+            group: DEFAULT_GROUP
+            refresh: true
           - data-id: redis.yaml
             group: DEFAULT_GROUP
             refresh: true
@@ -22,9 +28,6 @@ spring:
             group: DEFAULT_GROUP
             refresh: true
           - data-id: seata-client.yaml
-            group: DEFAULT_GROUP
-            refresh: true
-          - data-id: server.yaml
             group: DEFAULT_GROUP
             refresh: true
           - data-id: rabbit-mq.yaml

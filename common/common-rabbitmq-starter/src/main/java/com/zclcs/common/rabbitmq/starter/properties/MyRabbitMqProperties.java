@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class MyRabbitMqProperties {
 
     /**
-     * 是否开启Lettuce Redis
+     * 是否开启
      */
     private Boolean enable = true;
 

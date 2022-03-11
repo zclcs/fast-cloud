@@ -108,10 +108,22 @@
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
-        <!--hu tool 工具类-->
+        <!--hu tool 工具类 核心，包括Bean操作、日期、各种Util等-->
         <dependency>
             <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
+            <artifactId>hutool-core</artifactId>
+            <version>${hutool-all.version}</version>
+        </dependency>
+        <!--hu tool 工具类 JSON实现-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-json</artifactId>
+            <version>${hutool-all.version}</version>
+        </dependency>
+        <!--hu tool 工具类 加密解密模块，提供对称、非对称和摘要算法封装-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-crypto</artifactId>
             <version>${hutool-all.version}</version>
         </dependency>
         <!-- 接口文档依赖 -->

@@ -46,14 +46,14 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
 
     @Override
     public List<String> findUserPermissions(String username) {
-        checkUser(username);
+        //checkUser(username);
         List<SystemMenuVo> userPermissions = this.baseMapper.findUserPermissions(username);
         return userPermissions.stream().map(SystemMenuVo::getPerms).collect(Collectors.toList());
     }
 
     @Override
     public List<SystemMenuVo> findUserSystemMenus(String username) {
-        checkUser(username);
+        //checkUser(username);
         QueryWrapper<SystemMenuVo> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByAsc("sm.order_num");
         return this.baseMapper.findUserMenuListVo(queryWrapper, username);
@@ -74,7 +74,7 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
 
     @Override
     public List<VueRouter<SystemMenuVo>> getUserRouters(String username) {
-        checkUser(username);
+        //checkUser(username);
         List<VueRouter<SystemMenuVo>> routes = new ArrayList<>();
         List<SystemMenuVo> menus = this.findUserSystemMenus(username);
         menus.forEach(menu -> {

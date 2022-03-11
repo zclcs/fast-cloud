@@ -15,3 +15,6 @@ spring:
           - data-id: logging.yaml
             group: DEFAULT_GROUP
             refresh: true
+          - data-id: global-configuration.yaml
+            group: DEFAULT_GROUP
+            refresh: true

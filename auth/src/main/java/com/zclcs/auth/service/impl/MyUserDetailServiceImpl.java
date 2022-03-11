@@ -6,6 +6,8 @@ import com.zclcs.common.core.constant.ParamsConstant;
 import com.zclcs.common.core.constant.SocialConstant;
 import com.zclcs.common.core.constant.StringConstant;
 import com.zclcs.common.core.entity.MyAuthUser;
+import com.zclcs.common.core.entity.router.VueRouter;
+import com.zclcs.common.core.entity.system.vo.SystemMenuVo;
 import com.zclcs.common.core.entity.system.vo.SystemUserVo;
 import com.zclcs.common.core.utils.BaseUtil;
 import lombok.RequiredArgsConstructor;
@@ -40,21 +42,21 @@ public class MyUserDetailServiceImpl implements UserDetailsService {
         SystemUserVo systemUser = userManager.findByName(username);
         if (systemUser != null) {
             List<String> permissions = userManager.findUserPermissions(systemUser.getUsername());
+            List<VueRouter<SystemMenuVo>> userRoutes = userManager.findUserRoutes(systemUser.getUsername());
             boolean notLocked = StringUtils.equals(SystemUserVo.STATUS_VALID, systemUser.getStatus());
             String password = systemUser.getPassword();
             String loginType = (String) httpServletRequest.getAttribute(ParamsConstant.LOGIN_TYPE);
             if (StringUtils.equals(loginType, SocialConstant.SOCIAL_LOGIN)) {
                 password = passwordEncoder.encode(SocialConstant.getSocialLoginPassword());
             }
-
             List<GrantedAuthority> grantedAuthorities = AuthorityUtils.NO_AUTHORITIES;
             if (CollectionUtil.isNotEmpty(permissions)) {
                 grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList(String.join(StringConstant.COMMA, permissions));
             }
             MyAuthUser authUser = new MyAuthUser(systemUser.getUsername(), password, true, true, true, notLocked,
                     grantedAuthorities);
-
             BeanUtils.copyProperties(systemUser, authUser);
+
             return authUser;
         } else {
             throw new UsernameNotFoundException("");

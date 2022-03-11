@@ -17,6 +17,6 @@ public interface RedisCachePrefixConstant {
     /**
      * 缓存 client的 redis key，这里是 hash结构存储
      */
-    String CLIENT_DETAILS_PREFIX = "client_details:";
+    String CLIENT_DETAILS_PREFIX = "client_details";
 
 }

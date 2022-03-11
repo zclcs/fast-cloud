@@ -53,8 +53,41 @@
           and m.perms is not null
           and m.perms &lt;&gt; ''
     </select>
+    <sql id="baseSqlFromUserMenu">
+        select sm.menu_id,
+               sm.parent_id,
+               sm.menu_name,
+               sm.keep_alive_name,
+               sm.path,
+               sm.component,
+               sm.redirect,
+               sm.perms,
+               sm.icon,
+               sm.type,
+               sm.hide_menu,
+               sm.ignore_keep_alive,
+               sm.hide_breadcrumb,
+               sm.hide_children_in_menu,
+               sm.current_active_menu,
+               sm.order_num,
+               sm.create_time,
+               sm.modify_time
+        from system_menu sm
+        where sm.type &lt;&gt; 1
+          and sm.menu_id in
+              (select distinct srm.menu_id
+               from system_role_menu srm
+                        left join system_role sr on (srm.role_id = sr.role_id)
+                        left join system_user_role sur on (sur.role_id = sr.role_id)
+                        left join system_user su on (su.user_id = sur.user_id)
+               where su.username = #{username})
+            ${ew.customSqlSegment}
+    </sql>
     <select id="findListVo" resultType="com.zclcs.common.core.entity.system.vo.SystemMenuVo">
         <include refid="baseSql"/>
+    </select>
+    <select id="findUserMenuListVo" resultType="com.zclcs.common.core.entity.system.vo.SystemMenuVo">
+        <include refid="baseSqlFromUserMenu"/>
     </select>
 
 </mapper>

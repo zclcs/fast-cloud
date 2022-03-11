@@ -12,6 +12,9 @@ spring:
         prefix: ${SERVICE_NAME_AUTH:auth}
         file-extension: yaml
         extension-configs:
+          - data-id: global-configuration.yaml
+            group: DEFAULT_GROUP
+            refresh: true
           - data-id: logging.yaml
             group: DEFAULT_GROUP
             refresh: true

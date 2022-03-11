@@ -35,4 +35,13 @@ public interface SystemMenuMapper extends BaseMapper<SystemMenu> {
      */
     List<SystemMenuVo> findListVo(@Param(Constants.WRAPPER) Wrapper<SystemMenuVo> ew);
 
+    /**
+     * 查找集合
+     *
+     * @param ew       查询条件
+     * @param username 用户名
+     * @return 分页对象
+     */
+    List<SystemMenuVo> findUserMenuListVo(@Param(Constants.WRAPPER) Wrapper<SystemMenuVo> ew, @Param("username") String username);
+
 }
