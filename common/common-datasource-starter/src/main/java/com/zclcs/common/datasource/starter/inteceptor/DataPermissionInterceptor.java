@@ -3,7 +3,7 @@ package com.zclcs.common.datasource.starter.inteceptor;
 import com.baomidou.mybatisplus.core.toolkit.PluginUtils;
 import com.baomidou.mybatisplus.extension.plugins.inner.InnerInterceptor;
 import com.zclcs.common.core.entity.CurrentUser;
-import com.zclcs.common.core.utils.BaseUtil;
+import com.zclcs.common.core.utils.BaseUsersUtil;
 import com.zclcs.common.datasource.starter.annotation.DataPermission;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jsqlparser.expression.operators.conditional.AndExpression;
@@ -51,7 +51,7 @@ public class DataPermissionInterceptor implements InnerInterceptor {
             if (StringUtils.isBlank(dataPermission.field())) {
                 return originSql;
             }
-            CurrentUser user = BaseUtil.getCurrentUser();
+            CurrentUser user = BaseUsersUtil.getCurrentUser();
             if (user == null) {
                 return originSql;
             }

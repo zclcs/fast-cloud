@@ -13,7 +13,7 @@ import com.zclcs.common.core.entity.system.ao.SelectSystemUserAo;
 import com.zclcs.common.core.entity.system.ao.SystemUserAo;
 import com.zclcs.common.core.entity.system.vo.SystemUserVo;
 import com.zclcs.common.core.utils.BaseRspUtil;
-import com.zclcs.common.core.utils.BaseUtil;
+import com.zclcs.common.core.utils.BaseUsersUtil;
 import com.zclcs.common.core.validate.strategy.UpdateStrategy;
 import com.zclcs.server.system.service.SystemLoginLogService;
 import com.zclcs.server.system.service.SystemUserDataPermissionService;
@@ -58,7 +58,7 @@ public class SystemUserController {
     @GetMapping("success")
     @ApiOperation(value = "登录成功调用")
     public void loginSuccess(HttpServletRequest request) {
-        String currentUsername = BaseUtil.getCurrentUsername();
+        String currentUsername = BaseUsersUtil.getCurrentUsername();
         // update last login time
         this.userService.updateLoginTime(currentUsername);
         // save login log
@@ -131,7 +131,7 @@ public class SystemUserController {
     @GetMapping("password/mine/check/{password}")
     @ApiOperation(value = "检查当前用户密码")
     public BaseRsp<Boolean> checkMyPassword(@ApiParam(value = "密码", required = true) @NotBlank(message = "{required}") @PathVariable String password) {
-        String currentUsername = BaseUtil.getCurrentUsername();
+        String currentUsername = BaseUsersUtil.getCurrentUsername();
         SystemUserVo user = userService.findByName(currentUsername);
         return BaseRspUtil.data(user != null && passwordEncoder.matches(password, user.getPassword()));
     }

@@ -172,7 +172,6 @@
                         <!-- 单独打包网关 mvn -DsendCredentialsOverHttp=true clean package -pl ../gateway -am -->
                         <!-- 单独打包鉴权服务 mvn -DsendCredentialsOverHttp=true clean package -pl ../auth -am -->
                         <!-- 单独打包文档聚合服务 mvn -DsendCredentialsOverHttp=true clean package -pl ../knife4j -am -->
-                        <!-- 单独打包分布式事务服务TM mvn -DsendCredentialsOverHttp=true clean package -pl ../tx-manager -am -->
                         <!-- 单独打包字典服务 mvn -DsendCredentialsOverHttp=true clean package -pl ../server/server-dict -am -->
                         <!-- 单独打包代码生成服务 mvn -DsendCredentialsOverHttp=true clean package -pl ../server/server-generator -am -->
                         <!-- 单独打包文件服务 mvn -DsendCredentialsOverHttp=true clean package -pl ../server/server-minio -am -->

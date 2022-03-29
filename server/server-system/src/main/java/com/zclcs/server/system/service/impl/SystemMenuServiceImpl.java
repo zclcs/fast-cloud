@@ -6,6 +6,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zclcs.common.core.constant.RedisCachePrefixConstant;
 import com.zclcs.common.core.constant.StringConstant;
 import com.zclcs.common.core.entity.MenuTree;
 import com.zclcs.common.core.entity.Tree;
@@ -16,9 +17,11 @@ import com.zclcs.common.core.entity.system.ao.SystemMenuAo;
 import com.zclcs.common.core.entity.system.vo.SystemMenuVo;
 import com.zclcs.common.core.exception.MyException;
 import com.zclcs.common.core.utils.BaseTreeUtil;
-import com.zclcs.common.core.utils.BaseUtil;
+import com.zclcs.common.core.utils.BaseUsersUtil;
+import com.zclcs.common.redis.starter.service.RedisService;
 import com.zclcs.server.system.mapper.SystemMenuMapper;
 import com.zclcs.server.system.service.SystemMenuService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
@@ -42,7 +45,10 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service("menuService")
 @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
+@RequiredArgsConstructor
 public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemMenu> implements SystemMenuService {
+
+    private final RedisService redisService;
 
     @Override
     public List<String> findUserPermissions(String username) {
@@ -74,28 +80,40 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
 
     @Override
     public List<VueRouter<SystemMenuVo>> getUserRouters(String username) {
-        //checkUser(username);
-        List<VueRouter<SystemMenuVo>> routes = new ArrayList<>();
-        List<SystemMenuVo> menus = this.findUserSystemMenus(username);
-        menus.forEach(menu -> {
-            VueRouter<SystemMenuVo> route = new VueRouter<>();
-            route.setId(menu.getMenuId());
-            route.setParentId(menu.getParentId());
-            route.setPath(menu.getPath());
-            route.setName(StrUtil.isNotBlank(menu.getKeepAliveName()) ? menu.getKeepAliveName() : menu.getMenuName());
-            route.setComponent(menu.getComponent());
-            route.setRedirect(menu.getRedirect());
-            route.setMeta(new RouterMeta(
-                    menu.getMenuName(),
-                    menu.getIcon(),
-                    menu.getHideMenu().equals(SystemMenuVo.YES),
-                    menu.getIgnoreKeepAlive().equals(SystemMenuVo.YES),
-                    menu.getHideBreadcrumb().equals(SystemMenuVo.YES),
-                    menu.getHideChildrenInMenu().equals(SystemMenuVo.YES),
-                    menu.getCurrentActiveMenu()));
-            routes.add(route);
-        });
-        return BaseTreeUtil.buildVueRouter(routes);
+        Object obj = redisService.get(RedisCachePrefixConstant.ROUTES + username);
+        if (obj == null) {
+            synchronized (this) {
+                // 再查一次，防止上个已经抢到锁的线程已经更新过了
+                obj = redisService.get(RedisCachePrefixConstant.ROUTES + username);
+                if (obj != null) {
+                    return (List<VueRouter<SystemMenuVo>>) obj;
+                }
+                List<VueRouter<SystemMenuVo>> routes = new ArrayList<>();
+                List<SystemMenuVo> menus = this.findUserSystemMenus(username);
+                menus.forEach(menu -> {
+                    VueRouter<SystemMenuVo> route = new VueRouter<>();
+                    route.setId(menu.getMenuId());
+                    route.setParentId(menu.getParentId());
+                    route.setPath(menu.getPath());
+                    route.setName(StrUtil.isNotBlank(menu.getKeepAliveName()) ? menu.getKeepAliveName() : menu.getMenuName());
+                    route.setComponent(menu.getComponent());
+                    route.setRedirect(menu.getRedirect());
+                    route.setMeta(new RouterMeta(
+                            menu.getMenuName(),
+                            menu.getIcon(),
+                            menu.getHideMenu().equals(SystemMenuVo.YES),
+                            menu.getIgnoreKeepAlive().equals(SystemMenuVo.YES),
+                            menu.getHideBreadcrumb().equals(SystemMenuVo.YES),
+                            menu.getHideChildrenInMenu().equals(SystemMenuVo.YES),
+                            menu.getCurrentActiveMenu()));
+                    routes.add(route);
+                });
+                List<VueRouter<SystemMenuVo>> vueRouters = BaseTreeUtil.buildVueRouter(routes);
+                redisService.set(RedisCachePrefixConstant.ROUTES + username, vueRouters);
+                return vueRouters;
+            }
+        }
+        return (List<VueRouter<SystemMenuVo>>) obj;
     }
 
     @Override
@@ -186,7 +204,7 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
     }
 
     private void checkUser(String username) {
-        String currentUsername = BaseUtil.getCurrentUsername();
+        String currentUsername = BaseUsersUtil.getCurrentUsername();
         if (StringUtils.isNotBlank(currentUsername)
                 && !StringUtils.equalsIgnoreCase(currentUsername, username)) {
             throw new MyException("无权获取别的用户数据");

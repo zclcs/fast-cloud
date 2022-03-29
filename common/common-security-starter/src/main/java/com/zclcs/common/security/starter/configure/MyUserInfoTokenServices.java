@@ -1,5 +1,6 @@
 package com.zclcs.common.security.starter.configure;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -79,7 +80,7 @@ public class MyUserInfoTokenServices implements ResourceServerTokenServices {
         }
     }
 
-    @SneakyThrows
+    @SneakyThrows(value = JsonProcessingException.class)
     private OAuth2Authentication extractAuthentication(Map<String, Object> map) {
         Object principal = this.getPrincipal(map);
         List<GrantedAuthority> authorities = this.authoritiesExtractor.extractAuthorities(map);

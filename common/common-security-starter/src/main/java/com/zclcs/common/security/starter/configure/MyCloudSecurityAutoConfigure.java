@@ -1,7 +1,7 @@
 package com.zclcs.common.security.starter.configure;
 
 import com.zclcs.common.core.constant.MyConstant;
-import com.zclcs.common.core.utils.BaseUtil;
+import com.zclcs.common.core.utils.BaseUsersUtil;
 import com.zclcs.common.security.starter.handler.MyAccessDeniedHandler;
 import com.zclcs.common.security.starter.handler.MyAuthExceptionEntryPoint;
 import com.zclcs.common.security.starter.properties.MyCloudSecurityProperties;
@@ -66,7 +66,7 @@ public class MyCloudSecurityAutoConfigure extends GlobalMethodSecurityConfigurat
         return requestTemplate -> {
             String gatewayToken = new String(Base64Utils.encode(MyConstant.GATEWAY_TOKEN_VALUE.getBytes()));
             requestTemplate.header(MyConstant.GATEWAY_TOKEN_HEADER, gatewayToken);
-            String authorizationToken = BaseUtil.getCurrentTokenValue();
+            String authorizationToken = BaseUsersUtil.getCurrentTokenValue();
             if (StringUtils.isNotBlank(authorizationToken)) {
                 requestTemplate.header(HttpHeaders.AUTHORIZATION, MyConstant.OAUTH2_TOKEN_TYPE + authorizationToken);
             }

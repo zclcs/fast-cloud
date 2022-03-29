@@ -9,8 +9,6 @@ import com.zclcs.common.core.constant.PageConstant;
 import com.zclcs.common.core.constant.RegexpConstant;
 import com.zclcs.common.core.constant.StringConstant;
 import com.zclcs.common.core.constant.ValidConstant;
-import com.zclcs.common.core.entity.CurrentUser;
-import com.zclcs.common.core.entity.MyAuthUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.core.env.Environment;
@@ -20,11 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import reactor.core.publisher.Mono;
@@ -32,7 +25,9 @@ import reactor.core.publisher.Mono;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
@@ -289,59 +284,6 @@ public abstract class BaseUtil {
         return matcher.find();
     }
 
-    /**
-     * 获取在线用户信息
-     *
-     * @return CurrentUser 当前用户信息
-     */
-    public static CurrentUser getCurrentUser() {
-        try {
-            LinkedHashMap<String, Object> authenticationDetails = getAuthenticationDetails();
-            Object principal = authenticationDetails.get("principal");
-            ObjectMapper mapper = new ObjectMapper();
-            return mapper.readValue(mapper.writeValueAsString(principal), CurrentUser.class);
-        } catch (Exception e) {
-            log.error("获取当前用户信息失败", e);
-            return null;
-        }
-    }
-
-    /**
-     * 获取当前用户名称
-     *
-     * @return String 用户名
-     */
-    public static String getCurrentUsername() {
-        Object principal = getOauth2Authentication().getPrincipal();
-        if (principal instanceof MyAuthUser) {
-            return ((MyAuthUser) principal).getUsername();
-        }
-        return (String) getOauth2Authentication().getPrincipal();
-    }
-
-    /**
-     * 获取当前用户权限集
-     *
-     * @return Collection<GrantedAuthority>权限集
-     */
-    public static Collection<GrantedAuthority> getCurrentUserAuthority() {
-        return getOauth2Authentication().getAuthorities();
-    }
-
-    /**
-     * 获取当前令牌内容
-     *
-     * @return String 令牌内容
-     */
-    public static String getCurrentTokenValue() {
-        try {
-            OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) getOauth2Authentication().getDetails();
-            return details.getTokenValue();
-        } catch (Exception ignore) {
-            return null;
-        }
-    }
-
     public static void printSystemUpBanner(Environment environment) {
         String banner = "-----------------------------------------\n" +
                 "服务启动成功，时间：" + DateUtil.date() + "\n" +
@@ -349,16 +291,6 @@ public abstract class BaseUtil {
                 "端口号：" + environment.getProperty("server.port") + "\n" +
                 "-----------------------------------------";
         System.out.println(banner);
-    }
-
-    private static OAuth2Authentication getOauth2Authentication() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (OAuth2Authentication) authentication;
-    }
-
-    @SuppressWarnings("all")
-    private static LinkedHashMap<String, Object> getAuthenticationDetails() {
-        return (LinkedHashMap<String, Object>) getOauth2Authentication().getUserAuthentication().getDetails();
     }
 
     public static void logServiceError(Throwable throwable, String serviceName) {

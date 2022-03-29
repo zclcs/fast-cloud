@@ -1,10 +1,7 @@
 package com.zclcs.gateway.service.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zclcs.common.core.entity.system.BlackList;
 import com.zclcs.common.core.entity.system.RateLimitRule;
-import com.zclcs.common.core.exception.MyException;
 import com.zclcs.common.core.utils.BaseRouteEnhanceCacheUtil;
 import com.zclcs.common.redis.starter.service.RedisService;
 import com.zclcs.gateway.service.RouteEnhanceCacheService;
@@ -25,16 +22,9 @@ public class RouteEnhanceCacheServiceImpl implements RouteEnhanceCacheService {
 
     private RedisService redisService;
 
-    private ObjectMapper objectMapper;
-
     @Autowired(required = false)
     public void setRedisService(RedisService redisService) {
         this.redisService = redisService;
-    }
-
-    @Autowired
-    public void setObjectMapper(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
     }
 
     @Override
@@ -43,14 +33,8 @@ public class RouteEnhanceCacheServiceImpl implements RouteEnhanceCacheService {
             String key = StringUtils.isNotBlank(black.getBlackIp()) ?
                     BaseRouteEnhanceCacheUtil.getBlackListCacheKey(black.getBlackIp()) :
                     BaseRouteEnhanceCacheUtil.getBlackListCacheKey();
-            String value = null;
-            try {
-                this.setBlackList(black);
-                value = objectMapper.writeValueAsString(black);
-            } catch (JsonProcessingException e) {
-                throw new MyException("缓存所有黑名单失败");
-            }
-            redisService.sSet(key, value);
+            this.setBlackList(black);
+            redisService.sSet(key, black);
         });
         log.info("Cache blacklist into redis >>>");
     }
@@ -75,16 +59,10 @@ public class RouteEnhanceCacheServiceImpl implements RouteEnhanceCacheService {
 
     @Override
     public void saveAllRateLimitRules(List<RateLimitRule> rateLimitRules) {
-        rateLimitRules.forEach(r -> {
-            String key = BaseRouteEnhanceCacheUtil.getRateLimitCacheKey(r.getRequestUri(), r.getRequestMethod());
-            String value = null;
-            try {
-                this.setRateLimit(r);
-                value = objectMapper.writeValueAsString(r);
-            } catch (JsonProcessingException e) {
-                throw new MyException("缓存所有限流规则失败");
-            }
-            redisService.set(key, value);
+        rateLimitRules.forEach(rateLimitRule -> {
+            String key = BaseRouteEnhanceCacheUtil.getRateLimitCacheKey(rateLimitRule.getRequestUri(), rateLimitRule.getRequestMethod());
+            this.setRateLimit(rateLimitRule);
+            redisService.set(key, rateLimitRule);
         });
         log.info("Cache rate limit rules into redis >>>");
     }

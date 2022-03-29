@@ -17,7 +17,7 @@ import com.zclcs.common.core.entity.system.ao.SystemUserAo;
 import com.zclcs.common.core.entity.system.vo.SystemUserDataPermissionVo;
 import com.zclcs.common.core.entity.system.vo.SystemUserRoleVo;
 import com.zclcs.common.core.entity.system.vo.SystemUserVo;
-import com.zclcs.common.core.utils.BaseUtil;
+import com.zclcs.common.core.utils.BaseUsersUtil;
 import com.zclcs.server.system.mapper.SystemUserDataPermissionMapper;
 import com.zclcs.server.system.mapper.SystemUserMapper;
 import com.zclcs.server.system.mapper.SystemUserRoleMapper;
@@ -165,7 +165,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     public void updatePassword(String username, String password) {
         SystemUser user = new SystemUser();
         user.setPassword(passwordEncoder.encode(password));
-        String currentUsername = BaseUtil.getCurrentUsername();
+        String currentUsername = BaseUsersUtil.getCurrentUsername();
         this.lambdaUpdate().eq(SystemUser::getUsername, Optional.ofNullable(username).filter(StrUtil::isNotBlank).orElse(currentUsername)).update(user);
     }
 
@@ -173,7 +173,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     public void updateStatus(String username, String status) {
         SystemUser user = new SystemUser();
         user.setStatus(Optional.ofNullable(status).filter(StrUtil::isNotBlank).orElse(SystemUserVo.STATUS_LOCK));
-        String currentUsername = BaseUtil.getCurrentUsername();
+        String currentUsername = BaseUsersUtil.getCurrentUsername();
         this.lambdaUpdate().eq(SystemUser::getUsername, Optional.ofNullable(username).filter(StrUtil::isNotBlank).orElse(currentUsername)).update(user);
     }
 

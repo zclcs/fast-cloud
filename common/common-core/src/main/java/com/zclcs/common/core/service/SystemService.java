@@ -1,7 +1,6 @@
 package com.zclcs.common.core.service;
 
 import com.zclcs.common.core.base.BaseRsp;
-import com.zclcs.common.core.constant.MyServerConstant;
 import com.zclcs.common.core.entity.system.ao.SystemMenuAo;
 import com.zclcs.common.core.service.configure.fegin.FeignConfigure;
 import com.zclcs.common.core.service.fallback.SystemServiceFallback;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 /**
  * @author zclcs
  */
-@FeignClient(value = MyServerConstant.SERVER_SYSTEM, contextId = "systemLogServiceClient", fallbackFactory = SystemServiceFallback.class, configuration = FeignConfigure.class)
+@FeignClient(value = "${my.server-name.server-system}", contextId = "systemLogServiceClient", fallbackFactory = SystemServiceFallback.class, configuration = FeignConfigure.class)
 public interface SystemService {
 
     /**

@@ -6,7 +6,7 @@ import com.zclcs.common.core.annotation.ControllerEndpoint;
 import com.zclcs.common.core.constant.RabbitConstant;
 import com.zclcs.common.core.entity.MessageStruct;
 import com.zclcs.common.core.entity.system.ao.SystemLogAo;
-import com.zclcs.common.core.exception.MyException;
+import com.zclcs.common.core.utils.BaseUsersUtil;
 import com.zclcs.common.core.utils.BaseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -51,43 +51,38 @@ public class ControllerEndpointAspect extends BaseAspectSupport {
     }
 
     @Around("pointcut()")
-    public Object around(ProceedingJoinPoint point) throws MyException {
+    public Object around(ProceedingJoinPoint point) throws Throwable {
         Object result;
         Method targetMethod = resolveMethod(point);
         ControllerEndpoint annotation = targetMethod.getAnnotation(ControllerEndpoint.class);
         String operation = annotation.operation();
         long start = System.currentTimeMillis();
-        try {
-            result = point.proceed();
-            if (StringUtils.isNotBlank(operation)) {
-                String username = BaseUtil.getCurrentUsername();
-                String ip = BaseUtil.getHttpServletRequestIpAddress();
+        result = point.proceed();
+        if (StringUtils.isNotBlank(operation)) {
+            String username = BaseUsersUtil.getCurrentUsername();
+            String ip = BaseUtil.getHttpServletRequestIpAddress();
 
-                String className = point.getTarget().getClass().getName();
-                String methodName = targetMethod.getName();
+            String className = point.getTarget().getClass().getName();
+            String methodName = targetMethod.getName();
 
-                Object[] args = point.getArgs();
-                LocalVariableTableParameterNameDiscoverer u = new LocalVariableTableParameterNameDiscoverer();
-                String[] paramNames = u.getParameterNames(targetMethod);
-                StringBuilder params = new StringBuilder();
-                if (args != null && paramNames != null) {
-                    params = handleParams(params, args, Arrays.asList(paramNames));
-                }
-                SystemLogAo systemLogAo = new SystemLogAo();
-                systemLogAo.setClassName(className);
-                systemLogAo.setMethodName(methodName);
-                systemLogAo.setParams(params.toString());
-                systemLogAo.setIp(ip);
-                systemLogAo.setOperation(operation);
-                systemLogAo.setUsername(username);
-                systemLogAo.setStart(start);
-                rabbitTemplate.convertAndSend(RabbitConstant.DIRECT_MODE_QUEUE_ONE, new MessageStruct(JSONUtil.toJsonStr(systemLogAo)));
+            Object[] args = point.getArgs();
+            LocalVariableTableParameterNameDiscoverer u = new LocalVariableTableParameterNameDiscoverer();
+            String[] paramNames = u.getParameterNames(targetMethod);
+            StringBuilder params = new StringBuilder();
+            if (args != null && paramNames != null) {
+                params = handleParams(params, args, Arrays.asList(paramNames));
             }
-            return result;
-        } catch (Throwable throwable) {
-            String message = throwable.getMessage();
-            throw new MyException(message);
+            SystemLogAo systemLogAo = new SystemLogAo();
+            systemLogAo.setClassName(className);
+            systemLogAo.setMethodName(methodName);
+            systemLogAo.setParams(params.toString());
+            systemLogAo.setIp(ip);
+            systemLogAo.setOperation(operation);
+            systemLogAo.setUsername(username);
+            systemLogAo.setStart(start);
+            rabbitTemplate.convertAndSend(RabbitConstant.DIRECT_MODE_QUEUE_ONE, new MessageStruct(JSONUtil.toJsonStr(systemLogAo)));
         }
+        return result;
     }
 
     @SuppressWarnings("all")

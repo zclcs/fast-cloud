@@ -4,7 +4,6 @@ import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONUtil;
 import com.google.common.base.Stopwatch;
 import com.zclcs.common.core.constant.ParamsConstant;
 import com.zclcs.common.core.entity.system.BlackList;
@@ -97,7 +96,7 @@ public class RouteEnhanceServiceImpl implements RouteEnhanceService {
                     o = routeEnhanceCacheService.getRateLimitRule(originUri.getPath(), requestMethod);
                 }
                 if (o != null) {
-                    RateLimitRule rule = JSONUtil.toBean(o.toString(), RateLimitRule.class);
+                    RateLimitRule rule = (RateLimitRule) o;
                     Mono<Void> result = doRateLimitCheck(limit, rule, originUri, requestIp, requestMethod, response);
                     log.info("Rate limit verification completed - {}", stopwatch.stop());
                     if (result != null) {
@@ -170,7 +169,7 @@ public class RouteEnhanceServiceImpl implements RouteEnhanceService {
 
     private void doBlackListCheck(AtomicBoolean forbid, Set<Object> blackList, URI uri, String requestMethod) {
         for (Object o : blackList) {
-            BlackList b = JSONUtil.toBean(o.toString(), BlackList.class);
+            BlackList b = (BlackList) o;
             if (pathMatcher.match(b.getRequestUri(), uri.getPath()) && ParamsConstant.OPEN.equals(b.getBlackStatus())) {
                 if (ParamsConstant.METHOD_ALL.equalsIgnoreCase(b.getRequestMethod())
                         || StringUtils.equalsIgnoreCase(requestMethod, b.getRequestMethod())) {

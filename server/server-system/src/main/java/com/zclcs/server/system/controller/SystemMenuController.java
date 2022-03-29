@@ -1,6 +1,5 @@
 package com.zclcs.server.system.controller;
 
-
 import com.zclcs.common.core.annotation.ControllerEndpoint;
 import com.zclcs.common.core.base.BaseRsp;
 import com.zclcs.common.core.constant.StringConstant;
@@ -9,6 +8,7 @@ import com.zclcs.common.core.entity.router.VueRouter;
 import com.zclcs.common.core.entity.system.ao.SystemMenuAo;
 import com.zclcs.common.core.entity.system.vo.SystemMenuVo;
 import com.zclcs.common.core.utils.BaseRspUtil;
+import com.zclcs.common.core.utils.BaseUsersUtil;
 import com.zclcs.common.core.validate.strategy.UpdateStrategy;
 import com.zclcs.server.system.service.SystemMenuService;
 import io.swagger.annotations.Api;
@@ -17,11 +17,13 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,10 +45,10 @@ public class SystemMenuController {
 
     private final SystemMenuService menuService;
 
-    @GetMapping("/{username}")
+    @GetMapping("/routers")
     @ApiOperation(value = "用户路由")
-    public BaseRsp<List<VueRouter<SystemMenuVo>>> getUserRouters(@ApiParam(value = "用户名", required = true) @NotBlank(message = "{required}") @PathVariable String username) {
-        List<VueRouter<SystemMenuVo>> userRouters = this.menuService.getUserRouters(username);
+    public BaseRsp<List<VueRouter<SystemMenuVo>>> getUserRouters() {
+        List<VueRouter<SystemMenuVo>> userRouters = this.menuService.getUserRouters(BaseUsersUtil.getCurrentUsername());
         return BaseRspUtil.data(userRouters);
     }
 
@@ -57,10 +59,12 @@ public class SystemMenuController {
         return BaseRspUtil.data(systemMenus);
     }
 
-    @GetMapping("/permissions/{username}")
+    @GetMapping("/permissions")
     @ApiOperation(value = "权限")
-    public BaseRsp<List<String>> findUserPermissions(@ApiParam(value = "用户名", required = true) @NotBlank(message = "{required}") @PathVariable String username) {
-        return BaseRspUtil.data(this.menuService.findUserPermissions(username));
+    public BaseRsp<List<String>> findUserPermissions() {
+        Collection<GrantedAuthority> currentUserAuthority = BaseUsersUtil.getCurrentUserAuthority();
+        List<String> permissions = currentUserAuthority.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
+        return BaseRspUtil.data(permissions);
     }
 
     @PostMapping

@@ -17,6 +17,7 @@ import com.zclcs.common.core.entity.system.vo.SystemUserConnectionVo;
 import com.zclcs.common.core.entity.system.vo.SystemUserVo;
 import com.zclcs.common.core.exception.MyException;
 import com.zclcs.common.core.utils.BaseRspUtil;
+import com.zclcs.common.core.utils.BaseUsersUtil;
 import com.zclcs.common.core.utils.BaseUtil;
 import lombok.RequiredArgsConstructor;
 import me.zhyd.oauth.config.AuthSource;
@@ -174,7 +175,7 @@ public class SocialLoginServiceImpl implements SocialLoginService {
     }
 
     private boolean isCurrentUser(String username) {
-        String currentUsername = BaseUtil.getCurrentUsername();
+        String currentUsername = BaseUsersUtil.getCurrentUsername();
         return StringUtils.equalsIgnoreCase(username, currentUsername);
     }
 

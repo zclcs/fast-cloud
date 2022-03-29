@@ -6,8 +6,6 @@ import com.zclcs.common.core.constant.ParamsConstant;
 import com.zclcs.common.core.constant.SocialConstant;
 import com.zclcs.common.core.constant.StringConstant;
 import com.zclcs.common.core.entity.MyAuthUser;
-import com.zclcs.common.core.entity.router.VueRouter;
-import com.zclcs.common.core.entity.system.vo.SystemMenuVo;
 import com.zclcs.common.core.entity.system.vo.SystemUserVo;
 import com.zclcs.common.core.utils.BaseUtil;
 import lombok.RequiredArgsConstructor;
@@ -41,8 +39,9 @@ public class MyUserDetailServiceImpl implements UserDetailsService {
         HttpServletRequest httpServletRequest = BaseUtil.getHttpServletRequest();
         SystemUserVo systemUser = userManager.findByName(username);
         if (systemUser != null) {
-            List<String> permissions = userManager.findUserPermissions(systemUser.getUsername());
-            List<VueRouter<SystemMenuVo>> userRoutes = userManager.findUserRoutes(systemUser.getUsername());
+            String systemUserUsername = systemUser.getUsername();
+            // 缓存路由 以及 权限
+            List<String> permissions = userManager.findUserPermissions(systemUserUsername);
             boolean notLocked = StringUtils.equals(SystemUserVo.STATUS_VALID, systemUser.getStatus());
             String password = systemUser.getPassword();
             String loginType = (String) httpServletRequest.getAttribute(ParamsConstant.LOGIN_TYPE);
@@ -53,7 +52,7 @@ public class MyUserDetailServiceImpl implements UserDetailsService {
             if (CollectionUtil.isNotEmpty(permissions)) {
                 grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList(String.join(StringConstant.COMMA, permissions));
             }
-            MyAuthUser authUser = new MyAuthUser(systemUser.getUsername(), password, true, true, true, notLocked,
+            MyAuthUser authUser = new MyAuthUser(systemUserUsername, password, true, true, true, notLocked,
                     grantedAuthorities);
             BeanUtils.copyProperties(systemUser, authUser);
 

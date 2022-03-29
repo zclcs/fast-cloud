@@ -6,17 +6,30 @@ package com.zclcs.common.core.constant;
  * @author zclcs
  */
 public interface RedisCachePrefixConstant {
+
     /**
      * 验证码 key前缀
      */
     String CODE_PREFIX = "captcha:";
+
     /**
      * auth_code key前缀
      */
     String AUTH_CODE_PREFIX = "auth_code:";
+
     /**
      * 缓存 client的 redis key，这里是 hash结构存储
      */
     String CLIENT_DETAILS_PREFIX = "client_details";
+
+    /**
+     * 缓存 用户权限的 redis key
+     */
+    String PERMISSIONS = "user:permissions:";
+
+    /**
+     * 缓存 用户路由的 redis key
+     */
+    String ROUTES = "user:routes:";
 
 }

@@ -5,7 +5,7 @@ import com.zclcs.common.core.constant.MyConstant;
 /**
  * 基础控制器
  *
- * @author zhouchenglong
+ * @author zclcs
  */
 public class BaseController {
 

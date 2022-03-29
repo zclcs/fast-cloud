@@ -43,6 +43,7 @@ public class SystemRoleAo implements Serializable {
     private String remark;
 
     @ApiModelProperty(value = "菜单编号")
+    @NotNull(message = "{required}")
     private List<Long> menuIds;
 
 
