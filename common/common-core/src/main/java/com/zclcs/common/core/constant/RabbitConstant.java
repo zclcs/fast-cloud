@@ -10,9 +10,9 @@ package com.zclcs.common.core.constant;
 public interface RabbitConstant {
 
     /**
-     * 直接模式1
+     * 直接模式队列1 - 记录系统日志
      */
-    String DIRECT_MODE_QUEUE_ONE = "queue.direct.1";
+    String RECORD_SYSTEM_LOG_QUEUE = "queue.direct.1";
 
     /**
      * 队列2
@@ -23,6 +23,21 @@ public interface RabbitConstant {
      * 队列3
      */
     String QUEUE_THREE = "3.queue";
+
+    /**
+     * canal 读取 binlog 更新缓存队列
+     */
+    String CANAL_QUEUE = "canal";
+
+    /**
+     * canal 读取 binlog 更新缓存交换器
+     */
+    String CANAL_EXCHANGE = "exchange.canal";
+
+    /**
+     * canal 读取 binlog 更新缓存交换器
+     */
+    String CANAL_ROUTE_KEY = "canal-routing-key";
 
     /**
      * 分列模式

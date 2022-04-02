@@ -3,11 +3,14 @@ package com.zclcs.auth.service.impl;
 import cn.hutool.core.collection.CollectionUtil;
 import com.zclcs.auth.manager.UserManager;
 import com.zclcs.common.core.constant.ParamsConstant;
+import com.zclcs.common.core.constant.RedisCachePrefixConstant;
 import com.zclcs.common.core.constant.SocialConstant;
 import com.zclcs.common.core.constant.StringConstant;
 import com.zclcs.common.core.entity.MyAuthUser;
 import com.zclcs.common.core.entity.system.vo.SystemUserVo;
+import com.zclcs.common.core.properties.GlobalProperties;
 import com.zclcs.common.core.utils.BaseUtil;
+import com.zclcs.common.redis.starter.service.RedisService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -33,6 +36,8 @@ public class MyUserDetailServiceImpl implements UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserManager userManager;
+    private final RedisService redisService;
+    private final GlobalProperties globalProperties;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -42,6 +47,11 @@ public class MyUserDetailServiceImpl implements UserDetailsService {
             String systemUserUsername = systemUser.getUsername();
             // 缓存路由 以及 权限
             List<String> permissions = userManager.findUserPermissions(systemUserUsername);
+            redisService.setRedisPrefix(globalProperties.getRedisCache().getServerSystemPrefix());
+            if (!redisService.hasKey(RedisCachePrefixConstant.ROUTES + username)) {
+                redisService.set(RedisCachePrefixConstant.ROUTES + username, userManager.findUserRoutes(systemUserUsername));
+            }
+            redisService.setRedisPrefix(null);
             boolean notLocked = StringUtils.equals(SystemUserVo.STATUS_VALID, systemUser.getStatus());
             String password = systemUser.getPassword();
             String loginType = (String) httpServletRequest.getAttribute(ParamsConstant.LOGIN_TYPE);

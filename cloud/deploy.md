@@ -136,6 +136,12 @@ ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 > - 执行docker build -t 192.168.33.10:3000/library/rabbitmq:3.9.13-management .
 > - push 镜像到harbor仓库`docker push 192.168.33.10:3000/library/rabbitmq:3.9.13-management`
 
+# 若无canal基础镜像先创建基础镜像
+
+> - 复制项目 /cloud/third-part/canal 下的内容，上传至服务器
+> - 执行docker build -t 192.168.33.10:3000/library/canal:v1.1.5 .
+> - push 镜像到harbor仓库`docker push 192.168.33.10:3000/library/canal:v1.1.5`
+
 # 若无seata基础镜像先创建基础镜像
 
 > - 复制项目 cloud/docker-compose/cloud/seata 下的内容，上传至服务器
@@ -149,6 +155,7 @@ b n
 > - 复制`third-part`目录下的文件, 上传服务器
 > - 进入`third-part`目录, 执行`docker-compose up -d`
 > - 这个时候nacos会启动失败，原因是没有创建数据库，查看项目sql目录，通过sql名称建库
+> - 记得导入一下rabbitmq的配置
 > - 执行`docker-compose down`, `docker-compose up -d`重启
 
 ## 部署服务及前端

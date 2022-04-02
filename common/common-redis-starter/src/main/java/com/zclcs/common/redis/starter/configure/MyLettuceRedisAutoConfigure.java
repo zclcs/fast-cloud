@@ -45,9 +45,8 @@ public class MyLettuceRedisAutoConfigure {
 
         GenericJackson2JsonRedisSerializer genericJackson2JsonRedisSerializer = new GenericJackson2JsonRedisSerializer(mapper);
 
-        MyStringRedisSerializer myStringRedisSerializer = new MyStringRedisSerializer(properties);
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
-        template.setKeySerializer(myStringRedisSerializer);
+        template.setKeySerializer(stringRedisSerializer);
         template.setHashKeySerializer(stringRedisSerializer);
         template.setValueSerializer(genericJackson2JsonRedisSerializer);
         template.setHashValueSerializer(genericJackson2JsonRedisSerializer);
@@ -59,7 +58,7 @@ public class MyLettuceRedisAutoConfigure {
     @Bean
     @ConditionalOnBean(name = "redisTemplate")
     public RedisService redisService() {
-        return new RedisService();
+        return new RedisService(properties);
     }
 
 }

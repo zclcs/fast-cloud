@@ -43,7 +43,7 @@ public class MyRabbitMqAutoConfigure {
      */
     @Bean
     public Queue directOneQueue() {
-        return new Queue(RabbitConstant.DIRECT_MODE_QUEUE_ONE);
+        return new Queue(RabbitConstant.RECORD_SYSTEM_LOG_QUEUE);
     }
 
     /**
@@ -60,6 +60,14 @@ public class MyRabbitMqAutoConfigure {
     @Bean
     public Queue queueThree() {
         return new Queue(RabbitConstant.QUEUE_THREE);
+    }
+
+    /**
+     * canal 读取 binlog 更新缓存队列
+     */
+    @Bean
+    public Queue canalQueue() {
+        return new Queue(RabbitConstant.CANAL_QUEUE);
     }
 
     /**

@@ -23,7 +23,7 @@ import java.io.IOException;
  * @author zclcs
  */
 @Slf4j
-@RabbitListener(queues = RabbitConstant.DIRECT_MODE_QUEUE_ONE)
+@RabbitListener(queues = RabbitConstant.RECORD_SYSTEM_LOG_QUEUE)
 @Component
 public class DirectQueueOneHandler {
 

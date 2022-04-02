@@ -48,6 +48,10 @@ public class MyProvider implements DictProvider {
             } else {
                 dictTableLevels.stream().filter(dictTableLevel -> dictTableLevel.getDictNameId().equals(dictTableName.getId()))
                         .forEach(dictTableLevel -> dictTypeBuilder.add(dictTableLevel.getCode(), dictTableLevel.getTitle()));
+                DictTypeVo.DictTypeBuilder dictLevelTypeBuilder = DictTypeVo.newBuilder(dictTableName.getDictName(), dictTableName.getDictTitle());
+                dictTableLevels.stream().filter(dictTableLevel -> dictTableLevel.getDictNameId().equals(dictTableName.getId()))
+                        .forEach(dictTableLevel -> dictLevelTypeBuilder.add(dictTableLevel.getParentCode(), dictTableLevel.getCode(), dictTableLevel.getTitle()));
+                dictTypeVos.add(dictLevelTypeBuilder.build());
             }
             dictTypeVos.add(dictTypeBuilder.build());
         }
