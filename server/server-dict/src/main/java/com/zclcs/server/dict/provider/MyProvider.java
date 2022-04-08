@@ -43,15 +43,11 @@ public class MyProvider implements DictProvider {
         for (DictTableName dictTableName : dictTableNames) {
             DictTypeVo.DictTypeBuilder dictTypeBuilder = DictTypeVo.newBuilder(dictTableName.getDictName(), dictTableName.getDictTitle());
             if (DictConstant.DICT_TYPE_0.equals(dictTableName.getType())) {
-                dictTables.stream().filter(dictTable -> dictTable.getDictNameId().equals(dictTableName.getId()))
+                dictTables.stream().filter(dictTable -> dictTable.getDictName().equals(dictTableName.getDictName()))
                         .forEach(dictTable -> dictTypeBuilder.add(dictTable.getCode(), dictTable.getTitle()));
             } else {
-                dictTableLevels.stream().filter(dictTableLevel -> dictTableLevel.getDictNameId().equals(dictTableName.getId()))
+                dictTableLevels.stream().filter(dictTableLevel -> dictTableLevel.getDictName().equals(dictTableName.getDictName()))
                         .forEach(dictTableLevel -> dictTypeBuilder.add(dictTableLevel.getCode(), dictTableLevel.getTitle()));
-                DictTypeVo.DictTypeBuilder dictLevelTypeBuilder = DictTypeVo.newBuilder(dictTableName.getDictName(), dictTableName.getDictTitle());
-                dictTableLevels.stream().filter(dictTableLevel -> dictTableLevel.getDictNameId().equals(dictTableName.getId()))
-                        .forEach(dictTableLevel -> dictLevelTypeBuilder.add(dictTableLevel.getParentCode(), dictTableLevel.getCode(), dictTableLevel.getTitle()));
-                dictTypeVos.add(dictLevelTypeBuilder.build());
             }
             dictTypeVos.add(dictTypeBuilder.build());
         }

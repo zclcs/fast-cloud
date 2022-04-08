@@ -29,6 +29,13 @@ system:
     controller:
       enabled: true
       prefix: /cache
+    store-key:
+      # 树结构父级值的前缀
+      parent-prefix: '${my.redis-cache-prefix}dict:p:'
+      # 数据字典类型对象前缀
+      type-prefix: '${my.redis-cache-prefix}dict:t:'
+      # 数据字典值文本前缀
+      value-prefix: '${my.redis-cache-prefix}dict:v:'
 
 mybatis-plus:
   type-aliases-package: com.zclcs.common.core.entity.dict
@@ -40,9 +47,6 @@ my:
       enable: true
       anon-uris: /v2/api-docs,/v2/api-docs-ext
       only-fetch-by-gateway: false
-  lettuce:
-    redis:
-      cache-prefix: ${my.redis-cache.server-dict-prefix}
 
 seata:
   config:

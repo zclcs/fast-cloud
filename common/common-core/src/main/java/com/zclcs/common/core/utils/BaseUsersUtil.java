@@ -75,20 +75,6 @@ public abstract class BaseUsersUtil {
     }
 
     /**
-     * 更新用户信息
-     */
-    public static void updateUserDetail(SystemUserVo systemUser) {
-        boolean notLocked = StringUtils.equals(SystemUserVo.STATUS_VALID, systemUser.getStatus());
-        String password = systemUser.getPassword();
-        Collection<GrantedAuthority> currentUserAuthority = getCurrentUserAuthority();
-        MyAuthUser authUser = new MyAuthUser(systemUser.getPassword(), password, true, true, true, notLocked,
-                currentUserAuthority);
-        BeanUtils.copyProperties(systemUser, authUser);
-        SecurityContextHolder.getContext().setAuthentication(
-                new UsernamePasswordAuthenticationToken(authUser, authUser.getPassword(), currentUserAuthority));
-    }
-
-    /**
      * 获取当前用户权限集
      *
      * @return Collection<GrantedAuthority>权限集

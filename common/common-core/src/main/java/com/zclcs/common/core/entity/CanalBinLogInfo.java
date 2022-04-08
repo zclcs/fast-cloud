@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 /**
  * @author zhouchenglong
  */
@@ -15,9 +13,19 @@ import java.util.List;
 public class CanalBinLogInfo {
 
     /**
+     * 数据
+     */
+    private String data;
+
+    /**
      * sql 类型 INSERT UPDATE DELETE
      */
-    private String type;
+    private String database;
+
+    /**
+     * 是否ddl语句
+     */
+    private Boolean isDdl;
 
     /**
      * 表名
@@ -25,7 +33,7 @@ public class CanalBinLogInfo {
     private String table;
 
     /**
-     * 数据
+     * sql 类型 INSERT UPDATE DELETE
      */
-    private List<Object> data;
+    private String type;
 }

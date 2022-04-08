@@ -32,9 +32,10 @@ public class DictTableAo implements Serializable {
     @ApiModelProperty(value = "字典表名id")
     private Long id;
 
+    @Size(max = 255, message = "{noMoreThan}")
     @NotNull(message = "{required}")
-    @ApiModelProperty(value = "表名id", required = true)
-    private Long dictNameId;
+    @ApiModelProperty(value = "表名", required = true)
+    private String dictName;
 
     @Size(max = 40, message = "{noMoreThan}")
     @NotBlank(message = "{required}")

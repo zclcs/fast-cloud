@@ -35,12 +35,12 @@ public class DictTableLevelAo implements Serializable {
     @ApiModelProperty(value = "父项id-默认为0")
     private Long parentId;
 
+    @Size(max = 255, message = "{noMoreThan}")
     @NotNull(message = "{required}")
-    @ApiModelProperty(value = "表名id", required = true)
-    private Long dictNameId;
+    @ApiModelProperty(value = "表名", required = true)
+    private String dictName;
 
-    @NotNull(message = "{required}")
-    @ApiModelProperty(value = "层级", required = true)
+    @ApiModelProperty(value = "层级")
     private Integer level;
 
     @Size(max = 40, message = "{noMoreThan}")

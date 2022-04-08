@@ -26,23 +26,44 @@
         user_id, username, password, dept_id, email, mobile, status, create_time, modify_time, lassystem_login_time, ssex, is_tab, theme, avatar, description
     </sql>
     <select id="findByName" resultType="com.zclcs.common.core.entity.system.vo.SystemUserVo">
-        SELECT u.user_id,
-               u.username,
-               u.email,
-               u.mobile,
-               u.password,
-               u.status,
-               u.create_time,
-               u.gender,
-               u.dept_id,
-               u.last_login_time,
-               u.modify_time,
-               u.description,
-               u.avatar,
-               d.dept_name
-        FROM system_user u
-                 LEFT JOIN system_dept d ON (u.dept_id = d.dept_id)
-        WHERE u.username = #{username}
+        select su.user_id,
+               su.username,
+               su.password,
+               su.dept_id,
+               su.email,
+               su.mobile,
+               su.status,
+               su.create_time,
+               su.modify_time,
+               su.last_login_time,
+               su.gender,
+               su.is_tab,
+               su.theme,
+               su.avatar,
+               su.description,
+               group_concat(distinct sur.role_id)  roleIds,
+               group_concat(distinct sr.role_name) roleNames,
+               group_concat(distinct sudp.dept_id) deptIds
+        from system_user su
+                 left join system_user_role sur on su.user_id = sur.user_id
+                 inner join system_role sr on sur.role_id = sr.role_id
+                 left join system_user_data_permission sudp on su.user_id = sudp.user_id
+        WHERE su.username = #{username}
+        group by su.user_id,
+                 su.username,
+                 su.password,
+                 su.dept_id,
+                 su.email,
+                 su.mobile,
+                 su.status,
+                 su.create_time,
+                 su.modify_time,
+                 su.last_login_time,
+                 su.gender,
+                 su.is_tab,
+                 su.theme,
+                 su.avatar,
+                 su.description
     </select>
     <select id="findUserDataPermissions" resultType="com.zclcs.common.core.entity.system.vo.SystemUserDataPermissionVo">
         select user_id, dept_id

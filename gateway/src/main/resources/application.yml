@@ -98,9 +98,6 @@ mybatis-plus:
     banner: false
 
 my:
-  lettuce:
-    redis:
-      cache-prefix: ${my.redis-cache.gateway-prefix}
   log:
     enable-log-for-controller: ${LOG_CONTROLLER_PARAMS_GATEWAY:false}
 
@@ -121,4 +118,3 @@ hystrix:
 ribbon:
   eager-load:
     enabled: true
-

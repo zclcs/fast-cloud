@@ -71,6 +71,11 @@ public interface MyConstant {
     Long TOP_PARENT_ID = 0L;
 
     /**
+     * 根节点id
+     */
+    Integer TOP_PARENT_LEVEL = 1;
+
+    /**
      * 根节点code
      */
     String TOP_PARENT_CODE = "0";
@@ -94,5 +99,20 @@ public interface MyConstant {
      * 字典表缓存前缀
      */
     String DICT_CACHE_PREFIX = "dict";
+
+    /**
+     * 新增
+     */
+    String INSERT = "INSERT";
+
+    /**
+     * 修改
+     */
+    String UPDATE = "UPDATE";
+
+    /**
+     * 删除
+     */
+    String DELETE = "DELETE";
 
 }

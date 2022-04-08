@@ -29,10 +29,10 @@ public class DictTable {
     private Long id;
 
     /**
-     * 表名id
+     * 表名
      */
-    @TableField("dict_name_id")
-    private Long dictNameId;
+    @TableField("dict_name")
+    private String dictName;
 
     /**
      * 字典code

@@ -66,8 +66,16 @@ public interface DictTableService extends IService<DictTable> {
     /**
      * 删除
      *
-     * @param ids ids
+     * @param dictNames dictNames 字典 表名
      */
-    void deleteDictTableName(List<Long> ids);
+    void deleteDictTableName(List<String> dictNames);
+
+    /**
+     * 更新字典名
+     *
+     * @param oldDictName oldDictName 老字典名
+     * @param newDictName newDictName 新字典名
+     */
+    void updateDictTableName(String oldDictName, String newDictName);
 
 }

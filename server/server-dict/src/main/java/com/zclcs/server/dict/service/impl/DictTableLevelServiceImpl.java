@@ -6,15 +6,18 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.houkunlin.system.dict.starter.bean.DictValueVo;
+import com.zclcs.common.core.constant.DictConstant;
 import com.zclcs.common.core.constant.MyConstant;
+import com.zclcs.common.core.constant.ValidConstant;
 import com.zclcs.common.core.entity.dict.DictTableLevel;
+import com.zclcs.common.core.entity.dict.DictTableName;
 import com.zclcs.common.core.entity.dict.ao.DictTableLevelAo;
 import com.zclcs.common.core.entity.dict.vo.DictTableLevelTreeVo;
 import com.zclcs.common.core.entity.dict.vo.DictTableLevelVo;
+import com.zclcs.common.core.exception.MyException;
 import com.zclcs.common.core.utils.BaseTreeUtil;
 import com.zclcs.server.dict.mapper.DictTableLevelMapper;
-import com.zclcs.server.dict.provider.DictProvider;
+import com.zclcs.server.dict.mapper.DictTableNameMapper;
 import com.zclcs.server.dict.service.DictTableLevelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,7 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * 层级字典 Service实现
@@ -37,7 +39,7 @@ import java.util.stream.Collectors;
 @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
 public class DictTableLevelServiceImpl extends ServiceImpl<DictTableLevelMapper, DictTableLevel> implements DictTableLevelService {
 
-    private final DictProvider dictProvider;
+    private final DictTableNameMapper dictTableNameMapper;
 
     @Override
     public List<DictTableLevelTreeVo> findDictTableLevelTreeVo(DictTableLevelVo dictTableLevelVo) {
@@ -59,7 +61,7 @@ public class DictTableLevelServiceImpl extends ServiceImpl<DictTableLevelMapper,
     public List<DictTableLevelVo> findDictTableLevelList(DictTableLevelVo dictTableLevelVo) {
         QueryWrapper<DictTableLevelVo> queryWrapper = getQueryWrapper(dictTableLevelVo);
         queryWrapper.in(CollectionUtil.isNotEmpty(dictTableLevelVo.getIds()), "dtl.id", dictTableLevelVo.getIds());
-        queryWrapper.in(CollectionUtil.isNotEmpty(dictTableLevelVo.getDictNameIds()), "dtl.dict_name_id", dictTableLevelVo.getDictNameIds());
+        queryWrapper.in(CollectionUtil.isNotEmpty(dictTableLevelVo.getDictNames()), "dtl.dict_name", dictTableLevelVo.getDictNames());
         queryWrapper.eq(dictTableLevelVo.getParentId() != null, "dtl.parent_id", dictTableLevelVo.getParentId());
         return this.baseMapper.findListVo(queryWrapper);
     }
@@ -78,8 +80,7 @@ public class DictTableLevelServiceImpl extends ServiceImpl<DictTableLevelMapper,
 
     private QueryWrapper<DictTableLevelVo> getQueryWrapper(DictTableLevelVo dictTableLevelVo) {
         QueryWrapper<DictTableLevelVo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.like(StrUtil.isNotBlank(dictTableLevelVo.getDictName()), "dtn.dict_name", dictTableLevelVo.getDictName());
-        queryWrapper.eq(dictTableLevelVo.getDictNameId() != null, "dtl.dict_name_id", dictTableLevelVo.getDictNameId());
+        queryWrapper.like(StrUtil.isNotBlank(dictTableLevelVo.getDictName()), "dtl.dict_name", dictTableLevelVo.getDictName());
         queryWrapper.eq(StrUtil.isNotBlank(dictTableLevelVo.getCode()), "dtl.code", dictTableLevelVo.getCode());
         queryWrapper.like(StrUtil.isNotBlank(dictTableLevelVo.getTitle()), "dtl.title", dictTableLevelVo.getTitle());
         queryWrapper.eq(dictTableLevelVo.getParentCode() != null, "dtl.parent_code", dictTableLevelVo.getParentCode());
@@ -107,16 +108,16 @@ public class DictTableLevelServiceImpl extends ServiceImpl<DictTableLevelMapper,
     @Transactional(rollbackFor = Exception.class)
     public void createDictTableLevel(DictTableLevelAo dictTableLevelAo) {
         DictTableLevel dictTableLevel = getDictTableLevel(dictTableLevelAo);
+        validAdd(dictTableLevel);
         this.save(dictTableLevel);
-        refreshDictValue(dictTableLevel.getId());
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateDictTableLevel(DictTableLevelAo dictTableLevelAo) {
         DictTableLevel dictTableLevel = getDictTableLevel(dictTableLevelAo);
+        validUpdate(dictTableLevel);
         this.updateById(dictTableLevel);
-        refreshDictValue(dictTableLevel.getId());
     }
 
     private DictTableLevel getDictTableLevel(DictTableLevelAo dictTableLevelAo) {
@@ -124,9 +125,12 @@ public class DictTableLevelServiceImpl extends ServiceImpl<DictTableLevelMapper,
         DictTableLevel dictTableLevel = new DictTableLevel();
         BeanUtil.copyProperties(dictTableLevelAo, dictTableLevel);
         if (!MyConstant.TOP_PARENT_ID.equals(parentId)) {
-            dictTableLevel.setParentCode(this.lambdaQuery().eq(DictTableLevel::getId, dictTableLevelAo.getParentId()).one().getCode());
+            DictTableLevel parent = this.lambdaQuery().eq(DictTableLevel::getId, dictTableLevelAo.getParentId()).one();
+            dictTableLevel.setParentCode(parent.getCode());
+            dictTableLevel.setLevel(parent.getLevel() + MyConstant.TOP_PARENT_LEVEL);
         } else {
             dictTableLevel.setParentCode(MyConstant.TOP_PARENT_CODE);
+            dictTableLevel.setLevel(MyConstant.TOP_PARENT_LEVEL);
         }
         return dictTableLevel;
     }
@@ -135,19 +139,19 @@ public class DictTableLevelServiceImpl extends ServiceImpl<DictTableLevelMapper,
     @Transactional(rollbackFor = Exception.class)
     public void deleteDictTableLevel(List<Long> ids) {
         List<Long> allChildrenId = getAllChildrenId(ids);
-        List<DictTableLevelVo> dictTableList = this.findDictTableLevelList(DictTableLevelVo.builder().ids(allChildrenId).build());
         this.removeByIds(allChildrenId);
-        deleteDictValue(dictTableList);
     }
 
     @Override
-    public void deleteDictTableNameLevel(List<Long> ids) {
-        List<DictTableLevelVo> dictTableList = this.findDictTableLevelList(DictTableLevelVo.builder().dictNameIds(ids).build());
-        List<Long> tableLevelIds = dictTableList.stream().map(DictTableLevelVo::getId).collect(Collectors.toList());
-        if (CollectionUtil.isNotEmpty(tableLevelIds)) {
-            this.removeByIds(tableLevelIds);
-            deleteDictValue(dictTableList);
-        }
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteDictTableNameLevel(List<String> dictNames) {
+        this.lambdaUpdate().in(DictTableLevel::getDictName, dictNames).remove();
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateDictTableName(String oldDictName, String newDictName) {
+        this.lambdaUpdate().eq(DictTableLevel::getDictName, oldDictName).set(DictTableLevel::getDictName, newDictName).update();
     }
 
     private List<Long> getAllChildrenId(List<Long> tableLevelIds) {
@@ -167,7 +171,6 @@ public class DictTableLevelServiceImpl extends ServiceImpl<DictTableLevelMapper,
             tree.setLabel(tableLevelVo.getTitle());
             tree.setDictName(tableLevelVo.getDictName());
             tree.setHasPar(!tableLevelVo.getParentId().equals(MyConstant.TOP_PARENT_ID));
-            tree.setDictNameId(tableLevelVo.getDictNameId());
             tree.setCode(tableLevelVo.getCode());
             tree.setTitle(tableLevelVo.getTitle());
             tree.setRemark(tableLevelVo.getRemark());
@@ -185,25 +188,31 @@ public class DictTableLevelServiceImpl extends ServiceImpl<DictTableLevelMapper,
         }
     }
 
-    private void refreshDictValue(Long id) {
-        DictTableLevelVo dictTable = this.findDictTableLevel(DictTableLevelVo.builder().id(id).build());
-        dictProvider.refreshDictCache(DictValueVo.builder()
-                .dictType(dictTable.getDictName())
-                .value(dictTable.getCode())
-                .title(dictTable.getTitle())
-                .build());
+    private void validAdd(DictTableLevel dictTableLevel) {
+        validDictCode(dictTableLevel);
+        validDictName(dictTableLevel);
     }
 
-    private void deleteDictValue(List<DictTableLevelVo> dictTableList) {
-        List<DictValueVo> dictValueVos = new ArrayList<>();
-        for (DictTableLevelVo dictTableVo : dictTableList) {
-            DictValueVo dictValueVo = DictValueVo.builder()
-                    .dictType(dictTableVo.getDictName())
-                    .value(dictTableVo.getCode())
-                    .title(null)
-                    .build();
-            dictValueVos.add(dictValueVo);
+    private void validUpdate(DictTableLevel dictTableLevel) {
+        DictTableLevelVo dictTableLevelVo = this.findDictTableLevel(DictTableLevelVo.builder().id(dictTableLevel.getId()).build());
+        Optional.ofNullable(dictTableLevelVo).orElseThrow(() -> new MyException("查询不到该层级字典项"));
+        if (!StrUtil.equals(dictTableLevelVo.getCode(), dictTableLevel.getCode())) {
+            validDictCode(dictTableLevel);
         }
-        dictProvider.refreshDictListCache(dictValueVos);
+        validDictName(dictTableLevel);
+    }
+
+    private void validDictCode(DictTableLevel dictTableLevel) {
+        if (!this.lambdaQuery().eq(DictTableLevel::getCode, dictTableLevel.getCode()).count().equals(ValidConstant.COUNT_0)) {
+            throw new MyException("层级字典项code重复");
+        }
+    }
+
+    private void validDictName(DictTableLevel dictTableLevel) {
+        if (dictTableNameMapper.selectCount(new QueryWrapper<DictTableName>().lambda()
+                .eq(DictTableName::getDictName, dictTableLevel.getDictName())
+                .eq(DictTableName::getType, DictConstant.DICT_TYPE_1)).equals(ValidConstant.COUNT_0)) {
+            throw new MyException("未找到该层级字典：" + dictTableLevel.getDictName());
+        }
     }
 }

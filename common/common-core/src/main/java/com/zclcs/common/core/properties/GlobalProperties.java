@@ -16,9 +16,14 @@ public class GlobalProperties {
     private ServerNameProperties serverName;
 
     /**
+     * 服务名配置
+     */
+    private DatabaseProperties database;
+
+    /**
      * 服务缓存前缀
      */
-    private RedisCacheProperties redisCache;
+    private String redisCachePrefix;
 
     public ServerNameProperties getServerName() {
         return serverName;
@@ -28,19 +33,28 @@ public class GlobalProperties {
         this.serverName = serverName;
     }
 
-    public RedisCacheProperties getRedisCache() {
-        return redisCache;
+    public DatabaseProperties getDatabase() {
+        return database;
     }
 
-    public void setRedisCache(RedisCacheProperties redisCache) {
-        this.redisCache = redisCache;
+    public void setDatabase(DatabaseProperties database) {
+        this.database = database;
+    }
+
+    public String getRedisCachePrefix() {
+        return redisCachePrefix;
+    }
+
+    public void setRedisCachePrefix(String redisCachePrefix) {
+        this.redisCachePrefix = redisCachePrefix;
     }
 
     @Override
     public String toString() {
         return "GlobalProperties{" +
                 "serverName=" + serverName.toString() +
-                ", redisCache=" + redisCache.toString() +
+                ", database=" + database.toString() +
+                ", redisCachePrefix='" + redisCachePrefix + '\'' +
                 '}';
     }
 }

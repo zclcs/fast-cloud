@@ -80,9 +80,5 @@ my:
       only-fetch-by-gateway: false
       anon-uris: /captcha,/social/**,/v2/api-docs,/v2/api-docs-ext,/login,/resource/**
 
-  lettuce:
-    redis:
-      cache-prefix: ${my.redis-cache.auth-prefix}
-
   log:
     enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}

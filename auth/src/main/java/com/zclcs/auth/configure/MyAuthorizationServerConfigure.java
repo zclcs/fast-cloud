@@ -76,7 +76,7 @@ public class MyAuthorizationServerConfigure extends AuthorizationServerConfigure
             RedisTokenStore redisTokenStore = new RedisTokenStore(redisConnectionFactory);
             // 解决每次生成的 token都一样的问题
             redisTokenStore.setAuthenticationKeyGenerator(oAuth2Authentication -> UUID.randomUUID().toString());
-            redisTokenStore.setPrefix(globalProperties.getRedisCache().getAuthPrefix());
+            redisTokenStore.setPrefix(globalProperties.getRedisCachePrefix());
             return redisTokenStore;
         }
     }

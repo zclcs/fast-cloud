@@ -33,9 +33,6 @@ my:
       enable: true
       anon-uris: /v2/api-docs,/v2/api-docs-ext
       only-fetch-by-gateway: false
-  lettuce:
-    redis:
-      cache-prefix: ${my.redis-cache.server-minio-prefix}
 
 seata:
   config:

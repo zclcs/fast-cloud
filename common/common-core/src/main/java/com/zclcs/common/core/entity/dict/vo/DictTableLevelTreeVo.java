@@ -22,9 +22,6 @@ public class DictTableLevelTreeVo extends Tree<DictTableLevelVo> implements Seri
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "表名id")
-    private Long dictNameId;
-
     @ApiModelProperty(value = "字典名", required = true)
     private String dictName;
 

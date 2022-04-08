@@ -5,40 +5,26 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 /**
  * @author zclcs
  */
-@ConfigurationProperties(prefix = "my.lettuce.redis")
+@ConfigurationProperties(prefix = "my")
 public class MyLettuceRedisProperties {
-
-    /**
-     * 是否开启Lettuce Redis
-     */
-    private Boolean enable = true;
 
     /**
      * 缓存前缀
      */
-    private String cachePrefix = "default";
+    private String redisCachePrefix = "dev";
 
-    public Boolean getEnable() {
-        return enable;
+    public String getRedisCachePrefix() {
+        return redisCachePrefix;
     }
 
-    public void setEnable(Boolean enable) {
-        this.enable = enable;
-    }
-
-    public String getCachePrefix() {
-        return cachePrefix;
-    }
-
-    public void setCachePrefix(String cachePrefix) {
-        this.cachePrefix = cachePrefix;
+    public void setRedisCachePrefix(String redisCachePrefix) {
+        this.redisCachePrefix = redisCachePrefix;
     }
 
     @Override
     public String toString() {
         return "MyLettuceRedisProperties{" +
-                "enable=" + enable +
-                "cachePrefix=" + cachePrefix +
+                "redisCachePrefix='" + redisCachePrefix + '\'' +
                 '}';
     }
 }

@@ -39,15 +39,11 @@ public class DictTableLevelVo implements Serializable {
     @ApiModelProperty(value = "父项code")
     private Long parentCode;
 
-    @NotNull(message = "{required}")
-    @ApiModelProperty(value = "表名id", required = true)
-    private Long dictNameId;
-
-    @ApiModelProperty(value = "表名id集合")
-    private List<Long> dictNameIds;
-
     @ApiModelProperty(value = "字典名")
     private String dictName;
+
+    @ApiModelProperty(value = "字典名集合")
+    private List<String> dictNames;
 
     @ApiModelProperty(value = "字典名中文")
     private String dictTitle;

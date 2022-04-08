@@ -1,6 +1,5 @@
 package com.zclcs.common.core.entity;
 
-import com.zclcs.common.core.entity.system.vo.SystemUserRoleVo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
@@ -8,7 +7,6 @@ import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author zclcs
@@ -34,15 +32,26 @@ public class MyAuthUser extends User {
 
     private String deptName;
 
-    private List<SystemUserRoleVo> roles;
-
     private Date lastLoginTime;
 
     private String description;
 
     private String status;
 
+    /**
+     * 数据权限集合
+     */
     private String deptIds;
+
+    /**
+     * 用户角色编号
+     */
+    private String roleIds;
+
+    /**
+     * 用户角色名称集合字符串
+     */
+    private String roleNames;
 
     public MyAuthUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);

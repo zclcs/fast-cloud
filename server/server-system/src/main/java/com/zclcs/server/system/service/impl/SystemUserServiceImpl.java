@@ -8,14 +8,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
-import com.zclcs.common.core.constant.StringConstant;
 import com.zclcs.common.core.entity.system.SystemUser;
 import com.zclcs.common.core.entity.system.SystemUserDataPermission;
 import com.zclcs.common.core.entity.system.SystemUserRole;
 import com.zclcs.common.core.entity.system.ao.SelectSystemUserAo;
 import com.zclcs.common.core.entity.system.ao.SystemUserAo;
-import com.zclcs.common.core.entity.system.vo.SystemUserDataPermissionVo;
-import com.zclcs.common.core.entity.system.vo.SystemUserRoleVo;
 import com.zclcs.common.core.entity.system.vo.SystemUserVo;
 import com.zclcs.common.core.utils.BaseUsersUtil;
 import com.zclcs.server.system.mapper.SystemUserDataPermissionMapper;
@@ -33,7 +30,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -67,28 +63,13 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     public BasePage<SystemUserVo> findUserDetailPage(BasePageAo request, SelectSystemUserAo user) {
         BasePage<SystemUserVo> page = new BasePage<>(request.getPageNum(), request.getPageSize());
         BasePage<SystemUserVo> pageVo = this.baseMapper.findPageVo(page, getUserQueryWrapper(user));
-        for (SystemUserVo systemUserVo : pageVo.getList()) {
-            setUserRoleAndDataPermission(systemUserVo);
-        }
         return pageVo;
     }
 
     @Override
     public List<SystemUserVo> findUserList(SelectSystemUserAo user) {
         List<SystemUserVo> userVos = this.baseMapper.findListVo(getUserQueryWrapper(user));
-        for (SystemUserVo userVo : userVos) {
-            setUserRoleAndDataPermission(userVo);
-        }
         return userVos;
-    }
-
-    private void setUserRoleAndDataPermission(SystemUserVo systemUserVo) {
-        List<SystemUserRoleVo> userRoleListVo = userRoleMapper.findListVo(new QueryWrapper<SystemUserRoleVo>().eq("sur.user_id", systemUserVo.getUserId()));
-        systemUserVo.setRoleIds(userRoleListVo.stream().map(SystemUserRoleVo::getRoleId).collect(Collectors.toList()));
-        systemUserVo.setRoleNames(userRoleListVo.stream().map(SystemUserRoleVo::getRoleName).collect(Collectors.joining(StringConstant.COMMA)));
-        List<SystemUserDataPermissionVo> userDataPermissionListVo = systemUserDataPermissionMapper.findListVo(new QueryWrapper<SystemUserDataPermissionVo>().eq("sudp.user_id", systemUserVo.getUserId()));
-        systemUserVo.setDeptIds(userDataPermissionListVo.stream().map(SystemUserDataPermissionVo::getDeptId).collect(Collectors.toList()));
-        systemUserVo.setDeptNames(userDataPermissionListVo.stream().map(SystemUserDataPermissionVo::getDeptName).collect(Collectors.joining(StringConstant.COMMA)));
     }
 
     private QueryWrapper<SystemUserVo> getUserQueryWrapper(SelectSystemUserAo user) {
@@ -106,7 +87,6 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     @Override
     public SystemUserVo findUserDetail(String username) {
         SystemUserVo byName = this.findByName(username);
-        setUserRoleAndDataPermission(byName);
         return byName;
     }
 

@@ -13,8 +13,6 @@ import com.zclcs.common.core.entity.router.VueRouter;
 import com.zclcs.common.core.entity.system.SystemUser;
 import com.zclcs.common.core.entity.system.SystemUserRole;
 import com.zclcs.common.core.entity.system.vo.SystemMenuVo;
-import com.zclcs.common.core.entity.system.vo.SystemUserDataPermissionVo;
-import com.zclcs.common.core.entity.system.vo.SystemUserRoleVo;
 import com.zclcs.common.core.entity.system.vo.SystemUserVo;
 import com.zclcs.common.core.utils.BaseTreeUtil;
 import lombok.RequiredArgsConstructor;
@@ -46,15 +44,7 @@ public class UserManager {
      * @return 用户
      */
     public SystemUserVo findByName(String username) {
-        SystemUserVo user = userMapper.findByName(username);
-        if (user != null) {
-            List<SystemUserRoleVo> listVo = userRoleMapper.findListVo(new QueryWrapper<SystemUserRoleVo>().eq("sur.user_id", user.getUserId()));
-            user.setRoles(listVo);
-            List<SystemUserDataPermissionVo> permissions = userMapper.findUserDataPermissions(user.getUserId());
-            List<Long> deptIds = permissions.stream().map(SystemUserDataPermissionVo::getDeptId).collect(Collectors.toList());
-            user.setDeptIds(deptIds);
-        }
-        return user;
+        return userMapper.findByName(username);
     }
 
     /**

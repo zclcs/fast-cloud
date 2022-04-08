@@ -4,6 +4,9 @@ import cn.hutool.json.JSONUtil;
 import com.rabbitmq.client.Channel;
 import com.zclcs.common.core.constant.RabbitConstant;
 import com.zclcs.common.core.entity.CanalBinLogInfo;
+import com.zclcs.server.dict.factory.HandleCacheFactory;
+import com.zclcs.server.dict.service.HandleCacheService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.Exchange;
@@ -23,6 +26,7 @@ import java.io.IOException;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class CanalQueueHandler {
 
     @RabbitListener(bindings = {
@@ -37,17 +41,25 @@ public class CanalQueueHandler {
         final long deliveryTag = message.getMessageProperties().getDeliveryTag();
         try {
             CanalBinLogInfo canalBinLogInfo = JSONUtil.toBean(messageStruct, CanalBinLogInfo.class);
-            log.info("canal 读取 binlog，手动ACK，接收消息：{}", JSONUtil.toJsonStr(canalBinLogInfo));
-            //:TODO redis 缓存新增 更新都应放到这里
-            // 通知 MQ 消息已被成功消费,可以ACK了
-            channel.basicAck(deliveryTag, false);
-        } catch (IOException e) {
+            //log.info("canal 读取 binlog，手动ACK，接收消息：{}", JSONUtil.toJsonStr(canalBinLogInfo));
+            String database = canalBinLogInfo.getDatabase();
+            // 从工厂类中拿处理类
+            HandleCacheService handleCacheService = HandleCacheFactory.getHandleCacheService(database);
+            if (handleCacheService != null) {
+                handleCacheService.handleCache(canalBinLogInfo, deliveryTag, channel);
+            } else {
+                // 没hit到不需要处理 直接ack
+                channel.basicAck(deliveryTag, false);
+            }
+        } catch (Exception e) {
             try {
                 // 处理失败,重新压入MQ
                 channel.basicRecover();
             } catch (IOException e1) {
                 log.error(e1.getMessage(), e1);
             }
+            log.error(e.getMessage(), e);
         }
     }
+
 }
