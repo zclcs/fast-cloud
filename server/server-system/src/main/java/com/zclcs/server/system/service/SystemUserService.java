@@ -54,6 +54,21 @@ public interface SystemUserService extends IService<SystemUser> {
     SystemUserVo findUserDetail(String username);
 
     /**
+     * 缓存用户信息
+     *
+     * @param username 用户名
+     * @return 用户
+     */
+    SystemUserVo cacheAndGetUserDetail(String username);
+
+    /**
+     * 删除用户信息
+     *
+     * @param username 用户名
+     */
+    void deleteUserDetailCache(String username);
+
+    /**
      * 更新用户登录时间
      *
      * @param username username

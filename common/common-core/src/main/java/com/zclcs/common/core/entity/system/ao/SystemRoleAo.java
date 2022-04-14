@@ -3,8 +3,7 @@ package com.zclcs.common.core.entity.system.ao;
 import com.zclcs.common.core.validate.strategy.UpdateStrategy;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
@@ -22,6 +21,9 @@ import java.util.List;
  * @since 2021-08-16
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "SystemRole对象", description = "角色表")

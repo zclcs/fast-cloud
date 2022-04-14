@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  * @author zclcs
  * @since 2021-08-16
  */
-@Service("userDataPermissionService")
+@Service
 @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
 public class SystemUserDataPermissionServiceImpl extends ServiceImpl<SystemUserDataPermissionMapper, SystemUserDataPermission> implements SystemUserDataPermissionService {
 

@@ -2,8 +2,7 @@ package com.zclcs.common.core.entity.system.ao;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
@@ -19,9 +18,12 @@ import java.util.List;
  * @since 2021-08-11
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "SystemUser对象", description = "用户表")
+@Builder
 public class SelectSystemUserAo implements Serializable {
 
     private static final long serialVersionUID = 1L;

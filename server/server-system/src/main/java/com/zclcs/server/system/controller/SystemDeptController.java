@@ -43,13 +43,13 @@ import java.util.stream.Collectors;
 @Api(tags = "部门管理")
 public class SystemDeptController {
 
-    private final SystemDeptService deptService;
+    private final SystemDeptService systemDeptService;
 
     @GetMapping
     @ApiOperation(value = "分页")
     @PreAuthorize("hasAuthority('dept:view')")
     public BaseRsp<BasePage<DeptTree>> deptPage(@Valid BasePageAo basePageAo, SelectSystemDeptAo dept) {
-        BasePage<DeptTree> page = this.deptService.findDeptPage(basePageAo, dept);
+        BasePage<DeptTree> page = this.systemDeptService.findDeptPage(basePageAo, dept);
         return BaseRspUtil.data(page);
     }
 
@@ -57,7 +57,7 @@ public class SystemDeptController {
     @ApiOperation(value = "前端下拉框")
     @PreAuthorize("hasAuthority('dept:view')")
     public BaseRsp<List<DeptTree>> deptTree(@Valid SelectSystemDeptAo dept) {
-        List<DeptTree> list = this.deptService.findDeptTree(dept);
+        List<DeptTree> list = this.systemDeptService.findDeptTree(dept);
         return BaseRspUtil.data(list);
     }
 
@@ -65,7 +65,7 @@ public class SystemDeptController {
     @ApiOperation(value = "集合")
     @PreAuthorize("hasAuthority('dept:view')")
     public BaseRsp<List<SystemDeptVo>> deptList(@Valid SelectSystemDeptAo dept) {
-        List<SystemDeptVo> deptList = this.deptService.findDeptList(dept);
+        List<SystemDeptVo> deptList = this.systemDeptService.findDeptList(dept);
         return BaseRspUtil.data(deptList);
     }
 
@@ -74,7 +74,7 @@ public class SystemDeptController {
     @ApiOperation(value = "新增部门")
     @ControllerEndpoint(operation = "新增部门")
     public void addDept(@RequestBody @Validated SystemDeptAo dept) {
-        this.deptService.createDept(dept);
+        this.systemDeptService.createDept(dept);
     }
 
     @DeleteMapping("/{deptIds}")
@@ -83,7 +83,7 @@ public class SystemDeptController {
     @ControllerEndpoint(operation = "删除部门")
     public void deleteDepts(@ApiParam(value = "部门id集合(,分隔)", required = true) @NotBlank(message = "{required}") @PathVariable String deptIds) {
         List<Long> ids = Arrays.stream(deptIds.split(StringConstant.COMMA)).map(Long::valueOf).collect(Collectors.toList());
-        this.deptService.deleteDept(ids);
+        this.systemDeptService.deleteDept(ids);
     }
 
     @PutMapping
@@ -91,7 +91,7 @@ public class SystemDeptController {
     @ApiOperation(value = "修改部门")
     @ControllerEndpoint(operation = "修改部门")
     public void updateDept(@RequestBody @Validated(UpdateStrategy.class) SystemDeptAo dept) {
-        this.deptService.updateDept(dept);
+        this.systemDeptService.updateDept(dept);
     }
 
 }

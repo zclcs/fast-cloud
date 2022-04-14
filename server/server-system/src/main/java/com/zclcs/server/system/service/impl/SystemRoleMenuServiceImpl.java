@@ -20,7 +20,7 @@ import java.util.List;
  * @author zclcs
  * @since 2021-08-16
  */
-@Service("roleMenuService")
+@Service
 @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
 public class SystemRoleMenuServiceImpl extends ServiceImpl<SystemRoleMenuMapper, SystemRoleMenu> implements SystemRoleMenuService {
 

@@ -47,10 +47,13 @@ public class SystemRoleVo implements Serializable {
     @ApiModelProperty(value = "角色菜单集合")
     private List<SystemRoleMenuVo> systemRoleMenuVos;
 
-    @ApiModelProperty(value = "角色菜单编号集合")
+    @ApiModelProperty(value = "角色菜单编号集合字符串")
     private String menuIdsString;
 
     @ApiModelProperty(value = "角色菜单编号集合")
     private List<Long> menuIds;
+
+    @ApiModelProperty(value = "角色用户账号集合")
+    private List<String> usernames;
 
 }

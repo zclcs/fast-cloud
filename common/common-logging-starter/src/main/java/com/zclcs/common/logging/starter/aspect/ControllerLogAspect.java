@@ -1,5 +1,6 @@
 package com.zclcs.common.logging.starter.aspect;
 
+import cn.hutool.json.JSONUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -18,7 +19,6 @@ public class ControllerLogAspect {
             "|| @within(org.springframework.web.bind.annotation.RestController))" +
             "&& execution(public * com.zclcs..*.controller..*.*(..))")
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
-
         String className = pjp.getTarget().getClass().getName();
         String methodName = pjp.getSignature().getName();
         long beginTime = System.currentTimeMillis();
@@ -37,7 +37,7 @@ public class ControllerLogAspect {
                         className, methodName, pjp.getArgs(), ex);
             } else {
                 log.info("[class: {}][method: {}][cost: {}ms][args: {}][return: {}]",
-                        className, methodName, cost, pjp.getArgs(), returnValue);
+                        className, methodName, cost, pjp.getArgs(), JSONUtil.toJsonStr(returnValue));
             }
         }
 

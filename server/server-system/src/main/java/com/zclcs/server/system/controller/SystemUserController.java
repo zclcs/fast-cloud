@@ -51,8 +51,8 @@ import java.util.stream.Collectors;
 public class SystemUserController {
 
     private final SystemUserService userService;
-    private final SystemUserDataPermissionService userDataPermissionService;
-    private final SystemLoginLogService loginLogService;
+    private final SystemUserDataPermissionService systemUserDataPermissionService;
+    private final SystemLoginLogService systemLoginLogService;
     private final PasswordEncoder passwordEncoder;
 
     @GetMapping("success")
@@ -65,7 +65,7 @@ public class SystemUserController {
         SystemLoginLog loginLog = new SystemLoginLog();
         loginLog.setUsername(currentUsername);
         loginLog.setBrowser(request.getHeader("user-agent"));
-        this.loginLogService.save(loginLog);
+        this.systemLoginLogService.save(loginLog);
     }
 
     @GetMapping
@@ -124,7 +124,7 @@ public class SystemUserController {
     @PreAuthorize("hasAuthority('user:view')")
     @ApiOperation(value = "获取数据权限")
     public BaseRsp<List<Long>> findUserDataPermissions(@ApiParam(value = "用户id", required = true) @NotBlank(message = "{required}") @PathVariable Long userId) {
-        List<Long> dataPermissions = this.userDataPermissionService.findByUserId(userId);
+        List<Long> dataPermissions = this.systemUserDataPermissionService.findByUserId(userId);
         return BaseRspUtil.data(dataPermissions);
     }
 

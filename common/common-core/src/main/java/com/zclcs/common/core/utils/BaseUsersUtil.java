@@ -1,25 +1,17 @@
 package com.zclcs.common.core.utils;
 
-import cn.hutool.core.collection.CollectionUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zclcs.common.core.constant.StringConstant;
 import com.zclcs.common.core.entity.CurrentUser;
 import com.zclcs.common.core.entity.MyAuthUser;
-import com.zclcs.common.core.entity.system.vo.SystemUserVo;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.BeanUtils;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 /**
  * @author zclcs
@@ -55,23 +47,6 @@ public abstract class BaseUsersUtil {
             return ((MyAuthUser) principal).getUsername();
         }
         return (String) getOauth2Authentication().getPrincipal();
-    }
-
-    /**
-     * 更新用户信息
-     */
-    public static void updateUserDetail(SystemUserVo systemUser, List<String> permissions) {
-        boolean notLocked = StringUtils.equals(SystemUserVo.STATUS_VALID, systemUser.getStatus());
-        String password = systemUser.getPassword();
-        List<GrantedAuthority> grantedAuthorities = AuthorityUtils.NO_AUTHORITIES;
-        if (CollectionUtil.isNotEmpty(permissions)) {
-            grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList(String.join(StringConstant.COMMA, permissions));
-        }
-        MyAuthUser authUser = new MyAuthUser(systemUser.getPassword(), password, true, true, true, notLocked,
-                grantedAuthorities);
-        BeanUtils.copyProperties(systemUser, authUser);
-        SecurityContextHolder.getContext().setAuthentication(
-                new UsernamePasswordAuthenticationToken(authUser, authUser.getPassword(), grantedAuthorities));
     }
 
     /**

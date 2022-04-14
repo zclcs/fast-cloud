@@ -43,23 +43,15 @@ public class MyRabbitMqAutoConfigure {
      */
     @Bean
     public Queue directOneQueue() {
-        return new Queue(RabbitConstant.RECORD_SYSTEM_LOG_QUEUE);
+        return new Queue(RabbitConstant.QUEUE_SERVER_SYSTEM_LOG);
     }
 
     /**
-     * 队列2
+     * 直接模式队列2 - 刷新系统服务缓存
      */
     @Bean
-    public Queue queueTwo() {
-        return new Queue(RabbitConstant.QUEUE_TWO);
-    }
-
-    /**
-     * 队列3
-     */
-    @Bean
-    public Queue queueThree() {
-        return new Queue(RabbitConstant.QUEUE_THREE);
+    public Queue directTwoQueue() {
+        return new Queue(RabbitConstant.QUEUE_SERVER_SYSTEM_CACHE);
     }
 
     /**
@@ -67,82 +59,26 @@ public class MyRabbitMqAutoConfigure {
      */
     @Bean
     public Queue canalQueue() {
-        return new Queue(RabbitConstant.CANAL_QUEUE);
+        return new Queue(RabbitConstant.CANAL_QUEUE, true);
     }
 
     /**
-     * 分列模式队列
+     * 直接模式队列
      */
     @Bean
-    public FanoutExchange fanoutExchange() {
-        return new FanoutExchange(RabbitConstant.FANOUT_MODE_QUEUE);
+    public DirectExchange directExChange() {
+        return new DirectExchange(RabbitConstant.CANAL_EXCHANGE);
     }
 
     /**
-     * 分列模式绑定队列1
+     * 直接模式绑定canal队列
      *
-     * @param directOneQueue 绑定队列1
-     * @param fanoutExchange 分列模式交换器
+     * @param canalQueue     canal队列
+     * @param directExChange 直接模式交换器
      */
     @Bean
-    public Binding fanoutBinding1(Queue directOneQueue, FanoutExchange fanoutExchange) {
-        return BindingBuilder.bind(directOneQueue).to(fanoutExchange);
-    }
-
-    /**
-     * 分列模式绑定队列2
-     *
-     * @param queueTwo       绑定队列2
-     * @param fanoutExchange 分列模式交换器
-     */
-    @Bean
-    public Binding fanoutBinding2(Queue queueTwo, FanoutExchange fanoutExchange) {
-        return BindingBuilder.bind(queueTwo).to(fanoutExchange);
-    }
-
-    /**
-     * 主题模式队列
-     * <li>路由格式必须以 . 分隔，比如 user.email 或者 user.aaa.email</li>
-     * <li>通配符 * ，代表一个占位符，或者说一个单词，比如路由为 user.*，那么 user.email 可以匹配，但是 user.aaa.email 就匹配不了</li>
-     * <li>通配符 # ，代表一个或多个占位符，或者说一个或多个单词，比如路由为 user.#，那么 user.email 可以匹配，user.aaa.email 也可以匹配</li>
-     */
-    @Bean
-    public TopicExchange topicExchange() {
-        return new TopicExchange(RabbitConstant.TOPIC_MODE_QUEUE);
-    }
-
-
-    /**
-     * 主题模式绑定分列模式
-     *
-     * @param fanoutExchange 分列模式交换器
-     * @param topicExchange  主题模式交换器
-     */
-    @Bean
-    public Binding topicBinding1(FanoutExchange fanoutExchange, TopicExchange topicExchange) {
-        return BindingBuilder.bind(fanoutExchange).to(topicExchange).with(RabbitConstant.TOPIC_ROUTING_KEY_ONE);
-    }
-
-    /**
-     * 主题模式绑定队列2
-     *
-     * @param queueTwo      队列2
-     * @param topicExchange 主题模式交换器
-     */
-    @Bean
-    public Binding topicBinding2(Queue queueTwo, TopicExchange topicExchange) {
-        return BindingBuilder.bind(queueTwo).to(topicExchange).with(RabbitConstant.TOPIC_ROUTING_KEY_TWO);
-    }
-
-    /**
-     * 主题模式绑定队列3
-     *
-     * @param queueThree    队列3
-     * @param topicExchange 主题模式交换器
-     */
-    @Bean
-    public Binding topicBinding3(Queue queueThree, TopicExchange topicExchange) {
-        return BindingBuilder.bind(queueThree).to(topicExchange).with(RabbitConstant.TOPIC_ROUTING_KEY_THREE);
+    public Binding directExChangeBinding1(Queue canalQueue, DirectExchange directExChange) {
+        return BindingBuilder.bind(canalQueue).to(directExChange).with(RabbitConstant.CANAL_ROUTE_KEY);
     }
 
     /**

@@ -21,18 +21,9 @@
                sr.remark,
                sr.create_time,
                sr.modify_time,
-               group_concat(sm.menu_id) as menuIdsString
+               group_concat(distinct srm.menu_id) as menuIdsString
         from system_role sr
                  left join system_role_menu srm on sr.role_id = srm.role_id
-                 left join system_menu sm on srm.menu_id = sm.menu_id
-        group by sr.role_id, sr.role_name, sr.remark, sr.create_time, sr.modify_time
-            ${ew.customSqlSegment}
-    </sql>
-    <sql id="baseSqlFromUserRole">
-        select sr.role_id, sr.role_name, sr.remark, sr.create_time, sr.modify_time
-        from system_role sr
-                 left join system_user_role sur on sr.role_id = sur.role_id
-                 left join system_user su on sur.user_id = su.user_id
             ${ew.customSqlSegment}
     </sql>
     <select id="findPageVo" resultType="com.zclcs.common.core.entity.system.vo.SystemRoleVo">
@@ -44,14 +35,11 @@
     <select id="findOneVo" resultType="com.zclcs.common.core.entity.system.vo.SystemRoleVo">
         <include refid="baseSql"/>
     </select>
-    <select id="findUserRolePageVo" resultType="com.zclcs.common.core.entity.system.vo.SystemRoleVo">
-        <include refid="baseSqlFromUserRole"/>
-    </select>
-    <select id="findUserRoleListVo" resultType="com.zclcs.common.core.entity.system.vo.SystemRoleVo">
-        <include refid="baseSqlFromUserRole"/>
-    </select>
-    <select id="findUserRoleOneVo" resultType="com.zclcs.common.core.entity.system.vo.SystemRoleVo">
-        <include refid="baseSqlFromUserRole"/>
+    <select id="selectUsernamesByRoleId" resultType="java.lang.String">
+        select distinct su.username
+        from system_user_role sur
+                 inner join system_user su on sur.user_id = su.user_id
+        where role_id = #{roleId}
     </select>
 
 </mapper>

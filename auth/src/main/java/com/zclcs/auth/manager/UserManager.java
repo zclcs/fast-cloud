@@ -8,19 +8,19 @@ import com.zclcs.auth.mapper.SystemUserMapper;
 import com.zclcs.auth.mapper.SystemUserRoleMapper;
 import com.zclcs.common.core.constant.MyConstant;
 import com.zclcs.common.core.constant.StringConstant;
-import com.zclcs.common.core.entity.router.RouterMeta;
-import com.zclcs.common.core.entity.router.VueRouter;
 import com.zclcs.common.core.entity.system.SystemUser;
 import com.zclcs.common.core.entity.system.SystemUserRole;
 import com.zclcs.common.core.entity.system.vo.SystemMenuVo;
 import com.zclcs.common.core.entity.system.vo.SystemUserVo;
-import com.zclcs.common.core.utils.BaseTreeUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -56,32 +56,6 @@ public class UserManager {
     public List<String> findUserPermissions(String username) {
         List<SystemMenuVo> userPermissions = menuMapper.findUserPermissions(username);
         return userPermissions.stream().map(SystemMenuVo::getPerms).collect(Collectors.toList());
-    }
-
-    public List<VueRouter<SystemMenuVo>> findUserRoutes(String username) {
-        List<VueRouter<SystemMenuVo>> routes = new ArrayList<>();
-        QueryWrapper<SystemMenuVo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.orderByAsc("sm.order_num");
-        List<SystemMenuVo> menus = menuMapper.findUserMenuListVo(queryWrapper, username);
-        menus.forEach(menu -> {
-            VueRouter<SystemMenuVo> route = new VueRouter<>();
-            route.setId(menu.getMenuId());
-            route.setParentId(menu.getParentId());
-            route.setPath(menu.getPath());
-            route.setName(StrUtil.isNotBlank(menu.getKeepAliveName()) ? menu.getKeepAliveName() : menu.getMenuName());
-            route.setComponent(menu.getComponent());
-            route.setRedirect(menu.getRedirect());
-            route.setMeta(new RouterMeta(
-                    menu.getMenuName(),
-                    menu.getIcon(),
-                    menu.getHideMenu().equals(SystemMenuVo.YES),
-                    menu.getIgnoreKeepAlive().equals(SystemMenuVo.YES),
-                    menu.getHideBreadcrumb().equals(SystemMenuVo.YES),
-                    menu.getHideChildrenInMenu().equals(SystemMenuVo.YES),
-                    menu.getCurrentActiveMenu()));
-            routes.add(route);
-        });
-        return BaseTreeUtil.buildVueRouter(routes);
     }
 
     /**

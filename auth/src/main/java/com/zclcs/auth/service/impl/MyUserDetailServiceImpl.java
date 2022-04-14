@@ -41,13 +41,11 @@ public class MyUserDetailServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         HttpServletRequest httpServletRequest = BaseUtil.getHttpServletRequest();
         SystemUserVo systemUser = userManager.findByName(username);
+        redisService.set(RedisCachePrefixConstant.USER + username, systemUser);
         if (systemUser != null) {
             String systemUserUsername = systemUser.getUsername();
             // 缓存路由 以及 权限
             List<String> permissions = userManager.findUserPermissions(systemUserUsername);
-            if (!redisService.hasKey(RedisCachePrefixConstant.ROUTES + username)) {
-                redisService.set(RedisCachePrefixConstant.ROUTES + username, userManager.findUserRoutes(systemUserUsername));
-            }
             boolean notLocked = StringUtils.equals(SystemUserVo.STATUS_VALID, systemUser.getStatus());
             String password = systemUser.getPassword();
             String loginType = (String) httpServletRequest.getAttribute(ParamsConstant.LOGIN_TYPE);
@@ -61,7 +59,6 @@ public class MyUserDetailServiceImpl implements UserDetailsService {
             MyAuthUser authUser = new MyAuthUser(systemUserUsername, password, true, true, true, notLocked,
                     grantedAuthorities);
             BeanUtils.copyProperties(systemUser, authUser);
-
             return authUser;
         } else {
             throw new UsernameNotFoundException("");

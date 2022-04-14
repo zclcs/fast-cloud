@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @author zclcs
  * @since 2021-08-16
  */
-@Service("loginLogService")
+@Service
 public class SystemLoginLogServiceImpl extends ServiceImpl<SystemLoginLogMapper, SystemLoginLog> implements SystemLoginLogService {
 
 }

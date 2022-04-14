@@ -32,10 +32,10 @@ import java.util.Optional;
  * @author zclcs
  * @date 2021-11-02 15:26:13.215
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
-@Slf4j
 public class DictTableServiceImpl extends ServiceImpl<DictTableMapper, DictTable> implements DictTableService {
 
     private final DictTableNameMapper dictTableNameMapper;

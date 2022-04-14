@@ -43,19 +43,19 @@ import java.util.stream.Collectors;
 @Api(tags = "菜单管理")
 public class SystemMenuController {
 
-    private final SystemMenuService menuService;
+    private final SystemMenuService systemMenuService;
 
     @GetMapping("/routers")
     @ApiOperation(value = "用户路由")
     public BaseRsp<List<VueRouter<SystemMenuVo>>> getUserRouters() {
-        List<VueRouter<SystemMenuVo>> userRouters = this.menuService.getUserRouters(BaseUsersUtil.getCurrentUsername());
+        List<VueRouter<SystemMenuVo>> userRouters = this.systemMenuService.getUserRouters(BaseUsersUtil.getCurrentUsername());
         return BaseRspUtil.data(userRouters);
     }
 
     @GetMapping
     @ApiOperation(value = "菜单")
     public BaseRsp<List<MenuTree>> menuList(SystemMenuAo menu) {
-        List<MenuTree> systemMenus = (List<MenuTree>) this.menuService.findSystemMenus(menu);
+        List<MenuTree> systemMenus = (List<MenuTree>) this.systemMenuService.findSystemMenus(menu);
         return BaseRspUtil.data(systemMenus);
     }
 
@@ -72,7 +72,7 @@ public class SystemMenuController {
     @ApiOperation(value = "新增菜单/按钮")
     @ControllerEndpoint(operation = "新增菜单/按钮")
     public BaseRsp<Long> addMenu(@RequestBody @Validated SystemMenuAo menu) {
-        return BaseRspUtil.data(this.menuService.createSystemMenu(menu));
+        return BaseRspUtil.data(this.systemMenuService.createSystemMenu(menu));
     }
 
     @DeleteMapping("/{menuIds}")
@@ -81,7 +81,7 @@ public class SystemMenuController {
     @ControllerEndpoint(operation = "删除菜单/按钮")
     public void deleteMenus(@ApiParam(value = "菜单/按钮id集合(,分隔)", required = true) @NotBlank(message = "{required}") @PathVariable String menuIds) {
         List<Long> ids = Arrays.stream(menuIds.split(StringConstant.COMMA)).map(Long::valueOf).collect(Collectors.toList());
-        this.menuService.deleteMenus(ids);
+        this.systemMenuService.deleteMenus(ids);
     }
 
     @PutMapping
@@ -89,7 +89,7 @@ public class SystemMenuController {
     @ApiOperation(value = "修改菜单/按钮")
     @ControllerEndpoint(operation = "修改菜单/按钮")
     public void updateMenu(@RequestBody @Validated(UpdateStrategy.class) SystemMenuAo menu) {
-        this.menuService.updateSystemMenu(menu);
+        this.systemMenuService.updateSystemMenu(menu);
     }
 
 }

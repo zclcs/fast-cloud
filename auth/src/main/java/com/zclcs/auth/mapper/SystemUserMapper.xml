@@ -41,9 +41,9 @@
                su.theme,
                su.avatar,
                su.description,
-               group_concat(distinct sur.role_id)  roleIds,
-               group_concat(distinct sr.role_name) roleNames,
-               group_concat(distinct sudp.dept_id) deptIds
+               group_concat(distinct sur.role_id)  roleIdString,
+               group_concat(distinct sr.role_name) roleNameString,
+               group_concat(distinct sudp.dept_id) deptIdString
         from system_user su
                  left join system_user_role sur on su.user_id = sur.user_id
                  inner join system_role sr on sur.role_id = sr.role_id

@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  * @author zclcs
  * @since 2021-08-16
  */
-@Service("userRoleService")
+@Service
 @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
 public class SystemUserRoleServiceImpl extends ServiceImpl<SystemUserRoleMapper, SystemUserRole> implements SystemUserRoleService {
 

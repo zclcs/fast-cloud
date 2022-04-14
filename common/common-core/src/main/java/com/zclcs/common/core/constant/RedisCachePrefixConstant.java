@@ -32,4 +32,19 @@ public interface RedisCachePrefixConstant {
      */
     String ROUTES = "user:routes:";
 
+    /**
+     * 缓存 用户的 redis key
+     */
+    String USER = "user:";
+
+    /**
+     * 缓存 角色的 redis key
+     */
+    String ROLE = "role:";
+
+    /**
+     * 缓存 菜单的 redis key
+     */
+    String MENU = "menu:";
+
 }

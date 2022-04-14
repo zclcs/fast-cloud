@@ -6,7 +6,6 @@ import com.zclcs.common.core.base.BasePageAo;
 import com.zclcs.common.core.base.BaseRsp;
 import com.zclcs.common.core.constant.StringConstant;
 import com.zclcs.common.core.entity.system.SystemRole;
-import com.zclcs.common.core.entity.system.ao.SelectSystemRoleAo;
 import com.zclcs.common.core.entity.system.ao.SystemRoleAo;
 import com.zclcs.common.core.entity.system.vo.SystemRoleVo;
 import com.zclcs.common.core.utils.BaseRspUtil;
@@ -43,30 +42,30 @@ import java.util.stream.Collectors;
 @Api(tags = "角色管理")
 public class SystemRoleController {
 
-    private final SystemRoleService roleService;
+    private final SystemRoleService systemRoleService;
 
     @GetMapping
     @ApiOperation(value = "分页")
     public BaseRsp<BasePage<SystemRoleVo>> roleList(@Validated BasePageAo queryRequest, SystemRoleAo role) {
-        BasePage<SystemRoleVo> systemRolePage = roleService.findSystemRolePage(queryRequest, role);
+        BasePage<SystemRoleVo> systemRolePage = systemRoleService.findSystemRolePage(queryRequest, role);
         return BaseRspUtil.data(systemRolePage);
     }
 
     @GetMapping("options")
     @ApiOperation(value = "集合")
-    public BaseRsp<List<SystemRoleVo>> roles(@Validated SelectSystemRoleAo selectSystemRoleAo) {
-        List<SystemRoleVo> systemRoleList = roleService.findSystemRoleList(selectSystemRoleAo);
+    public BaseRsp<List<SystemRoleVo>> roles(@Validated SystemRoleAo systemRoleAo) {
+        List<SystemRoleVo> systemRoleList = systemRoleService.findSystemRoleList(systemRoleAo);
         return BaseRspUtil.data(systemRoleList);
     }
 
     @GetMapping("check/{roleId}/{roleName}")
     @ApiOperation(value = "检查用户角色名")
     public BaseRsp<Boolean> checkRoleName(@ApiParam(value = "角色id", required = true) @NotNull(message = "{required}") @PathVariable Long roleId, @ApiParam(value = "角色名") @NotBlank(message = "{required}") @PathVariable String roleName) {
-        SystemRole one = roleService.lambdaQuery().eq(SystemRole::getRoleId, roleId).one();
+        SystemRole one = systemRoleService.lambdaQuery().eq(SystemRole::getRoleId, roleId).one();
         if (one.getRoleName().equals(roleName)) {
             return BaseRspUtil.data(false);
         }
-        return BaseRspUtil.data(roleService.lambdaQuery().eq(SystemRole::getRoleName, roleName).one() != null);
+        return BaseRspUtil.data(systemRoleService.lambdaQuery().eq(SystemRole::getRoleName, roleName).one() != null);
     }
 
     @PostMapping
@@ -74,7 +73,7 @@ public class SystemRoleController {
     @ApiOperation(value = "新增角色")
     @ControllerEndpoint(operation = "新增角色")
     public void addRole(@RequestBody @Validated SystemRoleAo role) {
-        this.roleService.createSystemRole(role);
+        this.systemRoleService.createSystemRole(role);
     }
 
     @DeleteMapping("/{roleIds}")
@@ -83,7 +82,7 @@ public class SystemRoleController {
     @ControllerEndpoint(operation = "删除角色")
     public void deleteRoles(@ApiParam(value = "角色id集合(,分隔)", required = true) @NotBlank(message = "{required}") @PathVariable String roleIds) {
         List<Long> ids = Arrays.stream(roleIds.split(StringConstant.COMMA)).map(Long::valueOf).collect(Collectors.toList());
-        this.roleService.deleteSystemRoles(ids);
+        this.systemRoleService.deleteSystemRoles(ids);
     }
 
     @PutMapping
@@ -91,7 +90,7 @@ public class SystemRoleController {
     @ApiOperation(value = "修改角色")
     @ControllerEndpoint(operation = "修改角色")
     public void updateRole(@RequestBody @Validated(UpdateStrategy.class) SystemRoleAo role) {
-        this.roleService.updateSystemRole(role);
+        this.systemRoleService.updateSystemRole(role);
     }
 
 }

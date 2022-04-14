@@ -39,6 +39,12 @@
             <artifactId>apm-toolkit-logback-1.x</artifactId>
             <version>${apm-toolkit-logback-1.x.version}</version>
         </dependency>
+        <!--hu tool 工具类 JSON实现-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-json</artifactId>
+            <version>${hutool-all.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

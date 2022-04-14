@@ -1,8 +1,11 @@
 package com.zclcs.common.redis.starter.configure;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.zclcs.common.redis.starter.properties.MyLettuceRedisProperties;
 import com.zclcs.common.redis.starter.service.RedisService;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -40,9 +43,11 @@ public class MyLettuceRedisAutoConfigure {
         template.setConnectionFactory(factory);
 
         ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         mapper.activateDefaultTyping(mapper.getPolymorphicTypeValidator(), ObjectMapper.DefaultTyping.NON_FINAL);
-
         GenericJackson2JsonRedisSerializer genericJackson2JsonRedisSerializer = new GenericJackson2JsonRedisSerializer(mapper);
 
         MyStringRedisSerializer myStringRedisSerializer = new MyStringRedisSerializer(properties);

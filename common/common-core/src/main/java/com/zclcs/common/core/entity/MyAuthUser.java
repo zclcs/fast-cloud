@@ -1,5 +1,6 @@
 package com.zclcs.common.core.entity;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
@@ -7,6 +8,7 @@ import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author zclcs
@@ -38,20 +40,23 @@ public class MyAuthUser extends User {
 
     private String status;
 
-    /**
-     * 数据权限集合
-     */
-    private String deptIds;
+    @ApiModelProperty(value = "数据权限集合")
+    private String deptIdString;
 
-    /**
-     * 用户角色编号
-     */
-    private String roleIds;
+    @ApiModelProperty(value = "用户角色编号集合")
+    private String roleIdString;
 
-    /**
-     * 用户角色名称集合字符串
-     */
-    private String roleNames;
+    @ApiModelProperty(value = "用户角色名称集合字符串")
+    private String roleNameString;
+
+    @ApiModelProperty(value = "角色编号集合")
+    private List<Long> roleIds;
+
+    @ApiModelProperty(value = "数据权限集合")
+    private List<Long> deptIds;
+
+    @ApiModelProperty(value = "用户角色名称集合")
+    private List<String> roleNames;
 
     public MyAuthUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);

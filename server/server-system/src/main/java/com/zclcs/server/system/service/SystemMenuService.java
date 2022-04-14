@@ -52,6 +52,36 @@ public interface SystemMenuService extends IService<SystemMenu> {
     List<VueRouter<SystemMenuVo>> getUserRouters(String username);
 
     /**
+     * 获取用户路由
+     *
+     * @param username 用户名
+     * @return 用户路由
+     */
+    List<String> getUserPermissions(String username);
+
+    /**
+     * 通过id获取菜单
+     *
+     * @param menuId 菜单id
+     * @return 菜单
+     */
+    SystemMenuVo findById(Long menuId);
+
+    /**
+     * 通过id缓存菜单
+     *
+     * @param menuId 菜单id
+     */
+    SystemMenuVo cacheAndGetById(Long menuId);
+
+    /**
+     * 通过id删除菜单缓存
+     *
+     * @param menuId 菜单id
+     */
+    void deleteCacheById(Long menuId);
+
+    /**
      * 获取菜单列表
      *
      * @param menu menu

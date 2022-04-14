@@ -40,12 +40,12 @@ import java.util.stream.Collectors;
  * @since 2021-08-16
  */
 @Slf4j
-@Service("deptService")
+@Service
 @RequiredArgsConstructor
 @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
 public class SystemDeptServiceImpl extends ServiceImpl<SystemDeptMapper, SystemDept> implements SystemDeptService {
 
-    private final SystemUserDataPermissionService userDataPermissionService;
+    private final SystemUserDataPermissionService systemUserDataPermissionService;
 
     @Override
     public BasePage<DeptTree> findDeptPage(BasePageAo request, SelectSystemDeptAo dept) {
@@ -157,7 +157,7 @@ public class SystemDeptServiceImpl extends ServiceImpl<SystemDeptMapper, SystemD
 
     private void delete(List<Long> deptIds) {
         removeByIds(deptIds);
-        userDataPermissionService.deleteByDeptIds(deptIds);
+        systemUserDataPermissionService.deleteByDeptIds(deptIds);
 
         QueryWrapper<SystemDeptVo> queryWrapper = new QueryWrapper<>();
         queryWrapper.in("sd.parent_id", deptIds);

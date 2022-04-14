@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -111,13 +112,22 @@ public class SystemUserVo {
     @ApiModelProperty(value = "部门名称")
     private String deptName;
 
-    @ApiModelProperty(value = "数据权限集合")
-    private String deptIds;
+    @ApiModelProperty(value = "数据权限集合字符串")
+    private String deptIdString;
 
-    @ApiModelProperty(value = "用户角色编号集合")
-    private String roleIds;
+    @ApiModelProperty(value = "用户角色编号集合字符串")
+    private String roleIdString;
 
     @ApiModelProperty(value = "用户角色名称集合字符串")
-    private String roleNames;
+    private String roleNameString;
+
+    @ApiModelProperty(value = "角色编号集合")
+    private List<Long> roleIds;
+
+    @ApiModelProperty(value = "数据权限集合")
+    private List<Long> deptIds;
+
+    @ApiModelProperty(value = "用户角色名称集合")
+    private List<String> roleNames;
 
 }

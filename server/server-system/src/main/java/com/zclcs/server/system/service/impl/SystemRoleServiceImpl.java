@@ -9,16 +9,15 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
-import com.zclcs.common.core.constant.MyConstant;
+import com.zclcs.common.core.constant.RedisCachePrefixConstant;
 import com.zclcs.common.core.entity.system.SystemRole;
 import com.zclcs.common.core.entity.system.SystemRoleMenu;
-import com.zclcs.common.core.entity.system.ao.SelectSystemRoleAo;
 import com.zclcs.common.core.entity.system.ao.SystemRoleAo;
 import com.zclcs.common.core.entity.system.vo.SystemMenuVo;
 import com.zclcs.common.core.entity.system.vo.SystemRoleVo;
-import com.zclcs.common.core.utils.BaseSortUtil;
+import com.zclcs.common.core.utils.BaseQueryWrapperUtil;
+import com.zclcs.common.redis.starter.service.RedisService;
 import com.zclcs.server.system.mapper.SystemRoleMapper;
-import com.zclcs.server.system.service.SystemMenuService;
 import com.zclcs.server.system.service.SystemRoleMenuService;
 import com.zclcs.server.system.service.SystemRoleService;
 import com.zclcs.server.system.service.SystemUserRoleService;
@@ -43,21 +42,19 @@ import java.util.stream.Collectors;
  * @since 2021-08-16
  */
 @Slf4j
-@Service("roleService")
+@Service
 @RequiredArgsConstructor
 @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
 public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemRole> implements SystemRoleService {
 
-    private final SystemRoleMenuService roleMenuService;
-    private final SystemUserRoleService userRoleService;
-    private final SystemMenuService menuService;
+    private final SystemRoleMenuService systemRoleMenuService;
+    private final SystemUserRoleService systemUserRoleService;
+    private final RedisService redisService;
 
     @Override
     public BasePage<SystemRoleVo> findSystemRolePage(BasePageAo basePageAo, SystemRoleAo role) {
         BasePage<SystemRoleVo> basePage = new BasePage<>(basePageAo.getPageNum(), basePageAo.getPageSize());
-        BaseSortUtil.handlePageSort(basePageAo, basePage, "create_time", MyConstant.ORDER_DESC, false);
-        QueryWrapper<SystemRoleVo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(StrUtil.isNotBlank(role.getRoleName()), "sr.role_name", role.getRoleName());
+        QueryWrapper<SystemRoleVo> queryWrapper = getQueryWrapper(role);
         BasePage<SystemRoleVo> pageVo = this.baseMapper.findPageVo(basePage, queryWrapper);
         pageVo.getList().forEach(systemRoleVo ->
                 systemRoleVo.setMenuIds(
@@ -67,24 +64,60 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     }
 
     @Override
-    public List<SystemRoleVo> findUserRole(String username) {
-        QueryWrapper<SystemRoleVo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("su.user_name", username);
-        return this.baseMapper.findUserRoleListVo(queryWrapper);
-    }
-
-    @Override
-    public List<SystemRoleVo> findSystemRoleList(SelectSystemRoleAo selectSystemRoleAo) {
-        QueryWrapper<SystemRoleVo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.like(StrUtil.isNotBlank(selectSystemRoleAo.getRoleName()), "sr.role_name", selectSystemRoleAo.getRoleName());
+    public List<SystemRoleVo> findSystemRoleList(SystemRoleAo systemRoleAo) {
+        QueryWrapper<SystemRoleVo> queryWrapper = getQueryWrapper(systemRoleAo);
         return this.baseMapper.findListVo(queryWrapper);
     }
 
     @Override
-    public SystemRoleVo findByName(String roleName) {
-        QueryWrapper<SystemRoleVo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("sr.role_name", roleName);
+    public SystemRoleVo findSystemRoleOne(SystemRoleAo systemRoleAo) {
+        QueryWrapper<SystemRoleVo> queryWrapper = getQueryWrapper(systemRoleAo);
         return this.baseMapper.findOneVo(queryWrapper);
+    }
+
+    private QueryWrapper<SystemRoleVo> getQueryWrapper(SystemRoleAo systemRoleAo) {
+        QueryWrapper<SystemRoleVo> queryWrapper = new QueryWrapper<>();
+        BaseQueryWrapperUtil.likeNotBlank(queryWrapper, "sr.role_name", systemRoleAo.getRoleName());
+        BaseQueryWrapperUtil.eqNotNull(queryWrapper, "sr.role_id", systemRoleAo.getRoleId());
+        queryWrapper
+                .orderByDesc("sr.create_time")
+                .groupBy("sr.role_id", "sr.role_name", "sr.remark", "sr.create_time", "sr.modify_time");
+        return queryWrapper;
+    }
+
+    @Override
+    public SystemRoleVo findById(Long roleId) {
+        Object obj = redisService.get(RedisCachePrefixConstant.ROLE + roleId);
+        if (obj == null) {
+            synchronized (this) {
+                // 再查一次，防止上个已经抢到锁的线程已经更新过了
+                obj = redisService.get(RedisCachePrefixConstant.ROLE + roleId);
+                if (obj != null) {
+                    return (SystemRoleVo) obj;
+                }
+                return cacheAndGetById(roleId);
+            }
+        }
+        return (SystemRoleVo) obj;
+    }
+
+    @Override
+    public SystemRoleVo cacheAndGetById(Long roleId) {
+        SystemRoleVo systemRoleVo = this.findSystemRoleOne(SystemRoleAo.builder().roleId(roleId).build());
+        List<String> usernames = this.selectUsernamesByRoleId(roleId);
+        systemRoleVo.setUsernames(usernames);
+        redisService.set(RedisCachePrefixConstant.ROLE + roleId, systemRoleVo);
+        return systemRoleVo;
+    }
+
+    @Override
+    public void deleteCacheById(Long roleId) {
+        redisService.del(String.valueOf(roleId));
+    }
+
+    @Override
+    public List<String> selectUsernamesByRoleId(Long roleId) {
+        return this.baseMapper.selectUsernamesByRoleId(roleId);
     }
 
     @Override
@@ -101,8 +134,8 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     @Transactional(rollbackFor = Exception.class)
     public void deleteSystemRoles(List<Long> roleIds) {
         this.removeByIds(roleIds);
-        this.roleMenuService.deleteRoleMenusByRoleId(roleIds);
-        this.userRoleService.deleteUserRolesByRoleId(roleIds);
+        this.systemRoleMenuService.deleteRoleMenusByRoleId(roleIds);
+        this.systemUserRoleService.deleteUserRolesByRoleId(roleIds);
     }
 
     @Override
@@ -114,7 +147,7 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
         systemRole.setModifyTime(DateUtil.date());
         baseMapper.updateById(systemRole);
         ArrayList<Long> roleIds = CollectionUtil.newArrayList(systemRole.getRoleId());
-        this.roleMenuService.deleteRoleMenusByRoleId(roleIds);
+        this.systemRoleMenuService.deleteRoleMenusByRoleId(roleIds);
         setRoleMenus(systemRole, role.getMenuIds());
     }
 
@@ -126,7 +159,7 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
             roleMenu.setRoleId(role.getRoleId());
             roleMenus.add(roleMenu);
         });
-        this.roleMenuService.saveBatch(roleMenus);
+        this.systemRoleMenuService.saveBatch(roleMenus);
     }
 
     private void getParentMenuId(Long menuId, Set<Long> ids, List<SystemMenuVo> menus) {

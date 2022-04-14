@@ -46,28 +46,11 @@ public interface SystemRoleMapper extends BaseMapper<SystemRole> {
     SystemRoleVo findOneVo(@Param(Constants.WRAPPER) Wrapper<SystemRoleVo> ew);
 
     /**
-     * 分页
+     * 通过角色id获取账号
      *
-     * @param basePage 分页对象
-     * @param ew       查询条件
-     * @return 分页对象
+     * @param roleId 角色id
+     * @return 账号集合
      */
-    BasePage<SystemRoleVo> findUserRolePageVo(BasePage<SystemRoleVo> basePage, @Param(Constants.WRAPPER) Wrapper<SystemRoleVo> ew);
-
-    /**
-     * 查找集合
-     *
-     * @param ew 查询条件
-     * @return 分页对象
-     */
-    List<SystemRoleVo> findUserRoleListVo(@Param(Constants.WRAPPER) Wrapper<SystemRoleVo> ew);
-
-    /**
-     * 查找单个
-     *
-     * @param ew 查询条件
-     * @return 分页对象
-     */
-    SystemRoleVo findUserRoleOneVo(@Param(Constants.WRAPPER) Wrapper<SystemRoleVo> ew);
+    List<String> selectUsernamesByRoleId(Long roleId);
 
 }
