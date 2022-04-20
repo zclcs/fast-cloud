@@ -8,7 +8,6 @@ import com.zclcs.common.core.entity.CanalBinLogInfo;
 import com.zclcs.common.core.entity.MessageStruct;
 import com.zclcs.common.core.entity.system.*;
 import com.zclcs.common.core.entity.system.vo.SystemRoleVo;
-import com.zclcs.common.core.entity.system.vo.SystemUserVo;
 import com.zclcs.server.system.service.SystemMenuService;
 import com.zclcs.server.system.service.SystemRoleService;
 import com.zclcs.server.system.service.SystemUserService;
@@ -16,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -45,7 +43,6 @@ public class DirectQueueTwoHandler {
     private SystemUserService systemUserService;
     private SystemRoleService systemRoleService;
     private SystemMenuService systemMenuService;
-    private RabbitTemplate rabbitTemplate;
 
     @Autowired
     public void setSystemUserService(SystemUserService systemUserService) {
@@ -60,11 +57,6 @@ public class DirectQueueTwoHandler {
     @Autowired
     public void setSystemMenuService(SystemMenuService systemMenuService) {
         this.systemMenuService = systemMenuService;
-    }
-
-    @Autowired
-    public void setRabbitTemplate(RabbitTemplate rabbitTemplate) {
-        this.rabbitTemplate = rabbitTemplate;
     }
 
     @RabbitHandler
@@ -145,8 +137,8 @@ public class DirectQueueTwoHandler {
     }
 
     private void cacheAndUpdateUserDetail(String username) {
-        SystemUserVo systemUserVo = systemUserService.cacheAndGetUserDetail(username);
-        // :TODO 这里需要刷新用户信息
+        systemUserService.cacheAndGetUserDetail(username);
+        systemMenuService.cacheAndGetUserPermissions(username);
     }
 
     private void handleSystemRoleCache(CanalBinLogInfo canalBinLogInfo) {

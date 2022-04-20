@@ -111,6 +111,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     @Override
     public SystemUserVo cacheAndGetUserDetail(String username) {
         SystemUserVo systemUserVo = this.findByName(username);
+        systemUserVo.setNeedUpdateUserDetail(true);
         redisService.set(RedisCachePrefixConstant.USER + username, systemUserVo);
         return systemUserVo;
     }

@@ -1,7 +1,5 @@
 package com.zclcs.common.core.utils;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zclcs.common.core.entity.CurrentUser;
 import com.zclcs.common.core.entity.MyAuthUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -11,7 +9,6 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 
 import java.util.Collection;
-import java.util.LinkedHashMap;
 
 /**
  * @author zclcs
@@ -24,12 +21,10 @@ public abstract class BaseUsersUtil {
      *
      * @return CurrentUser 当前用户信息
      */
-    public static CurrentUser getCurrentUser() {
+    public static MyAuthUser getCurrentUser() {
         try {
-            LinkedHashMap<String, Object> authenticationDetails = getAuthenticationDetails();
-            Object principal = authenticationDetails.get("principal");
-            ObjectMapper mapper = new ObjectMapper();
-            return mapper.readValue(mapper.writeValueAsString(principal), CurrentUser.class);
+            Object principal = getOauth2Authentication().getPrincipal();
+            return (MyAuthUser) principal;
         } catch (Exception e) {
             log.error("获取当前用户信息失败", e);
             return null;
@@ -72,13 +67,8 @@ public abstract class BaseUsersUtil {
         }
     }
 
-    private static OAuth2Authentication getOauth2Authentication() {
+    public static OAuth2Authentication getOauth2Authentication() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return (OAuth2Authentication) authentication;
-    }
-
-    @SuppressWarnings("all")
-    private static LinkedHashMap<String, Object> getAuthenticationDetails() {
-        return (LinkedHashMap<String, Object>) getOauth2Authentication().getUserAuthentication().getDetails();
     }
 }

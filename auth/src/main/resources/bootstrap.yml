@@ -21,6 +21,9 @@ spring:
           - data-id: redis.yaml
             group: DEFAULT_GROUP
             refresh: true
+          - data-id: rabbit-mq.yaml
+            group: DEFAULT_GROUP
+            refresh: true
       discovery:
         server-addr: ${NACOS_HOST:127.0.0.1}:${NACOS_PORT:8848}
         namespace: ${NACOS_NAMESPACE:dev}

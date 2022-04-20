@@ -1,5 +1,6 @@
 package com.zclcs.common.security.starter.configure;
 
+import cn.hutool.json.JSONUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -70,6 +71,7 @@ public class MyUserInfoTokenServices implements ResourceServerTokenServices {
     @Override
     public OAuth2Authentication loadAuthentication(String accessToken) throws AuthenticationException, InvalidTokenException {
         Map<String, Object> map = this.getMap(this.userInfoEndpointUrl, accessToken);
+        log.info("信息：{}", JSONUtil.toJsonStr(map));
         String error = "error";
         if (map.containsKey(error)) {
             log.debug("userinfo returned error: " + map.get(error));
@@ -82,6 +84,7 @@ public class MyUserInfoTokenServices implements ResourceServerTokenServices {
 
     @SneakyThrows(value = JsonProcessingException.class)
     private OAuth2Authentication extractAuthentication(Map<String, Object> map) {
+        //log.info("信息：{}", JSONUtil.toJsonStr(map));
         Object principal = this.getPrincipal(map);
         List<GrantedAuthority> authorities = this.authoritiesExtractor.extractAuthorities(map);
 
@@ -118,7 +121,7 @@ public class MyUserInfoTokenServices implements ResourceServerTokenServices {
 
     @SuppressWarnings("all")
     private Map<String, Object> getMap(String path, String accessToken) {
-        log.debug("Getting user info from: " + path);
+        log.info("Getting user info from: " + path);
 
         try {
             OAuth2RestOperations restTemplate = this.restTemplate;
@@ -134,8 +137,9 @@ public class MyUserInfoTokenServices implements ResourceServerTokenServices {
                 token.setTokenType(this.tokenType);
                 restTemplate.getOAuth2ClientContext().setAccessToken(token);
             }
-
-            return (Map) restTemplate.getForEntity(path, Map.class, new Object[0]).getBody();
+            Map body = restTemplate.getForEntity(path, Map.class, new Object[0]).getBody();
+            log.info("user info: " + body);
+            return (Map) body;
         } catch (Exception e) {
             log.warn("Could not fetch user details: " + e.getClass() + ", " + e.getMessage());
             return Collections.singletonMap("error", "Could not fetch user details");

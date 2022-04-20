@@ -113,8 +113,10 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
     }
 
     @Override
-    public List<String> getUserPermissions(String username) {
-        return getCacheMenu(username).stream().map(SystemMenuVo::getPerms).filter(StrUtil::isNotBlank).collect(Collectors.toList());
+    public List<String> cacheAndGetUserPermissions(String username) {
+        List<String> permissions = getCacheMenu(username).stream().map(SystemMenuVo::getPerms).filter(StrUtil::isNotBlank).collect(Collectors.toList());
+        redisService.set(RedisCachePrefixConstant.USER_PERMISSIONS + username, permissions);
+        return permissions;
     }
 
     @Override
@@ -227,7 +229,6 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
 
     private void delete(List<Long> menuIds) {
         removeByIds(menuIds);
-
         QueryWrapper<SystemMenuVo> queryWrapper = new QueryWrapper<>();
         queryWrapper.in("sm.parent_id", menuIds);
         List<Long> childMenus = baseMapper.findListVo(queryWrapper).stream().map(SystemMenuVo::getMenuId).collect(Collectors.toList());

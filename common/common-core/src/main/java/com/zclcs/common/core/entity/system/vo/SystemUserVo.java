@@ -130,4 +130,6 @@ public class SystemUserVo {
     @ApiModelProperty(value = "用户角色名称集合")
     private List<String> roleNames;
 
+    @ApiModelProperty(value = "是否需要刷新用户信息")
+    private Boolean needUpdateUserDetail;
 }

@@ -2,7 +2,7 @@ package com.zclcs.common.datasource.starter.inteceptor;
 
 import com.baomidou.mybatisplus.core.toolkit.PluginUtils;
 import com.baomidou.mybatisplus.extension.plugins.inner.InnerInterceptor;
-import com.zclcs.common.core.entity.CurrentUser;
+import com.zclcs.common.core.entity.MyAuthUser;
 import com.zclcs.common.core.utils.BaseUsersUtil;
 import com.zclcs.common.datasource.starter.annotation.DataPermission;
 import lombok.extern.slf4j.Slf4j;
@@ -51,7 +51,7 @@ public class DataPermissionInterceptor implements InnerInterceptor {
             if (StringUtils.isBlank(dataPermission.field())) {
                 return originSql;
             }
-            CurrentUser user = BaseUsersUtil.getCurrentUser();
+            MyAuthUser user = BaseUsersUtil.getCurrentUser();
             if (user == null) {
                 return originSql;
             }
@@ -61,7 +61,7 @@ public class DataPermissionInterceptor implements InnerInterceptor {
             Table fromItem = (Table) plainSelect.getFromItem();
 
             String selectTableName = fromItem.getAlias() == null ? fromItem.getName() : fromItem.getAlias().getName();
-            String dataPermissionSql = String.format("%s.%s in (%s)", selectTableName, dataPermission.field(), StringUtils.defaultIfBlank(user.getDeptIds(), "'WITHOUT PERMISSIONS'"));
+            String dataPermissionSql = String.format("%s.%s in (%s)", selectTableName, dataPermission.field(), StringUtils.defaultIfBlank(user.getDeptIdString(), "'WITHOUT PERMISSIONS'"));
 
             if (plainSelect.getWhere() == null) {
                 plainSelect.setWhere(CCJSqlParserUtil.parseCondExpression(dataPermissionSql));

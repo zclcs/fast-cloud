@@ -11,7 +11,7 @@
  Target Server Version : 50735
  File Encoding         : 65001
 
- Date: 14/04/2022 10:17:37
+ Date: 20/04/2022 17:01:58
 */
 
 SET NAMES utf8mb4;
@@ -42,7 +42,7 @@ CREATE TABLE `config_info`
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `uk_configinfo_datagrouptenant` (`data_id`, `group_id`, `tenant_id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 390
+  AUTO_INCREMENT = 395
   CHARACTER SET = utf8
   COLLATE = utf8_bin COMMENT = 'config_info'
   ROW_FORMAT = DYNAMIC;
@@ -102,14 +102,14 @@ VALUES (133, 'flyway.yaml', 'DEFAULT_GROUP',
         'dev', '数据库版本管理配置', NULL, NULL, 'yaml', NULL);
 INSERT INTO `config_info`
 VALUES (134, 'logging.yaml', 'DEFAULT_GROUP',
-        'logging:\n  level:\n    org:\n      springframework:\n        data:\n          convert:\n            CustomConversions: error\n    com:\n      alibaba:\n        cloud:\n          nacos:\n            client:\n              NacosPropertySourceBuilder: error\n      codingapi: info',
-        '4888be6105874d1ef4a2630eb6960dab', '2021-11-29 18:41:52', '2022-03-27 20:26:58', NULL, '192.168.33.1', '',
-        'dev', '', NULL, NULL, 'yaml', NULL);
+        'logging:\n  level:\n    org:\n      springframework:\n        data:\n          convert:\n            CustomConversions: error\n    com:\n      zclcs: info\n      alibaba:\n        cloud:\n          nacos:\n            client:\n              NacosPropertySourceBuilder: error\n      codingapi: info',
+        '891ca48626e6c0ca5412f22caa5d23b5', '2021-11-29 18:41:52', '2022-04-20 03:59:40', 'nacos', '192.168.33.1', '',
+        'dev', '', '', '', 'yaml', '');
 INSERT INTO `config_info`
 VALUES (140, 'server.yaml', 'DEFAULT_GROUP',
-        'spring:\n  aop:\n    proxy-target-class: true\n\n  jackson:\n    date-format: yyyy-MM-dd HH:mm:ss\n    time-zone: GMT+8\n\n  freemarker:\n    check-template-location: false\n\n  datasource:\n    dynamic:\n      p6spy: ${LOG_SQL_ENABLED:true}\n      strict: true\n      seata: true    #开启seata代理，开启后默认每个数据源都代理，如果某个不需要代理可单独关闭\n      seata-mode: AT #支持XA及AT模式,默认AT\n      hikari:\n        connection-timeout: 30000\n        max-lifetime: 1800000\n        max-pool-size: 15\n        min-idle: 5\n        connection-test-query: select 1\n\nsecurity:\n  oauth2:\n    resource:\n      id: ${spring.application.name}\n      user-info-uri: http://${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}/auth/user\n\nmybatis-plus:\n  configuration:\n    jdbc-type-for-null: null\n  global-config:\n    banner: false\n\n#hystrix的超时时间\nhystrix:\n    command:\n        default:\n            execution:\n              timeout:\n                enabled: true\n              isolation:\n                    thread:\n                        timeoutInMilliseconds: 30000\n#ribbon的超时时间\nribbon:\n  ReadTimeout: 30000\n  ConnectTimeout: 30000\n\nmy:\n  doc:\n    enable: true\n    title: ${spring.application.name}文档\n    description: ${my.doc.title}\n    name: zclcs\n    email: 2371219112@qq.com\n    url: https://github.com/zclcs\n    version: 2.2-RELEASE\n  log:\n    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}',
-        '6baf07a46334682e201e5db44387e272', '2022-01-09 21:26:46', '2022-03-27 20:26:58', NULL, '192.168.33.1', '',
-        'dev', '', NULL, NULL, 'yaml', NULL);
+        'spring:\n  aop:\n    proxy-target-class: true\n\n  jackson:\n    date-format: yyyy-MM-dd HH:mm:ss\n    time-zone: GMT+8\n\n  freemarker:\n    check-template-location: false\n\n  datasource:\n    dynamic:\n      p6spy: ${LOG_SQL_ENABLED:true}\n      strict: true\n      seata: true    #开启seata代理，开启后默认每个数据源都代理，如果某个不需要代理可单独关闭\n      seata-mode: AT #支持XA及AT模式,默认AT\n      hikari:\n        connection-timeout: 30000\n        max-lifetime: 1800000\n        max-pool-size: 15\n        min-idle: 5\n        connection-test-query: select 1\n\nsecurity:\n  oauth2:\n    resource:\n      id: ${spring.application.name}\n      user-info-uri: http://${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}/auth/oath2/info\n\nmybatis-plus:\n  configuration:\n    jdbc-type-for-null: null\n  global-config:\n    banner: false\n\n#hystrix的超时时间\nhystrix:\n    command:\n        default:\n            execution:\n              timeout:\n                enabled: true\n              isolation:\n                    thread:\n                        timeoutInMilliseconds: 30000\n#ribbon的超时时间\nribbon:\n  ReadTimeout: 30000\n  ConnectTimeout: 30000\n\nmy:\n  doc:\n    enable: true\n    title: ${spring.application.name}文档\n    description: ${my.doc.title}\n    name: zclcs\n    email: 2371219112@qq.com\n    url: https://github.com/zclcs\n    version: 2.2-RELEASE\n  log:\n    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}',
+        'caba4d3936f2c6276cf8a68dac7caef5', '2022-01-09 21:26:46', '2022-04-20 02:15:37', 'nacos', '192.168.33.1', '',
+        'dev', '', '', '', 'yaml', '');
 INSERT INTO `config_info`
 VALUES (141, 'rabbit-mq.yaml', 'DEFAULT_GROUP',
         'spring:\n  rabbitmq:\n    host: ${RABBIT_MQ_HOST:127.0.0.1}\n    port: ${RABBIT_MQ_PORT:5672}\n    username: ${RABBIT_MQ_USERNAME:root}\n    password: ${RABBIT_MQ_PASSWORD:123456}\n    virtual-host: /\n    # 手动提交消息\n    listener:\n      type: simple\n      simple:\n        #消息必须手动确认\n        acknowledge-mode: manual\n        #限制每次发送一条数据。\n        prefetch: 1\n        #重试策略相关配置\n        retry:\n          # 开启消费者(程序出现异常)重试机制，默认开启并一直重试\n          enabled: true\n          # 最大重试次数\n          max-attempts: 5\n          # 重试间隔时间(毫秒)\n          initial-interval: 30000\n      direct:\n        acknowledge-mode: manual',
@@ -325,7 +325,7 @@ CREATE TABLE `his_config_info`
     INDEX `idx_gmt_modified` (`gmt_modified`) USING BTREE,
     INDEX `idx_did` (`data_id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 583
+  AUTO_INCREMENT = 588
   CHARACTER SET = utf8
   COLLATE = utf8_bin COMMENT = '多租户改造'
   ROW_FORMAT = DYNAMIC;
@@ -542,6 +542,31 @@ INSERT INTO `his_config_info`
 VALUES (130, 582, 'server-dict.yaml', 'DEFAULT_GROUP', '',
         'server:\n  port: ${PORT_SERVER_DICT:8205}\n\nspring:\n  datasource:\n    dynamic:\n      primary: primary\n      datasource:\n        primary:\n          driver-class-name: ${DATASOURCE_DRIVER:com.mysql.cj.jdbc.Driver}\n          url: jdbc:${DATASOURCE_DB_TYPE:mysql}://${DATASOURCE_HOST:127.0.0.1}:${DATASOURCE_PORT:3306}/${DB_NAME_DICT:cloud_dict}?${DATASOURCE_PARAM:useUnicode=true&characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true&serverTimezone=Asia/Shanghai}\n          username: ${DATASOURCE_USERNAME:root}\n          password: ${DATASOURCE_PASSWORD:root}\n\n  flyway:\n    table: dict_flyway_history\n\nsystem:\n  dict:\n    mq-type: none\n    text-value-default-null: true\n    on-boot-refresh-dict: false\n    cache:\n      enabled: true\n      maximum-size: 500\n      initial-capacity: 50\n      duration: 30s\n      miss-num: 50\n    controller:\n      enabled: true\n      prefix: /cache\n    store-key:\n      # 树结构父级值的前缀\n      parent-prefix: \'${my.redis-cache-prefix}dict:p:\'\n      # 数据字典类型对象前缀\n      type-prefix: \'${my.redis-cache-prefix}dict:t:\'\n      # 数据字典值文本前缀\n      value-prefix: \'${my.redis-cache-prefix}dict:v:\'\n\nmybatis-plus:\n  type-aliases-package: com.zclcs.common.core.entity.dict\n  mapper-locations: classpath:com/zclcs/server/dict/mapper/*.xml\n\nmy:\n  cloud:\n    security:\n      enable: true\n      anon-uris: /v2/api-docs,/v2/api-docs-ext\n      only-fetch-by-gateway: false\n\nseata:\n  config:\n    nacos:\n      data-id: server-dict-seata.properties',
         'bf3d99d4ff314b7ade6b6efd5fda413d', '2022-04-11 16:25:57', '2022-04-11 03:25:58', 'nacos', '192.168.33.1', 'U',
+        'dev');
+INSERT INTO `his_config_info`
+VALUES (134, 583, 'logging.yaml', 'DEFAULT_GROUP', '',
+        'logging:\n  level:\n    org:\n      springframework:\n        data:\n          convert:\n            CustomConversions: error\n    com:\n      alibaba:\n        cloud:\n          nacos:\n            client:\n              NacosPropertySourceBuilder: error\n      codingapi: info',
+        '4888be6105874d1ef4a2630eb6960dab', '2022-04-20 14:43:22', '2022-04-20 01:43:23', 'nacos', '192.168.33.1', 'U',
+        'dev');
+INSERT INTO `his_config_info`
+VALUES (140, 584, 'server.yaml', 'DEFAULT_GROUP', '',
+        'spring:\n  aop:\n    proxy-target-class: true\n\n  jackson:\n    date-format: yyyy-MM-dd HH:mm:ss\n    time-zone: GMT+8\n\n  freemarker:\n    check-template-location: false\n\n  datasource:\n    dynamic:\n      p6spy: ${LOG_SQL_ENABLED:true}\n      strict: true\n      seata: true    #开启seata代理，开启后默认每个数据源都代理，如果某个不需要代理可单独关闭\n      seata-mode: AT #支持XA及AT模式,默认AT\n      hikari:\n        connection-timeout: 30000\n        max-lifetime: 1800000\n        max-pool-size: 15\n        min-idle: 5\n        connection-test-query: select 1\n\nsecurity:\n  oauth2:\n    resource:\n      id: ${spring.application.name}\n      user-info-uri: http://${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}/auth/user\n\nmybatis-plus:\n  configuration:\n    jdbc-type-for-null: null\n  global-config:\n    banner: false\n\n#hystrix的超时时间\nhystrix:\n    command:\n        default:\n            execution:\n              timeout:\n                enabled: true\n              isolation:\n                    thread:\n                        timeoutInMilliseconds: 30000\n#ribbon的超时时间\nribbon:\n  ReadTimeout: 30000\n  ConnectTimeout: 30000\n\nmy:\n  doc:\n    enable: true\n    title: ${spring.application.name}文档\n    description: ${my.doc.title}\n    name: zclcs\n    email: 2371219112@qq.com\n    url: https://github.com/zclcs\n    version: 2.2-RELEASE\n  log:\n    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}',
+        '6baf07a46334682e201e5db44387e272', '2022-04-20 14:55:50', '2022-04-20 01:55:51', 'nacos', '192.168.33.1', 'U',
+        'dev');
+INSERT INTO `his_config_info`
+VALUES (140, 585, 'server.yaml', 'DEFAULT_GROUP', '',
+        'spring:\n  aop:\n    proxy-target-class: true\n\n  jackson:\n    date-format: yyyy-MM-dd HH:mm:ss\n    time-zone: GMT+8\n\n  freemarker:\n    check-template-location: false\n\n  datasource:\n    dynamic:\n      p6spy: ${LOG_SQL_ENABLED:true}\n      strict: true\n      seata: true    #开启seata代理，开启后默认每个数据源都代理，如果某个不需要代理可单独关闭\n      seata-mode: AT #支持XA及AT模式,默认AT\n      hikari:\n        connection-timeout: 30000\n        max-lifetime: 1800000\n        max-pool-size: 15\n        min-idle: 5\n        connection-test-query: select 1\n\nsecurity:\n  oauth2:\n    resource:\n      id: ${spring.application.name}\n      user-info-uri: http://${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}/auth/oath2/user\n\nmybatis-plus:\n  configuration:\n    jdbc-type-for-null: null\n  global-config:\n    banner: false\n\n#hystrix的超时时间\nhystrix:\n    command:\n        default:\n            execution:\n              timeout:\n                enabled: true\n              isolation:\n                    thread:\n                        timeoutInMilliseconds: 30000\n#ribbon的超时时间\nribbon:\n  ReadTimeout: 30000\n  ConnectTimeout: 30000\n\nmy:\n  doc:\n    enable: true\n    title: ${spring.application.name}文档\n    description: ${my.doc.title}\n    name: zclcs\n    email: 2371219112@qq.com\n    url: https://github.com/zclcs\n    version: 2.2-RELEASE\n  log:\n    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}',
+        '810d9ccb797f09de7a745a81463a099e', '2022-04-20 14:57:57', '2022-04-20 01:57:57', 'nacos', '192.168.33.1', 'U',
+        'dev');
+INSERT INTO `his_config_info`
+VALUES (140, 586, 'server.yaml', 'DEFAULT_GROUP', '',
+        'spring:\n  aop:\n    proxy-target-class: true\n\n  jackson:\n    date-format: yyyy-MM-dd HH:mm:ss\n    time-zone: GMT+8\n\n  freemarker:\n    check-template-location: false\n\n  datasource:\n    dynamic:\n      p6spy: ${LOG_SQL_ENABLED:true}\n      strict: true\n      seata: true    #开启seata代理，开启后默认每个数据源都代理，如果某个不需要代理可单独关闭\n      seata-mode: AT #支持XA及AT模式,默认AT\n      hikari:\n        connection-timeout: 30000\n        max-lifetime: 1800000\n        max-pool-size: 15\n        min-idle: 5\n        connection-test-query: select 1\n\nsecurity:\n  oauth2:\n    resource:\n      id: ${spring.application.name}\n      user-info-uri: http://${GATEWAY_HOST:127.0.0.1}:${PORT_GATEWAY:8301}/auth/oath2/user\n\nmybatis-plus:\n  configuration:\n    jdbc-type-for-null: null\n  global-config:\n    banner: false\n\n#hystrix的超时时间\nhystrix:\n    command:\n        default:\n            execution:\n              timeout:\n                enabled: true\n              isolation:\n                    thread:\n                        timeoutInMilliseconds: 30000\n#ribbon的超时时间\nribbon:\n  ReadTimeout: 30000\n  ConnectTimeout: 30000\n\nmy:\n  doc:\n    enable: true\n    title: ${spring.application.name}文档\n    description: ${my.doc.title}\n    name: zclcs\n    email: 2371219112@qq.com\n    url: https://github.com/zclcs\n    version: 2.2-RELEASE\n  log:\n    enable-log-for-controller: ${LOG_CONTROLLER_PARAMS:false}',
+        '810d9ccb797f09de7a745a81463a099e', '2022-04-20 15:15:36', '2022-04-20 02:15:37', 'nacos', '192.168.33.1', 'U',
+        'dev');
+INSERT INTO `his_config_info`
+VALUES (134, 587, 'logging.yaml', 'DEFAULT_GROUP', '',
+        'logging:\n  level:\n    org:\n      springframework:\n        data:\n          convert:\n            CustomConversions: error\n    com:\n      zclcs: debug\n      alibaba:\n        cloud:\n          nacos:\n            client:\n              NacosPropertySourceBuilder: error\n      codingapi: info',
+        'a4f31574c8745e3a57bd203f966efea8', '2022-04-20 16:59:39', '2022-04-20 03:59:40', 'nacos', '192.168.33.1', 'U',
         'dev');
 
 -- ----------------------------

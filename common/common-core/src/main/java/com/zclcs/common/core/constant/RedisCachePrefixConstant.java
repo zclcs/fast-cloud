@@ -25,7 +25,7 @@ public interface RedisCachePrefixConstant {
     /**
      * 缓存 用户权限的 redis key
      */
-    String PERMISSIONS = "user:permissions:";
+    String USER_PERMISSIONS = "user:permissions:";
 
     /**
      * 缓存 用户路由的 redis key
