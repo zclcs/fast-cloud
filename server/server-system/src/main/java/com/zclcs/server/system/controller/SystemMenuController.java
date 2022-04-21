@@ -17,13 +17,11 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,7 +46,7 @@ public class SystemMenuController {
     @GetMapping("/routers")
     @ApiOperation(value = "用户路由")
     public BaseRsp<List<VueRouter<SystemMenuVo>>> getUserRouters() {
-        List<VueRouter<SystemMenuVo>> userRouters = this.systemMenuService.getUserRouters(BaseUsersUtil.getCurrentUsername());
+        List<VueRouter<SystemMenuVo>> userRouters = this.systemMenuService.findUserRouters(BaseUsersUtil.getCurrentUsername());
         return BaseRspUtil.data(userRouters);
     }
 
@@ -62,9 +60,8 @@ public class SystemMenuController {
     @GetMapping("/permissions")
     @ApiOperation(value = "权限")
     public BaseRsp<List<String>> findUserPermissions() {
-        Collection<GrantedAuthority> currentUserAuthority = BaseUsersUtil.getCurrentUserAuthority();
-        List<String> permissions = currentUserAuthority.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
-        return BaseRspUtil.data(permissions);
+        List<String> userPermissions = this.systemMenuService.findUserPermissions(BaseUsersUtil.getCurrentUsername());
+        return BaseRspUtil.data(userPermissions);
     }
 
     @PostMapping

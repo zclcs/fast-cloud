@@ -32,10 +32,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -58,9 +55,18 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
 
     @Override
     public List<String> findUserPermissions(String username) {
-        //checkUser(username);
-        List<SystemMenuVo> userPermissions = this.baseMapper.findUserPermissions(username);
-        return userPermissions.stream().map(SystemMenuVo::getPerms).collect(Collectors.toList());
+        Object obj = redisService.get(RedisCachePrefixConstant.USER_PERMISSIONS + username);
+        if (obj == null) {
+            synchronized (this) {
+                // 再查一次，防止上个已经抢到锁的线程已经更新过了
+                obj = redisService.get(RedisCachePrefixConstant.USER_PERMISSIONS + username);
+                if (obj != null) {
+                    return (List<String>) obj;
+                }
+                return cacheAndGetUserPermissions(username);
+            }
+        }
+        return (List<String>) obj;
     }
 
     @Override
@@ -85,10 +91,26 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
     }
 
     @Override
-    public List<VueRouter<SystemMenuVo>> getUserRouters(String username) {
+    public List<VueRouter<SystemMenuVo>> findUserRouters(String username) {
+        Object obj = redisService.get(RedisCachePrefixConstant.USER_ROUTES + username);
+        if (obj == null) {
+            synchronized (this) {
+                // 再查一次，防止上个已经抢到锁的线程已经更新过了
+                obj = redisService.get(RedisCachePrefixConstant.USER_ROUTES + username);
+                if (obj != null) {
+                    return (List<VueRouter<SystemMenuVo>>) obj;
+                }
+                return cacheAndGetUserRouters(username);
+            }
+        }
+        return (List<VueRouter<SystemMenuVo>>) obj;
+    }
+
+    @Override
+    public List<VueRouter<SystemMenuVo>> cacheAndGetUserRouters(String username) {
         List<VueRouter<SystemMenuVo>> routes = new ArrayList<>();
-        List<SystemMenuVo> menus = this.getCacheMenu(username);
-        //menus.sort(Comparator.comparingDouble(SystemMenuVo::getOrderNum));
+        List<SystemMenuVo> menus = this.getCacheMenu(username).stream().filter(systemMenuVo -> !systemMenuVo.getType().equals(SystemMenuVo.TYPE_BUTTON))
+                .sorted(Comparator.comparingDouble(SystemMenuVo::getOrderNum)).collect(Collectors.toList());
         menus.forEach(menu -> {
             if (!menu.getType().equals(SystemMenuVo.TYPE_BUTTON)) {
                 VueRouter<SystemMenuVo> route = new VueRouter<>();
@@ -109,7 +131,9 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
                 routes.add(route);
             }
         });
-        return BaseTreeUtil.buildVueRouter(routes);
+        List<VueRouter<SystemMenuVo>> vueRouters = BaseTreeUtil.buildVueRouter(routes);
+        redisService.set(RedisCachePrefixConstant.USER_ROUTES + username, vueRouters);
+        return vueRouters;
     }
 
     @Override

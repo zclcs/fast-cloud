@@ -139,6 +139,7 @@ public class DirectQueueTwoHandler {
     private void cacheAndUpdateUserDetail(String username) {
         systemUserService.cacheAndGetUserDetail(username);
         systemMenuService.cacheAndGetUserPermissions(username);
+        systemMenuService.cacheAndGetUserRouters(username);
     }
 
     private void handleSystemRoleCache(CanalBinLogInfo canalBinLogInfo) {

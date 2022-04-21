@@ -49,13 +49,21 @@ public interface SystemMenuService extends IService<SystemMenu> {
      * @param username 用户名
      * @return 用户路由
      */
-    List<VueRouter<SystemMenuVo>> getUserRouters(String username);
+    List<VueRouter<SystemMenuVo>> findUserRouters(String username);
 
     /**
-     * 获取用户路由
+     * 缓存并获取用户路由
      *
      * @param username 用户名
      * @return 用户路由
+     */
+    List<VueRouter<SystemMenuVo>> cacheAndGetUserRouters(String username);
+
+    /**
+     * 缓存并获取用户权限
+     *
+     * @param username 用户名
+     * @return 用户权限
      */
     List<String> cacheAndGetUserPermissions(String username);
 

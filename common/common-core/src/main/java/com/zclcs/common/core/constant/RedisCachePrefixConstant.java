@@ -30,7 +30,7 @@ public interface RedisCachePrefixConstant {
     /**
      * 缓存 用户路由的 redis key
      */
-    String ROUTES = "user:routes:";
+    String USER_ROUTES = "user:routes:";
 
     /**
      * 缓存 用户的 redis key
