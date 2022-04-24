@@ -1,21 +1,54 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : docker_192.168.33.10
+ Source Server         : docker_mysql_192.168.30.10
  Source Server Type    : MySQL
  Source Server Version : 50735
  Source Host           : 192.168.33.10:3306
- Source Schema         : cloud_system
+ Source Schema         : dev_system
 
  Target Server Type    : MySQL
  Target Server Version : 50735
  File Encoding         : 65001
 
- Date: 25/02/2022 19:56:02
+ Date: 24/04/2022 09:48:33
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for oauth_client_details
+-- ----------------------------
+CREATE TABLE `oauth_client_details`
+(
+    `client_id`               varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '客户端ID',
+    `resource_ids`            varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL DEFAULT NULL COMMENT '资源编号',
+    `client_secret`           varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '客户端密钥',
+    `scope`                   varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '客户端权限',
+    `authorized_grant_types`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '鉴权类型',
+    `web_server_redirect_uri` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL DEFAULT NULL COMMENT '跳转地址',
+    `authorities`             varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '拥有的系统权限',
+    `access_token_validity`   int(11)                                                        NOT NULL COMMENT 'token过期时间',
+    `refresh_token_validity`  int(11)                                                        NULL DEFAULT NULL COMMENT 'token刷新时间',
+    `additional_information`  varchar(4096) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '额外信息',
+    `autoapprove`             tinyint(4)                                                     NULL DEFAULT NULL COMMENT '是否自动批准',
+    `origin_secret`           varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL DEFAULT NULL COMMENT '组织密码',
+    PRIMARY KEY (`client_id`) USING BTREE
+) ENGINE = InnoDB
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = '客户端配置表'
+  ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of oauth_client_details
+-- ----------------------------
+INSERT INTO `oauth_client_details`
+VALUES ('app', '', '$2a$10$8Qk/efslEpO1Af1kyw/rp.DdJGsdnET8UCp1vGDzpQEa.1qBklvua', 'all', 'refresh_token,password', '',
+        NULL, 86400, 864000, NULL, NULL, '123456');
+INSERT INTO `oauth_client_details`
+VALUES ('zclcs', ' ', '$2a$10$aSZTvMOtUAYUQ.75z2n3ceJd6dCIk9Vy3J/SKZUE4hBLd6sz7.6ge', 'all', 'password,refresh_token',
+        NULL, NULL, 86400, 8640000, NULL, 0, '123456');
 
 -- ----------------------------
 -- Table structure for system_dept
@@ -26,8 +59,8 @@ CREATE TABLE `system_dept`
     `parent_id`   bigint(20)                                                    NOT NULL COMMENT '上级部门id',
     `dept_name`   varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '部门名称',
     `order_num`   double(20, 0)                                                 NULL DEFAULT NULL COMMENT '排序',
-    `create_time` datetime(0)                                                   NULL DEFAULT NULL COMMENT '创建时间',
-    `modify_time` datetime(0)                                                   NULL DEFAULT NULL COMMENT '修改时间',
+    `create_time` datetime                                                      NULL DEFAULT NULL COMMENT '创建时间',
+    `modify_time` datetime                                                      NULL DEFAULT NULL COMMENT '修改时间',
     PRIMARY KEY (`dept_id`) USING BTREE,
     INDEX `system_dept_parent_id` (`parent_id`) USING BTREE,
     INDEX `system_dept_dept_name` (`dept_name`) USING BTREE
@@ -35,7 +68,7 @@ CREATE TABLE `system_dept`
   AUTO_INCREMENT = 7
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_unicode_ci COMMENT = '部门表'
-  ROW_FORMAT = Dynamic;
+  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_dept
@@ -74,16 +107,16 @@ CREATE TABLE `system_menu`
     `hide_children_in_menu` char(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci     NOT NULL DEFAULT '0' COMMENT '隐藏所有子菜单 1是 0否',
     `current_active_menu`   varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL     DEFAULT NULL COMMENT '当前激活的菜单。用于配置详情页时左侧激活的菜单路径',
     `order_num`             double(20, 0)                                                 NULL     DEFAULT NULL COMMENT '排序',
-    `create_time`           datetime(0)                                                   NOT NULL COMMENT '创建时间',
-    `modify_time`           datetime(0)                                                   NULL     DEFAULT NULL COMMENT '修改时间',
+    `create_time`           datetime                                                      NOT NULL COMMENT '创建时间',
+    `modify_time`           datetime                                                      NULL     DEFAULT NULL COMMENT '修改时间',
     PRIMARY KEY (`menu_id`) USING BTREE,
     INDEX `system_menu_parent_id` (`parent_id`) USING BTREE,
     INDEX `system_menu_menu_id` (`menu_id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 142
+  AUTO_INCREMENT = 161
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_unicode_ci COMMENT = '菜单表'
-  ROW_FORMAT = Dynamic;
+  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_menu
@@ -92,17 +125,16 @@ INSERT INTO `system_menu`
 VALUES (1, 0, '系统管理', NULL, '/system', 'Layout', NULL, NULL, 'ant-design:setting-outlined', '2', '0', '0', '0', '0',
         NULL, 2, '2017-12-27 16:39:07', '2021-09-15 09:55:30');
 INSERT INTO `system_menu`
-VALUES (2, 1, '用户管理', 'AccountManagement', 'user', '/cloud/system/user/index', NULL, 'user:view',
+VALUES (2, 1, '用户管理', 'AccountManagement', 'user', '/cloud/system/user/index', NULL, '',
         'ant-design:user-switch-outlined', '0', '0', '0', '0', '0', NULL, 1, '2017-12-27 16:47:13',
-        '2022-02-24 15:02:29');
+        '2022-04-24 09:18:21');
 INSERT INTO `system_menu`
 VALUES (3, 1, '用户详情页面', 'AccountDetail', 'accountDetail/:username', '/cloud/system/user/AccountDetail', NULL,
         'user:detail:view', 'ant-design:audit-outlined', '0', '1', '1', '0', '0', NULL, 2, '2021-09-02 09:40:08',
         '2022-02-24 15:02:55');
 INSERT INTO `system_menu`
-VALUES (4, 1, '部门管理', 'DeptManagement', 'dept', '/cloud/system/dept/index', NULL, 'dept:view',
-        'ant-design:apartment-outlined', '0', '0', '0', '0', '0', NULL, 4, '2021-09-02 11:56:30',
-        '2022-02-24 15:05:44');
+VALUES (4, 1, '部门管理', 'DeptManagement', 'dept', '/cloud/system/dept/index', NULL, '', 'ant-design:apartment-outlined',
+        '0', '0', '0', '0', '0', NULL, 4, '2021-09-02 11:56:30', '2022-04-24 09:28:02');
 INSERT INTO `system_menu`
 VALUES (5, 2, '添加用户', NULL, NULL, NULL, NULL, 'user:add', NULL, '1', '0', '0', '0', '0', NULL, NULL,
         '2021-09-03 10:07:35', '2021-09-10 10:33:20');
@@ -119,15 +151,14 @@ INSERT INTO `system_menu`
 VALUES (9, 2, '重置用户密码', NULL, NULL, NULL, NULL, 'user:reset', NULL, '1', '0', '0', '0', '0', NULL, NULL,
         '2021-09-07 15:16:32', NULL);
 INSERT INTO `system_menu`
-VALUES (10, 1, '菜单管理', 'MenuManagement', 'menu', '/cloud/system/menu/index', NULL, 'menu:view',
-        'ant-design:menu-fold-outlined', '0', '0', '0', '0', '0', NULL, 3, '2021-09-08 10:55:14',
-        '2022-02-24 15:05:25');
+VALUES (10, 1, '菜单管理', 'MenuManagement', 'menu', '/cloud/system/menu/index', NULL, '', 'ant-design:menu-fold-outlined',
+        '0', '0', '0', '0', '0', NULL, 3, '2021-09-08 10:55:14', '2022-04-24 09:21:37');
 INSERT INTO `system_menu`
 VALUES (11, 10, '添加菜单', NULL, NULL, NULL, NULL, 'menu:add', NULL, '1', '0', '0', '0', '0', NULL, NULL,
         '2021-09-08 15:08:38', NULL);
 INSERT INTO `system_menu`
-VALUES (12, 1, '角色管理', 'RoleManagement', 'role', '/cloud/system/role/index', NULL, 'role:view',
-        'ant-design:solution-outlined', '0', '0', '0', '0', '0', NULL, 2, '2021-09-08 15:11:16', '2022-02-24 15:05:04');
+VALUES (12, 1, '角色管理', 'RoleManagement', 'role', '/cloud/system/role/index', NULL, '', 'ant-design:solution-outlined',
+        '0', '0', '0', '0', '0', NULL, 2, '2021-09-08 15:11:16', '2022-04-24 09:20:15');
 INSERT INTO `system_menu`
 VALUES (13, 10, '修改菜单', NULL, NULL, NULL, NULL, 'menu:update', NULL, '1', '0', '0', '0', '0', NULL, NULL,
         '2021-09-08 15:34:15', NULL);
@@ -187,11 +218,11 @@ INSERT INTO `system_menu`
 VALUES (38, 0, '文件管理', NULL, '/file', 'Layout', NULL, NULL, 'ant-design:file-add-filled', '2', '1', '0', '1', '1', NULL,
         5, '2021-10-25 10:36:11', '2021-12-31 09:19:24');
 INSERT INTO `system_menu`
-VALUES (39, 38, '桶', NULL, '/file/bucket', NULL, NULL, 'bucket:view', 'ant-design:tags-filled', '0', '1', '0', '0', '0',
-        NULL, 1, '2021-10-25 10:37:56', '2022-01-10 10:42:03');
+VALUES (39, 38, '桶', NULL, '/file/bucket', NULL, NULL, '', 'ant-design:tags-filled', '0', '1', '0', '0', '0', NULL, 1,
+        '2021-10-25 10:37:56', '2022-04-24 09:44:22');
 INSERT INTO `system_menu`
-VALUES (40, 38, '文件', NULL, '/file/file', NULL, NULL, 'file:view', 'ant-design:file-unknown-twotone', '0', '1', '0',
-        '0', '0', NULL, 2, '2021-10-25 10:38:42', '2022-01-10 10:42:18');
+VALUES (40, 38, '文件', NULL, '/file/file', NULL, NULL, '', 'ant-design:file-unknown-twotone', '0', '1', '0', '0', '0',
+        NULL, 2, '2021-10-25 10:38:42', '2022-04-24 09:44:28');
 INSERT INTO `system_menu`
 VALUES (41, 39, '添加桶', NULL, NULL, NULL, NULL, 'bucket:add', NULL, '1', '0', '0', '0', '0', NULL, NULL,
         '2021-10-25 10:39:51', NULL);
@@ -211,13 +242,13 @@ INSERT INTO `system_menu`
 VALUES (48, 1, '字典管理', NULL, 'dict', '', NULL, NULL, 'ant-design:medicine-box-filled', '0', '0', '0', '0', '0', NULL, 6,
         '2021-11-03 09:04:26', '2021-11-03 09:05:13');
 INSERT INTO `system_menu`
-VALUES (49, 48, '字典', 'DictTable', 'dict', '/cloud/system/dict/dict/index', NULL, 'table:view',
+VALUES (49, 48, '字典', 'DictTable', 'dict', '/cloud/system/dict/dict/index', NULL, '',
         'ant-design:medicine-box-outlined', '0', '0', '0', '0', '0', NULL, 2, '2021-11-03 09:06:09',
-        '2022-02-24 15:07:56');
+        '2022-04-24 09:43:11');
 INSERT INTO `system_menu`
-VALUES (50, 48, '层级字典', 'DictLevelTable', 'dict/level', '/cloud/system/dict/level/index', NULL, 'tableLevel:view',
+VALUES (50, 48, '层级字典', 'DictLevelTable', 'dict/level', '/cloud/system/dict/level/index', NULL, '',
         'ant-design:medicine-box-twotone', '0', '0', '0', '0', '0', NULL, 3, '2021-11-03 09:06:59',
-        '2022-02-24 15:08:12');
+        '2022-04-24 09:43:22');
 INSERT INTO `system_menu`
 VALUES (51, 49, '添加字典', NULL, NULL, NULL, NULL, 'table:add', NULL, '1', '0', '0', '0', '0', NULL, NULL,
         '2021-11-03 09:07:40', NULL);
@@ -237,8 +268,8 @@ INSERT INTO `system_menu`
 VALUES (56, 50, '修改层级字典', NULL, NULL, NULL, NULL, 'tableLevel:update', NULL, '1', '0', '0', '0', '0', NULL, NULL,
         '2021-11-03 09:29:14', NULL);
 INSERT INTO `system_menu`
-VALUES (57, 48, '字典表', 'DictTableName', 'table', '/cloud/system/dict/table/index', NULL, 'tableName:view',
-        'ant-design:table-outlined', '0', '0', '0', '0', '0', NULL, 1, '2021-11-03 14:33:58', '2022-02-24 15:07:32');
+VALUES (57, 48, '字典表', 'DictTableName', 'table', '/cloud/system/dict/table/index', NULL, '',
+        'ant-design:table-outlined', '0', '0', '0', '0', '0', NULL, 1, '2021-11-03 14:33:58', '2022-04-24 09:43:03');
 INSERT INTO `system_menu`
 VALUES (58, 57, '新增字典名表', NULL, NULL, NULL, NULL, 'tableName:add', NULL, '1', '0', '0', '0', '0', NULL, NULL,
         '2021-11-03 14:35:36', NULL);
@@ -249,9 +280,8 @@ INSERT INTO `system_menu`
 VALUES (60, 57, '修改字典名表', NULL, NULL, NULL, NULL, 'tableName:update', NULL, '1', '0', '0', '0', '0', NULL, NULL,
         '2021-11-03 14:36:22', NULL);
 INSERT INTO `system_menu`
-VALUES (62, 1, '客户端管理', 'Client', 'client', '/cloud/system/client/index', NULL, 'client:view',
-        'ant-design:paper-clip-outlined', '0', '0', '0', '0', '0', NULL, 7, '2021-12-23 09:54:40',
-        '2022-02-24 15:08:32');
+VALUES (62, 1, '客户端管理', 'Client', 'client', '/cloud/system/client/index', NULL, '', 'ant-design:paper-clip-outlined',
+        '0', '0', '0', '0', '0', NULL, 7, '2021-12-23 09:54:40', '2022-04-24 09:43:29');
 INSERT INTO `system_menu`
 VALUES (63, 62, '添加', NULL, NULL, NULL, NULL, 'client:add', NULL, '1', '0', '0', '0', '0', NULL, NULL,
         '2021-12-23 09:56:46', NULL);
@@ -268,22 +298,22 @@ INSERT INTO `system_menu`
 VALUES (68, 0, '网关管理', NULL, '/route', 'Layout', NULL, NULL, 'ant-design:gateway-outlined', '2', '0', '0', '0', '0',
         NULL, 3, '2021-12-31 09:18:55', NULL);
 INSERT INTO `system_menu`
-VALUES (69, 68, '网关日志', 'RouteLog', 'log', '/cloud/route/log/index', NULL, 'routeLog:view', 'ant-design:login-outlined',
-        '0', '0', '0', '0', '0', NULL, 1, '2021-12-31 09:32:24', '2022-02-24 15:09:27');
+VALUES (69, 68, '网关日志', 'RouteLog', 'log', '/cloud/route/log/index', NULL, '', 'ant-design:login-outlined', '0', '0',
+        '0', '0', '0', NULL, 1, '2021-12-31 09:32:24', '2022-04-24 09:43:39');
 INSERT INTO `system_menu`
-VALUES (70, 68, '限流规则', 'RateLimitRule', 'rate/rule', '/cloud/route/rate/rule/index', NULL, 'rateLimitRule:view',
-        'ant-design:alert-filled', '0', '0', '0', '0', '0', NULL, 2, '2021-12-31 09:36:04', '2022-02-24 15:09:53');
+VALUES (70, 68, '限流规则', 'RateLimitRule', 'rate/rule', '/cloud/route/rate/rule/index', NULL, '',
+        'ant-design:alert-filled', '0', '0', '0', '0', '0', NULL, 2, '2021-12-31 09:36:04', '2022-04-24 09:43:48');
 INSERT INTO `system_menu`
-VALUES (71, 68, '限流日志', 'RateLimitLog', 'rate/log', '/cloud/route/rate/log/index', NULL, 'rateLimitLog:view',
+VALUES (71, 68, '限流日志', 'RateLimitLog', 'rate/log', '/cloud/route/rate/log/index', NULL, '',
         'ant-design:ant-design-outlined', '0', '0', '0', '0', '0', NULL, 3, '2021-12-31 09:37:18',
-        '2022-02-24 15:11:07');
+        '2022-04-24 09:43:58');
 INSERT INTO `system_menu`
-VALUES (72, 68, '黑名单管理', 'BlackListPage', 'black', '/cloud/route/black/index', NULL, 'blackList:view',
+VALUES (72, 68, '黑名单管理', 'BlackListPage', 'black', '/cloud/route/black/index', NULL, '',
         'ant-design:eye-invisible-filled', '0', '0', '0', '0', '0', NULL, 4, '2021-12-31 09:39:25',
-        '2022-02-24 15:15:15');
+        '2022-04-24 09:44:05');
 INSERT INTO `system_menu`
-VALUES (73, 68, '黑名单日志', 'BlockLog', 'block', '/cloud/route/block/index', NULL, 'blockLog:view',
-        'ant-design:tablet-outlined', '0', '0', '0', '0', '0', NULL, 5, '2021-12-31 09:40:29', '2022-02-24 15:16:09');
+VALUES (73, 68, '黑名单日志', 'BlockLog', 'block', '/cloud/route/block/index', NULL, '', 'ant-design:tablet-outlined', '0',
+        '0', '0', '0', '0', NULL, 5, '2021-12-31 09:40:29', '2022-04-24 09:44:11');
 INSERT INTO `system_menu`
 VALUES (75, 69, '删除', NULL, NULL, NULL, NULL, 'routeLog:delete', NULL, '1', '0', '0', '0', '0', NULL, NULL,
         '2021-12-31 10:17:18', NULL);
@@ -315,9 +345,9 @@ INSERT INTO `system_menu`
 VALUES (124, 0, '测试', NULL, '/test', 'Layout', NULL, NULL, 'ant-design:node-collapse-outlined', '2', '0', '0', '0', '0',
         NULL, 5, '2022-01-13 11:17:02', '2022-01-13 15:46:18');
 INSERT INTO `system_menu`
-VALUES (125, 124, '企业库', 'Company', 'company', '/cloud/labor/base/company/index', NULL, 'company:view',
+VALUES (125, 124, '企业库', 'Company', 'company', '/cloud/labor/base/company/index', NULL, '',
         'ant-design:mac-command-outlined', '0', '0', '0', '0', '0', NULL, 1, '2022-01-13 11:17:04',
-        '2022-02-24 15:27:17');
+        '2022-04-24 09:44:36');
 INSERT INTO `system_menu`
 VALUES (126, 125, '新增', NULL, NULL, NULL, NULL, 'company:add', NULL, '1', '0', '0', '0', '0', NULL, NULL,
         '2022-01-13 11:17:04', NULL);
@@ -328,8 +358,8 @@ INSERT INTO `system_menu`
 VALUES (128, 125, '修改', NULL, NULL, NULL, NULL, 'company:update', NULL, '1', '0', '0', '0', '0', NULL, NULL,
         '2022-01-13 11:17:05', NULL);
 INSERT INTO `system_menu`
-VALUES (129, 124, '项目库', NULL, 'project', '/cloud/labor/base/project/index', NULL, 'project:view',
-        'ant-design:project-outlined', '0', '0', '0', '0', '0', NULL, 2, '2022-01-13 11:18:53', '2022-01-13 15:48:14');
+VALUES (129, 124, '项目库', NULL, 'project', '/cloud/labor/base/project/index', NULL, '', 'ant-design:project-outlined',
+        '0', '0', '0', '0', '0', NULL, 2, '2022-01-13 11:18:53', '2022-04-24 09:44:42');
 INSERT INTO `system_menu`
 VALUES (130, 129, '新增', NULL, NULL, NULL, NULL, 'project:add', NULL, '1', '0', '0', '0', '0', NULL, NULL,
         '2022-01-13 11:18:53', NULL);
@@ -340,9 +370,9 @@ INSERT INTO `system_menu`
 VALUES (132, 129, '修改', NULL, NULL, NULL, NULL, 'project:update', NULL, '1', '0', '0', '0', '0', NULL, NULL,
         '2022-01-13 11:18:54', NULL);
 INSERT INTO `system_menu`
-VALUES (133, 124, '参建单位', NULL, 'projectCompany', '/cloud/labor/base/projectCompany/index', NULL, 'projectCompany:view',
+VALUES (133, 124, '参建单位', NULL, 'projectCompany', '/cloud/labor/base/projectCompany/index', NULL, '',
         'ant-design:fund-projection-screen-outlined', '0', '0', '0', '0', '0', NULL, 3, '2022-01-13 11:19:11',
-        '2022-01-13 15:48:43');
+        '2022-04-24 09:44:49');
 INSERT INTO `system_menu`
 VALUES (134, 133, '新增', NULL, NULL, NULL, NULL, 'projectCompany:add', NULL, '1', '0', '0', '0', '0', NULL, NULL,
         '2022-01-13 11:19:12', NULL);
@@ -352,6 +382,60 @@ VALUES (135, 133, '删除', NULL, NULL, NULL, NULL, 'projectCompany:delete', NUL
 INSERT INTO `system_menu`
 VALUES (136, 133, '修改', NULL, NULL, NULL, NULL, 'projectCompany:update', NULL, '1', '0', '0', '0', '0', NULL, NULL,
         '2022-01-13 11:19:12', NULL);
+INSERT INTO `system_menu`
+VALUES (143, 2, '查看用户', NULL, NULL, NULL, NULL, 'user:view', NULL, '1', '0', '0', '0', '0', NULL, NULL,
+        '2022-04-24 09:16:57', NULL);
+INSERT INTO `system_menu`
+VALUES (144, 12, '查看角色', NULL, NULL, NULL, NULL, 'role:view', NULL, '1', '0', '0', '0', '0', NULL, NULL,
+        '2022-04-24 09:20:04', NULL);
+INSERT INTO `system_menu`
+VALUES (145, 10, '查看菜单', NULL, NULL, NULL, NULL, 'menu:view', NULL, '1', '0', '0', '0', '0', NULL, NULL,
+        '2022-04-24 09:21:25', NULL);
+INSERT INTO `system_menu`
+VALUES (146, 4, '查看部门', NULL, NULL, NULL, NULL, 'dept:view', NULL, '1', '0', '0', '0', '0', NULL, NULL,
+        '2022-04-24 09:23:29', NULL);
+INSERT INTO `system_menu`
+VALUES (147, 57, '查看字典名', NULL, NULL, NULL, NULL, 'tableName:view', NULL, '1', '0', '0', '0', '0', NULL, NULL,
+        '2022-04-24 09:28:59', NULL);
+INSERT INTO `system_menu`
+VALUES (148, 49, '查看字典', NULL, NULL, NULL, NULL, 'table:view', NULL, '1', '0', '0', '0', '0', NULL, NULL,
+        '2022-04-24 09:30:27', NULL);
+INSERT INTO `system_menu`
+VALUES (149, 50, '查看层级字典', NULL, NULL, NULL, NULL, 'tableLevel:view', NULL, '1', '0', '0', '0', '0', NULL, NULL,
+        '2022-04-24 09:33:07', NULL);
+INSERT INTO `system_menu`
+VALUES (150, 62, '查看客户端', NULL, NULL, NULL, NULL, 'client:view', NULL, '1', '0', '0', '0', '0', NULL, NULL,
+        '2022-04-24 09:35:11', NULL);
+INSERT INTO `system_menu`
+VALUES (151, 39, '查看桶', NULL, NULL, NULL, NULL, 'bucket:view', NULL, '1', '0', '0', '0', '0', NULL, NULL,
+        '2022-04-24 09:35:54', NULL);
+INSERT INTO `system_menu`
+VALUES (152, 69, '查看网关日志', NULL, NULL, NULL, NULL, 'routeLog:view', NULL, '1', '0', '0', '0', '0', NULL, NULL,
+        '2022-04-24 09:36:52', NULL);
+INSERT INTO `system_menu`
+VALUES (153, 70, '查看限流规则', NULL, NULL, NULL, NULL, 'rateLimitRule:view', NULL, '1', '0', '0', '0', '0', NULL, NULL,
+        '2022-04-24 09:37:35', NULL);
+INSERT INTO `system_menu`
+VALUES (154, 71, '查看限流日志', NULL, NULL, NULL, NULL, 'rateLimitLog:view', NULL, '1', '0', '0', '0', '0', NULL, NULL,
+        '2022-04-24 09:38:09', NULL);
+INSERT INTO `system_menu`
+VALUES (155, 72, '查看黑名单', NULL, NULL, NULL, NULL, 'blackList:view', NULL, '1', '0', '0', '0', '0', NULL, NULL,
+        '2022-04-24 09:40:22', NULL);
+INSERT INTO `system_menu`
+VALUES (156, 73, '查看黑名单日志', NULL, NULL, NULL, NULL, 'blockLog:view', NULL, '1', '0', '0', '0', '0', NULL, NULL,
+        '2022-04-24 09:40:48', NULL);
+INSERT INTO `system_menu`
+VALUES (157, 40, '查看文件', NULL, NULL, NULL, NULL, 'file:view', NULL, '1', '0', '0', '0', '0', NULL, NULL,
+        '2022-04-24 09:41:19', NULL);
+INSERT INTO `system_menu`
+VALUES (158, 125, '查看企业', NULL, NULL, NULL, NULL, 'company:view', NULL, '1', '0', '0', '0', '0', NULL, NULL,
+        '2022-04-24 09:41:53', NULL);
+INSERT INTO `system_menu`
+VALUES (159, 129, '查看项目', NULL, NULL, NULL, NULL, 'project:view', NULL, '1', '0', '0', '0', '0', NULL, NULL,
+        '2022-04-24 09:42:15', NULL);
+INSERT INTO `system_menu`
+VALUES (160, 133, '查看参建单位', NULL, NULL, NULL, NULL, 'projectCompany:view', NULL, '1', '0', '0', '0', '0', NULL, NULL,
+        '2022-04-24 09:42:40', NULL);
 
 -- ----------------------------
 -- Table structure for system_role
@@ -361,22 +445,22 @@ CREATE TABLE `system_role`
     `role_id`     bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT '角色id',
     `role_name`   varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '角色名称',
     `remark`      varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '角色描述',
-    `create_time` datetime(0)                                                   NOT NULL COMMENT '创建时间',
-    `modify_time` datetime(0)                                                   NULL DEFAULT NULL COMMENT '修改时间',
+    `create_time` datetime                                                      NOT NULL COMMENT '创建时间',
+    `modify_time` datetime                                                      NULL DEFAULT NULL COMMENT '修改时间',
     PRIMARY KEY (`role_id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 3
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_unicode_ci COMMENT = '角色表'
-  ROW_FORMAT = Dynamic;
+  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_role
 -- ----------------------------
 INSERT INTO `system_role`
-VALUES (1, '管理员', '管理员', '2017-12-27 16:23:11', '2022-02-25 19:08:46');
+VALUES (1, '管理员', '管理员', '2017-12-27 16:23:11', '2022-04-24 09:45:15');
 INSERT INTO `system_role`
-VALUES (2, '查看', NULL, '2021-09-09 14:54:42', '2021-09-13 14:55:53');
+VALUES (2, '查看', NULL, '2021-09-09 14:54:42', '2022-04-24 09:46:14');
 
 -- ----------------------------
 -- Table structure for system_role_menu
@@ -391,7 +475,7 @@ CREATE TABLE `system_role_menu`
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_unicode_ci COMMENT = '角色菜单关联表'
-  ROW_FORMAT = Dynamic;
+  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_role_menu
@@ -449,41 +533,59 @@ VALUES (1, 18);
 INSERT INTO `system_role_menu`
 VALUES (1, 19);
 INSERT INTO `system_role_menu`
-VALUES (2, 20);
-INSERT INTO `system_role_menu`
 VALUES (1, 22);
-INSERT INTO `system_role_menu`
-VALUES (2, 23);
-INSERT INTO `system_role_menu`
-VALUES (2, 24);
-INSERT INTO `system_role_menu`
-VALUES (2, 25);
 INSERT INTO `system_role_menu`
 VALUES (1, 26);
 INSERT INTO `system_role_menu`
+VALUES (2, 26);
+INSERT INTO `system_role_menu`
 VALUES (1, 27);
+INSERT INTO `system_role_menu`
+VALUES (2, 27);
 INSERT INTO `system_role_menu`
 VALUES (1, 28);
 INSERT INTO `system_role_menu`
+VALUES (2, 28);
+INSERT INTO `system_role_menu`
 VALUES (1, 29);
+INSERT INTO `system_role_menu`
+VALUES (2, 29);
 INSERT INTO `system_role_menu`
 VALUES (1, 30);
 INSERT INTO `system_role_menu`
+VALUES (2, 30);
+INSERT INTO `system_role_menu`
 VALUES (1, 31);
+INSERT INTO `system_role_menu`
+VALUES (2, 31);
 INSERT INTO `system_role_menu`
 VALUES (1, 32);
 INSERT INTO `system_role_menu`
+VALUES (2, 32);
+INSERT INTO `system_role_menu`
 VALUES (1, 33);
+INSERT INTO `system_role_menu`
+VALUES (2, 33);
 INSERT INTO `system_role_menu`
 VALUES (1, 35);
 INSERT INTO `system_role_menu`
+VALUES (2, 35);
+INSERT INTO `system_role_menu`
 VALUES (1, 37);
+INSERT INTO `system_role_menu`
+VALUES (2, 37);
 INSERT INTO `system_role_menu`
 VALUES (1, 38);
 INSERT INTO `system_role_menu`
+VALUES (2, 38);
+INSERT INTO `system_role_menu`
 VALUES (1, 39);
 INSERT INTO `system_role_menu`
+VALUES (2, 39);
+INSERT INTO `system_role_menu`
 VALUES (1, 40);
+INSERT INTO `system_role_menu`
+VALUES (2, 40);
 INSERT INTO `system_role_menu`
 VALUES (1, 41);
 INSERT INTO `system_role_menu`
@@ -497,9 +599,15 @@ VALUES (1, 47);
 INSERT INTO `system_role_menu`
 VALUES (1, 48);
 INSERT INTO `system_role_menu`
+VALUES (2, 48);
+INSERT INTO `system_role_menu`
 VALUES (1, 49);
 INSERT INTO `system_role_menu`
+VALUES (2, 49);
+INSERT INTO `system_role_menu`
 VALUES (1, 50);
+INSERT INTO `system_role_menu`
+VALUES (2, 50);
 INSERT INTO `system_role_menu`
 VALUES (1, 51);
 INSERT INTO `system_role_menu`
@@ -515,6 +623,8 @@ VALUES (1, 56);
 INSERT INTO `system_role_menu`
 VALUES (1, 57);
 INSERT INTO `system_role_menu`
+VALUES (2, 57);
+INSERT INTO `system_role_menu`
 VALUES (1, 58);
 INSERT INTO `system_role_menu`
 VALUES (1, 59);
@@ -522,6 +632,8 @@ INSERT INTO `system_role_menu`
 VALUES (1, 60);
 INSERT INTO `system_role_menu`
 VALUES (1, 62);
+INSERT INTO `system_role_menu`
+VALUES (2, 62);
 INSERT INTO `system_role_menu`
 VALUES (1, 63);
 INSERT INTO `system_role_menu`
@@ -533,15 +645,27 @@ VALUES (1, 67);
 INSERT INTO `system_role_menu`
 VALUES (1, 68);
 INSERT INTO `system_role_menu`
+VALUES (2, 68);
+INSERT INTO `system_role_menu`
 VALUES (1, 69);
+INSERT INTO `system_role_menu`
+VALUES (2, 69);
 INSERT INTO `system_role_menu`
 VALUES (1, 70);
 INSERT INTO `system_role_menu`
+VALUES (2, 70);
+INSERT INTO `system_role_menu`
 VALUES (1, 71);
+INSERT INTO `system_role_menu`
+VALUES (2, 71);
 INSERT INTO `system_role_menu`
 VALUES (1, 72);
 INSERT INTO `system_role_menu`
+VALUES (2, 72);
+INSERT INTO `system_role_menu`
 VALUES (1, 73);
+INSERT INTO `system_role_menu`
+VALUES (2, 73);
 INSERT INTO `system_role_menu`
 VALUES (1, 75);
 INSERT INTO `system_role_menu`
@@ -563,6 +687,8 @@ VALUES (1, 87);
 INSERT INTO `system_role_menu`
 VALUES (1, 124);
 INSERT INTO `system_role_menu`
+VALUES (2, 124);
+INSERT INTO `system_role_menu`
 VALUES (1, 125);
 INSERT INTO `system_role_menu`
 VALUES (1, 126);
@@ -573,6 +699,8 @@ VALUES (1, 128);
 INSERT INTO `system_role_menu`
 VALUES (1, 129);
 INSERT INTO `system_role_menu`
+VALUES (2, 129);
+INSERT INTO `system_role_menu`
 VALUES (1, 130);
 INSERT INTO `system_role_menu`
 VALUES (1, 131);
@@ -581,11 +709,83 @@ VALUES (1, 132);
 INSERT INTO `system_role_menu`
 VALUES (1, 133);
 INSERT INTO `system_role_menu`
+VALUES (2, 133);
+INSERT INTO `system_role_menu`
 VALUES (1, 134);
 INSERT INTO `system_role_menu`
 VALUES (1, 135);
 INSERT INTO `system_role_menu`
 VALUES (1, 136);
+INSERT INTO `system_role_menu`
+VALUES (1, 143);
+INSERT INTO `system_role_menu`
+VALUES (2, 143);
+INSERT INTO `system_role_menu`
+VALUES (1, 144);
+INSERT INTO `system_role_menu`
+VALUES (2, 144);
+INSERT INTO `system_role_menu`
+VALUES (1, 145);
+INSERT INTO `system_role_menu`
+VALUES (2, 145);
+INSERT INTO `system_role_menu`
+VALUES (1, 146);
+INSERT INTO `system_role_menu`
+VALUES (2, 146);
+INSERT INTO `system_role_menu`
+VALUES (1, 147);
+INSERT INTO `system_role_menu`
+VALUES (2, 147);
+INSERT INTO `system_role_menu`
+VALUES (1, 148);
+INSERT INTO `system_role_menu`
+VALUES (2, 148);
+INSERT INTO `system_role_menu`
+VALUES (1, 149);
+INSERT INTO `system_role_menu`
+VALUES (2, 149);
+INSERT INTO `system_role_menu`
+VALUES (1, 150);
+INSERT INTO `system_role_menu`
+VALUES (2, 150);
+INSERT INTO `system_role_menu`
+VALUES (1, 151);
+INSERT INTO `system_role_menu`
+VALUES (2, 151);
+INSERT INTO `system_role_menu`
+VALUES (1, 152);
+INSERT INTO `system_role_menu`
+VALUES (2, 152);
+INSERT INTO `system_role_menu`
+VALUES (1, 153);
+INSERT INTO `system_role_menu`
+VALUES (2, 153);
+INSERT INTO `system_role_menu`
+VALUES (1, 154);
+INSERT INTO `system_role_menu`
+VALUES (2, 154);
+INSERT INTO `system_role_menu`
+VALUES (1, 155);
+INSERT INTO `system_role_menu`
+VALUES (2, 155);
+INSERT INTO `system_role_menu`
+VALUES (1, 156);
+INSERT INTO `system_role_menu`
+VALUES (2, 156);
+INSERT INTO `system_role_menu`
+VALUES (1, 157);
+INSERT INTO `system_role_menu`
+VALUES (2, 157);
+INSERT INTO `system_role_menu`
+VALUES (1, 158);
+INSERT INTO `system_role_menu`
+VALUES (1, 159);
+INSERT INTO `system_role_menu`
+VALUES (2, 159);
+INSERT INTO `system_role_menu`
+VALUES (1, 160);
+INSERT INTO `system_role_menu`
+VALUES (2, 160);
 
 -- ----------------------------
 -- Table structure for system_user
@@ -599,9 +799,9 @@ CREATE TABLE `system_user`
     `email`           varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '邮箱',
     `mobile`          varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL DEFAULT NULL COMMENT '联系电话',
     `status`          char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci      NOT NULL COMMENT '状态 0锁定 1有效',
-    `create_time`     datetime(0)                                                   NOT NULL COMMENT '创建时间',
-    `modify_time`     datetime(0)                                                   NULL DEFAULT NULL COMMENT '修改时间',
-    `last_login_time` datetime(0)                                                   NULL DEFAULT NULL COMMENT '最近访问时间',
+    `create_time`     datetime                                                      NOT NULL COMMENT '创建时间',
+    `modify_time`     datetime                                                      NULL DEFAULT NULL COMMENT '修改时间',
+    `last_login_time` datetime                                                      NULL DEFAULT NULL COMMENT '最近访问时间',
     `gender`          char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci      NULL DEFAULT NULL COMMENT '性别 0男 1女 2保密',
     `is_tab`          char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci      NULL DEFAULT NULL COMMENT '是否开启tab，0关闭 1开启',
     `theme`           varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL DEFAULT NULL COMMENT '主题',
@@ -614,7 +814,7 @@ CREATE TABLE `system_user`
   AUTO_INCREMENT = 10
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_unicode_ci COMMENT = '用户表'
-  ROW_FORMAT = Dynamic;
+  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_user
@@ -645,7 +845,7 @@ CREATE TABLE `system_user_connection`
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_unicode_ci COMMENT = '系统用户社交账户关联表'
-  ROW_FORMAT = Dynamic;
+  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_user_connection
@@ -662,7 +862,7 @@ CREATE TABLE `system_user_data_permission`
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_unicode_ci COMMENT = '用户数据权限关联表'
-  ROW_FORMAT = Dynamic;
+  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_user_data_permission
@@ -693,7 +893,7 @@ CREATE TABLE `system_user_role`
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_unicode_ci COMMENT = '用户角色关联表'
-  ROW_FORMAT = Dynamic;
+  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_user_role
@@ -702,35 +902,5 @@ INSERT INTO `system_user_role`
 VALUES (1, 1);
 INSERT INTO `system_user_role`
 VALUES (9, 2);
-
-CREATE TABLE `oauth_client_details`
-(
-    `client_id`               varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '客户端ID',
-    `resource_ids`            varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL DEFAULT NULL COMMENT '资源编号',
-    `client_secret`           varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '客户端密钥',
-    `scope`                   varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '客户端权限',
-    `authorized_grant_types`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '鉴权类型',
-    `web_server_redirect_uri` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL DEFAULT NULL COMMENT '跳转地址',
-    `authorities`             varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '拥有的系统权限',
-    `access_token_validity`   int(11)                                                        NOT NULL COMMENT 'token过期时间',
-    `refresh_token_validity`  int(11)                                                        NULL DEFAULT NULL COMMENT 'token刷新时间',
-    `additional_information`  varchar(4096) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '额外信息',
-    `autoapprove`             tinyint(4)                                                     NULL DEFAULT NULL COMMENT '是否自动批准',
-    `origin_secret`           varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL DEFAULT NULL COMMENT '组织密码',
-    PRIMARY KEY (`client_id`) USING BTREE
-) ENGINE = InnoDB
-  CHARACTER SET = utf8mb4
-  COLLATE = utf8mb4_general_ci COMMENT = '客户端配置表'
-  ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of oauth_client_details
--- ----------------------------
-INSERT INTO `oauth_client_details`
-VALUES ('app', '', '$2a$10$8Qk/efslEpO1Af1kyw/rp.DdJGsdnET8UCp1vGDzpQEa.1qBklvua', 'all', 'refresh_token,password', '',
-        NULL, 86400, 864000, NULL, NULL, '123456');
-INSERT INTO `oauth_client_details`
-VALUES ('zclcs', ' ', '$2a$10$aSZTvMOtUAYUQ.75z2n3ceJd6dCIk9Vy3J/SKZUE4hBLd6sz7.6ge', 'all', 'password,refresh_token',
-        NULL, NULL, 86400, 8640000, NULL, 0, '123456');
 
 SET FOREIGN_KEY_CHECKS = 1;

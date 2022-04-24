@@ -24,6 +24,7 @@
                group_concat(distinct srm.menu_id) as menuIdsString
         from system_role sr
                  left join system_role_menu srm on sr.role_id = srm.role_id
+                 inner join system_menu sm on srm.menu_id = sm.menu_id
             ${ew.customSqlSegment}
     </sql>
     <select id="findPageVo" resultType="com.zclcs.common.core.entity.system.vo.SystemRoleVo">

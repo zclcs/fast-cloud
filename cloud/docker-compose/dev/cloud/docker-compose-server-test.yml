@@ -1,10 +1,9 @@
 version: '3'
 
 services:
-  # 生产可以不用部署
   server-test:
     image: ${CLOUD_DEPOSITORY_IP_PORT}${CLOUD_DEPOSITORY_URL}/server-test:${CLOUD_DEPOSITORY_TAG}
-    container_name: server-test
+    container_name: ${NACOS_NAMESPACE}_server-test
     network_mode: host
     command: sh -c "/wait && java ${JAVA_OPS_PREFIX} ${SERVER_TEST_JAVA_OPS} ${JAVA_OPS_SUFFIX} -cp /app/resources:/app/classes:/app/libs/* ${SERVER_TEST_MAIN_CLASS}"
     environment:

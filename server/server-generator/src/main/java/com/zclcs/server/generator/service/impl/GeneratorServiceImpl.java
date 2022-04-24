@@ -78,6 +78,7 @@ public class GeneratorServiceImpl implements GeneratorService {
             className = StrUtil.removePrefix(name, generatorConfigVo.getTrimValue());
         }
         String underscoreToCamel = BaseUtil.underscoreToCamel(className);
+        createMenu(generateAo, underscoreToCamel);
         generatorConfigVo.setTableName(name);
         generatorConfigVo.setClassName(underscoreToCamel);
         generatorConfigVo.setTableComment(remark);
@@ -116,7 +117,6 @@ public class GeneratorServiceImpl implements GeneratorService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        createMenu(generateAo, underscoreToCamel);
     }
 
     private void createMenu(GenerateAo generateAo, String className) {
@@ -164,7 +164,7 @@ public class GeneratorServiceImpl implements GeneratorService {
         menu.setMenuName(Optional.ofNullable(generateAo.getMenuName()).filter(StrUtil::isNotBlank).orElse(generateAo.getRemark()));
         menu.setKeepAliveName(StrUtil.upperFirst(className));
         menu.setParentId(parentId);
-        menu.setPerms(className + StrUtil.COLON + ParamsConstant.AUTH_VIEW);
+        //menu.setPerms(className + StrUtil.COLON + ParamsConstant.AUTH_VIEW);
         menu.setType(DictConstant.MENU_TYPE_0);
         menu.setIcon(ParamsConstant.DEFAULT_MENU_ICON);
         menu.setPath(Optional.ofNullable(generateAo.getMenuPath()).filter(StrUtil::isNotBlank).orElse(className));

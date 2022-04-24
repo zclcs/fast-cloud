@@ -57,7 +57,7 @@ public interface ParamsConstant {
     /**
      * 代码生成权限集合
      */
-    String[] AUTHS = new String[]{"add", "delete", "update"};
+    String[] AUTHS = new String[]{"view", "add", "delete", "update"};
 
     /**
      * 代码生成权限集合
@@ -67,7 +67,7 @@ public interface ParamsConstant {
     /**
      * 按钮文字
      */
-    String[] BUTTON_TEXT = new String[]{"新增", "删除", "修改"};
+    String[] BUTTON_TEXT = new String[]{"查看", "新增", "删除", "修改"};
 
     /**
      * 代码压缩包后缀

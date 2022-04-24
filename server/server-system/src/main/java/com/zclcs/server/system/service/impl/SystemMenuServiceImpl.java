@@ -112,24 +112,22 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
         List<SystemMenuVo> menus = this.getCacheMenu(username).stream().filter(systemMenuVo -> !systemMenuVo.getType().equals(SystemMenuVo.TYPE_BUTTON))
                 .sorted(Comparator.comparingDouble(SystemMenuVo::getOrderNum)).collect(Collectors.toList());
         menus.forEach(menu -> {
-            if (!menu.getType().equals(SystemMenuVo.TYPE_BUTTON)) {
-                VueRouter<SystemMenuVo> route = new VueRouter<>();
-                route.setId(menu.getMenuId());
-                route.setParentId(menu.getParentId());
-                route.setPath(menu.getPath());
-                route.setName(StrUtil.isNotBlank(menu.getKeepAliveName()) ? menu.getKeepAliveName() : menu.getMenuName());
-                route.setComponent(menu.getComponent());
-                route.setRedirect(menu.getRedirect());
-                route.setMeta(new RouterMeta(
-                        menu.getMenuName(),
-                        menu.getIcon(),
-                        menu.getHideMenu().equals(SystemMenuVo.YES),
-                        menu.getIgnoreKeepAlive().equals(SystemMenuVo.YES),
-                        menu.getHideBreadcrumb().equals(SystemMenuVo.YES),
-                        menu.getHideChildrenInMenu().equals(SystemMenuVo.YES),
-                        menu.getCurrentActiveMenu()));
-                routes.add(route);
-            }
+            VueRouter<SystemMenuVo> route = new VueRouter<>();
+            route.setId(menu.getMenuId());
+            route.setParentId(menu.getParentId());
+            route.setPath(menu.getPath());
+            route.setName(StrUtil.isNotBlank(menu.getKeepAliveName()) ? menu.getKeepAliveName() : menu.getMenuName());
+            route.setComponent(menu.getComponent());
+            route.setRedirect(menu.getRedirect());
+            route.setMeta(new RouterMeta(
+                    menu.getMenuName(),
+                    menu.getIcon(),
+                    menu.getHideMenu().equals(SystemMenuVo.YES),
+                    menu.getIgnoreKeepAlive().equals(SystemMenuVo.YES),
+                    menu.getHideBreadcrumb().equals(SystemMenuVo.YES),
+                    menu.getHideChildrenInMenu().equals(SystemMenuVo.YES),
+                    menu.getCurrentActiveMenu()));
+            routes.add(route);
         });
         List<VueRouter<SystemMenuVo>> vueRouters = BaseTreeUtil.buildVueRouter(routes);
         redisService.set(RedisCachePrefixConstant.USER_ROUTES + username, vueRouters);
@@ -138,7 +136,7 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
 
     @Override
     public List<String> cacheAndGetUserPermissions(String username) {
-        List<String> permissions = getCacheMenu(username).stream().map(SystemMenuVo::getPerms).filter(StrUtil::isNotBlank).collect(Collectors.toList());
+        List<String> permissions = getCacheMenu(username).stream().filter(Objects::nonNull).map(SystemMenuVo::getPerms).filter(StrUtil::isNotBlank).distinct().collect(Collectors.toList());
         redisService.set(RedisCachePrefixConstant.USER_PERMISSIONS + username, permissions);
         return permissions;
     }

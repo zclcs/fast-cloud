@@ -5,7 +5,7 @@ version: '3'
 services:
   gateway:
     image: ${CLOUD_DEPOSITORY_IP_PORT}${CLOUD_DEPOSITORY_URL}/gateway:${CLOUD_DEPOSITORY_TAG}
-    container_name: gateway
+    container_name: ${NACOS_NAMESPACE}_gateway
     network_mode: host
     command: sh -c "/wait && java ${JAVA_OPS_PREFIX} ${GATEWAY_JAVA_OPS} ${JAVA_OPS_SUFFIX} -cp /app/resources:/app/classes:/app/libs/* ${GATEWAY_MAIN_CLASS}"
     environment:
@@ -25,7 +25,7 @@ services:
     env_file: .env
   auth:
     image: ${CLOUD_DEPOSITORY_IP_PORT}${CLOUD_DEPOSITORY_URL}/auth:${CLOUD_DEPOSITORY_TAG}
-    container_name: auth
+    container_name: ${NACOS_NAMESPACE}_auth
     network_mode: host
     command: sh -c "java ${JAVA_OPS_PREFIX} ${AUTH_JAVA_OPS} ${JAVA_OPS_SUFFIX} -cp /app/resources:/app/classes:/app/libs/* ${AUTH_MAIN_CLASS}"
     volumes:
@@ -40,7 +40,7 @@ services:
     env_file: .env
   knife4j:
     image: ${CLOUD_DEPOSITORY_IP_PORT}${CLOUD_DEPOSITORY_URL}/knife4j:${CLOUD_DEPOSITORY_TAG}
-    container_name: knife4j
+    container_name: ${NACOS_NAMESPACE}_knife4j
     network_mode: host
     command: sh -c "/wait && java ${JAVA_OPS_PREFIX} ${SERVER_KNIFE4J_JAVA_OPS} ${JAVA_OPS_SUFFIX} -cp /app/resources:/app/classes:/app/libs/* ${KNIFE4J_MAIN_CLASS}"
     environment:
@@ -58,7 +58,7 @@ services:
     env_file: .env
   server-system:
     image: ${CLOUD_DEPOSITORY_IP_PORT}${CLOUD_DEPOSITORY_URL}/server-system:${CLOUD_DEPOSITORY_TAG}
-    container_name: server-system
+    container_name: ${NACOS_NAMESPACE}_server-system
     network_mode: host
     command: sh -c "/wait && java ${JAVA_OPS_PREFIX} ${SERVER_SYSTEM_JAVA_OPS} ${JAVA_OPS_SUFFIX} -cp /app/resources:/app/classes:/app/libs/* ${SERVER_SYSTEM_MAIN_CLASS}"
     environment:
@@ -79,7 +79,7 @@ services:
   # 生产可以不用部署
   server-generator:
     image: ${CLOUD_DEPOSITORY_IP_PORT}${CLOUD_DEPOSITORY_URL}/server-generator:${CLOUD_DEPOSITORY_TAG}
-    container_name: server-generator
+    container_name: ${NACOS_NAMESPACE}_server-generator
     network_mode: host
     command: sh -c "/wait && java ${JAVA_OPS_PREFIX} ${SERVER_GENERATOR_JAVA_OPS} ${JAVA_OPS_SUFFIX} -cp /app/resources:/app/classes:/app/libs/* ${SERVER_GENERATOR_MAIN_CLASS}"
     environment:
@@ -99,7 +99,7 @@ services:
     env_file: .env
   server-dict:
     image: ${CLOUD_DEPOSITORY_IP_PORT}${CLOUD_DEPOSITORY_URL}/server-dict:${CLOUD_DEPOSITORY_TAG}
-    container_name: server-dict
+    container_name: ${NACOS_NAMESPACE}_server-dict
     network_mode: host
     command: sh -c "/wait && java ${JAVA_OPS_PREFIX} ${SERVER_DICT_JAVA_OPS} ${JAVA_OPS_SUFFIX} -cp /app/resources:/app/classes:/app/libs/* ${SERVER_DICT_MAIN_CLASS}"
     environment:
@@ -119,7 +119,7 @@ services:
     env_file: .env
   server-minio:
     image: ${CLOUD_DEPOSITORY_IP_PORT}${CLOUD_DEPOSITORY_URL}/server-minio:${CLOUD_DEPOSITORY_TAG}
-    container_name: server-minio
+    container_name: ${NACOS_NAMESPACE}_server-minio
     network_mode: host
     command: sh -c "/wait && java ${JAVA_OPS_PREFIX} ${SERVER_MINIO_JAVA_OPS} ${JAVA_OPS_SUFFIX} -cp /app/resources:/app/classes:/app/libs/* ${SERVER_MINIO_MAIN_CLASS}"
     environment:
@@ -140,7 +140,7 @@ services:
   # 生产可以不用部署
   server-test:
     image: ${CLOUD_DEPOSITORY_IP_PORT}${CLOUD_DEPOSITORY_URL}/server-test:${CLOUD_DEPOSITORY_TAG}
-    container_name: server-test
+    container_name: ${NACOS_NAMESPACE}_server-test
     network_mode: host
     command: sh -c "/wait && java ${JAVA_OPS_PREFIX} ${SERVER_TEST_JAVA_OPS} ${JAVA_OPS_SUFFIX} -cp /app/resources:/app/classes:/app/libs/* ${SERVER_TEST_MAIN_CLASS}"
     environment:
@@ -160,7 +160,7 @@ services:
     env_file: .env
   seata:
     image: ${CLOUD_DEPOSITORY_IP_PORT}/library/seata:1.4.2
-    container_name: seata
+    container_name: ${NACOS_NAMESPACE}_seata
     network_mode: host
     environment:
       # 指定seata服务启动端口

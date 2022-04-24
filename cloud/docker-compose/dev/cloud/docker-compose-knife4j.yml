@@ -3,7 +3,7 @@ version: '3'
 services:
   knife4j:
     image: ${CLOUD_DEPOSITORY_IP_PORT}${CLOUD_DEPOSITORY_URL}/knife4j:${CLOUD_DEPOSITORY_TAG}
-    container_name: knife4j
+    container_name: ${NACOS_NAMESPACE}_knife4j
     network_mode: host
     command: sh -c "/wait && java ${JAVA_OPS_PREFIX} ${SERVER_KNIFE4J_JAVA_OPS} ${JAVA_OPS_SUFFIX} -cp /app/resources:/app/classes:/app/libs/* ${KNIFE4J_MAIN_CLASS}"
     environment:

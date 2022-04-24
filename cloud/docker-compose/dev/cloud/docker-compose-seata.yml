@@ -3,7 +3,7 @@ version: '3'
 services:
   seata:
     image: ${CLOUD_DEPOSITORY_IP_PORT}/library/seata:1.4.2
-    container_name: seata
+    container_name: ${NACOS_NAMESPACE}_seata
     network_mode: host
     environment:
       # 指定seata服务启动端口

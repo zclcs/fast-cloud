@@ -3,7 +3,7 @@ version: '3'
 services:
   gateway:
     image: ${CLOUD_DEPOSITORY_IP_PORT}${CLOUD_DEPOSITORY_URL}/gateway:${CLOUD_DEPOSITORY_TAG}
-    container_name: gateway
+    container_name: ${NACOS_NAMESPACE}_gateway
     network_mode: host
     command: sh -c "/wait && java ${JAVA_OPS_PREFIX} ${GATEWAY_JAVA_OPS} ${JAVA_OPS_SUFFIX} -cp /app/resources:/app/classes:/app/libs/* ${GATEWAY_MAIN_CLASS}"
     environment:
