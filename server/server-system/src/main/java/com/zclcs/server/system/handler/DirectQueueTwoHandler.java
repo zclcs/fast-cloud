@@ -64,7 +64,7 @@ public class DirectQueueTwoHandler {
         //  如果手动ACK,消息会被监听消费,但是消息在队列中依旧存在,如果 未配置 acknowledge-mode 默认是会在消费完毕后自动ACK掉
         final long deliveryTag = message.getMessageProperties().getDeliveryTag();
         try {
-            log.info("直接队列2，处理server-system服务缓存，手动ACK，接收消息：{}", messageStruct.getMessage());
+            //log.info("直接队列2，处理server-system服务缓存，手动ACK，接收消息：{}", messageStruct.getMessage());
             CanalBinLogInfo canalBinLogInfo = JSONUtil.toBean(messageStruct.getMessage(), CanalBinLogInfo.class);
             switch (canalBinLogInfo.getTable()) {
                 case SYSTEM_USER:

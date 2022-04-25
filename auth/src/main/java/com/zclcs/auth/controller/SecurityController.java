@@ -50,6 +50,40 @@ public class SecurityController {
     @GetMapping("user")
     @ApiOperation(value = "获取当前用户信息(前端)")
     public MyAuthUser user() {
+        updateUserInfo();
+        return BaseUsersUtil.getCurrentUser();
+    }
+
+    @ResponseBody
+    @GetMapping("/oath2/info")
+    @ApiOperation(value = "获取当前认证信息(系统)")
+    public Principal currentUser() {
+        updateUserInfo();
+        return BaseUsersUtil.getOauth2Authentication();
+    }
+
+    @ResponseBody
+    @GetMapping("captcha")
+    @ApiOperation(value = "验证码")
+    public void captcha(HttpServletRequest request, HttpServletResponse response) throws IOException, ValidateCodeException {
+        validateCodeService.create(request, response);
+    }
+
+    @RequestMapping("login")
+    public String login() {
+        return "login";
+    }
+
+    @ResponseBody
+    @DeleteMapping("signout")
+    @ApiOperation(value = "登出")
+    public BaseRsp<String> signout(HttpServletRequest request, @RequestHeader("Authorization") String token) {
+        token = StringUtils.replace(token, "Bearer ", StringConstant.EMPTY).trim();
+        consumerTokenServices.revokeToken(token);
+        return BaseRspUtil.message("signout");
+    }
+
+    private void updateUserInfo() {
         String username = BaseUsersUtil.getCurrentUsername();
         SystemUserVo systemUserVo = (SystemUserVo) redisService.get(RedisCachePrefixConstant.USER + username);
         if (systemUserVo.getNeedUpdateUserDetail()) {
@@ -80,34 +114,5 @@ public class SecurityController {
             systemUserVo.setNeedUpdateUserDetail(false);
             redisService.set(RedisCachePrefixConstant.USER + username, systemUserVo);
         }
-        return BaseUsersUtil.getCurrentUser();
-    }
-
-    @ResponseBody
-    @GetMapping("/oath2/info")
-    @ApiOperation(value = "获取当前认证信息(系统)")
-    public Principal currentUser() {
-        return BaseUsersUtil.getOauth2Authentication();
-    }
-
-    @ResponseBody
-    @GetMapping("captcha")
-    @ApiOperation(value = "验证码")
-    public void captcha(HttpServletRequest request, HttpServletResponse response) throws IOException, ValidateCodeException {
-        validateCodeService.create(request, response);
-    }
-
-    @RequestMapping("login")
-    public String login() {
-        return "login";
-    }
-
-    @ResponseBody
-    @DeleteMapping("signout")
-    @ApiOperation(value = "登出")
-    public BaseRsp<String> signout(HttpServletRequest request, @RequestHeader("Authorization") String token) {
-        token = StringUtils.replace(token, "Bearer ", StringConstant.EMPTY).trim();
-        consumerTokenServices.revokeToken(token);
-        return BaseRspUtil.message("signout");
     }
 }
