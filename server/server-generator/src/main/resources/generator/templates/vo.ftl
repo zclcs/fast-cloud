@@ -45,7 +45,7 @@ public class ${className}Vo implements Serializable {
     </#if>
     <#if (column.type = 'varchar' || column.type = 'text' || column.type = 'uniqueidentifier'
     || column.type = 'varchar2' || column.type = 'nvarchar' || column.type = 'VARCHAR2'
-    || column.type = 'VARCHAR'|| column.type = 'CLOB' || column.type = 'char')>
+    || column.type = 'VARCHAR'|| column.type = 'CLOB' || column.type = 'char' || column.type = 'json')>
     private String ${column.field?uncap_first};
     </#if>
     <#if column.type = 'timestamp' || column.type = 'TIMESTAMP'>

@@ -40,7 +40,7 @@ public class ${className}Ao implements Serializable {
     <#list columns as column>
     <#if (column.type = 'varchar' || column.type = 'text' || column.type = 'uniqueidentifier'
     || column.type = 'varchar2' || column.type = 'nvarchar' || column.type = 'VARCHAR2'
-    || column.type = 'VARCHAR'|| column.type = 'CLOB' || column.type = 'char') && column.isCharMaxLength = true>
+    || column.type = 'VARCHAR'|| column.type = 'CLOB' || column.type = 'char' || column.type = 'json') && column.isCharMaxLength = true>
     @Size(max = ${column.charMaxLength}, message = "{noMoreThan}")
     </#if>
     <#if column.isKey = true>
@@ -49,7 +49,7 @@ public class ${className}Ao implements Serializable {
     </#if>
     <#if (column.type = 'varchar' || column.type = 'text' || column.type = 'uniqueidentifier'
     || column.type = 'varchar2' || column.type = 'nvarchar' || column.type = 'VARCHAR2'
-    || column.type = 'VARCHAR'|| column.type = 'CLOB' || column.type = 'char')>
+    || column.type = 'VARCHAR'|| column.type = 'CLOB' || column.type = 'char' || column.type = 'json')>
         <#if column.isNullable = false && column.isKey = false>
     @NotBlank(message = "{required}")
     @ApiModelProperty(value = "${column.remark}", required = true)
@@ -65,7 +65,7 @@ public class ${className}Ao implements Serializable {
     </#if>
     <#if (column.type = 'varchar' || column.type = 'text' || column.type = 'uniqueidentifier'
     || column.type = 'varchar2' || column.type = 'nvarchar' || column.type = 'VARCHAR2'
-    || column.type = 'VARCHAR'|| column.type = 'CLOB' || column.type = 'char')>
+    || column.type = 'VARCHAR'|| column.type = 'CLOB' || column.type = 'char' || column.type = 'json')>
     private String ${column.field?uncap_first};
     </#if>
     <#if column.type = 'timestamp' || column.type = 'TIMESTAMP'>
