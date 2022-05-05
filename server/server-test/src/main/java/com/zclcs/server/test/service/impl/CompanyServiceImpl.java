@@ -1,7 +1,6 @@
 package com.zclcs.server.test.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -79,7 +78,6 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
     public Company createCompany(CompanyAo companyAo) {
         Company company = new Company();
         BeanUtil.copyProperties(companyAo, company);
-        company.setCreateTime(DateUtil.date());
         validAdd(company);
         this.save(company);
         return company;
@@ -90,7 +88,6 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
     public Company updateCompany(CompanyAo companyAo) {
         Company company = new Company();
         BeanUtil.copyProperties(companyAo, company);
-        company.setModifyTime(DateUtil.date());
         validUpdate(company);
         this.updateById(company);
         return company;

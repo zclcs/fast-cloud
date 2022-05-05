@@ -15,7 +15,8 @@
                gc.service_impl_package,
                gc.controller_package,
                gc.is_trim,
-               gc.trim_value
+               gc.trim_value,
+               gc.exclude_columns
         from generator_config gc
             ${ew.customSqlSegment}
     </sql>

@@ -91,4 +91,10 @@ public class GeneratorConfig {
     @TableField("trim_value")
     private String trimValue;
 
+    /**
+     * 需要排除的字段
+     */
+    @TableField("exclude_columns")
+    private String excludeColumns;
+
 }

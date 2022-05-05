@@ -1,6 +1,6 @@
 package com.zclcs.common.core.entity.system.vo;
 
-import com.zclcs.common.core.entity.router.VueRouter;
+import com.zclcs.common.core.entity.system.router.VueRouter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

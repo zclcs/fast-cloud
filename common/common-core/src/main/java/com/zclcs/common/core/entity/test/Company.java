@@ -4,12 +4,13 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.zclcs.common.core.base.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * 企业 Entity
@@ -22,7 +23,7 @@ import java.util.Date;
 @Accessors(chain = true)
 @TableName("test_company")
 @ApiModel(value = "Company对象", description = "企业")
-public class Company {
+public class Company extends BaseEntity {
 
     /**
      * 企业id
@@ -136,13 +137,13 @@ public class Company {
      * 注册日期
      */
     @TableField("register_date")
-    private Date registerDate;
+    private LocalDate registerDate;
 
     /**
      * 成立日期
      */
     @TableField("establish_date")
-    private Date establishDate;
+    private LocalDate establishDate;
 
     /**
      * 办公电话
@@ -191,18 +192,5 @@ public class Company {
      */
     @TableField("remark")
     private String remark;
-
-    /**
-     * 创建时间
-     */
-    @TableField("create_time")
-    private Date createTime;
-
-    /**
-     * 编辑时间
-     */
-    @TableField("modify_time")
-    private Date modifyTime;
-
 
 }

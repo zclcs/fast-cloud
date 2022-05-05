@@ -39,9 +39,10 @@ public interface GeneratorService {
      * @param databaseType databaseType
      * @param schemaName   schemaName
      * @param tableName    tableName
+     * @param excludeColumns 需要排除的字段
      * @return 数据表列信息
      */
-    List<Column> getColumns(String databaseType, String schemaName, String tableName);
+    List<Column> getColumns(String databaseType, String schemaName, String tableName, List<String> excludeColumns);
 
     /**
      * 代码生成

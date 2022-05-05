@@ -11,13 +11,14 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
- * 项目 Ao
+ * 项目信息 Ao
  *
  * @author zclcs
- * @date 2022-01-13 11:18:52.469
+ * @date 2022-05-05 10:38:50.446
  */
 @Data
 @AllArgsConstructor
@@ -25,7 +26,7 @@ import java.util.Date;
 @Builder
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value = "ProjectAo对象", description = "项目")
+@ApiModel(value = "ProjectAo对象", description = "项目信息")
 public class ProjectAo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -82,16 +83,16 @@ public class ProjectAo implements Serializable {
     private String buildingLength;
 
     @ApiModelProperty(value = "实际开工日期")
-    private Date startDate;
+    private LocalDate startDate;
 
     @ApiModelProperty(value = "实际竣工日期")
-    private Date completeDate;
+    private LocalDate completeDate;
 
     @ApiModelProperty(value = "计划开工日期")
-    private Date plannedStartDate;
+    private LocalDate plannedStartDate;
 
     @ApiModelProperty(value = "计划竣工日期")
-    private Date plannedCompleteDate;
+    private LocalDate plannedCompleteDate;
 
     @Size(max = 50, message = "{noMoreThan}")
     @ApiModelProperty(value = "联系人姓名")
@@ -144,15 +145,8 @@ public class ProjectAo implements Serializable {
     @ApiModelProperty(value = "是否重点项目 @@yes_no")
     private String majorProject;
 
-    @NotNull(message = "{required}")
-    @ApiModelProperty(value = "创建时间", required = true)
-    private Date createTime;
-
-    @ApiModelProperty(value = "编辑时间")
-    private Date modifyTime;
-
     @ApiModelProperty(value = "最后一次考勤时间")
-    private Date lastAttendTime;
+    private LocalDateTime lastAttendTime;
 
 
 }

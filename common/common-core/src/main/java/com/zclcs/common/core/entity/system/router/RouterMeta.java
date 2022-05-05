@@ -1,4 +1,4 @@
-package com.zclcs.common.core.entity.router;
+package com.zclcs.common.core.entity.system.router;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

@@ -10,16 +10,14 @@ import com.zclcs.common.core.constant.RedisCachePrefixConstant;
 import com.zclcs.common.core.constant.StringConstant;
 import com.zclcs.common.core.entity.MenuTree;
 import com.zclcs.common.core.entity.Tree;
-import com.zclcs.common.core.entity.router.RouterMeta;
-import com.zclcs.common.core.entity.router.VueRouter;
+import com.zclcs.common.core.entity.system.router.RouterMeta;
+import com.zclcs.common.core.entity.system.router.VueRouter;
 import com.zclcs.common.core.entity.system.SystemMenu;
 import com.zclcs.common.core.entity.system.ao.SystemMenuAo;
 import com.zclcs.common.core.entity.system.vo.SystemMenuVo;
 import com.zclcs.common.core.entity.system.vo.SystemRoleVo;
 import com.zclcs.common.core.entity.system.vo.SystemUserVo;
-import com.zclcs.common.core.exception.MyException;
 import com.zclcs.common.core.utils.BaseTreeUtil;
-import com.zclcs.common.core.utils.BaseUsersUtil;
 import com.zclcs.common.redis.starter.service.RedisService;
 import com.zclcs.server.system.mapper.SystemMenuMapper;
 import com.zclcs.server.system.service.SystemMenuService;
@@ -255,14 +253,6 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
         queryWrapper.in("sm.parent_id", menuIds);
         List<Long> childMenus = baseMapper.findListVo(queryWrapper).stream().map(SystemMenuVo::getMenuId).collect(Collectors.toList());
         Optional.of(childMenus).filter(CollectionUtil::isNotEmpty).ifPresent(this::delete);
-    }
-
-    private void checkUser(String username) {
-        String currentUsername = BaseUsersUtil.getCurrentUsername();
-        if (StringUtils.isNotBlank(currentUsername)
-                && !StringUtils.equalsIgnoreCase(currentUsername, username)) {
-            throw new MyException("无权获取别的用户数据");
-        }
     }
 
     private List<SystemMenuVo> getCacheMenu(String username) {

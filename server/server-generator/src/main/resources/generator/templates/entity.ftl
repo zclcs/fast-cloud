@@ -10,13 +10,15 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.zclcs.common.core.base.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /**
  * ${tableComment} Entity
@@ -29,7 +31,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @TableName("${tableName}")
 @ApiModel(value = "${className}对象", description = "${tableComment}")
-public class ${className} {
+public class ${className} extends BaseEntity {
 
 <#if columns??>
     <#list columns as column>
@@ -46,8 +48,14 @@ public class ${className} {
     || column.type = 'VARCHAR'|| column.type = 'CLOB' || column.type = 'char')>
     private String ${column.field?uncap_first};
     </#if>
-    <#if column.type = 'timestamp' || column.type = 'date' || column.type = 'datetime'||column.type = 'TIMESTAMP' || column.type = 'DATE' || column.type = 'DATETIME'>
-    private Date ${column.field?uncap_first};
+    <#if column.type = 'timestamp' || column.type = 'TIMESTAMP'>
+    private Long ${column.field?uncap_first};
+    </#if>
+    <#if column.type = 'date' || column.type = 'DATE'>
+    private LocalDate ${column.field?uncap_first};
+    </#if>
+    <#if column.type = 'datetime' || column.type = 'DATETIME'>
+    private LocalDateTime ${column.field?uncap_first};
     </#if>
     <#if column.type = 'int' || column.type = 'smallint'>
     private Integer ${column.field?uncap_first};

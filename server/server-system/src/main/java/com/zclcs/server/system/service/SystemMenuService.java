@@ -2,7 +2,7 @@ package com.zclcs.server.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zclcs.common.core.entity.Tree;
-import com.zclcs.common.core.entity.router.VueRouter;
+import com.zclcs.common.core.entity.system.router.VueRouter;
 import com.zclcs.common.core.entity.system.SystemMenu;
 import com.zclcs.common.core.entity.system.ao.SystemMenuAo;
 import com.zclcs.common.core.entity.system.vo.SystemMenuVo;

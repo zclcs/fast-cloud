@@ -1,6 +1,5 @@
 package com.zclcs.common.security.starter.configure;
 
-import cn.hutool.json.JSONUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -71,7 +70,6 @@ public class MyUserInfoTokenServices implements ResourceServerTokenServices {
     @Override
     public OAuth2Authentication loadAuthentication(String accessToken) throws AuthenticationException, InvalidTokenException {
         Map<String, Object> map = this.getMap(this.userInfoEndpointUrl, accessToken);
-        log.info("信息：{}", JSONUtil.toJsonStr(map));
         String error = "error";
         if (map.containsKey(error)) {
             log.debug("userinfo returned error: " + map.get(error));
@@ -138,7 +136,6 @@ public class MyUserInfoTokenServices implements ResourceServerTokenServices {
                 restTemplate.getOAuth2ClientContext().setAccessToken(token);
             }
             Map body = restTemplate.getForEntity(path, Map.class, new Object[0]).getBody();
-            log.info("user info: " + body);
             return (Map) body;
         } catch (Exception e) {
             log.warn("Could not fetch user details: " + e.getClass() + ", " + e.getMessage());

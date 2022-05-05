@@ -48,6 +48,12 @@
         FROM information_schema.COLUMNS
         WHERE TABLE_SCHEMA = #{schemaName}
           AND TABLE_NAME = #{tableName}
+        <if test="excludeColumns != null and excludeColumns.size() != 0">
+            AND COLUMN_NAME not in
+            <foreach collection="excludeColumns" open="(" separator="," close=")" item="column">
+                #{column}
+            </foreach>
+        </if>
     </select>
 
 </mapper>

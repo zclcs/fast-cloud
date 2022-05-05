@@ -99,6 +99,12 @@ public class GeneratorConfigVo {
     private String trimValue;
 
     /**
+     * 需要排除的字段
+     */
+    @ApiModelProperty("需要排除的字段")
+    private String excludeColumns;
+
+    /**
      * java文件路径，固定值
      */
     private String javaPath = "/src/main/java/";

@@ -1,17 +1,14 @@
 package com.zclcs.common.core.entity.test;
 
-    import java.util.Date;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.zclcs.common.core.base.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import java.io.Serializable;
 
 /**
  * 参建单位 Entity
@@ -24,7 +21,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @TableName("test_project_company")
 @ApiModel(value = "ProjectCompany对象", description = "参建单位")
-public class ProjectCompany {
+public class ProjectCompany extends BaseEntity {
 
     /**
      * 参建单位id
@@ -73,18 +70,6 @@ public class ProjectCompany {
      */
     @TableField("manager_phone")
     private String managerPhone;
-
-    /**
-     * 创建时间
-     */
-    @TableField("create_time")
-    private Date createTime;
-
-    /**
-     * 编辑时间
-     */
-    @TableField("modify_time")
-    private Date modifyTime;
 
 
 }

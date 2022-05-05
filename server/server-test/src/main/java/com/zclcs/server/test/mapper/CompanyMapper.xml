@@ -31,8 +31,10 @@
                tc.email,
                tc.web_site,
                tc.remark,
-               tc.create_time,
-               tc.modify_time
+               tc.create_at,
+               tc.create_by,
+               tc.update_at,
+               tc.update_by
         from test_company tc
             ${ew.customSqlSegment}
     </sql>

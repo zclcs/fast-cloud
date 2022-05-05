@@ -1,31 +1,31 @@
 package com.zclcs.common.core.entity.test;
 
-    import java.util.Date;
-    import java.math.BigDecimal;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.zclcs.common.core.base.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
- * 项目 Entity
+ * 项目信息 Entity
  *
  * @author zclcs
- * @date 2022-01-13 11:18:52.469
+ * @date 2022-05-05 10:38:50.446
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("test_project")
-@ApiModel(value = "Project对象", description = "项目")
-public class Project {
+@ApiModel(value = "Project对象", description = "项目信息")
+public class Project extends BaseEntity {
 
     /**
      * 项目id
@@ -103,25 +103,25 @@ public class Project {
      * 实际开工日期
      */
     @TableField("start_date")
-    private Date startDate;
+    private LocalDate startDate;
 
     /**
      * 实际竣工日期
      */
     @TableField("complete_date")
-    private Date completeDate;
+    private LocalDate completeDate;
 
     /**
      * 计划开工日期
      */
     @TableField("planned_start_date")
-    private Date plannedStartDate;
+    private LocalDate plannedStartDate;
 
     /**
      * 计划竣工日期
      */
     @TableField("planned_complete_date")
-    private Date plannedCompleteDate;
+    private LocalDate plannedCompleteDate;
 
     /**
      * 联系人姓名
@@ -202,22 +202,10 @@ public class Project {
     private String majorProject;
 
     /**
-     * 创建时间
-     */
-    @TableField("create_time")
-    private Date createTime;
-
-    /**
-     * 编辑时间
-     */
-    @TableField("modify_time")
-    private Date modifyTime;
-
-    /**
      * 最后一次考勤时间
      */
     @TableField("last_attend_time")
-    private Date lastAttendTime;
+    private LocalDateTime lastAttendTime;
 
 
 }

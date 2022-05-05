@@ -122,4 +122,11 @@ public class GeneratorConfigAo {
     @Size(max = 50, message = "{noMoreThan}")
     private String trimValue;
 
+    /**
+     * 需要排除的字段
+     */
+    @ApiModelProperty("需要排除的字段")
+    @Size(max = 255, message = "{noMoreThan}")
+    private String excludeColumns;
+
 }

@@ -41,5 +41,5 @@ public interface GeneratorMapper {
      * @param tableName    tableName
      * @return 数据表列信息
      */
-    List<Column> getColumns(@Param("databaseType") String databaseType, @Param("schemaName") String schemaName, @Param("tableName") String tableName);
+    List<Column> getColumns(@Param("databaseType") String databaseType, @Param("schemaName") String schemaName, @Param("tableName") String tableName, @Param("excludeColumns") List<String> excludeColumns);
 }

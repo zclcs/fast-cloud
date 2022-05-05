@@ -4,7 +4,7 @@ import com.zclcs.common.core.annotation.ControllerEndpoint;
 import com.zclcs.common.core.base.BaseRsp;
 import com.zclcs.common.core.constant.StringConstant;
 import com.zclcs.common.core.entity.MenuTree;
-import com.zclcs.common.core.entity.router.VueRouter;
+import com.zclcs.common.core.entity.system.router.VueRouter;
 import com.zclcs.common.core.entity.system.ao.SystemMenuAo;
 import com.zclcs.common.core.entity.system.vo.SystemMenuVo;
 import com.zclcs.common.core.utils.BaseRspUtil;

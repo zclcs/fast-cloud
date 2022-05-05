@@ -16,6 +16,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * ${tableComment} Ao
@@ -66,8 +68,14 @@ public class ${className}Ao implements Serializable {
     || column.type = 'VARCHAR'|| column.type = 'CLOB' || column.type = 'char')>
     private String ${column.field?uncap_first};
     </#if>
-    <#if column.type = 'timestamp' || column.type = 'date' || column.type = 'datetime'||column.type = 'TIMESTAMP' || column.type = 'DATE' || column.type = 'DATETIME'>
-    private Date ${column.field?uncap_first};
+    <#if column.type = 'timestamp' || column.type = 'TIMESTAMP'>
+    private Long ${column.field?uncap_first};
+    </#if>
+    <#if column.type = 'date' || column.type = 'DATE'>
+    private LocalDate ${column.field?uncap_first};
+    </#if>
+    <#if column.type = 'datetime' || column.type = 'DATETIME'>
+    private LocalDateTime ${column.field?uncap_first};
     </#if>
     <#if column.type = 'int' || column.type = 'smallint'>
     private Integer ${column.field?uncap_first};

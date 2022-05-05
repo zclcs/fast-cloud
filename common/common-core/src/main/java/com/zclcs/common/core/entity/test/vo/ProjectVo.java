@@ -1,7 +1,5 @@
 package com.zclcs.common.core.entity.test.vo;
 
-    import java.util.Date;
-    import java.math.BigDecimal;
 import com.houkunlin.system.dict.starter.json.Array;
 import com.houkunlin.system.dict.starter.json.DictText;
 import io.swagger.annotations.ApiModel;
@@ -10,12 +8,15 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
- * 项目 Vo
+ * 项目信息 Vo
  *
  * @author zclcs
- * @date 2022-01-13 11:18:52.469
+ * @date 2022-05-05 10:38:50.446
  */
 @Data
 @AllArgsConstructor
@@ -23,7 +24,7 @@ import java.io.Serializable;
 @Builder
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value = "ProjectVo对象", description = "项目")
+@ApiModel(value = "ProjectVo对象", description = "项目信息")
 public class ProjectVo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -68,16 +69,16 @@ public class ProjectVo implements Serializable {
     private String buildingLength;
 
     @ApiModelProperty(value = "实际开工日期")
-    private Date startDate;
+    private LocalDate startDate;
 
     @ApiModelProperty(value = "实际竣工日期")
-    private Date completeDate;
+    private LocalDate completeDate;
 
     @ApiModelProperty(value = "计划开工日期")
-    private Date plannedStartDate;
+    private LocalDate plannedStartDate;
 
     @ApiModelProperty(value = "计划竣工日期")
-    private Date plannedCompleteDate;
+    private LocalDate plannedCompleteDate;
 
     @ApiModelProperty(value = "联系人姓名")
     private String linkMan;
@@ -125,14 +126,8 @@ public class ProjectVo implements Serializable {
     @DictText("yes_no")
     private String majorProject;
 
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
-
-    @ApiModelProperty(value = "编辑时间")
-    private Date modifyTime;
-
     @ApiModelProperty(value = "最后一次考勤时间")
-    private Date lastAttendTime;
+    private LocalDateTime lastAttendTime;
 
 
 }

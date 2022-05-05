@@ -1,11 +1,11 @@
 package com.zclcs.server.test.service;
 
-import com.zclcs.common.core.entity.test.Project;
-import com.zclcs.common.core.entity.test.ao.ProjectAo;
-import com.zclcs.common.core.entity.test.vo.ProjectVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
+import com.zclcs.common.core.entity.test.Project;
+import com.zclcs.common.core.entity.test.ao.ProjectAo;
+import com.zclcs.common.core.entity.test.vo.ProjectVo;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public interface ProjectService extends IService<Project> {
      * 查询（分页）
      *
      * @param basePageAo basePageAo
-     * @param projectVo projectVo
+     * @param projectVo  projectVo
      * @return BasePage<ProjectVo>
      */
     BasePage<ProjectVo> findProjectPage(BasePageAo basePageAo, ProjectVo projectVo);
@@ -37,7 +37,7 @@ public interface ProjectService extends IService<Project> {
     /**
      * 查询（单个）
      *
-     * @param projectVo projectVo
+     * @param projectVo ProjectVo
      * @return ProjectVo
      */
     ProjectVo findProject(ProjectVo projectVo);
@@ -56,7 +56,7 @@ public interface ProjectService extends IService<Project> {
      * @param projectAo projectAo
      * @return Project
      */
-     Project createProject(ProjectAo projectAo);
+    Project createProject(ProjectAo projectAo);
 
     /**
      * 修改
@@ -64,7 +64,7 @@ public interface ProjectService extends IService<Project> {
      * @param projectAo projectAo
      * @return Project
      */
-     Project updateProject(ProjectAo projectAo);
+    Project updateProject(ProjectAo projectAo);
 
     /**
      * 删除

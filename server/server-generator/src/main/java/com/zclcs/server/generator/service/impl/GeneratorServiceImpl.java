@@ -60,8 +60,8 @@ public class GeneratorServiceImpl implements GeneratorService {
     }
 
     @Override
-    public List<Column> getColumns(String databaseType, String schemaName, String tableName) {
-        return generatorMapper.getColumns(databaseType, schemaName, tableName);
+    public List<Column> getColumns(String databaseType, String schemaName, String tableName, List<String> excludeColumns) {
+        return generatorMapper.getColumns(databaseType, schemaName, tableName, excludeColumns);
     }
 
     @Override
@@ -83,7 +83,7 @@ public class GeneratorServiceImpl implements GeneratorService {
         generatorConfigVo.setClassName(underscoreToCamel);
         generatorConfigVo.setTableComment(remark);
         // 生成代码到临时目录
-        List<Column> columns = this.getColumns(GeneratorConstant.DATABASE_TYPE, generateAo.getDatasource(), name);
+        List<Column> columns = this.getColumns(GeneratorConstant.DATABASE_TYPE, generateAo.getDatasource(), name, StrUtil.split(generatorConfigVo.getExcludeColumns(), StrUtil.COMMA));
         for (Column column : columns) {
             if (column.getIsKey()) {
                 generatorConfigVo.setKeyName(column.getName());
