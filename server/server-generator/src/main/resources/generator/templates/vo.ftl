@@ -14,8 +14,6 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 /**
  * ${tableComment} Vo
@@ -52,10 +50,10 @@ public class ${className}Vo implements Serializable {
     private Long ${column.field?uncap_first};
     </#if>
     <#if column.type = 'date' || column.type = 'DATE'>
-    private LocalDate ${column.field?uncap_first};
+    private String ${column.field?uncap_first};
     </#if>
     <#if column.type = 'datetime' || column.type = 'DATETIME'>
-    private LocalDateTime ${column.field?uncap_first};
+    private String ${column.field?uncap_first};
     </#if>
     <#if column.type = 'int' || column.type = 'smallint'>
     private Integer ${column.field?uncap_first};
