@@ -4,12 +4,11 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.zclcs.common.core.base.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import java.util.Date;
 
 /**
  * minio桶 Entity
@@ -22,7 +21,7 @@ import java.util.Date;
 @Accessors(chain = true)
 @TableName("minio_bucket")
 @ApiModel(value = "MinioBucket对象", description = "minio桶")
-public class MinioBucket {
+public class MinioBucket extends BaseEntity {
 
     /**
      * 桶id
@@ -41,17 +40,5 @@ public class MinioBucket {
      */
     @TableField("bucket_policy")
     private String bucketPolicy;
-
-    /**
-     * 创建时间
-     */
-    @TableField("create_time")
-    private Date createTime;
-
-    /**
-     * 修改时间
-     */
-    @TableField("modify_time")
-    private Date modifyTime;
 
 }

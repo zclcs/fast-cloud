@@ -11,7 +11,7 @@
  Target Server Version : 50735
  File Encoding         : 65001
 
- Date: 05/05/2022 10:43:57
+ Date: 16/05/2022 18:08:15
 */
 
 SET NAMES utf8mb4;
@@ -20,7 +20,6 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 -- Table structure for generator_config
 -- ----------------------------
-DROP TABLE IF EXISTS `generator_config`;
 CREATE TABLE `generator_config`
 (
     `id`                   bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT '主键',
@@ -35,8 +34,14 @@ CREATE TABLE `generator_config`
     `service_impl_package` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT 'serviceImpl文件存放路径',
     `controller_package`   varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT 'controller文件存放路径',
     `is_trim`              char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci      NOT NULL COMMENT '是否去除前缀 1是 0否',
-    `trim_value`           varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL DEFAULT NULL COMMENT '前缀内容',
-    `exclude_columns`      varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '需要排除的字段',
+    `trim_value`           varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL     DEFAULT NULL COMMENT '前缀内容',
+    `exclude_columns`      varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL     DEFAULT NULL COMMENT '需要排除的字段',
+    `version`              bigint(20)                                                    NULL     DEFAULT 1 COMMENT '版本',
+    `tenant_id`            varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL     DEFAULT NULL COMMENT '租户id',
+    `create_at`            datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_at`            datetime                                                      NULL     DEFAULT NULL COMMENT '编辑时间',
+    `create_by`            varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL     DEFAULT NULL COMMENT '创建人',
+    `update_by`            varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL     DEFAULT NULL COMMENT '编辑人',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 2
@@ -50,6 +55,8 @@ CREATE TABLE `generator_config`
 INSERT INTO `generator_config`
 VALUES (1, 'zclcs', 'com.zclcs', 'common.core.entity.test', 'common.core.entity.test.ao', 'common.core.entity.test.vo',
         'server.test.mapper', 'server.test.mapper', 'server.test.service', 'server.test.service.impl',
-        'server.test.controller', '1', 'test_', 'version,tenant_id,create_at,update_at,create_by,update_by');
+        'server.test.controller', '1', 'test_',
+        'version,tenant_id,create_at,update_at,create_by,update_by,create_name,create_date,update_name,update_date,delete_name,delete_date,deleted',
+        1, NULL, '2022-05-16 11:23:21', NULL, NULL, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;

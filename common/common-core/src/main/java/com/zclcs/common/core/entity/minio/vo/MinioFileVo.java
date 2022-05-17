@@ -6,7 +6,6 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 文件 Vo
@@ -42,12 +41,6 @@ public class MinioFileVo implements Serializable {
 
     @ApiModelProperty(value = "文件路径")
     private String filePath;
-
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
-
-    @ApiModelProperty(value = "修改时间")
-    private Date modifyTime;
 
 
 }

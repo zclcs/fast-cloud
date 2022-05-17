@@ -73,7 +73,7 @@ public class RateLimitRuleServiceImpl extends ServiceImpl<RateLimitRuleMapper, R
     public void createRateLimitRule(RateLimitRuleAo rateLimitRuleAo) {
         RateLimitRule rateLimitRule = new RateLimitRule();
         BeanUtil.copyProperties(rateLimitRuleAo, rateLimitRule);
-        setRateLimitRule(rateLimitRule, true);
+        setRateLimitRule(rateLimitRule);
         boolean save = this.save(rateLimitRule);
         if (save) {
             routeEnhanceCacheService.saveRateLimitRule(rateLimitRule);
@@ -86,7 +86,7 @@ public class RateLimitRuleServiceImpl extends ServiceImpl<RateLimitRuleMapper, R
         RateLimitRule old = this.lambdaQuery().eq(RateLimitRule::getRateLimitRuleId, rateLimitRuleAo.getRateLimitRuleId()).one();
         RateLimitRule rateLimitRule = new RateLimitRule();
         BeanUtil.copyProperties(rateLimitRuleAo, rateLimitRule);
-        setRateLimitRule(rateLimitRule, false);
+        setRateLimitRule(rateLimitRule);
         boolean b = this.updateById(rateLimitRule);
         if (b) {
             routeEnhanceCacheService.removeRateLimitRule(old);
@@ -104,14 +104,10 @@ public class RateLimitRuleServiceImpl extends ServiceImpl<RateLimitRuleMapper, R
         }
     }
 
-    private void setRateLimitRule(RateLimitRule rateLimitRule, boolean isAdd) {
-        if (isAdd) {
-            rateLimitRule.setCreateTime(DateUtil.date());
-        }
+    private void setRateLimitRule(RateLimitRule rateLimitRule) {
         if (StrUtil.isNotBlank(rateLimitRule.getLimitFrom()) && StrUtil.isNotBlank(rateLimitRule.getLimitTo())) {
             rateLimitRule.setLimitFrom(DateUtil.parse(rateLimitRule.getLimitFrom()).toString(DatePattern.NORM_TIME_PATTERN));
             rateLimitRule.setLimitTo(DateUtil.parse(rateLimitRule.getLimitTo()).toString(DatePattern.NORM_TIME_PATTERN));
         }
-        rateLimitRule.setModifyTime(DateUtil.date());
     }
 }

@@ -10,13 +10,13 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
- * 企业 Ao
+ * 企业信息表 Ao
  *
  * @author zclcs
- * @date 2022-01-13 11:16:59.185
+ * @date 2022-05-16 10:49:01.656
  */
 @Data
 @AllArgsConstructor
@@ -24,7 +24,7 @@ import java.util.Date;
 @Builder
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value = "CompanyAo对象", description = "企业")
+@ApiModel(value = "CompanyAo对象", description = "企业信息表")
 public class CompanyAo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -105,10 +105,10 @@ public class CompanyAo implements Serializable {
     private String capitalCurrencyType;
 
     @ApiModelProperty(value = "注册日期")
-    private Date registerDate;
+    private LocalDate registerDate;
 
     @ApiModelProperty(value = "成立日期")
-    private Date establishDate;
+    private LocalDate establishDate;
 
     @Size(max = 20, message = "{noMoreThan}")
     @ApiModelProperty(value = "办公电话")

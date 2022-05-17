@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * <p>
@@ -59,15 +59,12 @@ public class SystemLogAo implements Serializable {
     @ApiModelProperty(value = "方法开始时间")
     private Long start;
 
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
-
     @ApiModelProperty(value = "操作地点")
     private String location;
 
     @ApiModelProperty(value = "创建时间-开始")
-    private String createTimeFrom;
+    private LocalDate createTimeFrom;
 
     @ApiModelProperty(value = "创建时间-结束")
-    private String createTimeTo;
+    private LocalDate createTimeTo;
 }

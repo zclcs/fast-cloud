@@ -1,7 +1,6 @@
 package com.zclcs.gateway.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zclcs.common.core.entity.system.RouteLog;
@@ -35,10 +34,8 @@ public class RouteLogServiceImpl extends ServiceImpl<RouteLogMapper, RouteLog> i
     }
 
     private void setRouteLog(RouteLog routeLog) {
-        routeLog.setCreateTime(DateUtil.date());
         if (StrUtil.isNotBlank(routeLog.getRouteIp())) {
             routeLog.setLocation(BaseAddressUtil.getCityInfo(routeLog.getRouteIp()));
         }
-        routeLog.setModifyTime(DateUtil.date());
     }
 }

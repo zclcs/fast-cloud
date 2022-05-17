@@ -1,13 +1,13 @@
 package com.zclcs.common.core.entity.system.vo;
 
-import com.zclcs.common.core.annotation.IsRightDate;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * 网关转发日志表 Vo
@@ -48,18 +48,13 @@ public class RouteLogVo implements Serializable {
     private String location;
 
     @ApiModelProperty(value = "创建时间")
-    private Date createTime;
+    private LocalDateTime createAt;
 
     @ApiModelProperty(value = "创建时间起")
-    @IsRightDate
-    private String createTimeFrom;
+    private LocalDate createTimeFrom;
 
     @ApiModelProperty(value = "创建时间起终")
-    @IsRightDate
-    private String createTimeTo;
-
-    @ApiModelProperty(value = "修改时间")
-    private Date modifyTime;
+    private LocalDate createTimeTo;
 
 
 }

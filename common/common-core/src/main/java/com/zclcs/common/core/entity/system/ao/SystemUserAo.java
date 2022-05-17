@@ -12,7 +12,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -59,7 +59,7 @@ public class SystemUserAo implements Serializable {
     private String status;
 
     @ApiModelProperty(value = "最近访问时间")
-    private Date lastLoginTime;
+    private LocalDateTime lastLoginTime;
 
     @ApiModelProperty(value = "性别 0男 1女 2保密")
     private String gender;

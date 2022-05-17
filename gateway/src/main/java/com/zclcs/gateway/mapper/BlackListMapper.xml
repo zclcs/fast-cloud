@@ -11,8 +11,8 @@
                sbl.limit_to,
                sbl.location,
                sbl.black_status,
-               sbl.create_time,
-               sbl.modify_time
+               sbl.create_at,
+               sbl.update_at
         from system_black_list sbl
             ${ew.customSqlSegment}
     </sql>

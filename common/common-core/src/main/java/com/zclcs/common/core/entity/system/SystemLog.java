@@ -1,15 +1,15 @@
 package com.zclcs.common.core.entity.system;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.zclcs.common.core.base.BaseEntity;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * <p>
@@ -23,36 +23,56 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "SystemLog对象", description = "用户操作日志表")
-public class SystemLog {
+public class SystemLog extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "日志id")
+    /**
+     * 日志id
+     */
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @ApiModelProperty(value = "操作用户")
+    /**
+     * 操作用户
+     */
+    @TableField("username")
     private String username;
 
-    @ApiModelProperty(value = "操作内容")
+    /**
+     * 操作内容
+     */
+    @TableField("operation")
     private String operation;
 
-    @ApiModelProperty(value = "耗时")
+    /**
+     * 耗时
+     */
+    @TableField("time")
     private BigDecimal time;
 
-    @ApiModelProperty(value = "操作方法")
+    /**
+     * 操作方法
+     */
+    @TableField("method")
     private String method;
 
-    @ApiModelProperty(value = "方法参数")
+    /**
+     * 方法参数
+     */
+    @TableField("params")
     private String params;
 
-    @ApiModelProperty(value = "操作者ip")
+    /**
+     * 操作者ip
+     */
+    @TableField("ip")
     private String ip;
 
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
-
-    @ApiModelProperty(value = "操作地点")
+    /**
+     * 操作地点
+     */
+    @TableField("location")
     private String location;
 
 }

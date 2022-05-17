@@ -9,8 +9,8 @@
                mf.file_name,
                mf.original_file_name,
                mf.file_path,
-               mf.create_time,
-               mf.modify_time
+               mf.create_at,
+               mf.update_at
         from minio_file mf
                  join minio_bucket mb on mf.bucket_id = mb.id
             ${ew.customSqlSegment}

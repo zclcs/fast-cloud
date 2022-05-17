@@ -1,14 +1,13 @@
 package com.zclcs.common.core.entity.system;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.zclcs.common.core.base.BaseEntity;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import java.util.Date;
 
 /**
  * <p>
@@ -22,27 +21,33 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "SystemDept对象", description = "部门表")
-public class SystemDept {
+public class SystemDept extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "部门id")
+    /**
+     * 部门id
+     */
     @TableId(value = "dept_id", type = IdType.AUTO)
     private Long deptId;
 
-    @ApiModelProperty(value = "上级部门id")
+    /**
+     * 上级部门id
+     */
+    @TableField("parent_id")
     private Long parentId;
 
-    @ApiModelProperty(value = "部门名称")
+    /**
+     * 部门名称
+     */
+    @TableField("dept_name")
     private String deptName;
 
-    @ApiModelProperty(value = "排序")
+
+    /**
+     * 排序
+     */
+    @TableField("order_num")
     private Double orderNum;
-
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
-
-    @ApiModelProperty(value = "修改时间")
-    private Date modifyTime;
 
 }

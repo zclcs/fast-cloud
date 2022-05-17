@@ -1,7 +1,6 @@
 package com.zclcs.gateway.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zclcs.common.core.entity.system.BlockLog;
@@ -35,10 +34,8 @@ public class BlockLogServiceImpl extends ServiceImpl<BlockLogMapper, BlockLog> i
     }
 
     private void setBlockLog(BlockLog blockLog) {
-        blockLog.setCreateTime(DateUtil.date());
         if (StrUtil.isNotBlank(blockLog.getBlockIp())) {
             blockLog.setLocation(BaseAddressUtil.getCityInfo(blockLog.getBlockIp()));
         }
-        blockLog.setModifyTime(DateUtil.date());
     }
 }

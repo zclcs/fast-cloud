@@ -9,7 +9,6 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,12 +36,6 @@ public class SystemRoleVo implements Serializable {
 
     @ApiModelProperty(value = "角色描述")
     private String remark;
-
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
-
-    @ApiModelProperty(value = "修改时间")
-    private Date modifyTime;
 
     @ApiModelProperty(value = "角色菜单集合")
     private List<SystemRoleMenuVo> systemRoleMenuVos;

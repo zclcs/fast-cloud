@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : docker_192.168.30.10
+ Source Server         : docker_mysql_192.168.30.10
  Source Server Type    : MySQL
  Source Server Version : 50735
  Source Host           : 192.168.33.10:3306
- Source Schema         : cloud_labor
+ Source Schema         : dev_test
 
  Target Server Type    : MySQL
  Target Server Version : 50735
  File Encoding         : 65001
 
- Date: 01/12/2021 14:37:43
+ Date: 16/05/2022 18:17:37
 */
 
 SET NAMES utf8mb4;
@@ -50,8 +50,12 @@ CREATE TABLE `test_child_project`
     `useful_life`          varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL DEFAULT NULL COMMENT '设计使用年限',
     `seismic_precaution`   varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL DEFAULT NULL COMMENT '抗震设防烈度',
     `prj_area`             varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL DEFAULT NULL COMMENT '面积',
-    `create_time`          datetime                                                      NOT NULL COMMENT '创建时间',
-    `modify_time`          datetime                                                      NULL DEFAULT NULL COMMENT '编辑时间',
+    `version`              bigint(20)                                                    NULL DEFAULT 1 COMMENT '版本',
+    `tenant_id`            varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL DEFAULT NULL COMMENT '租户id',
+    `create_at`            datetime                                                      NOT NULL COMMENT '创建时间',
+    `update_at`            datetime                                                      NULL DEFAULT NULL COMMENT '编辑时间',
+    `create_by`            varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '创建人',
+    `update_by`            varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '编辑人',
     PRIMARY KEY (`child_project_id`) USING BTREE,
     INDEX `ix_test_child_project_project_id` (`project_id`) USING BTREE COMMENT '工程表项目编号索引'
 ) ENGINE = InnoDB
@@ -59,10 +63,6 @@ CREATE TABLE `test_child_project`
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_unicode_ci COMMENT = '工程信息表'
   ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of test_child_project
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for test_company
@@ -97,18 +97,18 @@ CREATE TABLE `test_company`
     `email`                    varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '企业邮箱',
     `web_site`                 varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '企业网址',
     `remark`                   varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '企业备注',
-    `create_time`              datetime                                                      NOT NULL COMMENT '创建时间',
-    `modify_time`              datetime                                                      NULL DEFAULT NULL COMMENT '编辑时间',
+    `version`                  bigint(20)                                                    NULL DEFAULT 1 COMMENT '版本',
+    `tenant_id`                varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL DEFAULT NULL COMMENT '租户id',
+    `create_at`                datetime                                                      NOT NULL COMMENT '创建时间',
+    `update_at`                datetime                                                      NULL DEFAULT NULL COMMENT '编辑时间',
+    `create_by`                varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '创建人',
+    `update_by`                varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '编辑人',
     PRIMARY KEY (`company_id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_unicode_ci COMMENT = '企业信息表'
   ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of test_company
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for test_project
@@ -144,9 +144,13 @@ CREATE TABLE `test_project`
     `function_num`           char(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci       NULL DEFAULT NULL COMMENT '工程用途 @@function_num',
     `functional_unit`        char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci       NULL DEFAULT NULL COMMENT '职能单位 @@functional_unit',
     `major_project`          char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci       NULL DEFAULT NULL COMMENT '是否重点项目 @@yes_no',
-    `create_time`            datetime                                                       NOT NULL COMMENT '创建时间',
-    `modify_time`            datetime                                                       NULL DEFAULT NULL COMMENT '编辑时间',
     `last_attend_time`       datetime                                                       NULL DEFAULT NULL COMMENT '最后一次考勤时间',
+    `version`                bigint(20)                                                     NULL DEFAULT 1 COMMENT '版本',
+    `tenant_id`              varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci   NULL DEFAULT NULL COMMENT '租户id',
+    `create_at`              datetime                                                       NOT NULL COMMENT '创建时间',
+    `update_at`              datetime                                                       NULL DEFAULT NULL COMMENT '编辑时间',
+    `create_by`              varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL DEFAULT NULL COMMENT '创建人',
+    `update_by`              varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL DEFAULT NULL COMMENT '编辑人',
     PRIMARY KEY (`project_id`) USING BTREE,
     INDEX `ix_test_project_project_status` (`project_status`) USING BTREE
 ) ENGINE = InnoDB
@@ -156,33 +160,29 @@ CREATE TABLE `test_project`
   ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of test_project
--- ----------------------------
-
--- ----------------------------
 -- Table structure for test_project_company
 -- ----------------------------
 CREATE TABLE `test_project_company`
 (
-    `project_company_id`     bigint(20)                                                   NOT NULL AUTO_INCREMENT COMMENT '参建单位id',
-    `project_id`             bigint(20)                                                   NOT NULL COMMENT '项目id',
-    `company_id`             bigint(20)                                                   NOT NULL COMMENT '企业id',
-    `company_role`           char(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci     NOT NULL COMMENT '参建类型 @@company_role',
-    `manager_name`           varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '项目经理姓名',
-    `manager_id_card_type`   char(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci     NULL DEFAULT NULL COMMENT '项目经理证件类型 @@id_card_type',
-    `manager_id_card_number` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '项目经理证件号码',
-    `manager_phone`          varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '项目经理联系电话',
-    `create_time`            datetime                                                     NULL DEFAULT NULL COMMENT '创建时间',
-    `modify_time`            datetime                                                     NULL DEFAULT NULL COMMENT '编辑时间',
+    `project_company_id`     bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT '参建单位id',
+    `project_id`             bigint(20)                                                    NOT NULL COMMENT '项目id',
+    `company_id`             bigint(20)                                                    NOT NULL COMMENT '企业id',
+    `company_role`           char(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci      NOT NULL COMMENT '参建类型 @@company_role',
+    `manager_name`           varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL DEFAULT NULL COMMENT '项目经理姓名',
+    `manager_id_card_type`   char(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci      NULL DEFAULT NULL COMMENT '项目经理证件类型 @@id_card_type',
+    `manager_id_card_number` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL DEFAULT NULL COMMENT '项目经理证件号码',
+    `manager_phone`          varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL DEFAULT NULL COMMENT '项目经理联系电话',
+    `version`                bigint(20)                                                    NULL DEFAULT 1 COMMENT '版本',
+    `tenant_id`              varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NULL DEFAULT NULL COMMENT '租户id',
+    `create_at`              datetime                                                      NOT NULL COMMENT '创建时间',
+    `update_at`              datetime                                                      NULL DEFAULT NULL COMMENT '编辑时间',
+    `create_by`              varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '创建人',
+    `update_by`              varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '编辑人',
     PRIMARY KEY (`project_company_id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_unicode_ci COMMENT = '项目参建单位信息数据表'
   ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of test_project_company
--- ----------------------------
 
 SET FOREIGN_KEY_CHECKS = 1;

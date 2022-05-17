@@ -19,6 +19,7 @@
         <module>common-datasource-starter</module>
         <module>common-rabbitmq-starter</module>
         <module>common-resources</module>
+        <module>common-web-starter</module>
     </modules>
 
     <artifactId>common</artifactId>

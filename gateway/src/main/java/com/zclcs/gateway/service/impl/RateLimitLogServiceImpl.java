@@ -1,7 +1,6 @@
 package com.zclcs.gateway.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zclcs.common.core.entity.system.RateLimitLog;
@@ -35,10 +34,8 @@ public class RateLimitLogServiceImpl extends ServiceImpl<RateLimitLogMapper, Rat
     }
 
     private void setRateLimitLog(RateLimitLog rateLimitLog) {
-        rateLimitLog.setCreateTime(DateUtil.date());
         if (StrUtil.isNotBlank(rateLimitLog.getRateLimitLogIp())) {
             rateLimitLog.setLocation(BaseAddressUtil.getCityInfo(rateLimitLog.getRateLimitLogIp()));
         }
-        rateLimitLog.setModifyTime(DateUtil.date());
     }
 }

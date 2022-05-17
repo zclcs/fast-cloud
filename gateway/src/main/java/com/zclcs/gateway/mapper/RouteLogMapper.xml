@@ -9,8 +9,8 @@
                srl.target_uri,
                srl.request_method,
                srl.target_server,
-               srl.create_time,
-               srl.modify_time
+               srl.create_at,
+               srl.update_at
         from system_route_log srl
             ${ew.customSqlSegment}
     </sql>

@@ -2,7 +2,6 @@ package com.zclcs.server.system.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -10,10 +9,10 @@ import com.zclcs.common.core.constant.RedisCachePrefixConstant;
 import com.zclcs.common.core.constant.StringConstant;
 import com.zclcs.common.core.entity.MenuTree;
 import com.zclcs.common.core.entity.Tree;
-import com.zclcs.common.core.entity.system.router.RouterMeta;
-import com.zclcs.common.core.entity.system.router.VueRouter;
 import com.zclcs.common.core.entity.system.SystemMenu;
 import com.zclcs.common.core.entity.system.ao.SystemMenuAo;
+import com.zclcs.common.core.entity.system.router.RouterMeta;
+import com.zclcs.common.core.entity.system.router.VueRouter;
 import com.zclcs.common.core.entity.system.vo.SystemMenuVo;
 import com.zclcs.common.core.entity.system.vo.SystemRoleVo;
 import com.zclcs.common.core.entity.system.vo.SystemUserVo;
@@ -187,7 +186,6 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
     public Long createSystemMenu(SystemMenuAo menu) {
         SystemMenu systemMenu = new SystemMenu();
         BeanUtil.copyProperties(menu, systemMenu);
-        systemMenu.setCreateTime(DateUtil.date());
         setMenu(systemMenu);
         this.save(systemMenu);
         return systemMenu.getMenuId();
@@ -198,7 +196,6 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
     public void updateSystemMenu(SystemMenuAo menu) {
         SystemMenu systemMenu = new SystemMenu();
         BeanUtil.copyProperties(menu, systemMenu);
-        systemMenu.setModifyTime(DateUtil.date());
         setMenu(systemMenu);
         this.updateById(systemMenu);
     }
@@ -228,7 +225,6 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
             tree.setHideChildrenInMenu(menu.getHideChildrenInMenu());
             tree.setCurrentActiveMenu(menu.getCurrentActiveMenu());
             tree.setOrderNum(menu.getOrderNum());
-            tree.setCreateTime(menu.getCreateTime());
             trees.add(tree);
         });
     }

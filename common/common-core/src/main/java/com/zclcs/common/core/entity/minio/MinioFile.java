@@ -4,12 +4,11 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.zclcs.common.core.base.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import java.util.Date;
 
 /**
  * 文件 Entity
@@ -22,7 +21,7 @@ import java.util.Date;
 @Accessors(chain = true)
 @TableName("minio_file")
 @ApiModel(value = "MinioFile对象", description = "文件")
-public class MinioFile {
+public class MinioFile extends BaseEntity {
 
     /**
      * 文件id
@@ -53,17 +52,5 @@ public class MinioFile {
      */
     @TableField("file_path")
     private String filePath;
-
-    /**
-     * 创建时间
-     */
-    @TableField("create_time")
-    private Date createTime;
-
-    /**
-     * 修改时间
-     */
-    @TableField("modify_time")
-    private Date modifyTime;
 
 }

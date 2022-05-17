@@ -1,7 +1,5 @@
 package com.zclcs.server.system.service.impl;
 
-import cn.hutool.core.date.DatePattern;
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -12,6 +10,7 @@ import com.zclcs.common.core.entity.system.SystemLog;
 import com.zclcs.common.core.entity.system.ao.SystemLogAo;
 import com.zclcs.common.core.entity.system.vo.SystemLogVo;
 import com.zclcs.common.core.utils.BaseAddressUtil;
+import com.zclcs.common.core.utils.BaseQueryWrapperUtil;
 import com.zclcs.common.core.utils.BaseSortUtil;
 import com.zclcs.server.system.mapper.SystemLogMapper;
 import com.zclcs.server.system.service.SystemLogService;
@@ -21,7 +20,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,11 +44,7 @@ public class SystemLogServiceImpl extends ServiceImpl<SystemLogMapper, SystemLog
         queryWrapper.eq(StrUtil.isNotBlank(log.getUsername()), "sl.username", log.getUsername());
         queryWrapper.eq(StrUtil.isNotBlank(log.getOperation()), "sl.operation", log.getOperation());
         queryWrapper.eq(StrUtil.isNotBlank(log.getLocation()), "sl.location", log.getLocation());
-        if (StrUtil.isNotBlank(log.getCreateTimeFrom()) && StrUtil.isNotBlank(log.getCreateTimeTo())) {
-            queryWrapper.between("sl.create_time",
-                    DateUtil.beginOfDay(DateUtil.parse(log.getCreateTimeFrom(), DatePattern.NORM_DATETIME_PATTERN)).toString(),
-                    DateUtil.endOfDay(DateUtil.parse(log.getCreateTimeTo(), DatePattern.NORM_DATETIME_PATTERN)).toString());
-        }
+        BaseQueryWrapperUtil.betweenDateAddTimeNotBlank(queryWrapper, "sl.create_at", log.getCreateTimeFrom(), log.getCreateTimeTo());
         return this.baseMapper.findPageVo(basePage, queryWrapper);
     }
 
@@ -70,7 +64,6 @@ public class SystemLogServiceImpl extends ServiceImpl<SystemLogMapper, SystemLog
         log.setOperation(operation);
         log.setMethod(className + "." + methodName + "()");
         log.setParams(Optional.ofNullable(params).orElse(""));
-        log.setCreateTime(new Date());
         log.setLocation(BaseAddressUtil.getCityInfo(ip));
         // 保存系统日志
         save(log);

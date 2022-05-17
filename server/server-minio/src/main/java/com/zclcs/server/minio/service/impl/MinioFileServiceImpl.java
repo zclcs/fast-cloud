@@ -1,7 +1,6 @@
 package com.zclcs.server.minio.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -77,7 +76,6 @@ public class MinioFileServiceImpl extends ServiceImpl<MinioFileMapper, MinioFile
         MinioFile minioFile = new MinioFile();
         BeanUtil.copyProperties(fileUploadVo, minioFile);
         minioFile.setBucketId(bucketId);
-        minioFile.setCreateTime(DateUtil.date());
         this.save(minioFile);
     }
 

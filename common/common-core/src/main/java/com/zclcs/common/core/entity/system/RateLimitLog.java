@@ -4,12 +4,11 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.zclcs.common.core.base.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import java.util.Date;
 
 /**
  * 限流拦截日志表 Entity
@@ -22,7 +21,7 @@ import java.util.Date;
 @Accessors(chain = true)
 @TableName("system_rate_limit_log")
 @ApiModel(value = "RateLimitLog对象", description = "限流拦截日志表")
-public class RateLimitLog {
+public class RateLimitLog extends BaseEntity {
 
     /**
      * 限流日志id
@@ -53,18 +52,6 @@ public class RateLimitLog {
      */
     @TableField("location")
     private String location;
-
-    /**
-     * 创建时间
-     */
-    @TableField("create_time")
-    private Date createTime;
-
-    /**
-     * 修改时间
-     */
-    @TableField("modify_time")
-    private Date modifyTime;
 
 
 }

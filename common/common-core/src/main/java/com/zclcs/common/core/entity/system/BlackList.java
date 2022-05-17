@@ -1,12 +1,11 @@
 package com.zclcs.common.core.entity.system;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.zclcs.common.core.base.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import java.util.Date;
 
 /**
  * 黑名单表 Entity
@@ -19,7 +18,7 @@ import java.util.Date;
 @Accessors(chain = true)
 @TableName("system_black_list")
 @ApiModel(value = "BlackList对象", description = "黑名单表")
-public class BlackList {
+public class BlackList extends BaseEntity {
 
     /**
      * 黑名单id
@@ -68,18 +67,6 @@ public class BlackList {
      */
     @TableField("black_status")
     private String blackStatus;
-
-    /**
-     * 创建时间
-     */
-    @TableField("create_time")
-    private Date createTime;
-
-    /**
-     * 修改时间
-     */
-    @TableField("modify_time")
-    private Date modifyTime;
 
 
 }

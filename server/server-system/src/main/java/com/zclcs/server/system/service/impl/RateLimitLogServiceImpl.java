@@ -1,7 +1,6 @@
 package com.zclcs.server.system.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -62,8 +61,8 @@ public class RateLimitLogServiceImpl extends ServiceImpl<RateLimitLogMapper, Rat
         BaseQueryWrapperUtil.likeNotBlank(queryWrapper, "srll.rate_limit_log_ip", rateLimitLogVo.getRateLimitLogIp());
         BaseQueryWrapperUtil.likeNotBlank(queryWrapper, "srll.request_uri", rateLimitLogVo.getRequestUri());
         BaseQueryWrapperUtil.likeNotBlank(queryWrapper, "srll.request_method", rateLimitLogVo.getRequestMethod());
-        BaseQueryWrapperUtil.betweenDateAddTimeNotBlank(queryWrapper, "srll.create_time", rateLimitLogVo.getCreateTimeFrom(), rateLimitLogVo.getCreateTimeTo());
-        queryWrapper.orderByDesc("srll.create_time");
+        BaseQueryWrapperUtil.betweenDateAddTimeNotBlank(queryWrapper, "srll.create_at", rateLimitLogVo.getCreateTimeFrom(), rateLimitLogVo.getCreateTimeTo());
+        queryWrapper.orderByDesc("srll.create_at");
         return queryWrapper;
     }
 
@@ -72,7 +71,7 @@ public class RateLimitLogServiceImpl extends ServiceImpl<RateLimitLogMapper, Rat
     public void createRateLimitLog(RateLimitLogAo rateLimitLogAo) {
         RateLimitLog rateLimitLog = new RateLimitLog();
         BeanUtil.copyProperties(rateLimitLogAo, rateLimitLog);
-        setRateLimitLog(rateLimitLog, true);
+        setRateLimitLog(rateLimitLog);
         this.save(rateLimitLog);
     }
 
@@ -81,7 +80,7 @@ public class RateLimitLogServiceImpl extends ServiceImpl<RateLimitLogMapper, Rat
     public void updateRateLimitLog(RateLimitLogAo rateLimitLogAo) {
         RateLimitLog rateLimitLog = new RateLimitLog();
         BeanUtil.copyProperties(rateLimitLogAo, rateLimitLog);
-        setRateLimitLog(rateLimitLog, false);
+        setRateLimitLog(rateLimitLog);
         this.updateById(rateLimitLog);
     }
 
@@ -91,13 +90,9 @@ public class RateLimitLogServiceImpl extends ServiceImpl<RateLimitLogMapper, Rat
         this.removeByIds(ids);
     }
 
-    private void setRateLimitLog(RateLimitLog rateLimitLog, boolean isAdd) {
-        if (isAdd) {
-            rateLimitLog.setCreateTime(DateUtil.date());
-        }
+    private void setRateLimitLog(RateLimitLog rateLimitLog) {
         if (StrUtil.isNotBlank(rateLimitLog.getRateLimitLogIp())) {
             rateLimitLog.setLocation(BaseAddressUtil.getCityInfo(rateLimitLog.getRateLimitLogIp()));
         }
-        rateLimitLog.setModifyTime(DateUtil.date());
     }
 }

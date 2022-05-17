@@ -8,8 +8,8 @@
                srll.request_uri,
                srll.request_method,
                srll.location,
-               srll.create_time,
-               srll.modify_time
+               srll.create_at,
+               srll.update_at
         from system_rate_limit_log srll
             ${ew.customSqlSegment}
     </sql>

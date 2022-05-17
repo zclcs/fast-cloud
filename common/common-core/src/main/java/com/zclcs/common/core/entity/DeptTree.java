@@ -18,5 +18,5 @@ public class DeptTree extends Tree<SystemDeptVo> implements Serializable {
 
     private Boolean harPar;
     private Double orderNum;
-    private Date createTime;
+    private Date createAt;
 }

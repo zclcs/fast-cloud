@@ -11,6 +11,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  * <p>
@@ -44,10 +45,10 @@ public class SystemDeptAo implements Serializable {
     private Double orderNum;
 
     @ApiModelProperty(value = "创建时间-开始")
-    private String createTimeFrom;
+    private LocalDate createTimeFrom;
 
     @ApiModelProperty(value = "创建时间-结束")
-    private String createTimeTo;
+    private LocalDate createTimeTo;
 
 
 }

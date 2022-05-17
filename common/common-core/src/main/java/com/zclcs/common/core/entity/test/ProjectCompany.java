@@ -10,17 +10,21 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.LocalDate;
+
 /**
- * 参建单位 Entity
+ * 项目参建单位信息数据表 Entity
  *
  * @author zclcs
- * @date 2022-01-13 11:19:10.776
+ * @date 2022-05-16 10:49:03.613
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("test_project_company")
-@ApiModel(value = "ProjectCompany对象", description = "参建单位")
+@ApiModel(value = "ProjectCompany对象", description = "项目参建单位信息数据表")
 public class ProjectCompany extends BaseEntity {
 
     /**

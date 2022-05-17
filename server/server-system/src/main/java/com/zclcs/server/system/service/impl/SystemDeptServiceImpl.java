@@ -3,7 +3,6 @@ package com.zclcs.server.system.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
@@ -17,6 +16,7 @@ import com.zclcs.common.core.entity.system.SystemDept;
 import com.zclcs.common.core.entity.system.ao.SelectSystemDeptAo;
 import com.zclcs.common.core.entity.system.ao.SystemDeptAo;
 import com.zclcs.common.core.entity.system.vo.SystemDeptVo;
+import com.zclcs.common.core.utils.BaseQueryWrapperUtil;
 import com.zclcs.common.core.utils.BaseTreeUtil;
 import com.zclcs.server.system.mapper.SystemDeptMapper;
 import com.zclcs.server.system.service.SystemDeptService;
@@ -71,8 +71,7 @@ public class SystemDeptServiceImpl extends ServiceImpl<SystemDeptMapper, SystemD
         QueryWrapper<SystemDeptVo> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByAsc("sd.order_num");
         queryWrapper.like(StrUtil.isNotBlank(dept.getDeptName()), "sd.dept_name", dept.getDeptName());
-        queryWrapper.between(StrUtil.isNotBlank(dept.getCreateTimeFrom()) && StrUtil.isNotBlank(dept.getCreateTimeTo()),
-                "sd.create_time", dept.getCreateTimeFrom(), dept.getCreateTimeTo());
+        BaseQueryWrapperUtil.betweenDateAddTimeNotBlank(queryWrapper, "sd.create_at", dept.getCreateTimeFrom(), dept.getCreateTimeTo());
         return this.baseMapper.findListVo(queryWrapper);
     }
 
@@ -104,7 +103,6 @@ public class SystemDeptServiceImpl extends ServiceImpl<SystemDeptMapper, SystemD
         if (systemDept.getParentId() == null) {
             systemDept.setParentId(SystemDeptVo.TOP_DEPT_ID);
         }
-        systemDept.setCreateTime(DateUtil.date());
         this.save(systemDept);
     }
 
@@ -116,7 +114,6 @@ public class SystemDeptServiceImpl extends ServiceImpl<SystemDeptMapper, SystemD
         if (systemDept.getParentId() == null) {
             systemDept.setParentId(SystemDeptVo.TOP_DEPT_ID);
         }
-        systemDept.setModifyTime(DateUtil.date());
         this.updateById(systemDept);
     }
 
@@ -140,7 +137,6 @@ public class SystemDeptServiceImpl extends ServiceImpl<SystemDeptMapper, SystemD
             tree.setHarPar(!dept.getParentId().equals(MyConstant.TOP_PARENT_ID));
             tree.setLabel(dept.getDeptName());
             tree.setOrderNum(dept.getOrderNum());
-            tree.setCreateTime(dept.getCreateTime());
             trees.add(tree);
         });
     }

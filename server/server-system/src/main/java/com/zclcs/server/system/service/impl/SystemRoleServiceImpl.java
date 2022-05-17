@@ -3,7 +3,6 @@ package com.zclcs.server.system.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -80,8 +79,8 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
         BaseQueryWrapperUtil.likeNotBlank(queryWrapper, "sr.role_name", systemRoleAo.getRoleName());
         BaseQueryWrapperUtil.eqNotNull(queryWrapper, "sr.role_id", systemRoleAo.getRoleId());
         queryWrapper
-                .orderByDesc("sr.create_time")
-                .groupBy("sr.role_id", "sr.role_name", "sr.remark", "sr.create_time", "sr.modify_time");
+                .orderByDesc("sr.create_at")
+                .groupBy("sr.role_id", "sr.role_name", "sr.remark");
         return queryWrapper;
     }
 
@@ -125,7 +124,6 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     public void createSystemRole(SystemRoleAo role) {
         SystemRole systemRole = new SystemRole();
         BeanUtil.copyProperties(role, systemRole);
-        systemRole.setCreateTime(DateUtil.date());
         this.save(systemRole);
         setRoleMenus(systemRole, role.getMenuIds());
     }
@@ -144,7 +142,6 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
         SystemRole systemRole = new SystemRole();
         BeanUtil.copyProperties(role, systemRole);
         systemRole.setRoleName(role.getRoleName());
-        systemRole.setModifyTime(DateUtil.date());
         baseMapper.updateById(systemRole);
         ArrayList<Long> roleIds = CollectionUtil.newArrayList(systemRole.getRoleId());
         this.systemRoleMenuService.deleteRoleMenusByRoleId(roleIds);

@@ -4,14 +4,21 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.zclcs.common.core.base.BaseEntity;
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 /**
  * @author zclcs
  */
 @Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
 @TableName("generator_config")
-public class GeneratorConfig {
+@ApiModel(value = "GeneratorConfig对象", description = "代码生成配置表")
+public class GeneratorConfig extends BaseEntity {
 
     /**
      * 主键

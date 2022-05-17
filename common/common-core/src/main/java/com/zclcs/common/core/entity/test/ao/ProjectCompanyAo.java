@@ -1,6 +1,5 @@
 package com.zclcs.common.core.entity.test.ao;
 
-    import java.util.Date;
 import com.zclcs.common.core.validate.strategy.UpdateStrategy;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -13,10 +12,10 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
- * 参建单位 Ao
+ * 项目参建单位信息数据表 Ao
  *
  * @author zclcs
- * @date 2022-01-13 11:19:10.776
+ * @date 2022-05-16 10:49:03.613
  */
 @Data
 @AllArgsConstructor
@@ -24,7 +23,7 @@ import java.io.Serializable;
 @Builder
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value = "ProjectCompanyAo对象", description = "参建单位")
+@ApiModel(value = "ProjectCompanyAo对象", description = "项目参建单位信息数据表")
 public class ProjectCompanyAo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -61,12 +60,6 @@ public class ProjectCompanyAo implements Serializable {
     @Size(max = 50, message = "{noMoreThan}")
     @ApiModelProperty(value = "项目经理联系电话")
     private String managerPhone;
-
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
-
-    @ApiModelProperty(value = "编辑时间")
-    private Date modifyTime;
 
 
 }

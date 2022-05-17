@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -102,7 +101,6 @@ public class UserManager {
         SystemUser systemUser = new SystemUser();
         systemUser.setUsername(username);
         systemUser.setPassword(password);
-        systemUser.setCreateTime(new Date());
         systemUser.setStatus(SystemUserVo.STATUS_VALID);
         systemUser.setGender(SystemUserVo.SEX_UNKNOWN);
         systemUser.setAvatar(SystemUserVo.DEFAULT_AVATAR);

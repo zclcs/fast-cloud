@@ -1,7 +1,6 @@
 package com.zclcs.server.system.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -62,8 +61,8 @@ public class RouteLogServiceImpl extends ServiceImpl<RouteLogMapper, RouteLog> i
         BaseQueryWrapperUtil.likeNotBlank(queryWrapper, "srl.route_ip", routeLogVo.getRouteIp());
         BaseQueryWrapperUtil.likeNotBlank(queryWrapper, "srl.target_server", routeLogVo.getTargetServer());
         BaseQueryWrapperUtil.likeNotBlank(queryWrapper, "srl.request_method", routeLogVo.getRequestMethod());
-        BaseQueryWrapperUtil.betweenDateAddTimeNotBlank(queryWrapper, "srl.create_time", routeLogVo.getCreateTimeFrom(), routeLogVo.getCreateTimeTo());
-        queryWrapper.orderByDesc("srl.create_time");
+        BaseQueryWrapperUtil.betweenDateAddTimeNotBlank(queryWrapper, "srl.create_at", routeLogVo.getCreateTimeFrom(), routeLogVo.getCreateTimeTo());
+        queryWrapper.orderByDesc("srl.create_at");
         return queryWrapper;
     }
 
@@ -72,7 +71,7 @@ public class RouteLogServiceImpl extends ServiceImpl<RouteLogMapper, RouteLog> i
     public void createRouteLog(RouteLogAo routeLogAo) {
         RouteLog routeLog = new RouteLog();
         BeanUtil.copyProperties(routeLogAo, routeLog);
-        setRouteLog(routeLog, true);
+        setRouteLog(routeLog);
         this.save(routeLog);
     }
 
@@ -81,7 +80,7 @@ public class RouteLogServiceImpl extends ServiceImpl<RouteLogMapper, RouteLog> i
     public void updateRouteLog(RouteLogAo routeLogAo) {
         RouteLog routeLog = new RouteLog();
         BeanUtil.copyProperties(routeLogAo, routeLog);
-        setRouteLog(routeLog, false);
+        setRouteLog(routeLog);
         this.updateById(routeLog);
     }
 
@@ -91,13 +90,9 @@ public class RouteLogServiceImpl extends ServiceImpl<RouteLogMapper, RouteLog> i
         this.removeByIds(ids);
     }
 
-    private void setRouteLog(RouteLog routeLog, boolean isAdd) {
-        if (isAdd) {
-            routeLog.setCreateTime(DateUtil.date());
-        }
+    private void setRouteLog(RouteLog routeLog) {
         if (StrUtil.isNotBlank(routeLog.getRouteIp())) {
             routeLog.setLocation(BaseAddressUtil.getCityInfo(routeLog.getRouteIp()));
         }
-        routeLog.setModifyTime(DateUtil.date());
     }
 }

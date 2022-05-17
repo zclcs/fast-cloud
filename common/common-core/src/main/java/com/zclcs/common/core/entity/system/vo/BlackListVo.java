@@ -7,7 +7,6 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -54,12 +53,6 @@ public class BlackListVo implements Serializable {
     @ApiModelProperty(value = "黑名单状态 默认 1 @@enable_disable")
     @DictText("enable_disable")
     private String blackStatus;
-
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
-
-    @ApiModelProperty(value = "修改时间")
-    private Date modifyTime;
 
 
 }

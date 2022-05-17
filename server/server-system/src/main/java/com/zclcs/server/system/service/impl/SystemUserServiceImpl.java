@@ -28,7 +28,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
@@ -87,8 +90,8 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
                 .like(StrUtil.isNotBlank(user.getUsername()), "su.username", user.getUsername())
                 .orderByAsc("su.user_id")
                 .groupBy("su.user_id", "su.username", "su.password", "su.dept_id",
-                        "su.email", "su.mobile", "su.status", "su.create_time", "su.modify_time",
-                        "su.last_login_time", "su.gender", "su.is_tab", "su.theme", "su.avatar", "su.description");
+                        "su.email", "su.mobile", "su.status", "su.last_login_time", "su.gender",
+                        "su.is_tab", "su.theme", "su.avatar", "su.description");
         return queryWrapper;
     }
 
@@ -132,7 +135,6 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     public void createUser(SystemUserAo user) {
         SystemUser systemUser = new SystemUser();
         BeanUtil.copyProperties(user, systemUser);
-        systemUser.setCreateTime(new Date());
         systemUser.setAvatar(SystemUserVo.DEFAULT_AVATAR);
         systemUser.setPassword(passwordEncoder.encode(SystemUserVo.DEFAULT_PASSWORD));
         this.save(systemUser);
@@ -148,8 +150,6 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         // 更新用户
         systemUser.setPassword(null);
         systemUser.setUsername(null);
-        systemUser.setCreateTime(null);
-        systemUser.setModifyTime(DateUtil.date());
         updateById(systemUser);
 
         ArrayList<Long> userIds = CollUtil.newArrayList(systemUser.getUserId());

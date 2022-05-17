@@ -1,7 +1,6 @@
 package com.zclcs.server.system.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -62,8 +61,8 @@ public class BlockLogServiceImpl extends ServiceImpl<BlockLogMapper, BlockLog> i
         BaseQueryWrapperUtil.likeNotBlank(queryWrapper, "sbl.block_ip", blockLogVo.getBlockIp());
         BaseQueryWrapperUtil.likeNotBlank(queryWrapper, "sbl.request_uri", blockLogVo.getRequestUri());
         BaseQueryWrapperUtil.likeNotBlank(queryWrapper, "sbl.request_method", blockLogVo.getRequestMethod());
-        BaseQueryWrapperUtil.betweenDateAddTimeNotBlank(queryWrapper, "sbl.create_time", blockLogVo.getCreateTimeFrom(), blockLogVo.getCreateTimeTo());
-        queryWrapper.orderByDesc("sbl.create_time");
+        BaseQueryWrapperUtil.betweenDateAddTimeNotBlank(queryWrapper, "sbl.create_at", blockLogVo.getCreateTimeFrom(), blockLogVo.getCreateTimeTo());
+        queryWrapper.orderByDesc("sbl.create_at");
         return queryWrapper;
     }
 
@@ -72,7 +71,7 @@ public class BlockLogServiceImpl extends ServiceImpl<BlockLogMapper, BlockLog> i
     public void createBlockLog(BlockLogAo blockLogAo) {
         BlockLog blockLog = new BlockLog();
         BeanUtil.copyProperties(blockLogAo, blockLog);
-        setBlockLog(blockLog, true);
+        setBlockLog(blockLog);
         this.save(blockLog);
     }
 
@@ -81,7 +80,7 @@ public class BlockLogServiceImpl extends ServiceImpl<BlockLogMapper, BlockLog> i
     public void updateBlockLog(BlockLogAo blockLogAo) {
         BlockLog blockLog = new BlockLog();
         BeanUtil.copyProperties(blockLogAo, blockLog);
-        setBlockLog(blockLog, false);
+        setBlockLog(blockLog);
         this.updateById(blockLog);
     }
 
@@ -91,13 +90,9 @@ public class BlockLogServiceImpl extends ServiceImpl<BlockLogMapper, BlockLog> i
         this.removeByIds(ids);
     }
 
-    private void setBlockLog(BlockLog blockLog, boolean isAdd) {
-        if (isAdd) {
-            blockLog.setCreateTime(DateUtil.date());
-        }
+    private void setBlockLog(BlockLog blockLog) {
         if (StrUtil.isNotBlank(blockLog.getBlockIp())) {
             blockLog.setLocation(BaseAddressUtil.getCityInfo(blockLog.getBlockIp()));
         }
-        blockLog.setModifyTime(DateUtil.date());
     }
 }

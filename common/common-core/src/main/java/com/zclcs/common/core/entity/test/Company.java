@@ -13,16 +13,16 @@ import lombok.experimental.Accessors;
 import java.time.LocalDate;
 
 /**
- * 企业 Entity
+ * 企业信息表 Entity
  *
  * @author zclcs
- * @date 2022-01-13 11:16:59.185
+ * @date 2022-05-16 10:49:01.656
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("test_company")
-@ApiModel(value = "Company对象", description = "企业")
+@ApiModel(value = "Company对象", description = "企业信息表")
 public class Company extends BaseEntity {
 
     /**
@@ -192,5 +192,6 @@ public class Company extends BaseEntity {
      */
     @TableField("remark")
     private String remark;
+
 
 }

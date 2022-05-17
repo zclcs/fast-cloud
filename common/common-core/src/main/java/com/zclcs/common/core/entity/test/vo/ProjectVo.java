@@ -9,14 +9,12 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 /**
- * 项目信息 Vo
+ * 项目信息表 Vo
  *
  * @author zclcs
- * @date 2022-05-05 10:38:50.446
+ * @date 2022-05-16 10:48:59.648
  */
 @Data
 @AllArgsConstructor
@@ -24,7 +22,7 @@ import java.time.LocalDateTime;
 @Builder
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value = "ProjectVo对象", description = "项目信息")
+@ApiModel(value = "ProjectVo对象", description = "项目信息表")
 public class ProjectVo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -69,16 +67,16 @@ public class ProjectVo implements Serializable {
     private String buildingLength;
 
     @ApiModelProperty(value = "实际开工日期")
-    private LocalDate startDate;
+    private String startDate;
 
     @ApiModelProperty(value = "实际竣工日期")
-    private LocalDate completeDate;
+    private String completeDate;
 
     @ApiModelProperty(value = "计划开工日期")
-    private LocalDate plannedStartDate;
+    private String plannedStartDate;
 
     @ApiModelProperty(value = "计划竣工日期")
-    private LocalDate plannedCompleteDate;
+    private String plannedCompleteDate;
 
     @ApiModelProperty(value = "联系人姓名")
     private String linkMan;
@@ -127,7 +125,7 @@ public class ProjectVo implements Serializable {
     private String majorProject;
 
     @ApiModelProperty(value = "最后一次考勤时间")
-    private LocalDateTime lastAttendTime;
+    private String lastAttendTime;
 
 
 }

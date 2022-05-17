@@ -8,13 +8,12 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
- * 企业 Vo
+ * 企业信息表 Vo
  *
  * @author zclcs
- * @date 2022-01-13 11:16:59.185
+ * @date 2022-05-16 10:49:01.656
  */
 @Data
 @AllArgsConstructor
@@ -22,7 +21,7 @@ import java.util.Date;
 @Builder
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value = "CompanyVo对象", description = "企业")
+@ApiModel(value = "CompanyVo对象", description = "企业信息表")
 public class CompanyVo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -86,10 +85,10 @@ public class CompanyVo implements Serializable {
     private String capitalCurrencyType;
 
     @ApiModelProperty(value = "注册日期")
-    private Date registerDate;
+    private String registerDate;
 
     @ApiModelProperty(value = "成立日期")
-    private Date establishDate;
+    private String establishDate;
 
     @ApiModelProperty(value = "办公电话")
     private String officePhone;
@@ -114,12 +113,6 @@ public class CompanyVo implements Serializable {
 
     @ApiModelProperty(value = "企业备注")
     private String remark;
-
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
-
-    @ApiModelProperty(value = "编辑时间")
-    private Date modifyTime;
 
 
 }

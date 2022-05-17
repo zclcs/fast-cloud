@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -35,7 +35,7 @@ public class SystemLoginLogVo implements Serializable {
     private String username;
 
     @ApiModelProperty(value = "登录时间")
-    private Date loginTime;
+    private LocalDateTime loginTime;
 
     @ApiModelProperty(value = "登录地点")
     private String location;

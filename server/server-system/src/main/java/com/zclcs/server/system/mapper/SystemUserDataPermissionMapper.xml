@@ -20,8 +20,6 @@
                su.email,
                su.mobile,
                su.status,
-               su.create_time,
-               su.modify_time,
                su.last_login_time,
                su.gender,
                su.is_tab,
@@ -30,9 +28,7 @@
                su.description,
                sd.parent_id,
                sd.dept_name,
-               sd.order_num,
-               sd.create_time,
-               sd.modify_time
+               sd.order_num
         from system_user_data_permission sudp
                  inner join system_user su on sudp.user_id = su.user_id
                  inner join system_dept sd on sudp.dept_id = sd.dept_id

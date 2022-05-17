@@ -1,7 +1,8 @@
 package com.zclcs.common.core.entity.system;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.zclcs.common.core.base.BaseEntity;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -18,14 +19,20 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "SystemUserDataPermission对象", description = "用户数据权限关联表")
-public class SystemUserDataPermission {
+public class SystemUserDataPermission extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "用户编号")
+    /**
+     * 用户编号
+     */
+    @TableField("user_id")
     private Long userId;
 
-    @ApiModelProperty(value = "部门编号")
+    /**
+     * 部门编号
+     */
+    @TableField("dept_id")
     private Long deptId;
 
 }

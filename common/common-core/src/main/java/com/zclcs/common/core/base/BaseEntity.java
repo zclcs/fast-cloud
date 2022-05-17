@@ -20,17 +20,17 @@ import java.time.LocalDateTime;
 public class BaseEntity {
 
     /**
-     * 租户id
-     */
-    @TableField("tenant_id")
-    private String tenantId;
-
-    /**
      * 版本
      */
     @Version
     @TableField("version")
     private Long version;
+
+    /**
+     * 租户id
+     */
+    @TableField("tenant_id")
+    private String tenantId;
 
     /**
      * 创建时间

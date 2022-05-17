@@ -43,8 +43,8 @@ public class RouteEnhanceCacheServiceImpl implements RouteEnhanceCacheService {
     }
 
     private void setBlackList(BlackList blackList) {
-        blackList.setCreateTime(null);
-        blackList.setModifyTime(null);
+        blackList.setCreateAt(null);
+        blackList.setUpdateAt(null);
         blackList.setLocation(null);
     }
 
@@ -62,7 +62,7 @@ public class RouteEnhanceCacheServiceImpl implements RouteEnhanceCacheService {
     }
 
     private void setRateLimit(RateLimitRule rule) {
-        rule.setCreateTime(null);
-        rule.setModifyTime(null);
+        rule.setCreateAt(null);
+        rule.setUpdateAt(null);
     }
 }

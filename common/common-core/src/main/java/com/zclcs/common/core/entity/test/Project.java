@@ -1,5 +1,7 @@
 package com.zclcs.common.core.entity.test;
 
+    import java.util.Date;
+    import java.math.BigDecimal;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -10,21 +12,21 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /**
- * 项目信息 Entity
+ * 项目信息表 Entity
  *
  * @author zclcs
- * @date 2022-05-05 10:38:50.446
+ * @date 2022-05-16 10:48:59.648
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("test_project")
-@ApiModel(value = "Project对象", description = "项目信息")
+@ApiModel(value = "Project对象", description = "项目信息表")
 public class Project extends BaseEntity {
 
     /**

@@ -8,8 +8,8 @@
                sbl.request_uri,
                sbl.request_method,
                sbl.location,
-               sbl.create_time,
-               sbl.modify_time
+               sbl.create_at,
+               sbl.update_at
         from system_block_log sbl
             ${ew.customSqlSegment}
     </sql>

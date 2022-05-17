@@ -15,10 +15,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
- * 项目信息 Ao
+ * 项目信息表 Ao
  *
  * @author zclcs
- * @date 2022-05-05 10:38:50.446
+ * @date 2022-05-16 10:48:59.648
  */
 @Data
 @AllArgsConstructor
@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
 @Builder
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value = "ProjectAo对象", description = "项目信息")
+@ApiModel(value = "ProjectAo对象", description = "项目信息表")
 public class ProjectAo implements Serializable {
 
     private static final long serialVersionUID = 1L;

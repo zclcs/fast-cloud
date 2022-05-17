@@ -10,7 +10,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * minio桶 Ao
@@ -41,12 +40,6 @@ public class MinioBucketAo implements Serializable {
     @Size(max = 50, message = "{noMoreThan}")
     @ApiModelProperty(value = "桶权限", required = true)
     private String bucketPolicy;
-
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
-
-    @ApiModelProperty(value = "修改时间")
-    private Date modifyTime;
 
 
 }

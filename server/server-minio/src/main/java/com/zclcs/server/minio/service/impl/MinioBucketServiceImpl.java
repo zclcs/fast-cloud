@@ -1,7 +1,6 @@
 package com.zclcs.server.minio.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -77,7 +76,6 @@ public class MinioBucketServiceImpl extends ServiceImpl<MinioBucketMapper, Minio
                 log.error(e.getMessage(), e);
                 throw new MyMinioException("调用minio失败，" + e.getMessage());
             }
-            minioBucket.setCreateTime(DateUtil.date());
             this.save(minioBucket);
             return minioBucket.getId();
         } else {

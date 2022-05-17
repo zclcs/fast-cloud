@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  * <p>
@@ -34,10 +35,10 @@ public class SelectSystemDeptAo implements Serializable {
     private Double orderNum;
 
     @ApiModelProperty(value = "创建时间-开始")
-    private String createTimeFrom;
+    private LocalDate createTimeFrom;
 
     @ApiModelProperty(value = "创建时间-结束")
-    private String createTimeTo;
+    private LocalDate createTimeTo;
 
 
 }

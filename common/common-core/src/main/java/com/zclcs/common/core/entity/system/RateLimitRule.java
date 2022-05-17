@@ -1,12 +1,11 @@
 package com.zclcs.common.core.entity.system;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.zclcs.common.core.base.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import java.util.Date;
 
 /**
  * 限流规则表 Entity
@@ -19,7 +18,7 @@ import java.util.Date;
 @Accessors(chain = true)
 @TableName("system_rate_limit_rule")
 @ApiModel(value = "RateLimitRule对象", description = "限流规则表")
-public class RateLimitRule {
+public class RateLimitRule extends BaseEntity {
 
     /**
      * 限流规则id
@@ -68,18 +67,6 @@ public class RateLimitRule {
      */
     @TableField("rule_status")
     private String ruleStatus;
-
-    /**
-     * 创建时间
-     */
-    @TableField("create_time")
-    private Date createTime;
-
-    /**
-     * 修改时间
-     */
-    @TableField("modify_time")
-    private Date modifyTime;
 
 
 }

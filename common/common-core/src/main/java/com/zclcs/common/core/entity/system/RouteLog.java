@@ -4,12 +4,11 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.zclcs.common.core.base.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import java.util.Date;
 
 /**
  * 网关转发日志表 Entity
@@ -22,7 +21,7 @@ import java.util.Date;
 @Accessors(chain = true)
 @TableName("system_route_log")
 @ApiModel(value = "RouteLog对象", description = "网关转发日志表")
-public class RouteLog {
+public class RouteLog extends BaseEntity {
 
     /**
      * 网关转发日志id
@@ -65,18 +64,6 @@ public class RouteLog {
      */
     @TableField("location")
     private String location;
-
-    /**
-     * 创建时间
-     */
-    @TableField("create_time")
-    private Date createTime;
-
-    /**
-     * 修改时间
-     */
-    @TableField("modify_time")
-    private Date modifyTime;
 
 
 }

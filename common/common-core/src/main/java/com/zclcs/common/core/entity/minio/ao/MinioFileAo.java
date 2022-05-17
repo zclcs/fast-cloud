@@ -11,7 +11,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 文件 Ao
@@ -50,12 +49,6 @@ public class MinioFileAo implements Serializable {
     @NotBlank(message = "{required}")
     @ApiModelProperty(value = "文件路径", required = true)
     private String filePath;
-
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
-
-    @ApiModelProperty(value = "修改时间")
-    private Date modifyTime;
 
 
 }

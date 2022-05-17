@@ -1,14 +1,15 @@
 package com.zclcs.common.core.entity.system;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.zclcs.common.core.base.BaseEntity;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -22,30 +23,50 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "SystemLoginLog对象", description = "登录日志表")
-public class SystemLoginLog {
+public class SystemLoginLog extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "id")
+    /**
+     * id
+     */
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @ApiModelProperty(value = "用户名")
+    /**
+     * 用户名
+     */
+    @TableField("username")
     private String username;
 
-    @ApiModelProperty(value = "登录时间")
-    private Date loginTime;
+    /**
+     * 登录时间
+     */
+    @TableField("login_time")
+    private LocalDateTime loginTime;
 
-    @ApiModelProperty(value = "登录地点")
+    /**
+     * 登录地点
+     */
+    @TableField("location")
     private String location;
 
-    @ApiModelProperty(value = "ip地址")
+    /**
+     * ip地址
+     */
+    @TableField("ip")
     private String ip;
 
-    @ApiModelProperty(value = "操作系统")
+    /**
+     * 操作系统
+     */
+    @TableField("system")
     private String system;
 
-    @ApiModelProperty(value = "浏览器")
+    /**
+     * 浏览器
+     */
+    @TableField("browser")
     private String browser;
 
 }

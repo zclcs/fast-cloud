@@ -77,7 +77,7 @@ public class BlackListServiceImpl extends ServiceImpl<BlackListMapper, BlackList
     public void createBlackList(BlackListAo blackListAo) {
         BlackList blackList = new BlackList();
         BeanUtil.copyProperties(blackListAo, blackList);
-        setBlackList(blackList, true);
+        setBlackList(blackList);
         boolean save = this.save(blackList);
         if (save) {
             routeEnhanceCacheService.saveBlackList(blackList);
@@ -90,7 +90,7 @@ public class BlackListServiceImpl extends ServiceImpl<BlackListMapper, BlackList
         BlackList old = this.lambdaQuery().eq(BlackList::getBlackId, blackListAo.getBlackId()).one();
         BlackList blackList = new BlackList();
         BeanUtil.copyProperties(blackListAo, blackList);
-        setBlackList(blackList, false);
+        setBlackList(blackList);
         boolean b = this.updateById(blackList);
         if (b) {
             routeEnhanceCacheService.removeBlackList(old);
@@ -108,10 +108,7 @@ public class BlackListServiceImpl extends ServiceImpl<BlackListMapper, BlackList
         }
     }
 
-    private void setBlackList(BlackList blackList, boolean isAdd) {
-        if (isAdd) {
-            blackList.setCreateTime(DateUtil.date());
-        }
+    private void setBlackList(BlackList blackList) {
         if (StrUtil.isNotBlank(blackList.getBlackIp())) {
             blackList.setLocation(BaseAddressUtil.getCityInfo(blackList.getBlackIp()));
         } else {
@@ -121,6 +118,5 @@ public class BlackListServiceImpl extends ServiceImpl<BlackListMapper, BlackList
             blackList.setLimitFrom(DateUtil.parse(blackList.getLimitFrom()).toString(DatePattern.NORM_TIME_PATTERN));
             blackList.setLimitTo(DateUtil.parse(blackList.getLimitTo()).toString(DatePattern.NORM_TIME_PATTERN));
         }
-        blackList.setModifyTime(DateUtil.date());
     }
 }

@@ -1,23 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zclcs.server.system.mapper.SystemDeptMapper">
-
-    <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.zclcs.common.core.entity.system.SystemDept">
-        <id column="dept_id" property="deptId"/>
-        <result column="parent_id" property="parentId"/>
-        <result column="dept_name" property="deptName"/>
-        <result column="order_num" property="orderNum"/>
-        <result column="create_time" property="createTime"/>
-        <result column="modify_time" property="modifyTime"/>
-    </resultMap>
-
-    <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
-        dept_id, parent_id, dept_name, order_num, create_time, modify_time
-    </sql>
     <sql id="baseSql">
-        select sd.dept_id, sd.parent_id, sd.dept_name, sd.order_num, sd.create_time, sd.modify_time
+        select sd.dept_id, sd.parent_id, sd.dept_name, sd.order_num, sd.create_at, sd.update_at
         from system_dept sd
             ${ew.customSqlSegment}
     </sql>

@@ -6,7 +6,6 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * minio桶 Vo
@@ -33,12 +32,6 @@ public class MinioBucketVo implements Serializable {
 
     @ApiModelProperty(value = "桶权限")
     private String bucketPolicy;
-
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
-
-    @ApiModelProperty(value = "修改时间")
-    private Date modifyTime;
 
 
 }

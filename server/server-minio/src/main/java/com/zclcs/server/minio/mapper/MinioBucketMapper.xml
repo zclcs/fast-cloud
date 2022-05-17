@@ -3,7 +3,7 @@
 <mapper namespace="com.zclcs.server.minio.mapper.MinioBucketMapper">
 
     <sql id="baseSql">
-        select mb.id, mb.bucket_name, mb.create_time, mb.modify_time
+        select mb.id, mb.bucket_name, mb.create_at, mb.update_at
         from minio_bucket mb
             ${ew.customSqlSegment}
     </sql>

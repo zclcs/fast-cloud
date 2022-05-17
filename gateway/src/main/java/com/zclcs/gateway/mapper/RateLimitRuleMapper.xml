@@ -11,8 +11,8 @@
                srlr.rate_limit_count,
                srlr.interval_sec,
                srlr.rule_status,
-               srlr.create_time,
-               srlr.modify_time
+               srlr.create_at,
+               srlr.update_at
         from system_rate_limit_rule srlr
             ${ew.customSqlSegment}
     </sql>

@@ -115,4 +115,9 @@ public interface MyConstant {
      */
     String DELETE = "DELETE";
 
+    /**
+     * 删除
+     */
+    String ADMIN = "admin";
+
 }

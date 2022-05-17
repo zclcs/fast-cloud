@@ -1,7 +1,8 @@
 package com.zclcs.common.core.entity.system;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.zclcs.common.core.base.BaseEntity;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -18,32 +19,56 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "SystemUserConnection对象", description = "系统用户社交账户关联表")
-public class SystemUserConnection {
+public class SystemUserConnection extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "系统用户名")
+    /**
+     * 系统用户名
+     */
+    @TableField("user_name")
     private String userName;
 
-    @ApiModelProperty(value = "第三方平台名称")
+    /**
+     * 第三方平台名称
+     */
+    @TableField("provider_name")
     private String providerName;
 
-    @ApiModelProperty(value = "第三方平台账户id")
+    /**
+     * 第三方平台账户id
+     */
+    @TableField("provider_user_id")
     private String providerUserId;
 
-    @ApiModelProperty(value = "第三方平台用户名")
+    /**
+     * 第三方平台用户名
+     */
+    @TableField("provider_user_name")
     private String providerUserName;
 
-    @ApiModelProperty(value = "第三方平台昵称")
+    /**
+     * 第三方平台昵称
+     */
+    @TableField("nick_name")
     private String nickName;
 
-    @ApiModelProperty(value = "第三方平台头像")
+    /**
+     * 第三方平台头像
+     */
+    @TableField("image_url")
     private String imageUrl;
 
-    @ApiModelProperty(value = "地址")
+    /**
+     * 地址
+     */
+    @TableField("location")
     private String location;
 
-    @ApiModelProperty(value = "备注")
+    /**
+     * 备注
+     */
+    @TableField("remark")
     private String remark;
 
 }

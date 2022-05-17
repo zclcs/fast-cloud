@@ -1,7 +1,5 @@
 package com.zclcs.common.core.entity.test.vo;
 
-    import java.util.Date;
-import com.houkunlin.system.dict.starter.json.Array;
 import com.houkunlin.system.dict.starter.json.DictText;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -11,10 +9,10 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
- * 参建单位 Vo
+ * 项目参建单位信息数据表 Vo
  *
  * @author zclcs
- * @date 2022-01-13 11:19:10.776
+ * @date 2022-05-16 10:49:03.613
  */
 @Data
 @AllArgsConstructor
@@ -22,7 +20,7 @@ import java.io.Serializable;
 @Builder
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value = "ProjectCompanyVo对象", description = "参建单位")
+@ApiModel(value = "ProjectCompanyVo对象", description = "项目参建单位信息数据表")
 public class ProjectCompanyVo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,12 +50,6 @@ public class ProjectCompanyVo implements Serializable {
 
     @ApiModelProperty(value = "项目经理联系电话")
     private String managerPhone;
-
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
-
-    @ApiModelProperty(value = "编辑时间")
-    private Date modifyTime;
 
 
 }

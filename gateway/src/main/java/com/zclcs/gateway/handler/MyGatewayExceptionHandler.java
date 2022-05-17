@@ -5,6 +5,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.boot.autoconfigure.web.ErrorProperties;
 import org.springframework.boot.autoconfigure.web.ResourceProperties;
 import org.springframework.boot.autoconfigure.web.reactive.error.DefaultErrorWebExceptionHandler;
+import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.reactive.error.ErrorAttributes;
 import org.springframework.cloud.gateway.support.NotFoundException;
 import org.springframework.cloud.gateway.support.TimeoutException;
@@ -31,11 +32,11 @@ public class MyGatewayExceptionHandler extends DefaultErrorWebExceptionHandler {
      * 异常处理，定义返回报文格式
      */
     @Override
-    protected Map<String, Object> getErrorAttributes(ServerRequest request, boolean includeStackTrace) {
-        Throwable error = super.getError(request);
+    protected Map<String, Object> getErrorAttributes(ServerRequest webRequest, ErrorAttributeOptions options) {
+        Throwable error = super.getError(webRequest);
         log.error(
                 "请求发生异常，请求URI：{}，请求方法：{}，异常信息：{}",
-                request.path(), request.methodName(), error.getMessage()
+                webRequest.path(), webRequest.methodName(), error.getMessage()
         );
         String errorMessage;
         if (error instanceof NotFoundException) {

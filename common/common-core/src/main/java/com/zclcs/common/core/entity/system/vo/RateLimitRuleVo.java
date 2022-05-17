@@ -7,7 +7,6 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 限流规则表 Vo
@@ -50,12 +49,6 @@ public class RateLimitRuleVo implements Serializable {
     @ApiModelProperty(value = "规则状态 默认 1 @@yes_no")
     @DictText("enable_disable")
     private String ruleStatus;
-
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
-
-    @ApiModelProperty(value = "修改时间")
-    private Date modifyTime;
 
 
 }
