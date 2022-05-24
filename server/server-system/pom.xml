@@ -18,6 +18,11 @@
     <dependencies>
         <dependency>
             <groupId>com.zclcs</groupId>
+            <artifactId>common-sentinel-client-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zclcs</groupId>
             <artifactId>common-web-starter</artifactId>
             <version>${project.version}</version>
         </dependency>

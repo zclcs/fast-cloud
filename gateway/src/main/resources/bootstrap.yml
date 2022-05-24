@@ -5,7 +5,6 @@ spring:
 
   application:
     name: ${SERVICE_NAME_GATEWAY:gateway}
-
   cloud:
     nacos:
       config:
@@ -22,6 +21,12 @@ spring:
             group: DEFAULT_GROUP
             refresh: true
           - data-id: redis.yaml
+            group: DEFAULT_GROUP
+            refresh: true
+          - data-id: rabbit-mq.yaml
+            group: DEFAULT_GROUP
+            refresh: true
+          - data-id: sentinel-gateway.yaml
             group: DEFAULT_GROUP
             refresh: true
       discovery:

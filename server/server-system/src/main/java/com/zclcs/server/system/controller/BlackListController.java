@@ -45,6 +45,7 @@ public class BlackListController {
     @PreAuthorize("hasAuthority('blackList:view')")
     public BaseRsp<BasePage<BlackListVo>> findBlackListPage(@Valid BasePageAo basePageAo, BlackListVo blackListVo) {
         BasePage<BlackListVo> page = this.blackListService.findBlackListPage(basePageAo, blackListVo);
+        log.info("黑名单表查询");
         return BaseRspUtil.data(page);
     }
 

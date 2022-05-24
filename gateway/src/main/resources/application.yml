@@ -34,56 +34,26 @@ spring:
           uri: lb://${SERVICE_NAME_AUTH:auth}
           predicates:
             - Path=${SERVICE_PATH_AUTH:/auth}/**
-          filters:
-            - name: Hystrix
-              args:
-                name: authfallback
-                fallbackUri: forward:/fallback/${SERVICE_NAME_AUTH:auth}
         - id: ${SERVICE_NAME_SERVER_SYSTEM:server-system}
           uri: lb://${SERVICE_NAME_SERVER_SYSTEM:server-system}
           predicates:
             - Path=${SERVICE_PATH_SERVER_SYSTEM:/system}/**
-          filters:
-            - name: Hystrix
-              args:
-                name: systemfallback
-                fallbackUri: forward:/fallback/${SERVICE_NAME_SERVER_SYSTEM:server-system}
         - id: ${SERVICE_NAME_SERVER_GENERATOR:server-generator}
           uri: lb://${SERVICE_NAME_SERVER_GENERATOR:server-generator}
           predicates:
             - Path=${SERVICE_PATH_SERVER_GENERATOR:/generator}/**
-          filters:
-            - name: Hystrix
-              args:
-                name: generatorfallback
-                fallbackUri: forward:/fallback/${SERVICE_NAME_SERVER_GENERATOR:server-generator}
         - id: ${SERVICE_NAME_SERVER_TEST:server-test}
           uri: lb://${SERVICE_NAME_SERVER_TEST:server-test}
           predicates:
             - Path=${SERVICE_PATH_SERVER_TEST:/test}/**
-          filters:
-            - name: Hystrix
-              args:
-                name: testfallback
-                fallbackUri: forward:/fallback/${SERVICE_NAME_SERVER_TEST:server-test}
         - id: ${SERVICE_NAME_SERVER_MINIO:server-minio}
           uri: lb://${SERVICE_NAME_SERVER_MINIO:server-minio}
           predicates:
             - Path=${SERVICE_PATH_SERVER_MINIO:/minio}/**
-          filters:
-            - name: Hystrix
-              args:
-                name: miniofallback
-                fallbackUri: forward:/fallback/${SERVICE_NAME_SERVER_MINIO:server-minio}
         - id: ${SERVICE_NAME_SERVER_DICT:server-dict}
           uri: lb://${SERVICE_NAME_SERVER_DICT:server-dict}
           predicates:
             - Path=${SERVICE_PATH_SERVER_DICT:/dict}/**
-          filters:
-            - name: Hystrix
-              args:
-                name: miniofallback
-                fallbackUri: forward:/fallback/${SERVICE_NAME_SERVER_DICT:server-dict}
       loadbalancer:
         use404: true
       default-filters:
@@ -100,20 +70,6 @@ mybatis-plus:
 my:
   log:
     enable-log-for-controller: ${LOG_CONTROLLER_PARAMS_GATEWAY:false}
-
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 10000
-
-    socialfallback:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 60000
 
 ribbon:
   eager-load:

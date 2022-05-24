@@ -20,6 +20,7 @@
         <module>common-rabbitmq-starter</module>
         <module>common-resources</module>
         <module>common-web-starter</module>
+        <module>common-sentinel-client-starter</module>
     </modules>
 
     <artifactId>common</artifactId>

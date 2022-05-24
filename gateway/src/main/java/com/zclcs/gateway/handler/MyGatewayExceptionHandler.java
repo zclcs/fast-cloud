@@ -1,5 +1,10 @@
 package com.zclcs.gateway.handler;
 
+import com.alibaba.csp.sentinel.slots.block.authority.AuthorityException;
+import com.alibaba.csp.sentinel.slots.block.degrade.DegradeException;
+import com.alibaba.csp.sentinel.slots.block.flow.FlowException;
+import com.alibaba.csp.sentinel.slots.block.flow.param.ParamFlowException;
+import com.alibaba.csp.sentinel.slots.system.SystemBlockException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.boot.autoconfigure.web.ErrorProperties;
@@ -50,6 +55,16 @@ public class MyGatewayExceptionHandler extends DefaultErrorWebExceptionHandler {
         } else if (error instanceof ResponseStatusException
                 && StringUtils.containsIgnoreCase(error.getMessage(), HttpStatus.NOT_FOUND.toString())) {
             errorMessage = "未找到该资源";
+        } else if (error instanceof FlowException) {
+            errorMessage = "接口限流";
+        } else if (error instanceof DegradeException) {
+            errorMessage = "服务降级";
+        } else if (error instanceof ParamFlowException) {
+            errorMessage = "热点参数限流";
+        } else if (error instanceof SystemBlockException) {
+            errorMessage = "触发系统保护规则";
+        } else if (error instanceof AuthorityException) {
+            errorMessage = "授权规则不通过";
         } else {
             errorMessage = "网关转发异常";
         }

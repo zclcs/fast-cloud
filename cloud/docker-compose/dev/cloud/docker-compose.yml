@@ -7,7 +7,7 @@ services:
     image: ${CLOUD_DEPOSITORY_IP_PORT}${CLOUD_DEPOSITORY_URL}/gateway:${CLOUD_DEPOSITORY_TAG}
     container_name: ${NACOS_NAMESPACE}_gateway
     network_mode: host
-    command: sh -c "/wait && java ${JAVA_OPS_PREFIX} ${GATEWAY_JAVA_OPS} ${JAVA_OPS_SUFFIX} -cp /app/resources:/app/classes:/app/libs/* ${GATEWAY_MAIN_CLASS}"
+    command: sh -c "/wait && java ${JAVA_OPS_PREFIX} -Dcsp.sentinel.app.type=1 ${GATEWAY_JAVA_OPS} ${JAVA_OPS_SUFFIX} -cp /app/resources:/app/classes:/app/libs/* ${GATEWAY_MAIN_CLASS}"
     environment:
       WAIT_HOSTS: ${NACOS_HOST}:${PORT_SERVER_SYSTEM}
       WAIT_SLEEP_INTERVAL: ${DOCKER_WAIT_SLEEP_INTERVAL}
@@ -174,6 +174,26 @@ services:
       - ./seata/config:/root/seata-config
     healthcheck:
       test: [ "CMD-SHELL", "curl -sS ${NACOS_HOST}:${SEATA_PORT} || exit 1" ]
+      interval: ${DOCKER_HEALTHCHECK_INTERVAL}
+      timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
+      retries: ${DOCKER_HEALTHCHECK_RETRIES}
+    env_file: .env
+  sentinel:
+    image: ${CLOUD_DEPOSITORY_IP_PORT}/library/sentinel:1.8.4
+    container_name: ${NACOS_NAMESPACE}_sentinel
+    network_mode: host
+    environment:
+      # 设置时区
+      TZ: Asia/Shanghai
+      NACOS_ADDR: ${NACOS_HOST}:${NACOS_PORT}
+      ADMIN_USERNAME: ${SENTINEL_ADMIN_USERNAME}
+      ADMIN_PASSWORD: ${SENTINEL_ADMIN_PASSWORD}
+      NACOS_NAMESPACE_ID: ${NACOS_NAMESPACE}
+      SENTINEL_PORT: ${SENTINEL_PORT}
+    volumes:
+      - ./log/sentinel:/root/logs/csp
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -sS ${NACOS_HOST}:${SENTINEL_PORT} || exit 1" ]
       interval: ${DOCKER_HEALTHCHECK_INTERVAL}
       timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
       retries: ${DOCKER_HEALTHCHECK_RETRIES}

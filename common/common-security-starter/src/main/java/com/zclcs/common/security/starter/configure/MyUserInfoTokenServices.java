@@ -119,7 +119,7 @@ public class MyUserInfoTokenServices implements ResourceServerTokenServices {
 
     @SuppressWarnings("all")
     private Map<String, Object> getMap(String path, String accessToken) {
-        log.info("Getting user info from: " + path);
+        //log.info("Getting user info from: " + path);
 
         try {
             OAuth2RestOperations restTemplate = this.restTemplate;

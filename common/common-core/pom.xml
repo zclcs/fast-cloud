@@ -77,11 +77,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-security</artifactId>
         </dependency>
-        <!-- hystrix 调用熔断 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-        </dependency>
         <!-- 配置文件管理 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

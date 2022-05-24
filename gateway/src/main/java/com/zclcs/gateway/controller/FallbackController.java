@@ -20,7 +20,7 @@ public class FallbackController {
     @RequestMapping("fallback/{name}")
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Mono<BaseRsp<String>> systemFallback(@PathVariable String name) {
-        String response = "服务访问超时，请稍后再试";
+        String response = "当前服务器繁忙，请稍后重试";
         log.error("{}，目标微服务：{}", response, name);
         return Mono.just(BaseRspUtil.message(response));
     }

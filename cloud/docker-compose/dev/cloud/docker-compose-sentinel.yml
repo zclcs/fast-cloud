@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  sentinel:
+    image: ${CLOUD_DEPOSITORY_IP_PORT}/library/sentinel:1.8.4
+    container_name: ${NACOS_NAMESPACE}_sentinel
+    network_mode: host
+    environment:
+      # 设置时区
+      TZ: Asia/Shanghai
+      NACOS_ADDR: ${NACOS_HOST}:${NACOS_PORT}
+      ADMIN_USERNAME: ${SENTINEL_ADMIN_USERNAME}
+      ADMIN_PASSWORD: ${SENTINEL_ADMIN_PASSWORD}
+      NACOS_NAMESPACE_ID: ${NACOS_NAMESPACE}
+      SENTINEL_PORT: ${SENTINEL_PORT}
+    volumes:
+      - ./log/sentinel:/root/logs/csp
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -sS ${NACOS_HOST}:${SENTINEL_PORT} || exit 1" ]
+      interval: ${DOCKER_HEALTHCHECK_INTERVAL}
+      timeout: ${DOCKER_HEALTHCHECK_TIMEOUT}
+      retries: ${DOCKER_HEALTHCHECK_RETRIES}
+    env_file: .env
