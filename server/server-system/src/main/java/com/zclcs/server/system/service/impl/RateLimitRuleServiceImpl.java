@@ -14,7 +14,6 @@ import com.zclcs.common.core.entity.system.vo.RateLimitRuleVo;
 import com.zclcs.common.core.utils.BaseQueryWrapperUtil;
 import com.zclcs.server.system.mapper.RateLimitRuleMapper;
 import com.zclcs.server.system.service.RateLimitRuleService;
-import com.zclcs.server.system.service.RouteEnhanceCacheService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -32,8 +31,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
 public class RateLimitRuleServiceImpl extends ServiceImpl<RateLimitRuleMapper, RateLimitRule> implements RateLimitRuleService {
-
-    private final RouteEnhanceCacheService routeEnhanceCacheService;
 
     @Override
     public BasePage<RateLimitRuleVo> findRateLimitRulePage(BasePageAo basePageAo, RateLimitRuleVo rateLimitRuleVo) {
@@ -74,34 +71,22 @@ public class RateLimitRuleServiceImpl extends ServiceImpl<RateLimitRuleMapper, R
         RateLimitRule rateLimitRule = new RateLimitRule();
         BeanUtil.copyProperties(rateLimitRuleAo, rateLimitRule);
         setRateLimitRule(rateLimitRule);
-        boolean save = this.save(rateLimitRule);
-        if (save) {
-            routeEnhanceCacheService.saveRateLimitRule(rateLimitRule);
-        }
+        this.save(rateLimitRule);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateRateLimitRule(RateLimitRuleAo rateLimitRuleAo) {
-        RateLimitRule old = this.lambdaQuery().eq(RateLimitRule::getRateLimitRuleId, rateLimitRuleAo.getRateLimitRuleId()).one();
         RateLimitRule rateLimitRule = new RateLimitRule();
         BeanUtil.copyProperties(rateLimitRuleAo, rateLimitRule);
         setRateLimitRule(rateLimitRule);
-        boolean b = this.updateById(rateLimitRule);
-        if (b) {
-            routeEnhanceCacheService.removeRateLimitRule(old);
-            routeEnhanceCacheService.saveRateLimitRule(rateLimitRule);
-        }
+        this.updateById(rateLimitRule);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteRateLimitRule(List<Long> ids) {
-        List<RateLimitRule> rateLimitRules = this.lambdaQuery().in(RateLimitRule::getRateLimitRuleId, ids).list();
-        boolean b = this.removeByIds(ids);
-        if (b) {
-            rateLimitRules.forEach(routeEnhanceCacheService::removeRateLimitRule);
-        }
+        this.removeByIds(ids);
     }
 
     private void setRateLimitRule(RateLimitRule rateLimitRule) {

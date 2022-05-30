@@ -1,5 +1,6 @@
 package com.zclcs.common.core.utils;
 
+import com.zclcs.common.core.constant.MyConstant;
 import com.zclcs.common.core.entity.MyAuthUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -37,11 +38,15 @@ public abstract class BaseUsersUtil {
      * @return String 用户名
      */
     public static String getCurrentUsername() {
-        Object principal = getOauth2Authentication().getPrincipal();
+        OAuth2Authentication oauth2Authentication = getOauth2Authentication();
+        if (oauth2Authentication == null) {
+            return MyConstant.ADMIN;
+        }
+        Object principal = oauth2Authentication.getPrincipal();
         if (principal instanceof MyAuthUser) {
             return ((MyAuthUser) principal).getUsername();
         }
-        return (String) getOauth2Authentication().getPrincipal();
+        return (String) oauth2Authentication.getPrincipal();
     }
 
     /**

@@ -1,38 +1,31 @@
-package com.zclcs.server.system.handler;
+package com.zclcs.server.system.service.impl;
 
 import cn.hutool.json.JSONUtil;
 import com.rabbitmq.client.Channel;
 import com.zclcs.common.core.constant.MyConstant;
-import com.zclcs.common.core.constant.RabbitConstant;
 import com.zclcs.common.core.entity.CanalBinLogInfo;
-import com.zclcs.common.core.entity.MessageStruct;
 import com.zclcs.common.core.entity.system.*;
 import com.zclcs.common.core.entity.system.vo.SystemRoleVo;
+import com.zclcs.common.core.service.HandleCacheService;
+import com.zclcs.server.system.service.RouteEnhanceCacheService;
 import com.zclcs.server.system.service.SystemMenuService;
 import com.zclcs.server.system.service.SystemRoleService;
 import com.zclcs.server.system.service.SystemUserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.core.Message;
-import org.springframework.amqp.rabbit.annotation.RabbitHandler;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * <p>
- * 直接队列1 处理器
- * </p>
- *
  * @author zclcs
  */
+@Service(value = "handleServerSystemCacheService")
+@RequiredArgsConstructor
 @Slf4j
-@RabbitListener(queues = RabbitConstant.QUEUE_SERVER_SYSTEM_CACHE)
-@Component
-public class DirectQueueTwoHandler {
+public class HandleServerSystemCacheServiceImpl implements HandleCacheService {
 
     private static final String SYSTEM_USER = "system_user";
     private static final String SYSTEM_USER_DATA_PERMISSION = "system_user_data_permission";
@@ -40,9 +33,15 @@ public class DirectQueueTwoHandler {
     private static final String SYSTEM_ROLE = "system_role";
     private static final String SYSTEM_ROLE_MENU = "system_role_menu";
     private static final String SYSTEM_MENU = "system_menu";
+
+    private static final String SYSTEM_BLACK_LIST = "system_black_list";
+
+    private static final String SYSTEM_RATE_LIMIT_RULE = "system_rate_limit_rule";
     private SystemUserService systemUserService;
     private SystemRoleService systemRoleService;
     private SystemMenuService systemMenuService;
+
+    private RouteEnhanceCacheService routeEnhanceCacheService;
 
     @Autowired
     public void setSystemUserService(SystemUserService systemUserService) {
@@ -59,13 +58,14 @@ public class DirectQueueTwoHandler {
         this.systemMenuService = systemMenuService;
     }
 
-    @RabbitHandler
-    public void directHandlerManualAck(MessageStruct messageStruct, Message message, Channel channel) {
-        //  如果手动ACK,消息会被监听消费,但是消息在队列中依旧存在,如果 未配置 acknowledge-mode 默认是会在消费完毕后自动ACK掉
-        final long deliveryTag = message.getMessageProperties().getDeliveryTag();
-        try {
-            //log.info("直接队列2，处理server-system服务缓存，手动ACK，接收消息：{}", messageStruct.getMessage());
-            CanalBinLogInfo canalBinLogInfo = JSONUtil.toBean(messageStruct.getMessage(), CanalBinLogInfo.class);
+    @Autowired
+    public void setRouteEnhanceCacheService(RouteEnhanceCacheService routeEnhanceCacheService) {
+        this.routeEnhanceCacheService = routeEnhanceCacheService;
+    }
+
+    @Override
+    public void handleCache(CanalBinLogInfo canalBinLogInfo, long deliveryTag, Channel channel) throws Exception {
+        if (!canalBinLogInfo.getIsDdl()) {
             switch (canalBinLogInfo.getTable()) {
                 case SYSTEM_USER:
                     handleSystemUserCache(canalBinLogInfo);
@@ -85,20 +85,19 @@ public class DirectQueueTwoHandler {
                 case SYSTEM_MENU:
                     handleSystemMenuCache(canalBinLogInfo);
                     break;
+                case SYSTEM_BLACK_LIST:
+                    handleSystemBlackListCache(canalBinLogInfo);
+                    break;
+                case SYSTEM_RATE_LIMIT_RULE:
+                    handleSystemRateLimitRuleCache(canalBinLogInfo);
+                    break;
                 default:
                     break;
             }
             // 通知 MQ 消息已被成功消费,可以ACK了
             channel.basicAck(deliveryTag, false);
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            try {
-                // 处理失败,重新压入MQ
-                channel.basicRecover();
-            } catch (IOException e1) {
-                log.error(e1.getMessage(), e1);
-            }
         }
+        channel.basicAck(deliveryTag, false);
     }
 
     private void handleSystemUserCache(CanalBinLogInfo canalBinLogInfo) {
@@ -187,4 +186,41 @@ public class DirectQueueTwoHandler {
             }
         }
     }
+
+    private void handleSystemBlackListCache(CanalBinLogInfo canalBinLogInfo) {
+        List<BlackList> blackLists = JSONUtil.toList(canalBinLogInfo.getData(), BlackList.class);
+        for (BlackList blackList : blackLists) {
+            switch (canalBinLogInfo.getType()) {
+                case MyConstant.INSERT:
+                    routeEnhanceCacheService.saveBlackList(blackList);
+                case MyConstant.UPDATE:
+                    routeEnhanceCacheService.updateBlackList(blackList);
+                    break;
+                case MyConstant.DELETE:
+                    routeEnhanceCacheService.removeBlackList(blackList);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    private void handleSystemRateLimitRuleCache(CanalBinLogInfo canalBinLogInfo) {
+        List<RateLimitRule> rateLimitRules = JSONUtil.toList(canalBinLogInfo.getData(), RateLimitRule.class);
+        for (RateLimitRule rateLimitRule : rateLimitRules) {
+            switch (canalBinLogInfo.getType()) {
+                case MyConstant.INSERT:
+                    routeEnhanceCacheService.saveRateLimitRule(rateLimitRule);
+                case MyConstant.UPDATE:
+                    routeEnhanceCacheService.updateRateLimitRule(rateLimitRule);
+                    break;
+                case MyConstant.DELETE:
+                    routeEnhanceCacheService.removeRateLimitRule(rateLimitRule);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
 }

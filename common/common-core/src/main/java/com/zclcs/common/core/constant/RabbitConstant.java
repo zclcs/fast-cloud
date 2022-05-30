@@ -15,11 +15,6 @@ public interface RabbitConstant {
     String QUEUE_SERVER_SYSTEM_LOG = "queue.server.system.log";
 
     /**
-     * 直接模式队列2 - 处理系统服务缓存
-     */
-    String QUEUE_SERVER_SYSTEM_CACHE = "queue.server.system.cache";
-
-    /**
      * canal 读取 binlog 更新缓存队列
      */
     String CANAL_QUEUE = "canal";
@@ -30,9 +25,59 @@ public interface RabbitConstant {
     String CANAL_EXCHANGE = "exchange.canal";
 
     /**
-     * canal 读取 binlog 更新缓存交换器
+     * canal 读取 binlog 路由key
      */
     String CANAL_ROUTE_KEY = "canal-routing-key";
+
+    /**
+     * server-system 读取 binlog 更新缓存队列
+     */
+    String CANAL_SYSTEM_QUEUE = "canal.system";
+
+    /**
+     * server-system 读取 binlog 路由key
+     */
+    String CANAL_SYSTEM_ROUTE_KEY = "canal-system-routing-key";
+
+    /**
+     * server-dict 读取 binlog 更新缓存队列
+     */
+    String CANAL_DICT_QUEUE = "canal.dict";
+
+    /**
+     * server-dict 读取 binlog 路由key
+     */
+    String CANAL_DICT_ROUTE_KEY = "canal-dict-routing-key";
+
+    /**
+     * server-generator 读取 binlog 更新缓存队列
+     */
+    String CANAL_GENERATOR_QUEUE = "canal.generator";
+
+    /**
+     * server-generator 读取 binlog 路由key
+     */
+    String CANAL_GENERATOR_ROUTE_KEY = "canal-generator-routing-key";
+
+    /**
+     * server-minio 读取 binlog 更新缓存队列
+     */
+    String CANAL_MINIO_QUEUE = "canal.minio";
+
+    /**
+     * server-minio 读取 binlog 路由key
+     */
+    String CANAL_MINIO_ROUTE_KEY = "canal-minio-routing-key";
+
+    /**
+     * server-test 读取 binlog 更新缓存队列
+     */
+    String CANAL_TEST_QUEUE = "canal.test";
+
+    /**
+     * server-test 读取 binlog 路由key
+     */
+    String CANAL_TEST_ROUTE_KEY = "canal-test-routing-key";
 
     /**
      * 延迟队列

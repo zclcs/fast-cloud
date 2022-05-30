@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.zclcs.common.core.base.BasePage;
 import com.zclcs.common.core.base.BasePageAo;
 import com.zclcs.common.core.base.BaseRsp;
+import com.zclcs.common.core.client.SystemClient;
 import com.zclcs.common.core.constant.DictConstant;
 import com.zclcs.common.core.constant.GeneratorConstant;
 import com.zclcs.common.core.constant.MyConstant;
@@ -14,7 +15,6 @@ import com.zclcs.common.core.entity.generator.ao.GenerateAo;
 import com.zclcs.common.core.entity.generator.vo.GeneratorConfigVo;
 import com.zclcs.common.core.entity.system.ao.SystemMenuAo;
 import com.zclcs.common.core.exception.MyException;
-import com.zclcs.common.core.service.SystemService;
 import com.zclcs.common.core.utils.BaseFileUtil;
 import com.zclcs.common.core.utils.BaseSortUtil;
 import com.zclcs.common.core.utils.BaseUtil;
@@ -43,7 +43,7 @@ public class GeneratorServiceImpl implements GeneratorService {
 
     private final GeneratorMapper generatorMapper;
     private final GeneratorConfigService generatorConfigService;
-    private final SystemService systemService;
+    private final SystemClient systemClient;
     private final GeneratorHelper generatorHelper;
 
     @Override
@@ -126,7 +126,7 @@ public class GeneratorServiceImpl implements GeneratorService {
         if (DictConstant.YES_NO_1.equals(isCreateDirNew)) {
             SystemMenuAo dir = new SystemMenuAo();
             setDir(dir, generateAo);
-            BaseRsp<Long> dirRsp = systemService.addMenu(dir);
+            BaseRsp<Long> dirRsp = systemClient.addMenu(dir);
             SystemMenuAo menu = new SystemMenuAo();
             setMenu(menu, generateAo, className, dirRsp.getData());
             addMenuAndButton(menu, className);
@@ -138,7 +138,7 @@ public class GeneratorServiceImpl implements GeneratorService {
     }
 
     private void addMenuAndButton(SystemMenuAo menu, String className) {
-        BaseRsp<Long> menuRsp = systemService.addMenu(menu);
+        BaseRsp<Long> menuRsp = systemClient.addMenu(menu);
         for (int i = 0; i < ParamsConstant.AUTHS.length; i++) {
             String auth = ParamsConstant.AUTHS[i];
             SystemMenuAo button = new SystemMenuAo();
@@ -146,7 +146,7 @@ public class GeneratorServiceImpl implements GeneratorService {
             button.setParentId(menuRsp.getData());
             button.setType(DictConstant.MENU_TYPE_1);
             button.setPerms(className + StrUtil.COLON + auth);
-            systemService.addMenu(button);
+            systemClient.addMenu(button);
         }
     }
 

@@ -1,8 +1,8 @@
-package com.zclcs.server.dict.service.impl;
+package com.zclcs.server.minio.service.impl;
 
 import com.rabbitmq.client.Channel;
 import com.zclcs.common.core.entity.CanalBinLogInfo;
-import com.zclcs.server.dict.service.HandleCacheService;
+import com.zclcs.common.core.service.HandleCacheService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

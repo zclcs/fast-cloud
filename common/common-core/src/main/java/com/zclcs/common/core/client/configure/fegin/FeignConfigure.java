@@ -1,4 +1,4 @@
-package com.zclcs.common.core.service.configure.fegin;
+package com.zclcs.common.core.client.configure.fegin;
 
 import feign.Logger;
 import org.springframework.context.annotation.Bean;

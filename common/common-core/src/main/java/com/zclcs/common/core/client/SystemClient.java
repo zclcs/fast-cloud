@@ -1,9 +1,9 @@
-package com.zclcs.common.core.service;
+package com.zclcs.common.core.client;
 
 import com.zclcs.common.core.base.BaseRsp;
+import com.zclcs.common.core.client.configure.fegin.FeignConfigure;
+import com.zclcs.common.core.client.fallback.SystemClientFallback;
 import com.zclcs.common.core.entity.system.ao.SystemMenuAo;
-import com.zclcs.common.core.service.configure.fegin.FeignConfigure;
-import com.zclcs.common.core.service.fallback.SystemServiceFallback;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 /**
  * @author zclcs
  */
-@FeignClient(value = "${my.server-name.server-system}", contextId = "systemLogServiceClient", fallbackFactory = SystemServiceFallback.class, configuration = FeignConfigure.class)
-public interface SystemService {
+@FeignClient(value = "${my.server-name.server-system}", contextId = "systemLogServiceClient", fallbackFactory = SystemClientFallback.class, configuration = FeignConfigure.class)
+public interface SystemClient {
 
     /**
      * 创建菜单

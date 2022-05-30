@@ -1,8 +1,8 @@
-package com.zclcs.server.dict.service.impl;
+package com.zclcs.server.test.service.impl;
 
 import com.rabbitmq.client.Channel;
 import com.zclcs.common.core.entity.CanalBinLogInfo;
-import com.zclcs.server.dict.service.HandleCacheService;
+import com.zclcs.common.core.service.HandleCacheService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 /**
  * @author zclcs
  */
-@Service(value = "handleServerGeneratorCacheService")
+@Service(value = "handleServerTestCacheService")
 @RequiredArgsConstructor
 @Slf4j
-public class HandleServerGeneratorCacheServiceImpl implements HandleCacheService {
+public class HandleServerTestCacheServiceImpl implements HandleCacheService {
 
     @Override
     public void handleCache(CanalBinLogInfo canalBinLogInfo, long deliveryTag, Channel channel) throws Exception {

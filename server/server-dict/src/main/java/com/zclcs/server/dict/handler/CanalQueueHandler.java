@@ -1,11 +1,7 @@
 package com.zclcs.server.dict.handler;
 
-import cn.hutool.json.JSONUtil;
 import com.rabbitmq.client.Channel;
 import com.zclcs.common.core.constant.RabbitConstant;
-import com.zclcs.common.core.entity.CanalBinLogInfo;
-import com.zclcs.server.dict.factory.HandleCacheFactory;
-import com.zclcs.server.dict.service.HandleCacheService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
@@ -40,17 +36,9 @@ public class CanalQueueHandler {
         //  如果手动ACK,消息会被监听消费,但是消息在队列中依旧存在,如果 未配置 acknowledge-mode 默认是会在消费完毕后自动ACK掉
         final long deliveryTag = message.getMessageProperties().getDeliveryTag();
         try {
-            CanalBinLogInfo canalBinLogInfo = JSONUtil.toBean(messageStruct, CanalBinLogInfo.class);
-            //log.info("canal 读取 binlog，手动ACK，接收消息：{}", JSONUtil.toJsonStr(canalBinLogInfo));
-            String database = canalBinLogInfo.getDatabase();
-            // 从工厂类中拿处理类
-            HandleCacheService handleCacheService = HandleCacheFactory.getHandleCacheService(database);
-            if (handleCacheService != null) {
-                handleCacheService.handleCache(canalBinLogInfo, deliveryTag, channel);
-            } else {
-                // 没hit到不需要处理 直接ack
-                channel.basicAck(deliveryTag, false);
-            }
+            log.info("canal 读取 binlog，手动ACK，接收消息：{}", messageStruct);
+            // hit规则已配置在canal instance 中 这里直接ack
+            channel.basicAck(deliveryTag, false);
         } catch (Exception e) {
             try {
                 // 处理失败,重新压入MQ

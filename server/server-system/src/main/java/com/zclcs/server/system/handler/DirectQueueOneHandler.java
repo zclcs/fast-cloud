@@ -39,7 +39,7 @@ public class DirectQueueOneHandler {
         //  如果手动ACK,消息会被监听消费,但是消息在队列中依旧存在,如果 未配置 acknowledge-mode 默认是会在消费完毕后自动ACK掉
         final long deliveryTag = message.getMessageProperties().getDeliveryTag();
         try {
-            log.info("直接队列1，处理系统日志，手动ACK，接收消息：{}", messageStruct.getMessage());
+            //log.info("直接队列1，处理系统日志，手动ACK，接收消息：{}", messageStruct.getMessage());
             SystemLogAo systemLogAo = JSONUtil.toBean(messageStruct.getMessage(), SystemLogAo.class);
             logService.saveLog(systemLogAo.getClassName(), systemLogAo.getMethodName(), systemLogAo.getParams(), systemLogAo.getIp(), systemLogAo.getOperation(), systemLogAo.getUsername(), systemLogAo.getStart());
             // 通知 MQ 消息已被成功消费,可以ACK了

@@ -15,7 +15,6 @@ import com.zclcs.common.core.utils.BaseAddressUtil;
 import com.zclcs.common.core.utils.BaseQueryWrapperUtil;
 import com.zclcs.server.system.mapper.BlackListMapper;
 import com.zclcs.server.system.service.BlackListService;
-import com.zclcs.server.system.service.RouteEnhanceCacheService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -33,8 +32,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
 public class BlackListServiceImpl extends ServiceImpl<BlackListMapper, BlackList> implements BlackListService {
-
-    private final RouteEnhanceCacheService routeEnhanceCacheService;
 
     @Override
     public BasePage<BlackListVo> findBlackListPage(BasePageAo basePageAo, BlackListVo blackListVo) {
@@ -78,34 +75,22 @@ public class BlackListServiceImpl extends ServiceImpl<BlackListMapper, BlackList
         BlackList blackList = new BlackList();
         BeanUtil.copyProperties(blackListAo, blackList);
         setBlackList(blackList);
-        boolean save = this.save(blackList);
-        if (save) {
-            routeEnhanceCacheService.saveBlackList(blackList);
-        }
+        this.save(blackList);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateBlackList(BlackListAo blackListAo) {
-        BlackList old = this.lambdaQuery().eq(BlackList::getBlackId, blackListAo.getBlackId()).one();
         BlackList blackList = new BlackList();
         BeanUtil.copyProperties(blackListAo, blackList);
         setBlackList(blackList);
-        boolean b = this.updateById(blackList);
-        if (b) {
-            routeEnhanceCacheService.removeBlackList(old);
-            routeEnhanceCacheService.saveBlackList(blackList);
-        }
+        this.updateById(blackList);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteBlackList(List<Long> ids) {
-        List<BlackList> blackLists = this.lambdaQuery().in(BlackList::getBlackId, ids).list();
-        boolean b = this.removeByIds(ids);
-        if (b) {
-            blackLists.forEach(routeEnhanceCacheService::removeBlackList);
-        }
+        this.removeByIds(ids);
     }
 
     private void setBlackList(BlackList blackList) {

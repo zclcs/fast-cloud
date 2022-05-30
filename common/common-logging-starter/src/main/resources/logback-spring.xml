@@ -95,12 +95,12 @@
         </filter>
     </appender>
 
-    <appender name="file_service" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log.path}/service.log</file>
+    <appender name="file_client" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/client.log</file>
         <!-- 如果是 true，日志被追加到文件结尾，如果是 false，清空现存文件，默认是true。 -->
         <append>true</append>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${log.path}/service/service.%d{yyyy-MM-dd}%i.log</fileNamePattern>
+            <fileNamePattern>${log.path}/client/client.%d{yyyy-MM-dd}%i.log</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>${log.maxFileSize}</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
@@ -141,9 +141,9 @@
     <!-- 字典依赖日志 -->
     <logger name="com.houkunlin" level="debug" additivity="false"/>
 
-    <logger name="com.zclcs.common.core.service" level="DEBUG" additivity="false">
+    <logger name="com.zclcs.common.core.client" level="DEBUG" additivity="false">
         <appender-ref ref="console"/>
-        <appender-ref ref="file_service"/>
+        <appender-ref ref="file_client"/>
     </logger>
 
     <logger name="p6spy" level="DEBUG" additivity="false">

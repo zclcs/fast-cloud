@@ -16,6 +16,13 @@ public interface RouteEnhanceCacheService {
     void saveBlackList(BlackList blackList);
 
     /**
+     * 更新黑名单规则
+     *
+     * @param blackList 黑名单规则
+     */
+    void updateBlackList(BlackList blackList);
+
+    /**
      * 删除黑名单规则缓存
      *
      * @param blackList 黑名单
@@ -28,6 +35,13 @@ public interface RouteEnhanceCacheService {
      * @param rateLimitRule 限流规则
      */
     void saveRateLimitRule(RateLimitRule rateLimitRule);
+
+    /**
+     * 缓存限流规则
+     *
+     * @param rateLimitRule 限流规则
+     */
+    void updateRateLimitRule(RateLimitRule rateLimitRule);
 
     /**
      * 从缓存中删除限流规则

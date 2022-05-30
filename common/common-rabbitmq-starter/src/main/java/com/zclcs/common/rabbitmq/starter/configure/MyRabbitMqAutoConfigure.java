@@ -2,6 +2,7 @@ package com.zclcs.common.rabbitmq.starter.configure;
 
 import com.google.common.collect.Maps;
 import com.zclcs.common.core.constant.RabbitConstant;
+import com.zclcs.common.core.properties.GlobalProperties;
 import com.zclcs.common.rabbitmq.starter.properties.MyRabbitMqProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.*;
@@ -21,9 +22,18 @@ import java.util.Map;
  * @author zclcs
  */
 @Slf4j
-@EnableConfigurationProperties(MyRabbitMqProperties.class)
+@EnableConfigurationProperties({MyRabbitMqProperties.class, GlobalProperties.class})
 @ConditionalOnProperty(value = "my.lettuce.redis.enable", havingValue = "true", matchIfMissing = true)
 public class MyRabbitMqAutoConfigure {
+
+    private MyRabbitMqProperties myRabbitMqProperties;
+
+    private GlobalProperties globalProperties;
+
+    public MyRabbitMqAutoConfigure(MyRabbitMqProperties myRabbitMqProperties, GlobalProperties globalProperties) {
+        this.myRabbitMqProperties = myRabbitMqProperties;
+        this.globalProperties = globalProperties;
+    }
 
     @Bean(name = "rabbitTemplate")
     public RabbitTemplate rabbitTemplate(CachingConnectionFactory connectionFactory) {
@@ -47,14 +57,6 @@ public class MyRabbitMqAutoConfigure {
     }
 
     /**
-     * 直接模式队列2 - 刷新系统服务缓存
-     */
-    @Bean
-    public Queue directTwoQueue() {
-        return new Queue(RabbitConstant.QUEUE_SERVER_SYSTEM_CACHE);
-    }
-
-    /**
      * canal 读取 binlog 更新缓存队列
      */
     @Bean
@@ -63,22 +65,117 @@ public class MyRabbitMqAutoConfigure {
     }
 
     /**
-     * 直接模式队列
+     * canal 读取 binlog 更新缓存交换器
      */
     @Bean
-    public DirectExchange directExChange() {
+    public DirectExchange canalExChange() {
         return new DirectExchange(RabbitConstant.CANAL_EXCHANGE);
     }
 
     /**
      * 直接模式绑定canal队列
      *
-     * @param canalQueue     canal队列
-     * @param directExChange 直接模式交换器
+     * @param canalQueue    canal队列
+     * @param canalExChange 直接模式交换器
      */
     @Bean
-    public Binding directExChangeBinding1(Queue canalQueue, DirectExchange directExChange) {
-        return BindingBuilder.bind(canalQueue).to(directExChange).with(RabbitConstant.CANAL_ROUTE_KEY);
+    public Binding canalExChangeBinding(Queue canalQueue, DirectExchange canalExChange) {
+        return BindingBuilder.bind(canalQueue).to(canalExChange).with(RabbitConstant.CANAL_ROUTE_KEY);
+    }
+
+    /**
+     * canal system 读取 binlog 更新缓存队列
+     */
+    @Bean
+    public Queue canalSystemQueue() {
+        return new Queue(RabbitConstant.CANAL_SYSTEM_QUEUE, true);
+    }
+
+    /**
+     * system 直接模式绑定canal队列
+     *
+     * @param canalSystemQueue canal队列
+     * @param canalExChange    直接模式交换器
+     */
+    @Bean
+    public Binding canalSystemExChangeBinding(Queue canalSystemQueue, DirectExchange canalExChange) {
+        return BindingBuilder.bind(canalSystemQueue).to(canalExChange).with(RabbitConstant.CANAL_SYSTEM_ROUTE_KEY);
+    }
+
+    /**
+     * canal dict 读取 binlog 更新缓存队列
+     */
+    @Bean
+    public Queue canalDictQueue() {
+        return new Queue(RabbitConstant.CANAL_DICT_QUEUE, true);
+    }
+
+    /**
+     * dict 直接模式绑定canal队列
+     *
+     * @param canalDictQueue canal队列
+     * @param canalExChange  直接模式交换器
+     */
+    @Bean
+    public Binding canalDictExChangeBinding(Queue canalDictQueue, DirectExchange canalExChange) {
+        return BindingBuilder.bind(canalDictQueue).to(canalExChange).with(RabbitConstant.CANAL_DICT_ROUTE_KEY);
+    }
+
+    /**
+     * canal generator 读取 binlog 更新缓存队列
+     */
+    @Bean
+    public Queue canalGeneratorQueue() {
+        return new Queue(RabbitConstant.CANAL_GENERATOR_QUEUE, true);
+    }
+
+    /**
+     * generator 直接模式绑定canal队列
+     *
+     * @param canalGeneratorQueue canal队列
+     * @param canalExChange       直接模式交换器
+     */
+    @Bean
+    public Binding canalGeneratorExChangeBinding(Queue canalGeneratorQueue, DirectExchange canalExChange) {
+        return BindingBuilder.bind(canalGeneratorQueue).to(canalExChange).with(RabbitConstant.CANAL_GENERATOR_ROUTE_KEY);
+    }
+
+    /**
+     * canal system 读取 binlog 更新缓存队列
+     */
+    @Bean
+    public Queue canalMinioQueue() {
+        return new Queue(RabbitConstant.CANAL_MINIO_QUEUE, true);
+    }
+
+    /**
+     * system 直接模式绑定canal队列
+     *
+     * @param canalMinioQueue canal队列
+     * @param canalExChange   直接模式交换器
+     */
+    @Bean
+    public Binding canalMinioExChangeBinding(Queue canalMinioQueue, DirectExchange canalExChange) {
+        return BindingBuilder.bind(canalMinioQueue).to(canalExChange).with(RabbitConstant.CANAL_MINIO_ROUTE_KEY);
+    }
+
+    /**
+     * canal test 读取 binlog 更新缓存队列
+     */
+    @Bean
+    public Queue canalTestQueue() {
+        return new Queue(RabbitConstant.CANAL_TEST_QUEUE, true);
+    }
+
+    /**
+     * test 直接模式绑定canal队列
+     *
+     * @param canalTestQueue canal队列
+     * @param canalExChange  直接模式交换器
+     */
+    @Bean
+    public Binding canalTestExChangeBinding(Queue canalTestQueue, DirectExchange canalExChange) {
+        return BindingBuilder.bind(canalTestQueue).to(canalExChange).with(RabbitConstant.CANAL_TEST_ROUTE_KEY);
     }
 
     /**

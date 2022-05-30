@@ -1,4 +1,4 @@
-package com.zclcs.server.dict.service;
+package com.zclcs.common.core.service;
 
 import com.rabbitmq.client.Channel;
 import com.zclcs.common.core.entity.CanalBinLogInfo;

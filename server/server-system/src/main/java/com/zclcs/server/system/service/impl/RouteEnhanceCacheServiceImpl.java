@@ -4,11 +4,15 @@ import com.zclcs.common.core.entity.system.BlackList;
 import com.zclcs.common.core.entity.system.RateLimitRule;
 import com.zclcs.common.core.utils.BaseRouteEnhanceCacheUtil;
 import com.zclcs.common.redis.starter.service.RedisService;
+import com.zclcs.server.system.service.BlackListService;
+import com.zclcs.server.system.service.RateLimitRuleService;
 import com.zclcs.server.system.service.RouteEnhanceCacheService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author zclcs
@@ -17,7 +21,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class RouteEnhanceCacheServiceImpl implements RouteEnhanceCacheService {
 
+    private BlackListService blackListService;
+
+    private RateLimitRuleService rateLimitRuleService;
+
     private RedisService redisService;
+
+    @Autowired
+    public void setBlackListService(BlackListService blackListService) {
+        this.blackListService = blackListService;
+    }
+
+    @Autowired
+    public void setRateLimitRuleService(RateLimitRuleService rateLimitRuleService) {
+        this.rateLimitRuleService = rateLimitRuleService;
+    }
 
     @Autowired(required = false)
     public void setRedisService(RedisService redisService) {
@@ -31,6 +49,23 @@ public class RouteEnhanceCacheServiceImpl implements RouteEnhanceCacheService {
                 BaseRouteEnhanceCacheUtil.getBlackListCacheKey();
         this.setBlackList(blackList);
         redisService.sSet(key, blackList);
+    }
+
+    @Override
+    public void updateBlackList(BlackList blackList) {
+        if (StringUtils.isNotBlank(blackList.getBlackIp())) {
+            String cacheKey = BaseRouteEnhanceCacheUtil.getBlackListCacheKey(blackList.getBlackIp());
+            redisService.del(cacheKey);
+            List<BlackList> list = this.blackListService.lambdaQuery().eq(BlackList::getBlackId, blackList.getBlackId()).list();
+            list.forEach(this::setBlackList);
+            redisService.sSet(cacheKey, list);
+        } else {
+            String cacheKey = BaseRouteEnhanceCacheUtil.getBlackListCacheKey();
+            redisService.del(cacheKey);
+            List<BlackList> list = this.blackListService.lambdaQuery().isNull(BlackList::getBlackId).or().eq(BlackList::getBlackId, "").list();
+            list.forEach(this::setBlackList);
+            redisService.sSet(cacheKey, list);
+        }
     }
 
     @Override
@@ -53,6 +88,15 @@ public class RouteEnhanceCacheServiceImpl implements RouteEnhanceCacheService {
         String key = BaseRouteEnhanceCacheUtil.getRateLimitCacheKey(rateLimitRule.getRequestUri(), rateLimitRule.getRequestMethod());
         this.setRateLimit(rateLimitRule);
         redisService.set(key, rateLimitRule);
+    }
+
+    @Override
+    public void updateRateLimitRule(RateLimitRule rateLimitRule) {
+        String key = BaseRouteEnhanceCacheUtil.getRateLimitCacheKey(rateLimitRule.getRequestUri(), rateLimitRule.getRequestMethod());
+        redisService.del(key);
+        List<RateLimitRule> list = rateLimitRuleService.lambdaQuery().eq(RateLimitRule::getRequestUri, rateLimitRule.getRequestUri()).eq(RateLimitRule::getRequestMethod, rateLimitRule.getRequestMethod()).list();
+        list.forEach(this::setRateLimit);
+        redisService.sSet(key, list);
     }
 
     @Override
