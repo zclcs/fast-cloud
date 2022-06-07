@@ -11,7 +11,6 @@ import com.zclcs.common.core.entity.system.RateLimitRule;
 import com.zclcs.common.core.entity.system.ao.BlockLogAo;
 import com.zclcs.common.core.entity.system.ao.RateLimitLogAo;
 import com.zclcs.common.core.entity.system.ao.RouteLogAo;
-import com.zclcs.common.core.utils.BaseAddressUtil;
 import com.zclcs.common.core.utils.BaseRspUtil;
 import com.zclcs.common.core.utils.BaseUtil;
 import com.zclcs.gateway.service.*;
@@ -43,7 +42,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class RouteEnhanceServiceImpl implements RouteEnhanceService {
 
     private static final String METHOD_ALL = "ALL";
-    private static final String TOKEN_CHECK_URL = "/auth/user";
+    private static final String TOKEN_CHECK_URL = "/oath2/info";
     private final RouteLogService routeLogService;
     private final BlockLogService blockLogService;
     private final RateLimitLogService rateLimitLogService;
@@ -128,7 +127,6 @@ public class RouteEnhanceServiceImpl implements RouteEnhanceService {
                         .targetServer(route.getId())
                         .targetUri(url.getPath())
                         .requestMethod(request.getMethodValue())
-                        .location(BaseAddressUtil.getCityInfo(ipAddress))
                         .build();
                 routeLogService.createRouteLog(routeLog);
             }

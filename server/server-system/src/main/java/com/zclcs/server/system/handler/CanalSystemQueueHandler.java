@@ -6,13 +6,9 @@ import com.zclcs.common.core.constant.RabbitConstant;
 import com.zclcs.common.core.entity.CanalBinLogInfo;
 import com.zclcs.common.core.properties.GlobalProperties;
 import com.zclcs.common.core.service.HandleCacheService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
-import org.springframework.amqp.rabbit.annotation.Exchange;
-import org.springframework.amqp.rabbit.annotation.Queue;
-import org.springframework.amqp.rabbit.annotation.QueueBinding;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -21,14 +17,13 @@ import java.io.IOException;
 
 /**
  * <p>
- * 直接队列1 处理器
+ * canal 动态topic 更新缓存队列
  * </p>
  *
  * @author zclcs
  */
 @Slf4j
 @Component
-@RequiredArgsConstructor
 public class CanalSystemQueueHandler {
 
     private GlobalProperties globalProperties;
@@ -47,7 +42,10 @@ public class CanalSystemQueueHandler {
 
     @RabbitListener(bindings = {
             @QueueBinding(
-                    value = @Queue(value = RabbitConstant.CANAL_SYSTEM_QUEUE, durable = "true"),
+                    value = @Queue(value = RabbitConstant.CANAL_SYSTEM_QUEUE, durable = "true", arguments = {
+                            @Argument(name = RabbitConstant.DLX_EXCHANGE_PRE, value = RabbitConstant.DLX_EXCHANGE),
+                            @Argument(name = RabbitConstant.DLX_ROUTE_KEY_PRE, value = RabbitConstant.CANAL_SYSTEM_DLX_ROUTE_KEY)
+                    }),
                     exchange = @Exchange(value = RabbitConstant.CANAL_EXCHANGE),
                     key = RabbitConstant.CANAL_SYSTEM_ROUTE_KEY
             )
@@ -67,8 +65,8 @@ public class CanalSystemQueueHandler {
             }
         } catch (Exception e) {
             try {
-                // 处理失败,重新压入MQ
-                channel.basicRecover();
+                // 处理失败,进入死信队列
+                channel.basicReject(deliveryTag, false);
             } catch (IOException e1) {
                 log.error(e1.getMessage(), e1);
             }

@@ -110,7 +110,11 @@ ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
 ```
 {
-    "insecure-registries": ["192.168.33.10:3000"]
+    "insecure-registries": ["192.168.33.10:3000"],
+    "log-driver": "json-file",
+    "log-opts": {
+        "max-size":"100m", "max-file":"3"
+    }
 }
 ```
 

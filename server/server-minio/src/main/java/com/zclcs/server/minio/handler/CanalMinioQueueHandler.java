@@ -9,10 +9,7 @@ import com.zclcs.common.core.service.HandleCacheService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
-import org.springframework.amqp.rabbit.annotation.Exchange;
-import org.springframework.amqp.rabbit.annotation.Queue;
-import org.springframework.amqp.rabbit.annotation.QueueBinding;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -47,7 +44,10 @@ public class CanalMinioQueueHandler {
 
     @RabbitListener(bindings = {
             @QueueBinding(
-                    value = @Queue(value = RabbitConstant.CANAL_MINIO_QUEUE, durable = "true"),
+                    value = @Queue(value = RabbitConstant.CANAL_MINIO_QUEUE, durable = "true", arguments = {
+                            @Argument(name = RabbitConstant.DLX_EXCHANGE_PRE, value = RabbitConstant.DLX_EXCHANGE),
+                            @Argument(name = RabbitConstant.DLX_ROUTE_KEY_PRE, value = RabbitConstant.CANAL_MINIO_DLX_ROUTE_KEY)
+                    }),
                     exchange = @Exchange(value = RabbitConstant.CANAL_EXCHANGE),
                     key = RabbitConstant.CANAL_MINIO_ROUTE_KEY
             )
@@ -67,8 +67,8 @@ public class CanalMinioQueueHandler {
             }
         } catch (Exception e) {
             try {
-                // 处理失败,重新压入MQ
-                channel.basicRecover();
+                // 处理失败,进入死信队列
+                channel.basicReject(deliveryTag, false);
             } catch (IOException e1) {
                 log.error(e1.getMessage(), e1);
             }

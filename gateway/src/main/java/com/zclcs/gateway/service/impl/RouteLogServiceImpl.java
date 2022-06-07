@@ -3,6 +3,7 @@ package com.zclcs.gateway.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zclcs.common.core.constant.MyConstant;
 import com.zclcs.common.core.entity.system.RouteLog;
 import com.zclcs.common.core.entity.system.ao.RouteLogAo;
 import com.zclcs.common.core.utils.BaseAddressUtil;
@@ -37,5 +38,6 @@ public class RouteLogServiceImpl extends ServiceImpl<RouteLogMapper, RouteLog> i
         if (StrUtil.isNotBlank(routeLog.getRouteIp())) {
             routeLog.setLocation(BaseAddressUtil.getCityInfo(routeLog.getRouteIp()));
         }
+        routeLog.setCreateBy(MyConstant.ADMIN);
     }
 }

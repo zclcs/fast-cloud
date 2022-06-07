@@ -3,6 +3,7 @@ package com.zclcs.gateway.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zclcs.common.core.constant.MyConstant;
 import com.zclcs.common.core.entity.system.BlockLog;
 import com.zclcs.common.core.entity.system.ao.BlockLogAo;
 import com.zclcs.common.core.utils.BaseAddressUtil;
@@ -37,5 +38,6 @@ public class BlockLogServiceImpl extends ServiceImpl<BlockLogMapper, BlockLog> i
         if (StrUtil.isNotBlank(blockLog.getBlockIp())) {
             blockLog.setLocation(BaseAddressUtil.getCityInfo(blockLog.getBlockIp()));
         }
+        blockLog.setCreateBy(MyConstant.ADMIN);
     }
 }

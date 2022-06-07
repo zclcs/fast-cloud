@@ -3,6 +3,7 @@ package com.zclcs.gateway.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zclcs.common.core.constant.MyConstant;
 import com.zclcs.common.core.entity.system.RateLimitLog;
 import com.zclcs.common.core.entity.system.ao.RateLimitLogAo;
 import com.zclcs.common.core.utils.BaseAddressUtil;
@@ -37,5 +38,6 @@ public class RateLimitLogServiceImpl extends ServiceImpl<RateLimitLogMapper, Rat
         if (StrUtil.isNotBlank(rateLimitLog.getRateLimitLogIp())) {
             rateLimitLog.setLocation(BaseAddressUtil.getCityInfo(rateLimitLog.getRateLimitLogIp()));
         }
+        rateLimitLog.setCreateBy(MyConstant.ADMIN);
     }
 }
